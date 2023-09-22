@@ -2,7 +2,7 @@
 
 
 body{
-  background-color: rgb(0, 116, 255);
+  background-color: rgb(105, 105, 105);
   margin: 0px;
 }
 
@@ -29,9 +29,16 @@ nav > div{
 
 nav img{
   margin-left: 8%;
-  margin-right: 30%;
   height: 17%;
   width: 17%;
+}
+
+nav h1{
+  margin-top: 2%;
+  margin-left: 3%;
+  margin-right: 15%;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 25px;
 }
 
 nav div a {
@@ -99,42 +106,16 @@ nav div:hover .submenu{
   display: block;
 }
 
-  h1{
-    text-align:center;
-    font-size: 60px;
-    padding: 150px;
-    transition: transform 2.5s;
-    color:rgb(0, 0, 0)
-  }
+h1{
+  color: black;
+}
 
 footer{
-  background-color: #1a1a1a;
+  background-color: #ffffff;
   padding: 5px 5px;
-  color:white;
+  color: #000000;
   padding-left: 50px;
   font-weight: bold;
-}
-
-p{
-  font-family: 'Roboto', sans-serif;
-  font-size: 18px;
-}
-
-.contenupage a{
-  margin-top: 50px;
-  border-radius : 10px 10px;
-  color:white;
-  text-decoration: none;
-  font-weight: bold;
-  background-color: #1F85DE;
-  font-family: 'brandon';
-  display: inline-block;
-  transition: all 400ms;
-}
-
-.contenupage a:hover{
-  transform: scale(1.15);
-  border : 2px solid black;
 }
 
 
