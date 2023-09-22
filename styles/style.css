@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap');
+
+
+body{
+  background-color: rgb(0, 116, 255);
+  margin: 0px;
+}
+
+/* image temporaire css tempo*/
+img{
+  height: 99%;
+  width: 99%;
+}
+
+nav {
+  display: flex;
+  background-color: rgb(255, 255, 255);
+  flex-direction: row;
+  position: sticky;
+  z-index: 5;
+  padding: 18px 0px;
+}
+
+nav > div{
+  display: flex;
+  position : relative;
+  align-items: center;
+}
+
+nav img{
+  margin-left: 8%;
+  margin-right: 30%;
+  height: 17%;
+  width: 17%;
+}
+
+nav div a {
+  color: rgb(0, 0, 0);
+  padding: 20px 40px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+nav div a:hover{
+  color: #F44336;
+}
+
+.submenu{
+  display : none;
+  background-color: #f9f9f9;
+  position:absolute;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  margin-top: 314px;
+}
+
+nav div:hover .submenu{
+  display : block;
+}
+
+.submenu a {
+  color: #ffffff;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.submenu a:hover {
+  background-color: #f1f1f1;
+  text-decoration : none;  
+}
+
+.burger{
+  display: none;
+  position: fixed;
+  z-index: 5;
+  width: 100%;
+  background-color: white;
+}
+
+.burger a{
+  text-decoration: none;
+  color : black;
+  padding: 100% 0%;
+  font-size: 20px;
+}
+
+#menu2 div{
+  border-top : 1px solid black;
+  padding: 15px 0%;
+}
+
+#menu2{
+  display: none;
+  background-color: #ededeb;
+}
+
+.burger:hover #menu2{
+  display: block;
+}
+
+  h1{
+    text-align:center;
+    font-size: 60px;
+    padding: 150px;
+    transition: transform 2.5s;
+    color:rgb(0, 0, 0)
+  }
+
+footer{
+  background-color: #1a1a1a;
+  padding: 5px 5px;
+  color:white;
+  padding-left: 50px;
+  font-weight: bold;
+}
+
+p{
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+}
+
+.contenupage a{
+  margin-top: 50px;
+  border-radius : 10px 10px;
+  color:white;
+  text-decoration: none;
+  font-weight: bold;
+  background-color: #1F85DE;
+  font-family: 'brandon';
+  display: inline-block;
+  transition: all 400ms;
+}
+
+.contenupage a:hover{
+  transform: scale(1.15);
+  border : 2px solid black;
+}
+
+
+@media(max-width: 784px){
+  .boxes{
+    display: block;
+    position: static;
+  }
+
+  nav{
+    display: none;
+  }
+
+  .burger{
+    display: block;
+  }
+}
