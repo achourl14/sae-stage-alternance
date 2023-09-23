@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap');
 
 body{
-  background-color: rgb(0, 116, 255);
+  background-color: rgb(255, 255, 255);
   margin: 0px;
 }
 
@@ -14,9 +14,11 @@ img{
 
 nav {
   display: flex;
+  box-shadow: 10px 1px 5px #b9b9b9;
   background-color: rgb(255, 255, 255);
   flex-direction: row;
   position: sticky;
+  top: 0;
   z-index: 5;
   padding: 18px 0px;
 }
@@ -29,14 +31,21 @@ nav > div{
 
 nav img{
   margin-left: 8%;
-  margin-right: 30%;
-  height: 17%;
-  width: 17%;
+  height: 16%;
+  width: 16%;
+}
+
+nav h1{
+  margin-top: 2%;
+  margin-left: 3%;
+  margin-right: 15%;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 25px;
 }
 
 nav div a {
   color: rgb(0, 0, 0);
-  padding: 20px 40px;
+  padding: 15px 20px;
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
   text-decoration: none;
@@ -44,6 +53,10 @@ nav div a {
 }
 
 nav div a:hover{
+  color: #F44336;
+}
+
+#actuel{
   color: #F44336;
 }
 
@@ -68,6 +81,25 @@ nav div:hover .submenu{
 .submenu a:hover {
   background-color: #f1f1f1;
   text-decoration : none;  
+}
+
+.connexion{
+  position: absolute;
+  padding: 10px;
+  background-color: #F44336;
+  border-radius: 10px 10px;
+  color: white;
+  text-decoration: none;
+  right: 3%;
+}
+
+#connex{
+  top: 50%;
+}
+
+.connexion:hover{
+  transition: all 0.3s ease;
+  transform: scale(0.96);
 }
 
 .burger{
@@ -99,42 +131,20 @@ nav div:hover .submenu{
   display: block;
 }
 
-  h1{
-    text-align:center;
-    font-size: 60px;
-    padding: 150px;
-    transition: transform 2.5s;
-    color:rgb(0, 0, 0)
-  }
+form{
+  margin-left: 10%;
+}
+h1{
+  font-family: 'Roboto Slab', serif;
+  font-size: 34px;
+}
 
 footer{
-  background-color: #1a1a1a;
+  background-color: #ffffff;
   padding: 5px 5px;
-  color:white;
+  color: #000000;
   padding-left: 50px;
   font-weight: bold;
-}
-
-p{
-  font-family: 'Roboto', sans-serif;
-  font-size: 18px;
-}
-
-.contenupage a{
-  margin-top: 50px;
-  border-radius : 10px 10px;
-  color:white;
-  text-decoration: none;
-  font-weight: bold;
-  background-color: #1F85DE;
-  font-family: 'brandon';
-  display: inline-block;
-  transition: all 400ms;
-}
-
-.contenupage a:hover{
-  transform: scale(1.15);
-  border : 2px solid black;
 }
 
 
