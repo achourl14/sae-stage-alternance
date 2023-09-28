@@ -1,8 +1,8 @@
 <?php
 
-use Configuration\Configuration;
-
-require_once "../Configuration/Configuration.php";
+namespace App\Modele;
+use App\Configuration\Configuration;
+use PDO;
 class ConnexionBaseDeDonnee {
     private static ?ConnexionBaseDeDonnee $instance = null;
 

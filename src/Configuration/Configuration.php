@@ -1,6 +1,7 @@
 <?php
 
-namespace Configuration;
+namespace App\Configuration;
+
 class Configuration
 {
 
