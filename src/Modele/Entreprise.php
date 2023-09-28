@@ -1,6 +1,7 @@
 <?php
 
-require_once "../Modele/ConnexionBaseDeDonnee.php";
+namespace App\Modele;
+
 class Entreprise
 {
     private int $num_siret;
