@@ -1,17 +1,21 @@
+<!--
+Cette classe permet à l'eleve de creer un formulaire dans offre Alternance
+-->
+
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta charset="UTF-8">
-    <title> Inscription Entreprise</title>
+    <title> Inscription Eleve</title>
     <link rel="stylesheet" href="styles/style_inscription.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <div class="container">
-    <div class="title">Inscription Entreprise</div>
+    <div class="title">Inscription Alternance</div>
     <div class="content">
-        <form method="post" action="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/web/controleurFrontal.php?action=creerEntreprise">
+        <form method="post" action="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/src/Controleur/routeur.php?action=creerOffreEtudiantAlternance">
             <div class="user-details">
                 <div class="input-box">
                     <span class="details">Numéro SIRET</span>
@@ -58,7 +62,7 @@
                 </div>
             </div>
             <div class="button">
-                <input type="submit" value="S'inscrire">
+                <input type="submit" value="Valider l'offre">
             </div>
         </form>
     </div>

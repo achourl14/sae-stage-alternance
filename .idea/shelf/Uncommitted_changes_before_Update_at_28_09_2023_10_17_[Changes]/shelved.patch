@@ -1,0 +1,236 @@
+Index: web/inscription.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\n\n<html>\n<head>\n    <meta charset=\"UTF-8\">\n    <title> Inscription </title>\n    <link rel=\"stylesheet\" href=\"styles/style_inscription.css\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n</head>\n<body>\n<div class=\"container\">\n    <div class=\"title\">Inscription Entreprise</div>\n    <div class=\"content\">\n        <form method=\"post\" action=\"https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/src/Controleur/routeur.php?action=creerEntreprise\">\n            <div class=\"user-details\">\n                <div class=\"input-box\">\n                    <span class=\"details\">Numéro SIRET</span>\n                    <input type=\"text\" placeholder=\"\" name=\"num_siret\" required>\n                </div>\n                <div class=\"input-box\">\n                    <span class=\"details\">Nom de l'entreprise</span>\n                    <input type=\"text\" placeholder=\"\" name=\"nom_entreprise\" required>\n                </div>\n                <div class=\"input-box\">\n                    <span class=\"details\">Adresse</span>\n                    <input type=\"text\" placeholder=\"\" name=\"adresse\" required>\n                </div>\n                <div class=\"input-box\">\n                    <span class=\"details\">Telephone</span>\n                    <input type=\"tel\" placeholder=\"\" name=\"telephone\" required>\n                </div>\n                <div class=\"input-box\">\n                    <span class=\"details\">Adresse mail</span>\n                    <input type=\"email\" placeholder=\"\" name=\"mail\" required>\n                </div>\n                <div class=\"input-box\">\n                    <span class=\"details\">Interlocuteur </span>\n                    <input type=\"text\" placeholder=\"\" name=\"interlocuteur\" required>\n                </div>\n                <div class=\"input-box\">\n                    <span class=\"details\">Code APE</span>\n                    <input type=\"text\" placeholder=\"\" name=\"code_ape\" required>\n                </div>\n                <div class=\"input-box\">\n                    <span class=\"details\">Secteur d'Activité</span>\n                    <input type=\"text\" placeholder=\"\" name=\"activite\" required>\n                </div>\n                <div class=\"input-box\">\n                    <span class=\"details\">Mot de passe </span>\n                    <input type=\"password\" placeholder=\"Entrez votre mot de passe\" name=\"mdp\" required>\n                </div>\n                <div class=\"input-box\">\n                    <span class=\"details\">Confirmez mot de passe</span>\n                    <input type=\"password\" placeholder=\"Confirmez votre mot de passe\" name=\"confirmemdp\" required>\n                </div>\n                <div>\n                    <p> Vous êtes élèves ? vous n'avez pas d'accès ? Contactez le secrétariat</p>\n                </div>\n            </div>\n            <div class=\"button\">\n                <input type=\"submit\" value=\"S'inscrire\">\n            </div>\n        </form>\n    </div>\n</div>\n\n</body>\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/web/inscription.html b/web/inscription.html
+--- a/web/inscription.html	(revision e3f10489fed53630ff8adc28d7d1c9634542d301)
++++ b/web/inscription.html	(date 1695886211870)
+@@ -3,7 +3,7 @@
+ <html>
+ <head>
+     <meta charset="UTF-8">
+-    <title> Inscription </title>
++    <title> Inscription Entreprise</title>
+     <link rel="stylesheet" href="styles/style_inscription.css">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ </head>
+Index: src/Controleur/Controleur.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\nrequire_once \"../Modele/Entreprise.php\";\nclass Controleur {\n    public static function creerEntreprise() : void {\n        $entreprise = new Entreprise($_POST[\"num_siret\"],$_POST[\"nom_entreprise\"],$_POST[\"adresse\"],$_POST[\"telephone\"],$_POST[\"mail\"],$_POST[\"interlocuteur\"],$_POST[\"code_ape\"],$_POST[\"code_ape\"],$_POST[\"mdp\"]);\n        $entreprise->sauvegarder();\n    }\n}\n\n?>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Controleur/Controleur.php b/src/Controleur/Controleur.php
+--- a/src/Controleur/Controleur.php	(revision e3f10489fed53630ff8adc28d7d1c9634542d301)
++++ b/src/Controleur/Controleur.php	(date 1695887247685)
+@@ -5,6 +5,18 @@
+         $entreprise = new Entreprise($_POST["num_siret"],$_POST["nom_entreprise"],$_POST["adresse"],$_POST["telephone"],$_POST["mail"],$_POST["interlocuteur"],$_POST["code_ape"],$_POST["code_ape"],$_POST["mdp"]);
+         $entreprise->sauvegarder();
+     }
++
++    // creer un offre de Stage ou d'Alternance
++    /*
++    Offre Alternance => table offre_alternance
++    Offre de stage => table offre_stage
++    */
++    public static function creerOffreEtudiantStage() : void {
++
++}
++    public static function creerOffreEtudiantAlternance() : void {
++
++    }
+ }
+ 
+ ?>
+\ No newline at end of file
+Index: web/controlleurOffreStageAlternance.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/web/controlleurOffreStageAlternance.html b/web/controlleurOffreStageAlternance.html
+new file mode 100644
+--- /dev/null	(date 1695886591305)
++++ b/web/controlleurOffreStageAlternance.html	(date 1695886591305)
+@@ -0,0 +1,10 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++    <meta charset="UTF-8">
++    <title>Title</title>
++</head>
++<body>
++
++</body>
++</html>
+\ No newline at end of file
+Index: web/inscriptionEleveAlternance.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/web/inscriptionEleveAlternance.html b/web/inscriptionEleveAlternance.html
+new file mode 100644
+--- /dev/null	(date 1695887294025)
++++ b/web/inscriptionEleveAlternance.html	(date 1695887294025)
+@@ -0,0 +1,72 @@
++<!--
++Cette classe permet à l'eleve de creer un formulaire dans offre Alternance
++-->
++
++<!DOCTYPE html>
++
++<html>
++<head>
++    <meta charset="UTF-8">
++    <title> Inscription Eleve</title>
++    <link rel="stylesheet" href="styles/style_inscription.css">
++    <meta name="viewport" content="width=device-width, initial-scale=1.0">
++</head>
++<body>
++<div class="container">
++    <div class="title">Inscription Alternance</div>
++    <div class="content">
++        <form method="post" action="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/src/Controleur/routeur.php?action=creerOffreEtudiantAlternance">
++            <div class="user-details">
++                <div class="input-box">
++                    <span class="details">Numéro SIRET</span>
++                    <input type="text" placeholder="" name="num_siret" required>
++                </div>
++                <div class="input-box">
++                    <span class="details">Nom de l'entreprise</span>
++                    <input type="text" placeholder="" name="nom_entreprise" required>
++                </div>
++                <div class="input-box">
++                    <span class="details">Adresse</span>
++                    <input type="text" placeholder="" name="adresse" required>
++                </div>
++                <div class="input-box">
++                    <span class="details">Telephone</span>
++                    <input type="tel" placeholder="" name="telephone" required>
++                </div>
++                <div class="input-box">
++                    <span class="details">Adresse mail</span>
++                    <input type="email" placeholder="" name="mail" required>
++                </div>
++                <div class="input-box">
++                    <span class="details">Interlocuteur </span>
++                    <input type="text" placeholder="" name="interlocuteur" required>
++                </div>
++                <div class="input-box">
++                    <span class="details">Code APE</span>
++                    <input type="text" placeholder="" name="code_ape" required>
++                </div>
++                <div class="input-box">
++                    <span class="details">Secteur d'Activité</span>
++                    <input type="text" placeholder="" name="activite" required>
++                </div>
++                <div class="input-box">
++                    <span class="details">Mot de passe </span>
++                    <input type="password" placeholder="Entrez votre mot de passe" name="mdp" required>
++                </div>
++                <div class="input-box">
++                    <span class="details">Confirmez mot de passe</span>
++                    <input type="password" placeholder="Confirmez votre mot de passe" name="confirmemdp" required>
++                </div>
++                <div>
++                    <p> Vous êtes élèves ? vous n'avez pas d'accès ? Contactez le secrétariat</p>
++                </div>
++            </div>
++            <div class="button">
++                <input type="submit" value="Valider l'offre">
++            </div>
++        </form>
++    </div>
++</div>
++
++</body>
++</html>
+\ No newline at end of file
+Index: web/inscriptionEleveStage.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/web/inscriptionEleveStage.html b/web/inscriptionEleveStage.html
+new file mode 100644
+--- /dev/null	(date 1695887294041)
++++ b/web/inscriptionEleveStage.html	(date 1695887294041)
+@@ -0,0 +1,72 @@
++<!--
++Cette classe permet à l'eleve de creer un formulaire dans offre de Stage
++-->
++
++<!DOCTYPE html>
++
++<html>
++<head>
++    <meta charset="UTF-8">
++    <title> Inscription Eleve</title>
++    <link rel="stylesheet" href="styles/style_inscription.css">
++    <meta name="viewport" content="width=device-width, initial-scale=1.0">
++</head>
++<body>
++<div class="container">
++    <div class="title">Inscription Stage</div>
++    <div class="content">
++        <form method="post" action="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/src/Controleur/routeur.php?action=creerOffreEtudiantStage">
++            <div class="user-details">
++                <div class="input-box">
++                    <span class="details">Numéro SIRET</span>
++                    <input type="text" placeholder="" name="num_siret" required>
++                </div>
++                <div class="input-box">
++                    <span class="details">Nom de l'entreprise</span>
++                    <input type="text" placeholder="" name="nom_entreprise" required>
++                </div>
++                <div class="input-box">
++                    <span class="details">Adresse</span>
++                    <input type="text" placeholder="" name="adresse" required>
++                </div>
++                <div class="input-box">
++                    <span class="details">Telephone</span>
++                    <input type="tel" placeholder="" name="telephone" required>
++                </div>
++                <div class="input-box">
++                    <span class="details">Adresse mail</span>
++                    <input type="email" placeholder="" name="mail" required>
++                </div>
++                <div class="input-box">
++                    <span class="details">Interlocuteur </span>
++                    <input type="text" placeholder="" name="interlocuteur" required>
++                </div>
++                <div class="input-box">
++                    <span class="details">Code APE</span>
++                    <input type="text" placeholder="" name="code_ape" required>
++                </div>
++                <div class="input-box">
++                    <span class="details">Secteur d'Activité</span>
++                    <input type="text" placeholder="" name="activite" required>
++                </div>
++                <div class="input-box">
++                    <span class="details">Mot de passe </span>
++                    <input type="password" placeholder="Entrez votre mot de passe" name="mdp" required>
++                </div>
++                <div class="input-box">
++                    <span class="details">Confirmez mot de passe</span>
++                    <input type="password" placeholder="Confirmez votre mot de passe" name="confirmemdp" required>
++                </div>
++                <div>
++                    <p> Vous êtes élèves ? vous n'avez pas d'accès ? Contactez le secrétariat</p>
++                </div>
++            </div>
++            <div class="button">
++                <input type="submit" value=">Valider l'offre">
++            </div>
++        </form>
++    </div>
++</div>
++
++</body>
++</html>
+\ No newline at end of file
