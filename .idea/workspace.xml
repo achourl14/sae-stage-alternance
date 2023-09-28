@@ -4,14 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84102632-0c24-41d7-8f5e-6518e84410ab" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Modele/AlternanceExterneEtudiants.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Modele/StageExterneEtudiants.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/controlleurOffreStageAlternance.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/inscriptionEleveAlternance.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/inscriptionEleveStage.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controleur/Controleur.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controleur/Controleur.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/inscription.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/inscription.html" afterDir="false" />
+    <list default="true" id="84102632-0c24-41d7-8f5e-6518e84410ab" name="Changes" comment="initial commit">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +23,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -50,7 +49,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "FormulaireOffreExterne",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -68,11 +67,24 @@
       <option name="presentableId" value="Default" />
       <updated>1695884778555</updated>
       <workItem from="1695884780170" duration="44000" />
-      <workItem from="1695884879924" duration="6664000" />
+      <workItem from="1695884879924" duration="8015000" />
     </task>
+    <task id="LOCAL-00001" summary="initial commit">
+      <option name="closed" value="true" />
+      <created>1695892240510</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1695892240511</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="initial commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="initial commit" />
   </component>
 </project>
