@@ -10,7 +10,7 @@ class Entreprise
     private int $telephone;
     private string $mail;
     private string $interlocuteur;
-    private int $code_ape;
+    private string $code_ape;
     private string $activite;
     private string $mdp;
 
@@ -21,11 +21,11 @@ class Entreprise
      * @param int $telephone
      * @param string $mail
      * @param string $interlocuteur
-     * @param int $code_ape
+     * @param string $code_ape
      * @param string $activite
      * @param string $mdp
      */
-    public function __construct(int $num_siret, string $nom_entreprise, string $adresse, int $telephone, string $mail, string $interlocuteur, int $code_ape, string $activite, string $mdp)
+    public function __construct(int $num_siret, string $nom_entreprise, string $adresse, int $telephone, string $mail, string $interlocuteur, string $code_ape, string $activite, string $mdp)
     {
         $this->num_siret = $num_siret;
         $this->nom_entreprise = $nom_entreprise;
@@ -57,6 +57,39 @@ class Entreprise
         );
 
         $pdoStatement->execute($values);
+    }
+
+    public function getNomEntreprise(): string
+    {
+        return $this->nom_entreprise;
+    }
+
+
+
+    public static function construireDepuisTableau(array $entrepriseFormatTableau) : Entreprise {
+        $entreprise = new Entreprise($entrepriseFormatTableau['numSiret'],$entrepriseFormatTableau['nomEntreprise'],$entrepriseFormatTableau['adresseEntreprise'],$entrepriseFormatTableau['telephoneEntreprise'],$entrepriseFormatTableau['adressemail'],$entrepriseFormatTableau['interlocuteurPrincipal'],$entrepriseFormatTableau['codeAPE'],$entrepriseFormatTableau['secteurActivite'],$entrepriseFormatTableau['motDePasse']);
+        return $entreprise;
+    }
+
+    public static function getEntrepriseParSiret($numSiret) : ?Entreprise{
+        $sql = "SELECT * from Entreprise WHERE numSiret = :numSiretTag";
+        // Préparation de la requête
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+
+        $values = array(
+            "numSiretTag" => $numSiret,
+            //nomdutag => valeur, ...
+        );
+        // On donne les valeurs et on exécute la requête
+        $pdoStatement->execute($values);
+
+        // On récupère les résultats comme précédemment
+        // Note: fetch() renvoie false si pas de voiture correspondante
+        $entrepriseFormatTableau = $pdoStatement->fetch();
+        if($entrepriseFormatTableau == null){
+            return null;
+        }
+        return self::construireDepuisTableau($entrepriseFormatTableau);
     }
 
 }

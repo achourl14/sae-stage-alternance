@@ -32,7 +32,7 @@ class Etudiant
     public function sauvegarder() : void {
         $sql = "INSERT INTO Etudiant VALUES(:codeINETag, :codeEtudiantTag, :promotionTag, :groupeTag, :nomEtudiantTag, :prenomEtudiantTag, :mailEtudiantTag, :telephoneEtudiantTag, :dateNaissaneEtudiantTag, :motDePasseTag)";
 
-        $pdoStatement = \ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
         $values = array(
             "codeINETag" => $this->codeINE,

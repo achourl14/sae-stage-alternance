@@ -9,8 +9,11 @@ $loader->register();
 $loader->addNamespace('App', __DIR__ . '/../src');
 
 // On recupère l'action passée dans l'URL
-$action = $_GET['action'];
+if(isset($_GET['action'])){
+    $action = $_GET['action'];
+    Controleur::$action();
+}else{
+    require "index.html";
+}
 
-// Appel de la méthode statique $action de ControleurVoiture
-Controleur::$action();
 ?>
