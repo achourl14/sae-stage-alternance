@@ -73,5 +73,17 @@ class OffreAlternance
         return $tableau;
     }
 
+    public function sauvegarder() : void {
 
+        $sql = "INSERT INTO OffreAlternance (idEntrepriseAlternance, missionAlternance, nomOffre) VALUES(:idEntrepriseTag :missionTag :nomOffreTag)";
+
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+
+        $values = array(
+            "idEntrepriseTag" => $this->idEntreprise,
+            "missionTag" => $this->mission,
+            "nomOffreTag" => $this->nomOffre
+        );
+        $pdoStatement->execute($values);
+    }
 }

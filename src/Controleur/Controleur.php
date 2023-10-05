@@ -35,6 +35,21 @@ class Controleur {
 
         self::afficherVue("vueGenerale.php", ["contenu" => "vueOffres.php", "offresStage" => $tableauStage, "offresAlternance" => $tableauAlternance,"title" => "Liste des offres"]);
     }
+
+    public static function creerOffre(){
+        //var_dump($_POST['offre']);
+
+        $offre = $_POST['offre'];
+
+        if ( $offre == 1){
+            $offreStage = new OffreStage($_POST["Entreprise"],$_POST["mission"], $_POST["nomOffre"]);
+            $offreStage->OffreStage::sauvegarder();
+        }
+        else{
+            $offreAlternance = new OffreAlternance($_POST["Entreprise"],$_POST["mission"], $_POST["nomOffre"]);
+            $offreAlternance->OffreAlternance::sauvegarder();
+        }
+    }
 }
 
 ?>
