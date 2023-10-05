@@ -17,11 +17,6 @@ class Controleur {
         $entreprise->sauvegarder();
     }
     public static function consulterOffre() {
-//       $sql = "select * from offreDeStage";
-//       $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
-//       $offres = array();
-//
-//        $pdoStatement->execute($offres);
 
         $offresDeStage = OffredeStage::getOffreDeStage();
         foreach($offresDeStage as $offreFormatTableau){
@@ -42,12 +37,12 @@ class Controleur {
         $offre = $_POST['offre'];
 
         if ( $offre == 1){
-            $offreStage = new OffreStage($_POST["Entreprise"],$_POST["mission"], $_POST["nomOffre"]);
-            $offreStage->OffreStage::sauvegarder();
+            $offreStage = new OffredeStage($_POST["nomOffre"],$_POST["Entreprise"] ,$_POST["mission"] ,-9,-9,-9,0);
+            $offreStage->sauvegarder();
         }
         else{
-            $offreAlternance = new OffreAlternance($_POST["Entreprise"],$_POST["mission"], $_POST["nomOffre"]);
-            $offreAlternance->OffreAlternance::sauvegarder();
+            $offreAlternance = new OffreAlternance($_POST["nomOffre"],$_POST["Entreprise"], $_POST["mission"],-9,-9,-9,0);
+            $offreAlternance->sauvegarder();
         }
     }
 }

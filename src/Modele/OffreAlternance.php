@@ -18,14 +18,20 @@ class OffreAlternance
      * @param string $statutStage
      * @param int $validation
      */
-    public function __construct(int $idAlternance, string $nomOffre, int $idEntreprise, string $mission, string $statutAlternance, int $validation)
-    {
-        $this->idAlternance = $idAlternance;
+    public function __construct(string $nomOffre,int $idEntreprise, string $mission, string $statutAlternance, int $idAlternance, int $validation,int $inOut){
         $this->nomOffre = $nomOffre;
         $this->idEntreprise = $idEntreprise;
         $this->mission = $mission;
-        $this->statutAlternance = $statutAlternance;
-        $this->validation = $validation;
+        if($inOut == 1){
+            self::construct2($idAlternance,$statutAlternance,$validation);
+        }
+    }
+
+    public function construct2(int $idStage,string $statutStage, int $validation)
+    {
+        $this->idAlternance = $idStage;
+        $this->statutAlternance = $statutStage;
+        $this->validationS = $validation;
     }
 
     public function getIdStage(): int
@@ -61,7 +67,7 @@ class OffreAlternance
 
 
     public static function construireDepuisTableau(array $offreFormatTableau) : OffreAlternance {
-        $offreDeStage = new OffreAlternance($offreFormatTableau['idAlternance'],$offreFormatTableau['nomOffre'],$offreFormatTableau['idEntrepriseAlternance'],$offreFormatTableau['missionAlternance'],$offreFormatTableau['statueAlternance'],$offreFormatTableau['ValidationAlternance']);
+        $offreDeStage = new OffreAlternance($offreFormatTableau['nomOffre'],$offreFormatTableau['idEntrepriseAlternance'],$offreFormatTableau['missionAlternance'],$offreFormatTableau['statueAlternance'],$offreFormatTableau['idAlternance'],$offreFormatTableau['ValidationAlternance'],1);
         return $offreDeStage;
     }
 
@@ -75,7 +81,7 @@ class OffreAlternance
 
     public function sauvegarder() : void {
 
-        $sql = "INSERT INTO OffreAlternance (idEntrepriseAlternance, missionAlternance, nomOffre) VALUES(:idEntrepriseTag :missionTag :nomOffreTag)";
+        $sql = "INSERT INTO OffreDeAlternance (idEntrepriseAlternance, missionAlternance, nomOffre) VALUES(:idEntrepriseTag, :missionTag, :nomOffreTag)";
 
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 

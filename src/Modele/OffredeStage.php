@@ -18,12 +18,18 @@ class OffredeStage
      * @param string $statutStage
      * @param int $validation
      */
-    public function __construct(int $idStage, string $nomOffre,int $idEntreprise, string $mission, string $statutStage, int $validation)
-    {
-        $this->idStage = $idStage;
+    public function __construct(string $nomOffre,int $idEntreprise, string $mission, string $statutStage, int $idStage, int $validation,int $inOut){
         $this->nomOffre = $nomOffre;
         $this->idEntreprise = $idEntreprise;
         $this->mission = $mission;
+        if($inOut == 1){
+            self::construct2($idStage,$statutStage,$validation);
+        }
+    }
+
+    public function construct2(int $idStage,string $statutStage, int $validation)
+    {
+        $this->idStage = $idStage;
         $this->statutStage = $statutStage;
         $this->validation = $validation;
     }
@@ -61,7 +67,7 @@ class OffredeStage
 
 
     public static function construireDepuisTableau(array $offreFormatTableau) : OffredeStage {
-        $offreDeStage = new OffredeStage($offreFormatTableau['idStage'],$offreFormatTableau['nomOffre'],$offreFormatTableau['idEntrepriseStage'],$offreFormatTableau['missionStage'],$offreFormatTableau['statueStage'],$offreFormatTableau['ValidationStage']);
+        $offreDeStage = new OffredeStage($offreFormatTableau['nomOffre'],$offreFormatTableau['idEntrepriseStage'],$offreFormatTableau['missionStage'],$offreFormatTableau['statueStage'],$offreFormatTableau['idStage'],$offreFormatTableau['ValidationStage'],1);
         return $offreDeStage;
     }
 
@@ -75,7 +81,7 @@ class OffredeStage
 
     public function sauvegarder() : void {
 
-        $sql = "INSERT INTO OffreStage (idEntrepriseStage, missionStage, nomOffre) VALUES(:idEntrepriseTag :missionTag :nomOffreTag)";
+        $sql = "INSERT INTO OffreDeStage (idEntrepriseStage, missionStage, nomOffre) VALUES (:idEntrepriseTag, :missionTag, :nomOffreTag)";
 
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
