@@ -29,49 +29,34 @@
 </nav>
 
 
-<form method="post" action="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/src/Controleur/routeur.php?action=creerOffre">
-    <h1> Création d'un offre </h1>
+<form method="post" action="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/web/controleurFrontal.php?action=creerOffre">
+    <h1> Création d'une offre </h1>
         <p>
-            <label for="num_SIRE">Numéro SIRE</label> :
-            <input type="number" placeholder="" name="numSIRE" id="num_SIRE" required/>
+            <label for="idEntreprise">Numéro Siret de  l'entreprise qui propose l'offre </label> :
+            <input  type="int" placeholder="" name="Entreprise" id="idEntreprise" required/>
         </p>
 
         <p>
-            <label for="nom">Nom de l'Entreprise</label> :
-            <input type="text" placeholder="" name="nomEntreprise" id="nom" required/>
-        </p>
-        <p>
-            <label for="adresse">Adresse</label> :
-            <input type="text" placeholder="" name="adresse" id="adresse" required/>
-        </p>
-        <p>
-            <label for="tel">Téléphone</label> :
-            <input type="text" placeholder="" name="telephone" id="tel" required/>
+            <label for="idnom">Nom de l'offre </label> :
+            <input maxlength="50" type="text" placeholder="" name="nomOffre" id="idnom" required/>
         </p>
 
         <p>
-            <label for="email">Adresse Mail</label> :
-            <input type="text" placeholder="" name="mail" id="email" required/>
+            <label for="mission">Mission </label>
+            <textarea maxlength="500" id="mission" name="mission" required></textarea>
         </p>
-
         <p>
-            <label for="interlec">Interlocuteur</label> :
-            <input type="text" placeholder="" name="interlocuteur" id="interlec" required/>
-        </p>
-
-        <p>
-            <label for="code_ape">Code APE</label> :
-            <input type="text" placeholder="" name="codeAPE" id="code_ape" required/>
-        </p>
-
-        <p>
-            <label for="activite">Secteur d'Activité</label> :
-            <input type="text" placeholder="" name="secteur" id="activite" required/>
-        </p>
-
-        <p>
-            <label for="motpasse">Mot de passe</label> :
-            <input type="text" placeholder="" name="mdp" id="motpasse" required/>
+            <fieldset>
+                <legend> Stage / Alternance :</legend>
+                <div>
+                  <label for="stage">Stage </label> :
+                  <input type="radio" placeholder="" name="offre" id="stage" value="1" required/>
+                </div>
+                 <div>
+                   <label for="alternance">Alternance </label> :
+                   <input type="radio" placeholder="" name="offre" id="alternance" value="2" required/>
+                </div>
+            </fieldset>
         </p>
 
         <p>
