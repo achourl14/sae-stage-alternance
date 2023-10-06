@@ -132,9 +132,6 @@ nav div:hover .submenu{
   display: block;
 }
 
-form{
-  margin-left: 10%;
-}
 h1{
   font-family: 'Roboto Slab', serif;
   font-size: 34px;
@@ -168,10 +165,22 @@ footer{
 Button
  */
 
-.boutonAlternanceStage {
-  display: flex;
-  align-items: center;
+div.boutonAlternanceStage {
+    display: flex;
 }
+
+.container .buttonStage,
+.container .buttonAlternance {
+  margin: 0;
+}
+
+.container .buttonStage:hover {
+  background: white;
+  color: red;
+  border: 2px solid #000; /* Couleur de la bordure (noir dans cet exemple) */
+}
+
+
 
 .container .buttonStage {
   width: 50%;
@@ -183,6 +192,7 @@ Button
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
 }
+
 .container .buttonAlternance {
   width: 50%;
   font-size: 3vh;
@@ -201,19 +211,17 @@ formulaire
 form {
   padding-right: 15%;
   padding-bottom: 2%;
+  margin-left: 10%;
 }
 
 
 
 .container{
   max-width: 700px;
-  align-content: center;
-  justify-content: center;
   width: 100%;
   background-color: #fff;
-
-  margin: 5vh 0 0 30vw;
   border-radius: 5px;
+  margin: 5vh 0 0 25vw;
   box-shadow: 0 5px 10px rgba(0,0,0,0.15);
 }
 .container .title{

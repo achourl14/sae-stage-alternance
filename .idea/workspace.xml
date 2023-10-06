@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84102632-0c24-41d7-8f5e-6518e84410ab" name="Changes" comment="initial commit">
+    <list default="true" id="84102632-0c24-41d7-8f5e-6518e84410ab" name="Changes" comment="esthetic formualire externe offre">
+      <change afterPath="$PROJECT_DIR$/web/styles/styleInscriptionExterne.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_09_2023_10_17_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_09_2023_10_17__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/formulaireoffre.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/formulaireoffre.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/inscriptionEleveAlternance.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/inscriptionEleveStage.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/controlleurOffreStageAlternance.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/controlleurOffreStageAlternance.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/styles/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -59,6 +60,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -72,6 +74,8 @@
       <updated>1695884778555</updated>
       <workItem from="1695884780170" duration="44000" />
       <workItem from="1695884879924" duration="8015000" />
+      <workItem from="1696588332582" duration="61000" />
+      <workItem from="1696588406571" duration="1514000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -81,7 +85,15 @@
       <option name="project" value="LOCAL" />
       <updated>1695892240511</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="esthetic formualire externe offre">
+      <option name="closed" value="true" />
+      <created>1696586489749</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1696586489750</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -89,6 +101,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="initial commit" />
+    <MESSAGE value="esthetic formualire externe offre" />
+    <option name="LAST_COMMIT_MESSAGE" value="esthetic formualire externe offre" />
   </component>
 </project>

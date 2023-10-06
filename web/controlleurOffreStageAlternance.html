@@ -1,10 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title> Inscription Entreprise</title>
+    <link rel="stylesheet" href="styles/styleInscriptionExterne.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+<div class="container">
+
+    <div class="content">
+        <form method="post" action="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/web/controleurFrontal.php?action=creerEntreprise">
+            <div class="user-details">
+                <div class="input-box">
+                    <span class="details">Numéro SIRET</span>
+                    <input type="text" placeholder="" name="num_siret" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Nom de l'entreprise</span>
+                    <input type="text" placeholder="" name="nom_entreprise" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Adresse</span>
+                    <input type="text" placeholder="" name="adresse" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Telephone</span>
+                    <input type="tel" placeholder="" name="telephone" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Adresse mail</span>
+                    <input type="email" placeholder="" name="mail" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Interlocuteur </span>
+                    <input type="text" placeholder="" name="interlocuteur" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Code APE</span>
+                    <input type="text" placeholder="" name="code_ape" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Secteur d'Activité</span>
+                    <input type="text" placeholder="" name="activite" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Mot de passe </span>
+                    <input type="password" placeholder="Entrez votre mot de passe" name="mdp" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Confirmez mot de passe</span>
+                    <input type="password" placeholder="Confirmez votre mot de passe" name="confirmemdp" required>
+                </div>
+                <div>
+                    <p> Vous êtes élèves ? vous n'avez pas d'accès ? Contactez le secrétariat</p>
+                </div>
+            </div>
+            <div class="button">
+                <input type="submit" value="S'inscrire">
+            </div>
+        </form>
+    </div>
+</div>
 
 </body>
 </html>
