@@ -1,9 +1,11 @@
 <?php
 namespace App\Controleur;
-use App\Modele\Entreprise;
-use App\Modele\ConnexionBaseDeDonnee;
-use App\Modele\OffredeStage;
-use App\Modele\OffreAlternance;
+use App\Modele\DataObject\Entreprise;
+use App\Modele\DataObject\OffreAlternance;
+use App\Modele\DataObject\OffredeStage;
+use App\Modele\Repository\EntrepriseRepository;
+use App\Modele\Repository\OffreAlternanceRepository;
+use App\Modele\Repository\OffredeStageRepository;
 
 class Controleur {
 
@@ -14,16 +16,16 @@ class Controleur {
 
     public static function creerEntreprise() : void {
         $entreprise = new Entreprise($_POST["num_siret"],$_POST["nom_entreprise"],$_POST["adresse"],$_POST["telephone"],$_POST["mail"],$_POST["interlocuteur"],$_POST["code_ape"],$_POST["code_ape"],$_POST["mdp"]);
-        $entreprise->sauvegarder();
+        EntrepriseRepository::sauvegarder($entreprise);
     }
     public static function consulterOffre() {
 
-        $offresDeStage = OffredeStage::getOffreDeStage();
+        $offresDeStage = OffredeStageRepository::getOffreDeStage();
         foreach($offresDeStage as $offreFormatTableau){
             $tableauStage[] = $offreFormatTableau;
         }
 
-        $offresAlternance = OffreAlternance::getOffreAlternance();
+        $offresAlternance = OffreAlternanceRepository::getOffreAlternance();
         foreach($offresAlternance as $offreFormatTableau){
             $tableauAlternance[] = $offreFormatTableau;
         }
@@ -38,12 +40,28 @@ class Controleur {
 
         if ( $offre == 1){
             $offreStage = new OffredeStage($_POST["nomOffre"],$_POST["Entreprise"] ,$_POST["mission"] ,-9,-9,-9,0);
-            $offreStage->sauvegarder();
+            OffredeStageRepository::sauvegarder($offreStage);
         }
         else{
             $offreAlternance = new OffreAlternance($_POST["nomOffre"],$_POST["Entreprise"], $_POST["mission"],-9,-9,-9,0);
-            $offreAlternance->sauvegarder();
+            OffreAlternanceRepository::sauvegarder($offreAlternance);
         }
+    }
+
+    public static function afficherAccueil(){
+        self::afficherVue("index.html");
+    }
+
+    public static function afficherInscription(){
+        self::afficherVue("inscription.html");
+    }
+
+    public static function afficherFormulaire(){
+        self::afficherVue("formulaireoffre.html");
+    }
+
+    public static function afficherConnexion(){
+        self::afficherVue("connexion.html");
     }
 }
 

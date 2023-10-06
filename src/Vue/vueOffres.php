@@ -1,13 +1,14 @@
 <?php
 
-use App\Modele\Entreprise;
+use App\Modele\Repository\EntrepriseRepository;
+
 echo '<div class="offres">';
  echo '<div class="toutesLesCartesS">';
  echo "<p> Stages : </p>";
 foreach($offresStage as $offre){
     echo '<div class ="carte">';
     echo ("<h1>". $offre->getNomOffre() . "</h1>");
-    echo "<h2> Entreprise : ". Entreprise::getEntrepriseParSiret($offre->getIdEntreprise())->getNomEntreprise() . "</h2>";
+    echo "<h2> Entreprise : ". EntrepriseRepository::getEntrepriseParSiret($offre->getIdEntreprise())->getNomEntreprise() . "</h2>";
     echo ("<p>". $offre->getMission() ."</p> ");
 
     echo ("<p> ".$offre->getStatutStage()." </p>");
@@ -20,7 +21,7 @@ echo "<p> Alternance : </p>";
 foreach($offresAlternance as $offre) {
     echo '<div class ="carte">';
     echo("<h1>" . $offre->getNomOffre() . "</h1>");
-    echo "<h2> Entreprise : " . Entreprise::getEntrepriseParSiret($offre->getIdEntreprise())->getNomEntreprise() . "</h2>";
+    echo "<h2> Entreprise : " . EntrepriseRepository::getEntrepriseParSiret($offre->getIdEntreprise())->getNomEntreprise() . "</h2>";
     echo("<p>" . $offre->getMission() . "</p> ");
 
     echo("<p> " . $offre->getStatutAlternance() . " </p>");

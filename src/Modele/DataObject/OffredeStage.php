@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modele;
+namespace App\Modele\DataObject;
 
 class OffredeStage
 {
@@ -62,35 +62,6 @@ class OffredeStage
     public function getNomOffre(): string
     {
         return $this->nomOffre;
-    }
-
-
-
-    public static function construireDepuisTableau(array $offreFormatTableau) : OffredeStage {
-        $offreDeStage = new OffredeStage($offreFormatTableau['nomOffre'],$offreFormatTableau['idEntrepriseStage'],$offreFormatTableau['missionStage'],$offreFormatTableau['statueStage'],$offreFormatTableau['idStage'],$offreFormatTableau['ValidationStage'],1);
-        return $offreDeStage;
-    }
-
-    public static function getOffreDeStage(){
-        $pdoStatement =  ConnexionBaseDeDonnee::getPdo()->query("SELECT * FROM OffreDeStage");
-        foreach($pdoStatement as $offreFormatTableau){
-            $tableau[] = self::construireDepuisTableau($offreFormatTableau);
-        }
-        return $tableau;
-    }
-
-    public function sauvegarder() : void {
-
-        $sql = "INSERT INTO OffreDeStage (idEntrepriseStage, missionStage, nomOffre) VALUES (:idEntrepriseTag, :missionTag, :nomOffreTag)";
-
-        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
-
-        $values = array(
-            "idEntrepriseTag" => $this->idEntreprise,
-            "missionTag" => $this->mission,
-            "nomOffreTag" => $this->nomOffre
-        );
-        $pdoStatement->execute($values);
     }
 
 

@@ -23,7 +23,7 @@
     <img src="img/LogoIutMontpellier.png" />
     <h1> Stage / Alternance </h1>
     <div><a href="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/web/controleurFrontal.php">Accueil</a></div>
-    <div><a href="web/formulaireoffre.html">Formulaire Offres</a></div>
+    <div><a href="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/web/controleurFrontal.php?action=afficherFormulaire"">Formulaire Offres</a></div>
     <div><a id="actuel" href="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/web/controleurFrontal.php?action=consulterOffre">Offres</a></div>
     <div><a href="">A mettre</a></div>
     <a class="connexion" id="inscrip" href="inscription.html">Inscription</a>
