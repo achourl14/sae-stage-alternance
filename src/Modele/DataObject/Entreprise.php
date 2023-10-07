@@ -43,4 +43,45 @@ class Entreprise
         return $this->nom_entreprise;
     }
 
+    public function getNumSiret(): int
+    {
+        return $this->num_siret;
+    }
+
+    public function getAdresse(): string
+    {
+        return $this->adresse;
+    }
+
+    public function getTelephone(): int
+    {
+        return $this->telephone;
+    }
+
+    public function getMail(): string
+    {
+        return $this->mail;
+    }
+
+    public function getInterlocuteur(): string
+    {
+        return $this->interlocuteur;
+    }
+
+    public function getCodeApe(): string
+    {
+        return $this->code_ape;
+    }
+
+    public function getActivite(): string
+    {
+        return $this->activite;
+    }
+
+    public function getMdp(): string
+    {
+        return $this->mdp;
+    }
+
+
 }

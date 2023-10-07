@@ -5,21 +5,21 @@ use App\Modele\DataObject\Entreprise;
 
 class EntrepriseRepository
 {
-    public static function sauvegarder($entreprise) : void {
+    public static function sauvegarder(Entreprise $entreprise) : void {
         $sql = "INSERT INTO Entreprise VALUES(:numSIRETTag, :nomEntrepriseTag, :adresseEntrepriseTag, :interlocuteurPrincipalTag, :telephoneEntrepriseTag, :codeAPETag, :secteurActiviteTag, :mailTag, :motDePasseTag)";
 
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
         $values = array(
-            "numSIRETTag" => $entreprise->num_siret,
-            "nomEntrepriseTag" => $entreprise->nom_entreprise,
-            "adresseEntrepriseTag" => $entreprise->adresse,
-            "interlocuteurPrincipalTag" => $entreprise->interlocuteur,
-            "telephoneEntrepriseTag" => $entreprise->telephone,
-            "codeAPETag" => $entreprise->code_ape,
-            "secteurActiviteTag" => $entreprise->activite,
-            "mailTag" => $entreprise->mail,
-            "motDePasseTag" => $entreprise->mdp
+            "numSIRETTag" => $entreprise->getNumSiret(),
+            "nomEntrepriseTag" => $entreprise->getNomEntreprise(),
+            "adresseEntrepriseTag" => $entreprise->getAdresse(),
+            "interlocuteurPrincipalTag" => $entreprise->getInterlocuteur(),
+            "telephoneEntrepriseTag" => $entreprise->getTelephone(),
+            "codeAPETag" => $entreprise->getCodeApe(),
+            "secteurActiviteTag" => $entreprise->getActivite(),
+            "mailTag" => $entreprise->getMail(),
+            "motDePasseTag" => $entreprise->getMdp()
 
         );
 

@@ -19,16 +19,16 @@ class OffredeStageRepository
         return $tableau;
     }
 
-    public static function sauvegarder($offre) : void {
+    public static function sauvegarder(OffredeStage $offre) : void {
 
         $sql = "INSERT INTO OffreDeStage (idEntrepriseStage, missionStage, nomOffre) VALUES (:idEntrepriseTag, :missionTag, :nomOffreTag)";
 
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
         $values = array(
-            "idEntrepriseTag" => $offre->idEntreprise,
-            "missionTag" => $offre->mission,
-            "nomOffreTag" => $offre->nomOffre
+            "idEntrepriseTag" => $offre->getIdEntreprise(),
+            "missionTag" => $offre->getMission(),
+            "nomOffreTag" => $offre->getNomOffre()
         );
         $pdoStatement->execute($values);
     }

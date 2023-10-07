@@ -2,6 +2,8 @@
 
 use App\Modele\Repository\EntrepriseRepository;
 
+$nbStage =0;
+$nbAlternance = 0;
 echo '<div class="offres">';
  echo '<div class="toutesLesCartesS">';
  echo "<p> Stages : </p>";
@@ -14,7 +16,7 @@ foreach($offresStage as $offre){
     echo ("<p> ".$offre->getStatutStage()." </p>");
     echo "</div>";
 }
-echo "</div>";
+echo'</div>';
 
 echo '<div class="toutesLesCartesA">';
 echo "<p> Alternance : </p>";
@@ -28,4 +30,5 @@ foreach($offresAlternance as $offre) {
     echo "</div>";
 }
 echo'</div>';
+echo '</div>';
 ?>

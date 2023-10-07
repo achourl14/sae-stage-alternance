@@ -29,4 +29,56 @@ class Etudiant
         $this->promotion = $promotion;
     }
 
+    public function getCodeINE(): int
+    {
+        return $this->codeINE;
+    }
+
+    public function getNumEtudiant(): int
+    {
+        return $this->numEtudiant;
+    }
+
+    public function getGroupe(): string
+    {
+        return $this->groupe;
+    }
+
+    public function getNom(): string
+    {
+        return $this->nom;
+    }
+
+    public function getPrenom(): string
+    {
+        return $this->prenom;
+    }
+
+    public function getNumTel(): int
+    {
+        return $this->numTel;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function getMotDePasse(): string
+    {
+        return $this->motDePasse;
+    }
+
+    public function getDateDeNaissance(): string
+    {
+        return $this->dateDeNaissance;
+    }
+
+    public function getPromotion(): string
+    {
+        return $this->promotion;
+    }
+
+
+
 }
