@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300&family=Oswald:wght@300&family=Titillium+Web:wght@600&display=swap');
 
 body{
+  font-family: 'Young Serif', sans-serif;
   height: 80vh;
   justify-content: center;
   align-items: center;
@@ -174,18 +176,18 @@ div.boutonAlternanceStage {
   margin: 0;
 }
 
-.container .buttonStage:hover {
-  background: white;
-  color: red;
-  border: 2px solid #000; /* Couleur de la bordure (noir dans cet exemple) */
-}
 
+.container .buttonAlternance:hover {
+  background: black;
+  color: white;
+}
 
 
 .container .buttonStage {
   width: 50%;
   font-size: 3vh;
   background: red;
+  font-family: 'Montserrat', sans-serif;
   text-align: center;
   padding: 2%;
   color: black;
@@ -196,8 +198,10 @@ div.boutonAlternanceStage {
 .container .buttonAlternance {
   width: 50%;
   font-size: 3vh;
-  background: black;
-  color: white;
+  background: white;
+  color: black;
+  border: 2px solid #000;
+  font-family: 'Montserrat', sans-serif;
   padding: 2%;
   text-align: center;
   border-bottom-right-radius: 5px;
@@ -214,14 +218,11 @@ form {
   margin-left: 10%;
 }
 
-
-
 .container{
   max-width: 700px;
   width: 100%;
   background-color: #fff;
   border-radius: 5px;
-
   margin: 5vh auto auto auto;
   box-shadow: 0 5px 10px rgba(0,0,0,0.15);
 }

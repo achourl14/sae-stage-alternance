@@ -3,7 +3,7 @@
 <head>
     <title> Formulaire Type </title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="styles/style.css">
+    <link rel="stylesheet" type="text/css" href="styles/styleInscriptionExterneAlternance.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -30,10 +30,10 @@
 
 <div class="container">
     <div class="boutonAlternanceStage">
-        <button class="buttonStage">
+        <button onclick="window.location.href='formulaireOffreExterneStage.html'" class="buttonStage">
             Stage
         </button>
-        <button class="buttonAlternance">
+        <button onclick="window.location.href='formulaireOffreExterneAlternance.html'" class="buttonAlternance">
             Alternance
         </button>
     </div>
@@ -41,47 +41,44 @@
         <form method="post" action="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/web/controleurFrontal.php?action=creerEntreprise">
             <div class="user-details">
                 <div class="input-box">
-                    <span class="details">Numéro SIRET</span>
-                    <input type="text" placeholder="" name="num_siret" required>
+                    <span class="details">Numéro Etudiant</span>
+                    <input type="text" placeholder="" name="idEtudaintStage" required>
                 </div>
                 <div class="input-box">
-                    <span class="details">Nom de l'entreprise</span>
-                    <input type="text" placeholder="" name="nom_entreprise" required>
+                    <span class="details">Numéro Maitre D'Alternance</span>
+                    <input type="text" placeholder="" name="numMaitreDeStage" required>
                 </div>
                 <div class="input-box">
-                    <span class="details">Adresse</span>
+                    <span class="details">Numéro Tuteur Alternance</span>
                     <input type="text" placeholder="" name="adresse" required>
                 </div>
                 <div class="input-box">
-                    <span class="details">Telephone</span>
-                    <input type="tel" placeholder="" name="telephone" required>
+                    <span class="details">Mail De L'Etudiant</span>
+                    <input type="text" placeholder="" name="activite" required>
                 </div>
                 <div class="input-box">
-                    <span class="details">Adresse mail</span>
-                    <input type="email" placeholder="" name="mail" required>
+                    <span class="details">Mail De L'Entreprise</span>
+                    <input type="text" placeholder="" name="activite" required>
                 </div>
                 <div class="input-box">
-                    <span class="details">Interlocuteur </span>
-                    <input type="text" placeholder="" name="interlocuteur" required>
+                    <span class="details">Date De Début</span>
+                    <input type="tel" placeholder="" name="datetDebutStage" required>
                 </div>
                 <div class="input-box">
-                    <span class="details">Code APE</span>
-                    <input type="text" placeholder="" name="code_ape" required>
+                    <span class="details">Date De Fin</span>
+                    <input type="email" placeholder="" name="DateFinStage" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Rémunération</span>
+                    <input type="text" placeholder="" name="remuneration" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Numéro SIRET</span>
+                    <input type="text" placeholder="" name="numSiretEntrepriseStageExterieur" required>
                 </div>
                 <div class="input-box">
                     <span class="details">Secteur d'Activité</span>
                     <input type="text" placeholder="" name="activite" required>
-                </div>
-                <div class="input-box">
-                    <span class="details">Mot de passe </span>
-                    <input type="password" placeholder="Entrez votre mot de passe" name="mdp" required>
-                </div>
-                <div class="input-box">
-                    <span class="details">Confirmez mot de passe</span>
-                    <input type="password" placeholder="Confirmez votre mot de passe" name="confirmemdp" required>
-                </div>
-                <div>
-                    <p> Vous êtes élèves ? vous n'avez pas d'accès ? Contactez le secrétariat</p>
                 </div>
             </div>
             <div class="button">

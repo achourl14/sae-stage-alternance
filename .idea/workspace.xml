@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84102632-0c24-41d7-8f5e-6518e84410ab" name="Changes" comment="animation bouton a faire" />
+    <list default="true" id="84102632-0c24-41d7-8f5e-6518e84410ab" name="Changes" comment="j'ai reussi à centrer le bordel">
+      <change afterPath="$PROJECT_DIR$/src/test.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/formulaireOffreExterneAlternance.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/controlleurOffreStageAlternance.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/formulaireoffre.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/formulaireOffreExterneStage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/styles/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/styles/styleInscriptionExterne.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/styles/styleInscriptionExterneAlternance.css" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -57,6 +66,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Xavier\PhpstormProjects\sae-stage-alternance\web\font" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -96,7 +110,15 @@
       <option name="project" value="LOCAL" />
       <updated>1696590303438</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="j'ai reussi à centrer le bordel">
+      <option name="closed" value="true" />
+      <created>1696762545045</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1696762545045</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -106,6 +128,7 @@
     <MESSAGE value="initial commit" />
     <MESSAGE value="esthetic formualire externe offre" />
     <MESSAGE value="animation bouton a faire" />
-    <option name="LAST_COMMIT_MESSAGE" value="animation bouton a faire" />
+    <MESSAGE value="j'ai reussi à centrer le bordel" />
+    <option name="LAST_COMMIT_MESSAGE" value="j'ai reussi à centrer le bordel" />
   </component>
 </project>

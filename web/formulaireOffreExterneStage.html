@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Formulaire Type </title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<div class="burger">
+    <img src="img/burger.png" alt="burger" width="50">
+    <div id="menu2">
+        <div><a href="">Formulaire</a></div>
+        <div><a href="">A mettre</a></div>
+        <div><a href="">A mettre</a></div>
+    </div>
+</div>
+
+<nav>
+    <img src="img/LogoIutMontpellier.png" />
+    <h1> Stage / Alternance </h1>
+    <div><a href="index.html">Accueil</a></div>
+    <div><a id="actuel">Formulaire Inscription</a></div>
+    <div><a href="">A mettre</a></div>
+    <div><a href="">A mettre</a></div>
+    <a class="connexion" id="inscrip" href="inscription.html">Inscription</a>
+    <a class="connexion" id="connex" href="connexion.html">Connexion</a>
+</nav>
+
+<div class="container">
+    <div class="boutonAlternanceStage">
+        <button onclick="window.location.href='formulaireOffreExterneStage.html'" class="buttonStage">
+            Stage
+        </button>
+        <button onclick="window.location.href='formulaireOffreExterneAlternance.html'" class="buttonAlternance">
+            Alternance
+        </button>
+    </div>
+    <div class="content">
+        <form method="post" action="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/web/controleurFrontal.php?action=creerEntreprise">
+            <div class="user-details">
+                <div class="input-box">
+                    <span class="details">Numéro Etudiant</span>
+                    <input type="text" placeholder="" name="idEtudaintStage" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Numéro Maitre De Stage</span>
+                    <input type="text" placeholder="" name="numMaitreDeStage" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Numéro Tuteur Stage</span>
+                    <input type="text" placeholder="" name="adresse" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Mail De L'Etudiant</span>
+                    <input type="text" placeholder="" name="activite" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Mail De L'Entreprise</span>
+                    <input type="text" placeholder="" name="activite" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Date De Début</span>
+                    <input type="tel" placeholder="" name="datetDebutStage" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Date De Fin</span>
+                    <input type="email" placeholder="" name="DateFinStage" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Rémunération</span>
+                    <input type="text" placeholder="" name="remuneration" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Numéro SIRET</span>
+                    <input type="text" placeholder="" name="numSiretEntrepriseStageExterieur" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Secteur d'Activité</span>
+                    <input type="text" placeholder="" name="activite" required>
+                </div>
+            </div>
+            <div class="button">
+                <input type="submit" value="S'inscrire">
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
