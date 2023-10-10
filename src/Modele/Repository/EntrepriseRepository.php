@@ -3,7 +3,7 @@
 namespace App\Modele\Repository;
 use App\Modele\DataObject\Entreprise;
 
-class EntrepriseRepository
+class EntrepriseRepository extends AbstractRepository
 {
     public static function sauvegarder(Entreprise $entreprise) : void {
         $sql = "INSERT INTO Entreprise VALUES(:numSIRETTag, :nomEntrepriseTag, :adresseEntrepriseTag, :interlocuteurPrincipalTag, :telephoneEntrepriseTag, :codeAPETag, :secteurActiviteTag, :mailTag, :motDePasseTag)";
@@ -27,29 +27,32 @@ class EntrepriseRepository
     }
 
 
-    public static function construireDepuisTableau(array $entrepriseFormatTableau) : Entreprise {
+    public function construireDepuisTableau(array $entrepriseFormatTableau) : Entreprise {
         $entreprise = new Entreprise($entrepriseFormatTableau['numSiret'],$entrepriseFormatTableau['nomEntreprise'],$entrepriseFormatTableau['adresseEntreprise'],$entrepriseFormatTableau['telephoneEntreprise'],$entrepriseFormatTableau['adressemail'],$entrepriseFormatTableau['interlocuteurPrincipal'],$entrepriseFormatTableau['codeAPE'],$entrepriseFormatTableau['secteurActivite'],$entrepriseFormatTableau['motDePasse']);
         return $entreprise;
     }
 
-    public static function getEntrepriseParSiret($numSiret) : ?Entreprise{
-        $sql = "SELECT * from Entreprise WHERE numSiret = :numSiretTag";
-        // Préparation de la requête
-        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+    protected function getNomTable(): string
+    {
+        return "Entreprise";
+    }
 
-        $values = array(
-            "numSiretTag" => $numSiret,
-            //nomdutag => valeur, ...
+    protected function getNomClePrimaire(): string
+    {
+        return "numSiret";
+    }
+
+    protected function getNomsColones(): array
+    {
+        return array(
+          "nomEntreprise",
+          "adresseEntreprise",
+          "interlocuteurPrincipal",
+          "telephoneEntreprise",
+          "codeAPE",
+          "secteurActivite",
+          "adressemail",
+          "motDePasse"
         );
-        // On donne les valeurs et on exécute la requête
-        $pdoStatement->execute($values);
-
-        // On récupère les résultats comme précédemment
-        // Note: fetch() renvoie false si pas de voiture correspondante
-        $entrepriseFormatTableau = $pdoStatement->fetch();
-        if($entrepriseFormatTableau == null){
-            return null;
-        }
-        return self::construireDepuisTableau($entrepriseFormatTableau);
     }
 }

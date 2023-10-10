@@ -20,12 +20,12 @@ class Controleur {
     }
     public static function consulterOffre() {
 
-        $offresDeStage = OffredeStageRepository::getOffreDeStage();
+        $offresDeStage = (new OffredeStageRepository())->recuperer();
         foreach($offresDeStage as $offreFormatTableau){
             $tableauStage[] = $offreFormatTableau;
         }
 
-        $offresAlternance = OffreAlternanceRepository::getOffreAlternance();
+        $offresAlternance = (new OffreAlternanceRepository())->recuperer();
         foreach($offresAlternance as $offreFormatTableau){
             $tableauAlternance[] = $offreFormatTableau;
         }

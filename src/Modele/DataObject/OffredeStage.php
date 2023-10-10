@@ -2,7 +2,7 @@
 
 namespace App\Modele\DataObject;
 
-class OffredeStage
+class OffredeStage extends AbstractDataObject
 {
     private int $idStage;
     private string $nomOffre;
@@ -64,5 +64,17 @@ class OffredeStage
         return $this->nomOffre;
     }
 
+    public function formatTableau(): array
+    {
+        return array(
+            "idStageTag" => $this->getIdStage(),
+            "idEntrepriseStageTag" => $this->getIdEntreprise(),
+            "missionStageTag" => $this->getMission(),
+            "statueStageTag" => $this->getStatutStage(),
+            "ValidationStageTag" => $this->getValidation(),
+            "nomOffreTag" => $this->getNomOffre()
+
+        );
+    }
 
 }

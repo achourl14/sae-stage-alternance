@@ -10,7 +10,7 @@ echo '<div class="offres">';
 foreach($offresStage as $offre){
     echo '<div class ="carte">';
     echo ("<h1>". $offre->getNomOffre() . "</h1>");
-    echo "<h2> Entreprise : ". EntrepriseRepository::getEntrepriseParSiret($offre->getIdEntreprise())->getNomEntreprise() . "</h2>";
+    echo "<h2> Entreprise : ". (new EntrepriseRepository())->recupererParClePrimaire($offre->getIdEntreprise())->getNomEntreprise() . "</h2>";
     echo ("<p>". $offre->getMission() ."</p> ");
 
     echo ("<p> ".$offre->getStatutStage()." </p>");
@@ -23,7 +23,7 @@ echo "<p> Alternance : </p>";
 foreach($offresAlternance as $offre) {
     echo '<div class ="carte">';
     echo("<h1>" . $offre->getNomOffre() . "</h1>");
-    echo "<h2> Entreprise : " . EntrepriseRepository::getEntrepriseParSiret($offre->getIdEntreprise())->getNomEntreprise() . "</h2>";
+    echo "<h2> Entreprise : " . (new EntrepriseRepository())->recupererParClePrimaire($offre->getIdEntreprise())->getNomEntreprise() . "</h2>";
     echo("<p>" . $offre->getMission() . "</p> ");
 
     echo("<p> " . $offre->getStatutAlternance() . " </p>");

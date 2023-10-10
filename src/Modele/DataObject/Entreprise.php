@@ -2,7 +2,7 @@
 
 namespace App\Modele\DataObject;
 
-class Entreprise
+class Entreprise extends AbstractDataObject
 {
     private int $num_siret;
     private string $nom_entreprise;
@@ -81,6 +81,21 @@ class Entreprise
     public function getMdp(): string
     {
         return $this->mdp;
+    }
+
+    public function formatTableau(): array
+    {
+        return array(
+            "numSiretTag" => $this->getNumSiret(),
+            "nomEntrepriseTag" => $this->getNomEntreprise(),
+            "adresseEntrepriseTag" => $this->getAdresse(),
+            "interlocuteurPrincipalTag" => $this->getInterlocuteur(),
+            "telephoneEntrepriseTag"  => $this->getTelephone(),
+            "codeAPETag" => $this->getCodeApe(),
+            "secteurActiviteTag" => $this->getActivite(),
+            "adressemailTag" => $this->getMail(),
+            "motDePasseTag" => $this->getMdp()
+        );
     }
 
 

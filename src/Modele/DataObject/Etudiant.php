@@ -2,7 +2,7 @@
 
 namespace App\Modele\DataObject;
 
-class Etudiant
+class Etudiant extends AbstractDataObject
 {
     private int $codeINE;
     private int $numEtudiant;
@@ -79,6 +79,21 @@ class Etudiant
         return $this->promotion;
     }
 
+    public function formatTableau(): array
+    {
+        return array(
+            "codeINETag" => $this->getCodeINE(),
+            "codeEtudiantTag" => $this->getNumEtudiant(),
+            "promotionTag" => $this->getPromotion(),
+            "groupeTag" => $this->getGroupe(),
+            "nomEtudiantTag" => $this->getNom(),
+            "prenomEtudiantTag" => $this->getPrenom(),
+            "mailEtudiantTag" => $this->getEmail(),
+            "telephoneEtudiantTag" => $this->getNumTel(),
+            "dateNaissanceEtudiantTag" => $this->getDateDeNaissance(),
+            "motDePasseTag" => $this->getMotDePasse()
+        );
+    }
 
 
 }

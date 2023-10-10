@@ -4,19 +4,11 @@ namespace App\Modele\Repository;
 
 use App\Modele\DataObject\OffredeStage;
 
-class OffredeStageRepository
+class OffredeStageRepository extends AbstractRepository
 {
-    public static function construireDepuisTableau(array $offreFormatTableau) : OffredeStage {
+    public function construireDepuisTableau(array $offreFormatTableau) : OffredeStage {
         $offreDeStage = new OffredeStage($offreFormatTableau['nomOffre'],$offreFormatTableau['idEntrepriseStage'],$offreFormatTableau['missionStage'],$offreFormatTableau['statueStage'],$offreFormatTableau['idStage'],$offreFormatTableau['ValidationStage'],1);
         return $offreDeStage;
-    }
-
-    public static function getOffreDeStage(){
-        $pdoStatement =  ConnexionBaseDeDonnee::getPdo()->query("SELECT * FROM OffreDeStage");
-        foreach($pdoStatement as $offreFormatTableau){
-            $tableau[] = self::construireDepuisTableau($offreFormatTableau);
-        }
-        return $tableau;
     }
 
     public static function sauvegarder(OffredeStage $offre) : void {
@@ -31,5 +23,26 @@ class OffredeStageRepository
             "nomOffreTag" => $offre->getNomOffre()
         );
         $pdoStatement->execute($values);
+    }
+
+    protected function getNomsColones(): array
+    {
+        return array(
+            "nomOffre",
+            "idEntrepriseAlternance",
+            "missionAlternance",
+            "statueAlternance",
+            "ValidationAlternance"
+        );
+    }
+
+    protected function getNomTable(): string
+    {
+        return "OffreDeStage";
+    }
+
+    protected function getNomClePrimaire(): string
+    {
+        return "idStage";
     }
 }

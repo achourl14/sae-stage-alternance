@@ -2,7 +2,7 @@
 
 namespace App\Modele\DataObject;
 
-class OffreAlternance
+class OffreAlternance extends AbstractDataObject
 {
     private int $idAlternance;
     private string $nomOffre;
@@ -34,9 +34,14 @@ class OffreAlternance
         $this->validationS = $validation;
     }
 
-    public function getIdStage(): int
+    public function getIdAlternance(): int
     {
-        return $this->idStage;
+        return $this->idAlternance;
+    }
+
+    public function getNomOffre(): string
+    {
+        return $this->nomOffre;
     }
 
     public function getIdEntreprise(): int
@@ -59,8 +64,17 @@ class OffreAlternance
         return $this->validation;
     }
 
-    public function getNomOffre(): string
+    public function formatTableau(): array
     {
-        return $this->nomOffre;
+        return array(
+            "idAlternanceTag" => $this->getIdAlternance(),
+            "idEntrepriseAlternanceTag" => $this->getIdEntreprise(),
+            "missionAlternanceTag" => $this->getMission(),
+            "statueAlternance" => $this->getStatutAlternance(),
+            "ValidationAlternanceTag" => $this->getValidation(),
+            "nomOffreTag" => $this->getNomOffre()
+        );
     }
+
+
 }

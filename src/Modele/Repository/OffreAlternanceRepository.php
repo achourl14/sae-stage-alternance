@@ -4,19 +4,11 @@ namespace App\Modele\Repository;
 
 use App\Modele\DataObject\OffreAlternance;
 
-class OffreAlternanceRepository
+class OffreAlternanceRepository extends AbstractRepository
 {
-    public static function construireDepuisTableau(array $offreFormatTableau) : OffreAlternance {
+    public function construireDepuisTableau(array $offreFormatTableau) : OffreAlternance {
         $offreDeStage = new OffreAlternance($offreFormatTableau['nomOffre'],$offreFormatTableau['idEntrepriseAlternance'],$offreFormatTableau['missionAlternance'],$offreFormatTableau['statueAlternance'],$offreFormatTableau['idAlternance'],$offreFormatTableau['ValidationAlternance'],1);
         return $offreDeStage;
-    }
-
-    public static function getOffreAlternance(){
-        $pdoStatement =  ConnexionBaseDeDonnee::getPdo()->query("SELECT * FROM OffreDeAlternance");
-        foreach($pdoStatement as $offreFormatTableau){
-            $tableau[] = self::construireDepuisTableau($offreFormatTableau);
-        }
-        return $tableau;
     }
 
     public static function sauvegarder(OffreAlternance $offre) : void {
@@ -32,4 +24,25 @@ class OffreAlternanceRepository
         );
         $pdoStatement->execute($values);
     }
+    protected function getNomTable(): string
+    {
+        return "OffreDeAlternance";
+    }
+
+    protected function getNomClePrimaire(): string
+    {
+        return "idAlternance";
+    }
+
+    protected function getNomsColones(): array
+    {
+        return array(
+            "nomOffre",
+            "idEntrepriseAlternance",
+            "missionAlternance",
+            "statueAlternance",
+            "ValidationAlternance"
+        );
+    }
+
 }
