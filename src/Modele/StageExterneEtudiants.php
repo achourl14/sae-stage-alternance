@@ -24,7 +24,6 @@ class StageExterneEtudiants
      * @param $dateFinStage
      * @param $remuneration
      * @param $numSIRET
-     * @param $secteurActivite
      */
     public function __construct($idEtudiantStage, $numStage, $numMaitreStage, $idTuteurStage, $dateDebutStage, $dateFinStage, $remuneration, $numSIRET)
     {

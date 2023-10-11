@@ -18,12 +18,10 @@ class Controleur {
     public static function creerStageExterne() : void {
         $entreprise = new Entreprise($_POST["num_siret"],$_POST["nom_entreprise"],$_POST["adresse"],$_POST["telephone"],$_POST["mail"],$_POST["interlocuteur"],$_POST["code_ape"],$_POST["code_ape"],$_POST["mdp"]);
         $entreprise->sauvegarder();
-        /*
-        a changer
 
-        $alternanceStageEtudiant = new StageExterneEtudiants($_POST["idEtudiantAlternant"], $_POST["numOffreAltrenance"], $_POST["numMaitreAlternance"], $_POST["idTuteurAlternance"], $_POST["dateDebutAlternance"], $_POST["dateFinAlternance"], $_POST["remuneration"], $_POST["numSiretEntrepriseExterieur"]);
+        $alternanceStageEtudiant = new StageExterneEtudiants($_POST["idEtudiantStage"], $_POST["numStage"], $_POST["numMaitreStage"], $_POST["idTuteurStage"], $_POST["dateDebutStage"], $_POST["dateFinStage"], $_POST["remuneration"], $_POST["numSIRET"]);
         $alternanceStageEtudiant -> sauvegarder();
-        */
+
 }
 
     public static function creerAlternanceExterne() : void {
