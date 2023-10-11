@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title><?php echo "$title" ?></title>
     <link rel="stylesheet" type="text/css" href="styles/style.css">
+    <link rel="stylesheet" type="text/css" href="styles/style_accueil.css">
+    <link rel="stylesheet" type="text/css" href="styles/style_form.css">
     <link rel="stylesheet" type="text/css" href="styles/consulterOffre.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -22,12 +24,13 @@
 <nav>
     <img src="img/LogoIutMontpellier.png" />
     <h1> Stage / Alternance </h1>
-    <div><a href="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/web/controleurFrontal.php">Accueil</a></div>
-    <div><a href="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/web/controleurFrontal.php?action=afficherFormulaire"">Formulaire Offres</a></div>
-    <div><a id="actuel" href="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/web/controleurFrontal.php?action=consulterOffre">Offres</a></div>
+    <div><a id="nav-accueil" href="controleurFrontal.php">Accueil</a></div>
+    <div><a id="nav-form" href="controleurFrontal.php?action=afficherFormulaire"">Creer Offres Par Entreprise</a></div>
+    <div><a id="nav-consulter" href="controleurFrontal.php?action=consulterOffre">Offres</a></div>
     <div><a href="">A mettre</a></div>
-    <a class="connexion" id="inscrip" href="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/web/controleurFrontal.php?action=afficherInscription">Inscription</a>
-    <a class="connexion" id="connex" href="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/web/controleurFrontal.php?action=afficherInscription">Connexion</a>
+    <div><a href="">A mettre</a></div>
+    <a class="connexion" id="inscrip" href="controleurFrontal.php?action=afficherInscription">Inscription</a>
+    <a class="connexion" id="connex" href="controleurFrontal.php?action=afficherInscription">Connexion</a>
 </nav>
 
 

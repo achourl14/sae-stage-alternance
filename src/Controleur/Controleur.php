@@ -51,7 +51,7 @@ class Controleur {
     }
 
     public static function afficherAccueil(){
-        self::afficherVue("index.html");
+        self::afficherVue("vueGenerale.php",["contenu" => "index.html","title" => "Accueil"]);
     }
 
     public static function afficherInscription(){
@@ -59,7 +59,7 @@ class Controleur {
     }
 
     public static function afficherFormulaire(){
-        self::afficherVue("formulaireoffre.html");
+        self::afficherVue("vueGenerale.php",["contenu" => "formulaireoffre.html","title" => "Création Offres"]);
     }
 
     public static function afficherConnexion(){
