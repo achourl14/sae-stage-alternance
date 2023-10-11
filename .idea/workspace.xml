@@ -5,17 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="84102632-0c24-41d7-8f5e-6518e84410ab" name="Changes" comment="j'ai reussi à centrer le bordel">
-      <change afterPath="$PROJECT_DIR$/src/Modele/Repository/AlternanceRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Modele/Repository/StageRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_08_10_2023_12_50__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_08_10_2023_12_50__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controleur/Controleur.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controleur/Controleur.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Modele/AlternanceExterneEtudiants.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Modele/DataObject/Alternance.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Modele/StageExterneEtudiants.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Modele/DataObject/Stage.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Vue/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/Vue/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Vue/vueGenerale.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Vue/vueGenerale.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/formulaireOffreExterneAlternance.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/Vue/formulaireOffreExterneAlternance.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/formulaireOffreExterneStage.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/Vue/formulaireOffreExterneStage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Modele/Repository/EntrepriseRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Modele/Repository/EntrepriseRepository.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
