@@ -13,7 +13,7 @@ if(isset($_GET['action'])){
     $action = $_GET['action'];
     Controleur::$action();
 }else{
-    require "index.html";
+    Controleur::afficherAccueil();
 }
 
 ?>
