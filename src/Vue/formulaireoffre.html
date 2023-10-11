@@ -1,36 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title> Formulaire Type </title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="styles/style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-
-<div class="burger">
-    <img src="img/burger.png" alt="burger" width="50">
-    <div id="menu2">
-        <div><a href="">Formulaire</a></div>
-        <div><a href="">A mettre</a></div>
-        <div><a href="">A mettre</a></div>
-    </div>
-</div>
-
-<nav>
-    <img src="img/LogoIutMontpellier.png" />
-    <h1> Stage / Alternance </h1>
-    <div><a href="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/web/controleurFrontal.php?action=afficherAccueil">Accueil</a></div>
-    <div><a id="actuel">Formulaire Offres</a></div>
-    <div><a href="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/web/controleurFrontal.php?action=consulterOffre">Offres</a></div>
-    <div><a href="">A mettre</a></div>
-    <a class="connexion" id="inscrip" href="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/web/controleurFrontal.php?action=afficherInscription">Inscription</a>
-    <a class="connexion" id="connex" href="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/web/controleurFrontal.php?action=afficherConnexion">Connexion</a>
-</nav>
-
-
-<form method="post" action="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/web/controleurFrontal.php?action=creerOffre">
-    <h1> Création d'une offre </h1>
+<form method="post" action="controleurFrontal.php?action=creerOffre">
+    <h1> Création d'une offre par une entreprise </h1>
         <p>
             <label for="idEntreprise">Numéro Siret de  l'entreprise qui propose l'offre </label> :
             <input  type="text" placeholder="" name="Entreprise" id="idEntreprise" required/>
@@ -63,6 +32,3 @@
             <input type="submit" value="Envoyer" />
         </p>
 </form>
-
-</body>
-</html>
