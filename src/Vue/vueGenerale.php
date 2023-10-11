@@ -26,8 +26,8 @@
     <div><a href="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/web/controleurFrontal.php?action=afficherFormulaire"">Formulaire Offres</a></div>
     <div><a id="actuel" href="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/web/controleurFrontal.php?action=consulterOffre">Offres</a></div>
     <div><a href="">A mettre</a></div>
-    <a class="connexion" id="inscrip" href="inscription.html">Inscription</a>
-    <a class="connexion" id="connex" href="connexion.html">Connexion</a>
+    <a class="connexion" id="inscrip" href="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/web/controleurFrontal.php?action=afficherInscription">Inscription</a>
+    <a class="connexion" id="connex" href="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/web/controleurFrontal.php?action=afficherInscription">Connexion</a>
 </nav>
 
 
