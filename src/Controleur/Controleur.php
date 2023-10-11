@@ -1,12 +1,16 @@
 <?php
 namespace App\Controleur;
+use App\Modele\DataObject\Alternance;
 use App\Modele\DataObject\Entreprise;
 use App\Modele\DataObject\OffreAlternance;
 use App\Modele\DataObject\OffredeStage;
-use App\Modele\Repository\AbstractRepository;
+use App\Modele\DataObject\Stage;
+use App\Modele\Repository\AlternanceRepository;
 use App\Modele\Repository\EntrepriseRepository;
 use App\Modele\Repository\OffreAlternanceRepository;
 use App\Modele\Repository\OffredeStageRepository;
+use App\Modele\Repository\StageRepository;
+
 
 class Controleur {
 
@@ -17,7 +21,7 @@ class Controleur {
 
     public static function creerEntreprise() : void {
         $entreprise = new Entreprise($_POST["num_siret"],$_POST["nom_entreprise"],$_POST["adresse"],$_POST["telephone"],$_POST["mail"],$_POST["interlocuteur"],$_POST["code_ape"],$_POST["activite"],$_POST["mdp"]);
-        $entreprise->sauvegarder();
+        EntrepriseRepository::sauvegarder($entreprise);
     }
 
     // creer un offre de Stage ou d'Alternance
@@ -27,20 +31,17 @@ class Controleur {
     */
     public static function creerStageExterne() : void {
         $entreprise = new Entreprise($_POST["num_siret"],$_POST["nom_entreprise"],$_POST["adresse"],$_POST["telephone"],$_POST["mail"],$_POST["interlocuteur"],$_POST["code_ape"],$_POST["activite"],$_POST["mdp"]);
-        $entreprise->sauvegarder();
-
-        $alternanceStageEtudiant = new StageExterneEtudiants($_POST["idEtudiantStage"], $_POST["numStage"], $_POST["numMaitreStage"], $_POST["idTuteurStage"], $_POST["dateDebutStage"], $_POST["dateFinStage"], $_POST["remuneration"], $_POST["numSIRET"]);
-        $alternanceStageEtudiant -> sauvegarder();
+        EntrepriseRepository::sauvegarder($entreprise);
+        $alternanceStageEtudiant = new Stage($_POST["idEtudiantStage"], $_POST["numStage"], $_POST["numMaitreStage"], $_POST["idTuteurStage"], $_POST["dateDebutStage"], $_POST["dateFinStage"], $_POST["remuneration"], $_POST["numSIRET"]);
+        StageRepository::sauvegarder($alternanceStageEtudiant);
 
 }
 
     public static function creerAlternanceExterne() : void {
         $entreprise = new Entreprise($_POST["num_siret"],$_POST["nom_entreprise"],$_POST["adresse"],$_POST["telephone"],$_POST["mail"],$_POST["interlocuteur"],$_POST["code_ape"],$_POST["activite"],$_POST["mdp"]);
-        $entreprise->sauvegarder();
-        $alternanceExterneEtudiant = new AlternanceExterneEtudiants($_POST["idEtudiantAlternant"], $_POST["numOffreAltrenance"], $_POST["numMaitreAlternance"], $_POST["idTuteurAlternance"], $_POST["dateDebutAlternance"], $_POST["dateFinAlternance"], $_POST["remuneration"], $_POST["numSiretEntrepriseExterieur"]);
-        $alternanceExterneEtudiant -> sauvegarder();
-        $entreprise = new Entreprise($_POST["num_siret"],$_POST["nom_entreprise"],$_POST["adresse"],$_POST["telephone"],$_POST["mail"],$_POST["interlocuteur"],$_POST["code_ape"],$_POST["code_ape"],$_POST["mdp"]);
         EntrepriseRepository::sauvegarder($entreprise);
+        $alternanceExterneEtudiant = new Alternance($_POST["idEtudiantAlternant"], $_POST["numOffreAltrenance"], $_POST["numMaitreAlternance"], $_POST["idTuteurAlternance"], $_POST["dateDebutAlternance"], $_POST["dateFinAlternance"], $_POST["remuneration"], $_POST["numSiretEntrepriseExterieur"]);
+        AlternanceRepository::sauvegarder($alternanceExterneEtudiant);
     }
     public static function consulterOffre() {
 
@@ -87,6 +88,14 @@ class Controleur {
 
     public static function afficherConnexion(){
         self::afficherVue("connexion.html");
+    }
+
+    public static function afficherFormulaireExterneStage(){
+        self::afficherVue("vueGenerale.php", ["title" => "FormulaireExterne", "contenu" => "formulaireOffreExterneStage.html"]);
+    }
+
+    public static function afficherFormulaireExterneAlternant(){
+        self::afficherVue("vueGenerale.php", ["title" => "FormulaireExterne", "contenu" => "formulaireOffreExterneAlternance.html"]);
     }
 }
 

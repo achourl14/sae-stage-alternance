@@ -1,44 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title> Formulaire Type </title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="styles/style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-
-<div class="burger">
-    <img src="img/burger.png" alt="burger" width="50">
-    <div id="menu2">
-        <div><a href="">Formulaire</a></div>
-        <div><a href="">A mettre</a></div>
-        <div><a href="">A mettre</a></div>
-    </div>
-</div>
-
-<nav>
-    <img src="img/LogoIutMontpellier.png" />
-    <h1> Stage / Alternance </h1>
-    <div><a href="index.html">Accueil</a></div>
-    <div><a id="actuel">Formulaire Inscription</a></div>
-    <div><a href="">A mettre</a></div>
-    <div><a href="">A mettre</a></div>
-    <a class="connexion" id="inscrip" href="inscription.html">Inscription</a>
-    <a class="connexion" id="connex" href="connexion.html">Connexion</a>
-</nav>
-
 <div class="container">
     <div class="boutonAlternanceStage">
-        <button onclick="window.location.href='formulaireOffreExterneStage.html'" class="buttonStage">
+        <button onclick="window.location.href='controleurFrontal.php?action=afficherFormulaireExterneStage'" class="buttonStage">
             Stage
         </button>
-        <button onclick="window.location.href='formulaireOffreExterneAlternance.html'" class="buttonAlternance">
+        <button onclick="window.location.href='controleurFrontal.php?action=afficherFormulaireExterneAlternant'" class="buttonAlternance">
             Alternance
         </button>
     </div>
     <div class="content">
-        <form method="post" action="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/web/controleurFrontal.php?action=creerStageExterne">
+        <form method="post" action="controleurFrontal.php?action=creerStageExterne">
             <div class="user-details">
                 <div class="input-box">
                     <span class="details">Numéro Etudiant</span>
@@ -80,6 +50,3 @@
         </form>
     </div>
 </div>
-
-</body>
-</html>

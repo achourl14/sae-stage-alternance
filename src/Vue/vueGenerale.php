@@ -5,9 +5,8 @@
     <meta charset="UTF-8">
     <title><?php echo "$title" ?></title>
     <link rel="stylesheet" type="text/css" href="styles/style.css">
-    <link rel="stylesheet" type="text/css" href="styles/style_accueil.css">
-    <link rel="stylesheet" type="text/css" href="styles/style_form.css">
     <link rel="stylesheet" type="text/css" href="styles/consulterOffre.css">
+    <link rel="stylesheet" type="text/css" href="styles/styleInscriptionExterneAlternance.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
@@ -27,7 +26,7 @@
     <div><a id="nav-accueil" href="controleurFrontal.php">Accueil</a></div>
     <div><a id="nav-form" href="controleurFrontal.php?action=afficherFormulaire"">Creer Offres Par Entreprise</a></div>
     <div><a id="nav-consulter" href="controleurFrontal.php?action=consulterOffre">Offres</a></div>
-    <div><a href="">A mettre</a></div>
+    <div><a href="controleurFrontal.php?action=afficherFormulaireExterneStage">Formulaire externe </a></div>
     <div><a href="">A mettre</a></div>
     <a class="connexion" id="inscrip" href="controleurFrontal.php?action=afficherInscription">Inscription</a>
     <a class="connexion" id="connex" href="controleurFrontal.php?action=afficherInscription">Connexion</a>

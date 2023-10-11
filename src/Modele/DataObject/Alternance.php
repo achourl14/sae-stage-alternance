@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Modele;
+namespace App\Modele\DataObject;
 
-class AlternanceExterneEtudiants
+use App\Modele\Repository\ConnexionBaseDeDonnee;
+
+class Alternance extends AbstractDataObject
 {
     private string $idEtudiantAlternant;
 
@@ -41,12 +43,51 @@ class AlternanceExterneEtudiants
         $this->numSiretEntrepriseExterieur = $numSiretEntrepriseExterieur;
     }
 
-    public function sauvegarder() : void {
-        $sql = "INSERT INTO Alternance VALUES(:idEtudiantAlternantTag, :numOffreAlternanceTag, :numMaitreDeAlternanceTag, :idTuteurAlternanceTag, :dateDebutAlternanceTag, :dateFinAlternanceTag, :remunerationTag, :numSiretEntrepriseAlternanceExterieurTag)";
+    public function getIdEtudiantAlternant(): string
+    {
+        return $this->idEtudiantAlternant;
+    }
 
-        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+    public function getNumOffreAltrenance(): int
+    {
+        return $this->numOffreAltrenance;
+    }
 
-        $values = array(
+    public function getNumMaitreAlternance(): int
+    {
+        return $this->numMaitreAlternance;
+    }
+
+    public function getIdTuteurAlternance(): int
+    {
+        return $this->idTuteurAlternance;
+    }
+
+    public function getDateDebutAlternance(): string
+    {
+        return $this->dateDebutAlternance;
+    }
+
+    public function getDateFinAlternance(): string
+    {
+        return $this->dateFinAlternance;
+    }
+
+    public function getRemuneration(): float
+    {
+        return $this->remuneration;
+    }
+
+    public function getNumSiretEntrepriseExterieur(): string
+    {
+        return $this->numSiretEntrepriseExterieur;
+    }
+
+
+
+    public function formatTableau(): array
+    {
+        return array(
             "idEtudiantAlternantTag" => $this->idEtudiantAlternant,
             "numOffreAlternanceTag" => $this->numOffreAltrenance,
             "numMaitreDeAlternanceTag" => $this->numMaitreAlternance,
@@ -56,7 +97,5 @@ class AlternanceExterneEtudiants
             "remunerationTag" => $this->remuneration,
             "numSiretEntrepriseAlternanceExterieurTag" => $this->numSiretEntrepriseExterieur
         );
-
-        $pdoStatement->execute($values);
     }
 }

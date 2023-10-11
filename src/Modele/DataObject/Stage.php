@@ -1,10 +1,10 @@
 <?php
 
-namespace Modele;
+namespace App\Modele\DataObject;
 
-use App\Modele\ConnexionBaseDeDonnee;
+use App\Modele\Repository\ConnexionBaseDeDonnee;
 
-class StageExterneEtudiants
+class Stage extends AbstractDataObject
 {
     private $idEtudiantStage;
     private $numStage;
@@ -37,12 +37,75 @@ class StageExterneEtudiants
         $this->numSIRET = $numSIRET;
     }
 
-    public function sauvegarder() : void {
-        $sql = "INSERT INTO Stage VALUES(:numEtudiantTag, :numStageTag, :numMaitreStageTag, :idTuteurStageTag, :dateDebutStageTag, :dateFinStageTag, :remunerationTag, :numSIRETTag)";
+    /**
+     * @return mixed
+     */
+    public function getIdEtudiantStage()
+    {
+        return $this->idEtudiantStage;
+    }
 
-        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+    /**
+     * @return mixed
+     */
+    public function getNumStage()
+    {
+        return $this->numStage;
+    }
 
-        $values = array(
+    /**
+     * @return mixed
+     */
+    public function getNumMaitreStage()
+    {
+        return $this->numMaitreStage;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdTuteurStage()
+    {
+        return $this->idTuteurStage;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDateDebutStage()
+    {
+        return $this->dateDebutStage;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDateFinStage()
+    {
+        return $this->dateFinStage;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRemuneration()
+    {
+        return $this->remuneration;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNumSIRET()
+    {
+        return $this->numSIRET;
+    }
+
+
+
+    public function formatTableau(): array
+    {
+        return array(
             "numEtudiantTag" => $this->idEtudiantStage,
             "numStageTag" => $this->numStage,
             "numMaitreStageTag" => $this->numMaitreStage,
@@ -52,7 +115,5 @@ class StageExterneEtudiants
             "remunerationTag" => $this->remuneration,
             "numSIRETTag" => $this->numSIRET,
         );
-
-        $pdoStatement->execute($values);
     }
 }
