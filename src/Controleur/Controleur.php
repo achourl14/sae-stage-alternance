@@ -3,6 +3,7 @@ namespace App\Controleur;
 use App\Modele\DataObject\Entreprise;
 use App\Modele\DataObject\OffreAlternance;
 use App\Modele\DataObject\OffredeStage;
+use App\Modele\Repository\AbstractRepository;
 use App\Modele\Repository\EntrepriseRepository;
 use App\Modele\Repository\OffreAlternanceRepository;
 use App\Modele\Repository\OffredeStageRepository;
@@ -69,10 +70,11 @@ class Controleur {
             $offreAlternance = new OffreAlternance($_POST["nomOffre"],$_POST["Entreprise"], $_POST["mission"],-9,-9,-9,0);
             OffreAlternanceRepository::sauvegarder($offreAlternance);
         }
+        self::consulterOffre();
     }
 
     public static function afficherAccueil(){
-        self::afficherVue("index.html");
+        self::afficherVue("vueGenerale.php",["contenu" => "index.html","title" => "Accueil"]);
     }
 
     public static function afficherInscription(){
@@ -80,7 +82,7 @@ class Controleur {
     }
 
     public static function afficherFormulaire(){
-        self::afficherVue("formulaireoffre.html");
+        self::afficherVue("vueGenerale.php",["contenu" => "formulaireoffre.html","title" => "Création Offres"]);
     }
 
     public static function afficherConnexion(){
