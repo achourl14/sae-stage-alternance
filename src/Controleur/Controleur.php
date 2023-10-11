@@ -6,7 +6,7 @@ use Modele\StageExterneEtudiants;
 
 class Controleur {
     public static function creerEntreprise() : void {
-        $entreprise = new Entreprise($_POST["num_siret"],$_POST["nom_entreprise"],$_POST["adresse"],$_POST["telephone"],$_POST["mail"],$_POST["interlocuteur"],$_POST["code_ape"],$_POST["code_ape"],$_POST["mdp"]);
+        $entreprise = new Entreprise($_POST["num_siret"],$_POST["nom_entreprise"],$_POST["adresse"],$_POST["telephone"],$_POST["mail"],$_POST["interlocuteur"],$_POST["code_ape"],$_POST["activite"],$_POST["mdp"]);
         $entreprise->sauvegarder();
     }
 
@@ -16,7 +16,7 @@ class Controleur {
     Offre de stage => table offre_stage
     */
     public static function creerStageExterne() : void {
-        $entreprise = new Entreprise($_POST["num_siret"],$_POST["nom_entreprise"],$_POST["adresse"],$_POST["telephone"],$_POST["mail"],$_POST["interlocuteur"],$_POST["code_ape"],$_POST["code_ape"],$_POST["mdp"]);
+        $entreprise = new Entreprise($_POST["num_siret"],$_POST["nom_entreprise"],$_POST["adresse"],$_POST["telephone"],$_POST["mail"],$_POST["interlocuteur"],$_POST["code_ape"],$_POST["activite"],$_POST["mdp"]);
         $entreprise->sauvegarder();
 
         $alternanceStageEtudiant = new StageExterneEtudiants($_POST["idEtudiantStage"], $_POST["numStage"], $_POST["numMaitreStage"], $_POST["idTuteurStage"], $_POST["dateDebutStage"], $_POST["dateFinStage"], $_POST["remuneration"], $_POST["numSIRET"]);
@@ -25,7 +25,7 @@ class Controleur {
 }
 
     public static function creerAlternanceExterne() : void {
-        $entreprise = new Entreprise($_POST["num_siret"],$_POST["nom_entreprise"],$_POST["adresse"],$_POST["telephone"],$_POST["mail"],$_POST["interlocuteur"],$_POST["code_ape"],$_POST["code_ape"],$_POST["mdp"]);
+        $entreprise = new Entreprise($_POST["num_siret"],$_POST["nom_entreprise"],$_POST["adresse"],$_POST["telephone"],$_POST["mail"],$_POST["interlocuteur"],$_POST["code_ape"],$_POST["activite"],$_POST["mdp"]);
         $entreprise->sauvegarder();
         $alternanceExterneEtudiant = new AlternanceExterneEtudiants($_POST["idEtudiantAlternant"], $_POST["numOffreAltrenance"], $_POST["numMaitreAlternance"], $_POST["idTuteurAlternance"], $_POST["dateDebutAlternance"], $_POST["dateFinAlternance"], $_POST["remuneration"], $_POST["numSiretEntrepriseExterieur"]);
         $alternanceExterneEtudiant -> sauvegarder();
