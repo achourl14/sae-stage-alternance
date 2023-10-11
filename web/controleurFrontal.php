@@ -13,4 +13,5 @@ $action = $_GET['action'];
 
 // Appel de la méthode statique $action de ControleurVoiture
 Controleur::$action();
+
 ?>

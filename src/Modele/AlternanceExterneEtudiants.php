@@ -42,7 +42,7 @@ class AlternanceExterneEtudiants
     }
 
     public function sauvegarder() : void {
-        $sql = "INSERT INTO Alternance VALUES(:idEtudiantAlternantTag, :numOffreAlternanceTag, :numMaitreDeAlternanceTag, :idTuteurAlternanceTag, :dateDebutAlternanceTag, :dateFinAlternanceTag, :remunerationTag, :numSiretEntrepriseAlternanceExterieur)";
+        $sql = "INSERT INTO Alternance VALUES(:idEtudiantAlternantTag, :numOffreAlternanceTag, :numMaitreDeAlternanceTag, :idTuteurAlternanceTag, :dateDebutAlternanceTag, :dateFinAlternanceTag, :remunerationTag, :numSiretEntrepriseAlternanceExterieurTag)";
 
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
@@ -54,7 +54,7 @@ class AlternanceExterneEtudiants
             "dateDebutAlternanceTag" => $this->dateDebutAlternance,
             "dateFinAlternanceTag" => $this->dateFinAlternance,
             "remunerationTag" => $this->remuneration,
-            "numSiretEntrepriseAlternanceExterieur" => $this->numSiretEntrepriseExterieur
+            "numSiretEntrepriseAlternanceExterieurTag" => $this->numSiretEntrepriseExterieur
         );
 
         $pdoStatement->execute($values);
