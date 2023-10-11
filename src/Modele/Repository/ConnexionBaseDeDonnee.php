@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Modele;
+namespace App\Modele\Repository;
 use App\Configuration\Configuration;
 use PDO;
+
 class ConnexionBaseDeDonnee {
     private static ?ConnexionBaseDeDonnee $instance = null;
 
