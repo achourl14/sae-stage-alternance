@@ -31,7 +31,7 @@ class OffreAlternance extends AbstractDataObject
     {
         $this->idAlternance = $idStage;
         $this->statutAlternance = $statutStage;
-        $this->validationS = $validation;
+        $this->validation = $validation;
     }
 
     public function getIdAlternance(): int

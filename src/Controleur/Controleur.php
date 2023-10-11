@@ -19,19 +19,56 @@ class Controleur {
         $entreprise = new Entreprise($_POST["num_siret"],$_POST["nom_entreprise"],$_POST["adresse"],$_POST["telephone"],$_POST["mail"],$_POST["interlocuteur"],$_POST["code_ape"],$_POST["code_ape"],$_POST["mdp"]);
         EntrepriseRepository::sauvegarder($entreprise);
     }
-    public static function consulterOffre() {
+    public static function consulterOffre()
+    {
+
+        $offresDeStage = (new OffredeStageRepository())->recupererOffreStageValide();
+        $offresAlternance = (new OffreAlternanceRepository())->recupererOffreAlternanceValide();
+
+        //var_dump($offresDeStage);
+        //var_dump($offresAlternance);
+        foreach ($offresDeStage as $offreFormatTableau) {
+            $tableauStage[] = $offreFormatTableau;
+        }
+        foreach ($offresAlternance as $offreFormatTableau) {
+            $tableauAlternance[] = $offreFormatTableau;
+        }
+        //var_dump($tableauAlternance);
+        //echo"<br>";
+        //var_dump($offresAlternance);
+        if ($tableauAlternance[0] == NULL && $tableauStage[0] == NULL) {
+            self::afficherAucuneOffre();
+        }
+        else{
+            self::afficherVue("vueGenerale.php", ["contenu" => "vueOffres.php", "offresStage" => $tableauStage, "offresAlternance" => $tableauAlternance, "title" => "Liste des offres"]);
+            }
+    }
+
+    public static function consulterOffreSecretaire() {
 
         $offresDeStage = (new OffredeStageRepository())->recuperer();
         foreach($offresDeStage as $offreFormatTableau){
             $tableauStage[] = $offreFormatTableau;
+
         }
 
         $offresAlternance = (new OffreAlternanceRepository())->recuperer();
         foreach($offresAlternance as $offreFormatTableau){
             $tableauAlternance[] = $offreFormatTableau;
         }
+            self::afficherVue("vueGenerale.php", ["contenu" => "vueValiderOffre.php", "offresStage" => $tableauStage, "offresAlternance" => $tableauAlternance,"title" => "Liste des offres a valider"]);
 
-        self::afficherVue("vueGenerale.php", ["contenu" => "vueOffres.php", "offresStage" => $tableauStage, "offresAlternance" => $tableauAlternance,"title" => "Liste des offres"]);
+
+    }
+
+    public static function validerOffreAlternance(){
+        OffreAlternanceRepository::validerOffreDeAlternance($_GET['id']);
+    }
+
+    public static function validerOffreStage(){
+        OffredeStageRepository::validerOffreDeStage($_GET['id']);
+
+        //self::afficherVue("vueGenrale.php", ["contenu" => "vueValiderOffre.php", "offresStage" => $validerStage, "offresAlternance" => $validerAlternance,"title" => "Liste des offres a valider"] );
     }
 
     public static function creerOffre(){
@@ -64,6 +101,10 @@ class Controleur {
 
     public static function afficherConnexion(){
         self::afficherVue("connexion.html");
+    }
+
+    public static function afficherAucuneOffre(){
+        self::afficherVue("vueGenerale.php",["title" => "Indisponible", "contenu" => "vueAucuneOffres.php"]);
     }
 }
 
