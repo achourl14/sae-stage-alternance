@@ -1,14 +1,13 @@
 <div class="container">
     <div class="boutonAlternanceStage">
-        <button onclick="window.location.href='controleurFrontal.php?action=afficherFormulaireExterneStage'" class="buttonStage">
-            Stage
-        </button>
-        <button onclick="window.location.href='controleurFrontal.php?action=afficherFormulaireExterneAlternant'" class="buttonAlternance">
-            Alternance
-        </button>
+        <input id="buttonStage" class="buttonStage" type="button" value="Stage" onclick="submitValue('Stage')">
+        <input id="buttonAlternance" class="buttonAlternance" type="button" value="Alternance" onclick="submitValue('Alternance')">
     </div>
     <div class="content">
+
         <form method="post" action="controleurFrontal.php?action=creerStageExterne">
+                <input type="hidden" id="stage" name="stage" value="Stage">
+            <div class="title">Partie Stage</div>
             <div class="user-details">
                 <div class="input-box">
                     <span class="details">Numéro Etudiant</span>
@@ -16,15 +15,11 @@
                 </div>
                 <div class="input-box">
                     <span class="details">Numéro Maitre De Stage</span>
-                    <input type="text" placeholder="" name="numStage" required>
-                </div>
-                <div class="input-box">
-                    <span class="details">Numéro Tuteur Stage</span>
                     <input type="text" placeholder="" name="numMaitreStage" required>
                 </div>
                 <div class="input-box">
-                    <span class="details">Mail De L'Entreprise</span>
-                    <input type="email" placeholder="" name="mail" required>
+                    <span class="details">Numéro Tuteur Stage</span>
+                    <input type="text" placeholder="" name="idTuteurStage" required>
                 </div>
                 <div class="input-box">
                     <span class="details">Date De Début</span>
@@ -38,11 +33,34 @@
                     <span class="details">Rémunération</span>
                     <input type="text" placeholder="" name="remuneration" required>
                 </div>
+            </div>
+            <div class="title">Partie Entreprise</div>
+            <div class="user-details">
+
                 <div class="input-box">
                     <span class="details">Numéro SIRET</span>
-                    <input type="text" placeholder="" name="num_siret" required>
+                    <input type="text" name="num_siret"/>
                 </div>
-
+                <div class="input-box">
+                    <span class="details">Nom de l'entreprise</span>
+                    <input type="text" placeholder="" name="nom_entreprise" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Adresse</span>
+                    <input type="text" placeholder="" name="adresse" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Telephone</span>
+                    <input type="tel" placeholder="" name="telephone" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Adresse mail</span>
+                    <input type="email" placeholder="" name="mail" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Code APE</span>
+                    <input type="text" placeholder="" name="code_ape" required>
+                </div>
             </div>
             <div class="button">
                 <input type="submit" value="Envoyer">

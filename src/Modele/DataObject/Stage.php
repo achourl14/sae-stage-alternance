@@ -40,7 +40,7 @@ class Stage extends AbstractDataObject
     /**
      * @return mixed
      */
-    public function getIdEtudiantStage()
+    public function getIdEtudiantStage() : string
     {
         return $this->idEtudiantStage;
     }
@@ -48,7 +48,7 @@ class Stage extends AbstractDataObject
     /**
      * @return mixed
      */
-    public function getNumStage()
+    public function getNumStage() : int
     {
         return $this->numStage;
     }
@@ -56,7 +56,7 @@ class Stage extends AbstractDataObject
     /**
      * @return mixed
      */
-    public function getNumMaitreStage()
+    public function getNumMaitreStage() : int
     {
         return $this->numMaitreStage;
     }
@@ -64,7 +64,7 @@ class Stage extends AbstractDataObject
     /**
      * @return mixed
      */
-    public function getIdTuteurStage()
+    public function getIdTuteurStage() : int
     {
         return $this->idTuteurStage;
     }
@@ -72,7 +72,7 @@ class Stage extends AbstractDataObject
     /**
      * @return mixed
      */
-    public function getDateDebutStage()
+    public function getDateDebutStage() : string
     {
         return $this->dateDebutStage;
     }
@@ -80,7 +80,7 @@ class Stage extends AbstractDataObject
     /**
      * @return mixed
      */
-    public function getDateFinStage()
+    public function getDateFinStage() : string
     {
         return $this->dateFinStage;
     }
@@ -88,7 +88,7 @@ class Stage extends AbstractDataObject
     /**
      * @return mixed
      */
-    public function getRemuneration()
+    public function getRemuneration() : int
     {
         return $this->remuneration;
     }
@@ -96,7 +96,7 @@ class Stage extends AbstractDataObject
     /**
      * @return mixed
      */
-    public function getNumSIRET()
+    public function getNumSIRET() : int
     {
         return $this->numSIRET;
     }

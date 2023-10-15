@@ -9,10 +9,10 @@ class Entreprise extends AbstractDataObject
     private string $adresse;
     private int $telephone;
     private string $mail;
-    private string $interlocuteur;
+    private $interlocuteur;
     private string $code_ape;
-    private string $activite;
-    private string $mdp;
+    private $activite;
+    private $mdp;
 
     /**
      * @param int $num_siret
@@ -20,12 +20,12 @@ class Entreprise extends AbstractDataObject
      * @param string $adresse
      * @param int $telephone
      * @param string $mail
-     * @param string $interlocuteur
+     * @param  $interlocuteur
      * @param string $code_ape
-     * @param string $activite
-     * @param string $mdp
+     * @param  $activite
+     * @param  $mdp
      */
-    public function __construct(int $num_siret, string $nom_entreprise, string $adresse, int $telephone, string $mail, string $interlocuteur, string $code_ape, string $activite, string $mdp)
+    public function __construct(int $num_siret,string $nom_entreprise, string $adresse, int $telephone, string $mail, $interlocuteur, string $code_ape, $activite, $mdp)
     {
         $this->num_siret = $num_siret;
         $this->nom_entreprise = $nom_entreprise;
@@ -63,7 +63,7 @@ class Entreprise extends AbstractDataObject
         return $this->mail;
     }
 
-    public function getInterlocuteur(): string
+    public function getInterlocuteur(): ? string
     {
         return $this->interlocuteur;
     }
@@ -73,12 +73,12 @@ class Entreprise extends AbstractDataObject
         return $this->code_ape;
     }
 
-    public function getActivite(): string
+    public function getActivite(): ? string
     {
         return $this->activite;
     }
 
-    public function getMdp(): string
+    public function getMdp(): ? string
     {
         return $this->mdp;
     }

@@ -26,24 +26,6 @@ class EntrepriseRepository extends AbstractRepository
         $pdoStatement->execute($values);
     }
 
-    public static function sauvegarderExterne($num_siret, $nom_entreprise, $adresse, $telephone, $mail, $code_ape) {
-        $entreprise = new Entreprise($num_siret, $nom_entreprise, $adresse, $telephone, $mail, null, $code_ape, null, null);
-        $sql = "INSERT INTO Entreprise VALUES(:numSIRETTag, :nomEntrepriseTag, :adresseEntrepriseTag, null, :telephoneEntrepriseTag, :codeAPETag, null, :mailTag, null)";
-
-        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
-
-        $values = array(
-            "numSIRETTag" => $entreprise->getNumSiret(),
-            "nomEntrepriseTag" => $entreprise->getNomEntreprise(),
-            "adresseEntrepriseTag" => $entreprise->getAdresse(),
-            "telephoneEntrepriseTag" => $entreprise->getTelephone(),
-            "codeAPETag" => $entreprise->getCodeApe(),
-            "mailTag" => $entreprise->getMail(),
-        );
-
-        $pdoStatement->execute($values);
-    }
-
 
     public function construireDepuisTableau(array $entrepriseFormatTableau) : Entreprise {
         $entreprise = new Entreprise($entrepriseFormatTableau['numSiret'],$entrepriseFormatTableau['nomEntreprise'],$entrepriseFormatTableau['adresseEntreprise'],$entrepriseFormatTableau['telephoneEntreprise'],$entrepriseFormatTableau['adressemail'],$entrepriseFormatTableau['interlocuteurPrincipal'],$entrepriseFormatTableau['codeAPE'],$entrepriseFormatTableau['secteurActivite'],$entrepriseFormatTableau['motDePasse']);

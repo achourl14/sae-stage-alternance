@@ -29,18 +29,25 @@ class Controleur {
     Offre Alternance => table offre_alternance
     Offre de stage => table offre_stage
     */
-    public static function creerStageExterne() : void {
-        self::extracted();
-        $alternanceStageEtudiant = new Stage($_POST["idEtudiantStage"], $_POST["numStage"], $_POST["numMaitreStage"], $_POST["idTuteurStage"], $_POST["dateDebutStage"], $_POST["dateFinStage"], $_POST["remuneration"], $_POST["numSIRET"]);
-        StageRepository::sauvegarder($alternanceStageEtudiant);
-
-}
-
-    public static function creerAlternanceExterne() : void {
-        self::extracted();
-        $alternanceExterneEtudiant = new Alternance($_POST["idEtudiantAlternant"], $_POST["numOffreAltrenance"], $_POST["numMaitreAlternance"], $_POST["idTuteurAlternance"], $_POST["dateDebutAlternance"], $_POST["dateFinAlternance"], $_POST["remuneration"], $_POST["numSiretEntrepriseExterieur"]);
-        AlternanceRepository::sauvegarder($alternanceExterneEtudiant);
+    public static function entrepriseStageExterne(): void
+    {
+        $entreprise = new Entreprise($_POST["num_siret"], $_POST["nom_entreprise"], $_POST["adresse"], $_POST["telephone"], $_POST["mail"], null, $_POST["code_ape"], null, null);
+        EntrepriseRepository::sauvegarder($entreprise);
     }
+    public static function creerStageExterne() : void {
+        $stage = $_POST['stage'];
+
+        self::entrepriseStageExterne();
+
+        if ($stage == "Stage") {
+            $alternanceStageEtudiant = new Stage($_POST["idEtudiantStage"], 0, $_POST["numMaitreStage"], $_POST["idTuteurStage"], $_POST["dateDebutStage"], $_POST["dateFinStage"], $_POST["remuneration"], $_POST["num_siret"]);
+            StageRepository::sauvegarder($alternanceStageEtudiant);
+        }
+        else {
+            $alternanceExterneEtudiant = new Alternance($_POST["idEtudiantStage"], 0, $_POST["numMaitreStage"], $_POST["idTuteurStage"], $_POST["dateDebutStage"], $_POST["dateFinStage"], $_POST["remuneration"], $_POST["num_siret"]);
+            AlternanceRepository::sauvegarder($alternanceExterneEtudiant);
+        }
+}
     public static function consulterOffre() {
 
         $offresDeStage = (new OffredeStageRepository())->recuperer();
@@ -55,6 +62,7 @@ class Controleur {
 
         self::afficherVue("vueGenerale.php", ["contenu" => "vueOffres.php", "offresStage" => $tableauStage, "offresAlternance" => $tableauAlternance,"title" => "Liste des offres"]);
     }
+
 
     public static function creerOffre(){
         //var_dump($_POST['offre']);
@@ -88,22 +96,15 @@ class Controleur {
         self::afficherVue("connexion.html");
     }
 
-    public static function afficherFormulaireExterneStage(){
+    public static function afficherFormulaireExterne(){
         self::afficherVue("vueGenerale.php", ["title" => "FormulaireExterne", "contenu" => "formulaireOffreExterneStage.html"]);
     }
 
-    public static function afficherFormulaireExterneAlternant(){
-        self::afficherVue("vueGenerale.php", ["title" => "FormulaireExterne", "contenu" => "formulaireOffreExterneAlternance.html"]);
-    }
 
     /**
      * @return void
      */
-    public static function extracted(): void
-    {
-        $entreprise = new Entreprise($_POST["num_siret"], $_POST["nom_entreprise"], $_POST["adresse"], $_POST["telephone"], $_POST["mail"], $_POST["interlocuteur"], $_POST["code_ape"], $_POST["activite"], $_POST["mdp"]);
-        EntrepriseRepository::sauvegarderExterne($entreprise->getNumSiret(), $entreprise->getNomEntreprise(), $entreprise->getAdresse(), $entreprise->getTelephone(), $entreprise->getMail(), $entreprise->getCodeApe());
-    }
+
 }
 
 ?>
