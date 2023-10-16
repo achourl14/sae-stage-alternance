@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title><?php echo "$title" ?></title>
-    <link rel="stylesheet" type="text/css" href="styles/css/style.css">
-    <link rel="stylesheet" type="text/css" href="styles/css/consulterOffre.css">
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
+    <link rel="stylesheet" type="text/css" href="styles/style_accueil.css">
+    <link rel="stylesheet" type="text/css" href="styles/style_form.css">
+    <link rel="stylesheet" type="text/css" href="styles/consulterOffre.css">
     <script src="styles/js/script.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -20,16 +22,34 @@
     </div>
 </div>
 
-<nav>
-    <img src="img/LogoIutMontpellier.png" />
-    <h1> Stage / Alternance </h1>
-    <div><a id="nav-accueil" href="controleurFrontal.php">Accueil</a></div>
-    <div><a id="nav-form" href="controleurFrontal.php?action=afficherFormulaire"">Creer Offres Par Entreprise</a></div>
-    <div><a id="nav-consulter" href="controleurFrontal.php?action=consulterOffre">Offres</a></div>
-    <div><a href="controleurFrontal.php?action=afficherFormulaireExterne">Formulaire externe </a></div>
-    <div><a href="">A mettre</a></div>
+<?php
+$accueil = "";
+$form = "";
+$offres = "";
+$valider = "";
+$formExterne ="";
+
+if($contenu == "index.html"){
+    $accueil = "actuel";
+}else if($contenu == "formulaireoffre.html"){
+    $form = "actuel";
+} else if($contenu == "vueValiderOffre.php"){
+    $valider = "actuel";
+} else if ($contenu == "vueOffres.php"){
+    $offres = "actuel";
+}
+
+echo  '<nav>';
+echo  '<img src="img/LogoIutMontpellier.png" />';
+echo  '<h1> Stage / Alternance </h1>';
+echo  '<div><a href="controleurFrontal.php" id='.$accueil.'>Accueil</a></div>';
+echo  '<div><a href="controleurFrontal.php?action=afficherFormulaire" id='.$form.'>Creer Offres Par Entreprise</a></div>';
+echo  '<div><a href="controleurFrontal.php?action=consulterOffre" id='.$offres.'>Offres</a></div>';
+echo  '<div><a href="controleurFrontal.php?action=consulterOffreSecretaire" id='.$valider.'>Valider offre</a></div>';
+echo  '<div><a href="" id='. $formExterne.'>Formulaire Externe</a></div>'
+?>
     <a class="connexion" id="inscrip" href="controleurFrontal.php?action=afficherInscription">Inscription</a>
-    <a class="connexion" id="connex" href="controleurFrontal.php?action=afficherInscription">Connexion</a>
+    <a class="connexion" id="connex" href="controleurFrontal.php?action=afficherConnexion">Connexion</a>
 </nav>
 
 

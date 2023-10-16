@@ -1,11 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
 .carte{
     margin-bottom: 20px;
-    padding: 15px;
+    padding: 15px 15px 15px 15px;
+    min-width : 400px;
+    max-width : 400px;
     border-radius: 15px 15px;
     border: solid #c7c4c3 1px;
     cursor : pointer;
+}
+
+.valide{
+    border: solid #29d200 2px;
+}
+.nonValide{
+    border: solid #ff0000 2px;
 }
 
 .carte:hover{
@@ -24,18 +34,18 @@
 }
 
 .carte p{
-    font-size: 13px;
+    font-size: 15px;
     color : #7c7c7c;
 }
 
-.toutesLesCartesS{
+.toutesLesCartes{
     margin-top: 50px;
-    margin-left: 100px;
-    margin-right: 30%;
+    margin-left: 200px;
 }
 
-.toutesLesCartesA{
-    margin-top: 50px;
+.toutesLesCartes a{
+    text-decoration: none;
+    color: black;
 }
 
 .offres{
@@ -43,6 +53,51 @@
     flex-direction: row;
 }
 
-#nav-consulter{
-    color: #F44336;
+.offre_detail{
+    margin-top: 140px;
+    margin-left: 100px;
+    padding: 20px;
+    min-width : 700px;
+    max-width : 700px;
+}
+
+.offre_detail h1{
+    font-size: 22px;
+}
+
+.offre_detail h2{
+    font-size: 20px;
+}
+
+.offre_detail p{
+    font-size: 17px;
+    color : black;
+}
+
+.buttonDeBase{
+    padding: 7px 12px;
+    border-radius: 5px 5px;
+    color:white;
+    background-color: #F44336;
+    text-decoration: none;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 14px;
+    border: solid black 2px;
+}
+
+.valideButton{
+    background-color: #29d200;
+}
+
+.type{
+    border-radius: 5px 5px;
+    font-family: 'Noto Sans', sans-serif;
+    background-color: #d7d7d7;
+    padding: 8px;
+    color: #575757;
+    font-size: 14px;
+}
+
+.buttonDeBase:hover{
+    background-color: #ff5c4f;
 }
