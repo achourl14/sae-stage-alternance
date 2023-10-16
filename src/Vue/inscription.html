@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title> Inscription </title>
     <link rel="stylesheet" href="styles/style_inscription.css">
+    <link rel="stylesheet" href="styles/style_form.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -15,43 +16,43 @@
             <div class="user-details">
                 <div class="input-box">
                     <span class="details">Numéro SIRET</span>
-                    <input type="text" name="num_siret" required min="100000000000000" maxlength="29999999999999"/>
+                    <input type="text" name="num_siret" pattern="[0-9]{14}" required minlength="14" maxlength="14"/>
                 </div>
                 <div class="input-box">
                     <span class="details">Nom de l'entreprise</span>
-                    <input type="text" placeholder="" name="nom_entreprise" required>
+                    <input type="text" placeholder="" name="nom_entreprise" maxlength="50" required>
                 </div>
                 <div class="input-box">
                     <span class="details">Adresse</span>
-                    <input type="text" placeholder="" name="adresse" required>
+                    <input type="text" placeholder="" name="adresse" maxlength="100" required>
                 </div>
                 <div class="input-box">
                     <span class="details">Telephone</span>
-                    <input type="tel" placeholder="" name="telephone" required>
+                    <input type="tel" placeholder="" name="telephone" pattern="[0-9]{10}" maxlength="10" required>
                 </div>
                 <div class="input-box">
                     <span class="details">Adresse mail</span>
-                    <input type="email" placeholder="" name="mail" required>
+                    <input type="email" placeholder="" name="mail"  maxlength="100">
                 </div>
                 <div class="input-box">
                     <span class="details">Interlocuteur </span>
-                    <input type="text" placeholder="" name="interlocuteur" required>
+                    <input type="text" placeholder="" name="interlocuteur" maxlength="50" required>
                 </div>
                 <div class="input-box">
                     <span class="details">Code APE</span>
-                    <input type="text" placeholder="" name="code_ape" required>
+                    <input type="text" placeholder="" name="code_ape" pattern="[0-9]{5}" maxlength="5" required>
                 </div>
                 <div class="input-box">
                     <span class="details">Secteur d'Activité</span>
-                    <input type="text" placeholder="" name="activite" required>
+                    <input type="text" placeholder="" name="activite" maxlength="50" required>
                 </div>
                 <div class="input-box">
                     <span class="details">Mot de passe </span>
-                    <input type="password" placeholder="Entrez votre mot de passe" name="mdp" required>
+                    <input type="password" placeholder="Entrez votre mot de passe" name="mdp" minlength="8" maxlength="50" required>
                 </div>
                 <div class="input-box">
                     <span class="details">Confirmez mot de passe</span>
-                    <input type="password" placeholder="Confirmez votre mot de passe" name="confirmemdp" required>
+                    <input type="password" placeholder="Confirmez votre mot de passe" name="confirmemdp" minlength="8" maxlength="50" required>
                 </div>
                 <div>
                     <p> Vous êtes élèves ? vous n'avez pas d'accès ? Contactez le secrétariat</p>

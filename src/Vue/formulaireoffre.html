@@ -1,34 +1,36 @@
 <form method="post" action="controleurFrontal.php?action=creerOffre">
-    <h1> Création d'une offre par une entreprise </h1>
-        <p>
-            <label for="idEntreprise">Numéro Siret de  l'entreprise qui propose l'offre </label> :
+    <h1 class="title"> Création d'une offre par une entreprise </h1>
+    <div class="user-details">
+        <div class="input-box">
+            <label for="idEntreprise" class="details">Numéro Siret de  l'entreprise qui propose l'offre </label>
             <input  type="text" placeholder="" name="Entreprise" id="idEntreprise" required/>
-        </p>
+        </div>
 
-        <p>
-            <label for="idnom">Nom de l'offre </label> :
+        <div class="input-box">
+            <label class="details" for="idnom">Nom de l'offre </label>
             <input maxlength="50" type="text" placeholder="" name="nomOffre" id="idnom" required/>
-        </p>
+        </div>
 
-        <p>
-            <label for="mission">Mission </label>
-            <textarea maxlength="500" id="mission" name="mission" required></textarea>
-        </p>
-        <p>
+        <div class="input-box">
+            <label class="details" for="mission">Mission </label>
+            <textarea rows="5" cols="100" maxlength="500" id="mission" name="mission" required></textarea>
+        </div>
+        <div class="category input-box">
             <fieldset>
                 <legend> Stage / Alternance :</legend>
                 <div>
-                  <label for="stage">Stage </label> :
+                  <label class="details" for="stage">Stage </label>
                   <input type="radio" placeholder="" name="offre" id="stage" value="1" required/>
                 </div>
                  <div>
-                   <label for="alternance">Alternance </label> :
+                   <label class="details" for="alternance">Alternance </label>
                    <input type="radio" placeholder="" name="offre" id="alternance" value="2" required/>
                 </div>
             </fieldset>
-        </p>
+        </div>
 
-        <p>
+        <div class="button">
             <input type="submit" value="Envoyer" />
-        </p>
+        </div>
+    </div>
 </form>

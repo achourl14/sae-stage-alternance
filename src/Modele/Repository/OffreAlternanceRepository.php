@@ -28,6 +28,7 @@ class OffreAlternanceRepository extends AbstractRepository
 
     public function recupererOffreAlternanceValide()
     {
+        $tableau = null;
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query("SELECT * FROM OffreDeAlternance WHERE Validation = 1");
         foreach ($pdoStatement as $objetFormatTableau) {
             $tableau[] = $this->construireDepuisTableau($objetFormatTableau);
@@ -35,25 +36,23 @@ class OffreAlternanceRepository extends AbstractRepository
         return $tableau;
     }
 
-    public static function validerOffreDeAlternance(int $idAlternance) : void {
+    public static function validerOffreDeAlternance(OffreAlternance $offreDeAlternance) : void {
 
         $sql = "UPDATE OffreDeAlternance SET Validation = :ValidationTag WHERE idAlternance = :idAlternanceTag";
 
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
-        $offredeAlternance = (new OffreAlternanceRepository())->recupererParClePrimaire($idAlternance);
-
-        if ($offredeAlternance->getValidation() == 0) {
+        if ($offreDeAlternance->getValidation() == 0) {
               $values = array(
               "ValidationTag" => 1,
-              "idAlternanceTag" => $idAlternance,
+              "idAlternanceTag" => $offreDeAlternance->getIdAlternance(),
               );
               $pdoStatement->execute($values);
         }
         else{
               $values = array(
                   "ValidationTag" => 0,
-                  "idAlternanceTag" => $idAlternance,
+                  "idAlternanceTag" => $offreDeAlternance->getIdAlternance(),
               );
               $pdoStatement->execute($values);
         }

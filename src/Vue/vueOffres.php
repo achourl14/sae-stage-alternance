@@ -2,42 +2,44 @@
 
 use App\Modele\Repository\EntrepriseRepository;
 
-$nbStage =0;
+$nbStage = 0;
 $nbAlternance = 0;
 echo '<div class="offres">';
 
-
- echo '<div class="toutesLesCartesS">';
- echo "<p> Stages : </p>";
-     foreach($offresStage as $offre){
-         echo '<div class ="carte">';
-         echo ("<h1>". $offre->getNomOffre() . "</h1>");
-         echo "<h2> Entreprise : ". htmlspecialchars((new EntrepriseRepository())->recupererParClePrimaire($offre->getIdEntreprise())->getNomEntreprise()) . "</h2>";
-         echo ("<p>". $offre->getMission() ."</p> ");
-
-         echo ("<p> ".$offre->getStatutStage()." </p>");
-         echo "</div>";
-     }
-
-echo'</div>';
-
-
-echo '<div class="toutesLesCartesA">';
-echo "<p> Alternance : </p>";
-
-    foreach($offresAlternance as $offre) {
+echo '<div class="filtres">';
+echo '</div>';
+echo '<div class="toutesLesCartes">';
+echo "<div class='title'> Offres disponible </div>";
+if ($offresStage != null) {
+    foreach ($offresStage as $offre) {
+        echo "<a href='controleurFrontal.php?action=consulterOffre&idStage=".$offre->getIdStage()."'>";
         echo '<div class ="carte">';
-        echo("<h1>" . $offre->getNomOffre() . "</h1>");
+        echo("<h1>" .  htmlspecialchars($offre->getNomOffre()) . "</h1>");
         echo "<h2> Entreprise : " . htmlspecialchars((new EntrepriseRepository())->recupererParClePrimaire($offre->getIdEntreprise())->getNomEntreprise()) . "</h2>";
-        echo("<p>" . $offre->getMission() . "</p> ");
+        echo("<p>" . htmlspecialchars(substr($offre->getMission(),0,50)) . "</p> ");
 
-        echo("<p> " . $offre->getStatutAlternance() . " </p>");
+        echo("<p> " . htmlspecialchars($offre->getStatutStage()) . " </p>");
+        echo("<h3 class='type'> Stage </h3>");
         echo "</div>";
+        echo "</a>";
     }
+}
 
+if ($offresAlternance != null) {
+    foreach ($offresAlternance as $offre) {
+        echo "<a href='controleurFrontal.php?action=consulterOffre&idAlternance=".$offre->getIdAlternance()."'>";
+        echo '<div class ="carte">';
+        echo("<h1>" . htmlspecialchars($offre->getNomOffre()) . "</h1>");
+        echo "<h2> Entreprise : " . htmlspecialchars((new EntrepriseRepository())->recupererParClePrimaire($offre->getIdEntreprise())->getNomEntreprise()) . "</h2>";
+        echo("<p>" . htmlspecialchars(substr($offre->getMission(),0,50)) . "</p> ");
 
-echo'</div>';
-
-
+        echo("<p> " . htmlspecialchars($offre->getStatutAlternance()) . " </p>");
+        echo("<h3 class='type'> Alternance </h3>");
+        echo "</div>";
+        echo "</a>";
+    }
+}
+echo '</div>';
+    require __DIR__ . "/{$contenuDetail}";
 echo '</div>';
 ?>

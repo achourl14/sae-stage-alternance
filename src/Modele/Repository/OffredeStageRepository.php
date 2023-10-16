@@ -27,33 +27,32 @@ class OffredeStageRepository extends AbstractRepository
 
     public function recupererOffreStageValide()
     {
+        $tableau = null;
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query("SELECT * FROM OffreDeStage WHERE Validation = 1");
-
         foreach ($pdoStatement as $objetFormatTableau) {
             $tableau[] = $this->construireDepuisTableau($objetFormatTableau);
         }
         return $tableau;
     }
 
-    public static function validerOffreDeStage(int $idStage) : void {
+    public static function validerOffreDeStage(OffredeStage $offreDeStage) : void {
 
         $sql = "UPDATE OffreDeStage SET Validation = :ValidationTag WHERE idStage = :idStageTag";
 
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
-        $offredeStage = (new OffreStageRepository())->recupererParClePrimaire();
 
-        if ($offredeStage->getValidation() == 0) {
+        if ($offreDeStage->getValidation() == 0) {
                $values = array(
                      "ValidationTag" => 1,
-                     "idStageTag" => $idStage,
+                     "idStageTag" => $offreDeStage->getIdStage(),
                );
                $pdoStatement->execute($values);
         }
         else{
                 $values = array(
                     "ValidationTag" => 0,
-                    "idStageTag" => $idStage,
+                    "idStageTag" => $offreDeStage->getIdStage(),
                 );
                 $pdoStatement->execute($values);
         }

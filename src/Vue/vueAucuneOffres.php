@@ -1,5 +1,5 @@
 <?php
 
-echo "<p> Aucune offres, veuillez revenir plus tard </p>";
+echo "<p> Aucune offres disponible, veuillez revenir plus tard </p>";
 
 ?>
