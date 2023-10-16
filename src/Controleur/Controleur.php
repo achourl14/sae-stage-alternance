@@ -174,12 +174,6 @@ class Controleur {
     public static function afficherFormulaireExterne(){
         self::afficherVue("vueGenerale.php", ["title" => "FormulaireExterne", "contenu" => "formulaireOffreExterneStage.html"]);
     }
-
-
-    /**
-     * @return void
-     */
-
 }
 
 ?>

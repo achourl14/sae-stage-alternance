@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="styles/style_accueil.css">
     <link rel="stylesheet" type="text/css" href="styles/style_form.css">
     <link rel="stylesheet" type="text/css" href="styles/consulterOffre.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/form_externe.css">
     <script src="styles/js/script.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -46,7 +47,7 @@ echo  '<div><a href="controleurFrontal.php" id='.$accueil.'>Accueil</a></div>';
 echo  '<div><a href="controleurFrontal.php?action=afficherFormulaire" id='.$form.'>Creer Offres Par Entreprise</a></div>';
 echo  '<div><a href="controleurFrontal.php?action=consulterOffre" id='.$offres.'>Offres</a></div>';
 echo  '<div><a href="controleurFrontal.php?action=consulterOffreSecretaire" id='.$valider.'>Valider offre</a></div>';
-echo  '<div><a href="" id='. $formExterne.'>Formulaire Externe</a></div>'
+echo  '<div><a href="controleurFrontal.php?action=afficherFormulaireExterne" id='. $formExterne.'>Formulaire Externe</a></div>'
 ?>
     <a class="connexion" id="inscrip" href="controleurFrontal.php?action=afficherInscription">Inscription</a>
     <a class="connexion" id="connex" href="controleurFrontal.php?action=afficherConnexion">Connexion</a>
