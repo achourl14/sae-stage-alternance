@@ -15,5 +15,4 @@ if(isset($_GET['action'])){
 }else{
     Controleur::afficherAccueil();
 }
-
 ?>
