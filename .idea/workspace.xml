@@ -4,15 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84102632-0c24-41d7-8f5e-6518e84410ab" name="Changes" comment="début finalisation sprint 1">
-      <change afterPath="$PROJECT_DIR$/web/styles/css/form_externe.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_08_10_2023_12_50__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_08_10_2023_12_50__Changes_.xml" afterDir="false" />
+    <list default="true" id="84102632-0c24-41d7-8f5e-6518e84410ab" name="Changes" comment="amélioration merge">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controleur/Controleur.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controleur/Controleur.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Vue/formulaireOffreExterneStage.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/Vue/formulaireOffreExterneStage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Vue/formulaireoffre.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/Vue/formulaireoffre.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Vue/vueGenerale.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Vue/vueGenerale.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/styles/css/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/styles/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/styles/css/form_externe.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/styles/css/form_externe.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/styles/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/styles/style_form.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/styles/css/style_form.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,12 +61,13 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "web.server",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\crepi\Desktop\BUT\BUT2\sae-stage-alternance\web\styles\css" />
       <recent name="C:\Users\Xavier\PhpstormProjects\sae-stage-alternance\web\styles\css" />
       <recent name="C:\Users\crepi\Desktop\conflit\sae-stage-alternance\src\Vue" />
       <recent name="C:\Users\Xavier\PhpstormProjects\sae-stage-alternance\web\font" />
@@ -94,6 +93,9 @@
       <workItem from="1697362333489" duration="3116000" />
       <workItem from="1697376219954" duration="1455000" />
       <workItem from="1697377695103" duration="7824000" />
+      <workItem from="1697469722597" duration="746000" />
+      <workItem from="1697540473675" duration="12000" />
+      <workItem from="1697567575169" duration="424000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -127,7 +129,15 @@
       <option name="project" value="LOCAL" />
       <updated>1696762545045</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="amélioration merge">
+      <option name="closed" value="true" />
+      <created>1697443049567</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1697443049567</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -139,6 +149,7 @@
     <MESSAGE value="animation bouton a faire" />
     <MESSAGE value="j'ai reussi à centrer le bordel" />
     <MESSAGE value="début finalisation sprint 1" />
-    <option name="LAST_COMMIT_MESSAGE" value="début finalisation sprint 1" />
+    <MESSAGE value="amélioration merge" />
+    <option name="LAST_COMMIT_MESSAGE" value="amélioration merge" />
   </component>
 </project>

@@ -1,8 +1,9 @@
+<div class="container">
 <form method="post" action="controleurFrontal.php?action=creerOffre">
     <h1 class="title"> Création d'une offre par une entreprise </h1>
     <div class="user-details">
         <div class="input-box">
-            <label for="idEntreprise" class="details">Numéro Siret de  l'entreprise qui propose l'offre </label>
+            <label for="idEntreprise" class="details">Numéro Siret de  l'entreprise </label>
             <input  type="text" placeholder="" name="Entreprise" id="idEntreprise" required/>
         </div>
 
@@ -13,7 +14,7 @@
 
         <div class="input-box">
             <label class="details" for="mission">Mission </label>
-            <textarea rows="5" cols="100" maxlength="500" id="mission" name="mission" required></textarea>
+            <textarea rows="5" cols="75" maxlength="500" id="mission" name="mission" required></textarea>
         </div>
         <div class="category input-box">
             <fieldset>
@@ -34,3 +35,4 @@
         </div>
     </div>
 </form>
+</div>

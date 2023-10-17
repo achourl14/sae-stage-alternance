@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title><?php echo "$title" ?></title>
-    <link rel="stylesheet" type="text/css" href="styles/style.css">
-    <link rel="stylesheet" type="text/css" href="styles/style_accueil.css">
-    <link rel="stylesheet" type="text/css" href="styles/style_form.css">
-    <link rel="stylesheet" type="text/css" href="styles/consulterOffre.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/style.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/style_accueil.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/style_form.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/consulterOffre.css">
     <link rel="stylesheet" type="text/css" href="styles/css/form_externe.css">
     <script src="styles/js/script.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">

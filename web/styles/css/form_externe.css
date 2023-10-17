@@ -61,16 +61,15 @@ form {
     margin-left: 10%;
 }
 
-.container{
+.container {
     max-width: 700px;
-    max-height: 50vh;
-    height: 100%;
     width: 100%;
     background-color: #fff;
     border-radius: 5px;
     margin: 5vh auto auto auto;
     box-shadow: 0 5px 10px rgba(0,0,0,0.15);
 }
+
 .container .title{
     font-size: 25px;
     font-weight: 500;
