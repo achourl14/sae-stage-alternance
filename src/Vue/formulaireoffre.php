@@ -4,7 +4,7 @@
     <div class="user-details">
         <div class="input-box">
             <label for="idEntreprise" class="details">Numéro Siret de  l'entreprise </label>
-            <input  type="text" placeholder="" name="Entreprise" id="idEntreprise" required/>
+            <input type="text" value=<?php use App\Lib\ConnexionUtilisateur; echo ConnexionUtilisateur::getLoginUtilisateurConnecte() ?> name="Entreprise" id="idEntreprise" required readonly/>
         </div>
 
         <div class="input-box">

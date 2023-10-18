@@ -46,7 +46,7 @@ if ($offresAlternance != null) {
             $buttonValider = "Validez Alternance";
             $classButton = "";
         }
-        echo "<a href='controleurFrontal.php?action=consulterOffre&idAlternance=".$offre->getIdAlternance()."'>";
+        echo "<a href='controleurFrontal.php?action=consulterOffreSecretaire&idAlternance=".$offre->getIdAlternance()."'>";
         echo '<div class="carte ' . $class . '">';
         echo("<h1>" . htmlspecialchars($offre->getNomOffre()) . "</h1>");
         echo "<h2> Entreprise : " . htmlspecialchars((new EntrepriseRepository())->recupererParClePrimaire($offre->getIdEntreprise())->getNomEntreprise()) . "</h2>";

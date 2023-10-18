@@ -1,27 +1,41 @@
 <?php
 namespace App\Controleur;
+use App\Lib\ConnexionUtilisateur;
+use App\Lib\MotDePasse;
 use App\Modele\DataObject\Alternance;
 use App\Modele\DataObject\Entreprise;
 use App\Modele\DataObject\OffreAlternance;
 use App\Modele\DataObject\OffredeStage;
 use App\Modele\DataObject\Stage;
+use App\Modele\HTTP\Session;
 use App\Modele\Repository\AlternanceRepository;
 use App\Modele\Repository\EntrepriseRepository;
+use App\Modele\Repository\EtudiantRepository;
 use App\Modele\Repository\OffreAlternanceRepository;
 use App\Modele\Repository\OffredeStageRepository;
+use App\Modele\Repository\SecretariatRepository;
 use App\Modele\Repository\StageRepository;
 
 
-class Controleur {
+class Controleur extends ControleurGenerique
+{
 
-    private static function afficherVue(string $cheminVue, array $parametres = []) : void {
-        extract($parametres); // Crée des variables à partir du tableau $parametres
-        require ("../src/Vue/$cheminVue"); // Charge la vue
-    }
-
-    public static function creerEntreprise() : void {
-        $entreprise = new Entreprise($_POST["num_siret"],$_POST["nom_entreprise"],$_POST["adresse"],$_POST["telephone"],$_POST["mail"],$_POST["interlocuteur"],$_POST["code_ape"],$_POST["activite"],$_POST["mdp"]);
-        EntrepriseRepository::sauvegarder($entreprise);
+    public static function creerEntreprise(): void
+    {
+        if ((new EntrepriseRepository())->recupererParClePrimaire($_POST['num_siret']) != null) {
+            echo '<div class="msgConfirmation"><p> ⚠️ Le numéro de Siret est déjà enregistré, veuillez contacter l\'IUT ⚠️  </p></div>';
+            self::afficherInscription();
+        } else {
+            if ($_POST['mdp'] != $_POST['mdp2']) {
+                echo '<div class="msgConfirmation"><p> ⚠️ Vos 2 champs de mot de passe ne correspondent pas ⚠️  </p></div>';
+                self::afficherInscription();
+            } else {
+                $entreprise = Entreprise::construireDepuisFormulaire($_POST);
+                EntrepriseRepository::sauvegarder($entreprise);
+                echo '<div class="msgConfirmation"><p> L\'entreprise a bien été enregistrée </p></div>';
+                self::afficherAccueil();
+            }
+        }
     }
 
     // creer un offre de Stage ou d'Alternance
@@ -33,11 +47,12 @@ class Controleur {
     {
         $entreprise = new Entreprise($_POST["num_siret"], $_POST["nom_entreprise"], $_POST["adresse"], $_POST["telephone"], $_POST["mail"], null, $_POST["code_ape"], null, null);
         EntrepriseRepository::sauvegarder($entreprise);
-        echo '<div class="msgConfirmation"><p> Vous avez bien inscrit votre entreprise du nom de : '.$_POST["nom_entreprise"].'</p></div>';
+        echo '<div class="msgConfirmation"><p> Vous avez bien inscrit votre entreprise du nom de : ' . $_POST["nom_entreprise"] . '</p></div>';
         self::afficherAccueil();
     }
 
-    public static function creerStageExterne() : void {
+    public static function creerStageExterne(): void
+    {
         $stage = $_POST['stage'];
 
         self::entrepriseStageExterne();
@@ -45,8 +60,7 @@ class Controleur {
         if ($stage == "Stage") {
             $alternanceStageEtudiant = new Stage($_POST["idEtudiantStage"], 0, $_POST["numMaitreStage"], $_POST["idTuteurStage"], $_POST["dateDebutStage"], $_POST["dateFinStage"], $_POST["remuneration"], $_POST["num_siret"]);
             StageRepository::sauvegarder($alternanceStageEtudiant);
-        }
-        else {
+        } else {
             $alternanceExterneEtudiant = new Alternance($_POST["idEtudiantStage"], 0, $_POST["numMaitreStage"], $_POST["idTuteurStage"], $_POST["dateDebutStage"], $_POST["dateFinStage"], $_POST["remuneration"], $_POST["num_siret"]);
             AlternanceRepository::sauvegarder($alternanceExterneEtudiant);
         }
@@ -61,15 +75,15 @@ class Controleur {
         $tableauStage = null;
         $tableauAlternance = null;
 
-        if($offresDeStage == null & $offresAlternance == null){
+        if ($offresDeStage == null & $offresAlternance == null) {
             self::afficherAucuneOffre();
-        }else{
-            if($offresDeStage != null){
+        } else {
+            if ($offresDeStage != null) {
                 foreach ($offresDeStage as $offreFormatTableau) {
                     $tableauStage[] = $offreFormatTableau;
                 }
             }
-            if($offresAlternance != null){
+            if ($offresAlternance != null) {
                 foreach ($offresAlternance as $offreFormatTableau) {
                     $tableauAlternance[] = $offreFormatTableau;
                 }
@@ -78,7 +92,8 @@ class Controleur {
         }
     }
 
-    public static function consulterOffreSecretaire() {
+    public static function consulterOffreSecretaire()
+    {
 
         $offresDeStage = (new OffredeStageRepository())->recuperer();
         $offresAlternance = (new OffreAlternanceRepository())->recuperer();
@@ -86,15 +101,15 @@ class Controleur {
         $tableauStage = null;
         $tableauAlternance = null;
 
-        if($offresDeStage == null & $offresAlternance == null){
+        if ($offresDeStage == null & $offresAlternance == null) {
             self::afficherAucuneOffre();
-        }else{
-            if($offresDeStage != null){
+        } else {
+            if ($offresDeStage != null) {
                 foreach ($offresDeStage as $offreFormatTableau) {
                     $tableauStage[] = $offreFormatTableau;
                 }
             }
-            if($offresAlternance != null){
+            if ($offresAlternance != null) {
                 foreach ($offresAlternance as $offreFormatTableau) {
                     $tableauAlternance[] = $offreFormatTableau;
                 }
@@ -103,77 +118,163 @@ class Controleur {
         }
     }
 
-    public static function validerOffreAlternance(){
+    public static function validerOffreAlternance()
+    {
         $offre = (new OffreAlternanceRepository())->recupererParClePrimaire($_GET['id']);
         OffreAlternanceRepository::validerOffreDeAlternance($offre);
         $msg = "";
-        if($offre->getValidation()){
+        if ($offre->getValidation()) {
             $msg = "invalider";
-        }else{
+        } else {
             $msg = "valider";
         }
-        echo '<div class="msgConfirmation"><p> Vous avez bien '.$msg.' l\'offre d\'Alternance : '.$offre->getNomOffre().'</p></div>';
+        echo '<div class="msgConfirmation"><p> Vous avez bien ' . $msg . ' l\'offre d\'Alternance : ' . $offre->getNomOffre() . '</p></div>';
         self::consulterOffreSecretaire();
     }
 
-    public static function validerOffreStage(){
-        $offre = (new OffredeStageRepository())->recupererParClePrimaire($_GET['id']);
-        OffredeStageRepository::validerOffreDeStage($offre);
-        $msg = "";
-        if($offre->getValidation()){
-            $msg = "invalider";
-        }else{
-            $msg = "valider";
+    public static function validerOffreStage()
+    {
+        if(ConnexionUtilisateur::estSecretariat()){
+            $offre = (new OffredeStageRepository())->recupererParClePrimaire($_GET['id']);
+            OffredeStageRepository::validerOffreDeStage($offre);
+            $msg = "";
+            if ($offre->getValidation()) {
+                $msg = "invalider";
+            } else {
+                $msg = "valider";
+            }
+            echo '<div class="msgConfirmation"><p> Vous avez bien ' . $msg . ' l\'offre de Stage : ' . $offre->getNomOffre() . '</p></div>';
+            self::consulterOffreSecretaire();
         }
-        echo '<div class="msgConfirmation"><p> Vous avez bien '.$msg.' l\'offre de Stage : '.$offre->getNomOffre().'</p></div>';
-        self::consulterOffreSecretaire();
+        else{
+            echo '<div class="msgConfirmation"><p>Vous n\'avez pas les droits de valider ou dévalider les offres</p></div>';
+        }
     }
 
-    public static function creerOffre(){
+    public static function creerOffre()
+    {
         $type = $_POST['offre'];
         $offre = null;
         $msg = "";
-        if ( $type == 1){
-            $offre = new OffredeStage($_POST["nomOffre"],$_POST["Entreprise"] ,$_POST["mission"] ,-9,-9,-9,0);
+        if ($type == 1) {
+            $offre = new OffredeStage($_POST["nomOffre"], $_POST["Entreprise"], $_POST["mission"], -9, -9, -9, 0);
             OffredeStageRepository::sauvegarder($offre);
             $msg = "de Stage";
-        }
-        else{
-            $offre = new OffreAlternance($_POST["nomOffre"],$_POST["Entreprise"], $_POST["mission"],-9,-9,-9,0);
+        } else {
+            $offre = new OffreAlternance($_POST["nomOffre"], $_POST["Entreprise"], $_POST["mission"], -9, -9, -9, 0);
             OffreAlternanceRepository::sauvegarder($offre);
             $msg = "d'Alternance";
         }
-        echo '<div class="msgConfirmation"><p> Vous avez bien valider l\'offre '.$msg.' : '.$offre->getNomOffre().'</p></div>';
+        echo '<div class="msgConfirmation"><p> Vous avez bien valider l\'offre ' . $msg . ' : ' . $offre->getNomOffre() . '</p></div>';
         self::consulterOffre();
     }
 
-    public static function afficherAccueil(){
-        self::afficherVue("vueGenerale.php",["contenu" => "index.html","title" => "Accueil"]);
+    public static function connecter()
+    {
+        $cle = "";
+
+        if (!isset($_POST['login']) || !isset($_POST['mdp'])) {
+            echo '<div class="msgConfirmation"><p>Veuillez rentrer l\'ensemble des champs</p></div>';
+        }
+
+        if ($_POST['type_connexion'] == 'secretariat') {
+            $utilisateurAVerifier = (new SecretariatRepository())->recupererParClePrimaire($_POST['login']);
+            $cle="secretariat";
+        } else if ($_POST['type_connexion'] == 'etudiant') {
+            $utilisateurAVerifier = (new EtudiantRepository())->recupererParClePrimaire($_POST['login']);
+            $cle = "etudiant";
+        } else if ($_POST['type_connexion'] == 'entreprise') {
+            $utilisateurAVerifier = (new EntrepriseRepository())->recupererParClePrimaire($_POST['login']);
+            $cle = "entreprise";
+        }else{
+            echo '<div class="msgConfirmation"><p>Erreur au niveau type de connexion</p></div>';
     }
 
-    public static function afficherInscription(){
+        if ($utilisateurAVerifier == null) {
+            echo '<div class="msgConfirmation"><p>Aucun compte de ce login existe</p></div>';
+        }else{
+            $mdpCorrect = MotDePasse::verifier($_POST['mdp'], $utilisateurAVerifier->getMdp());
+            if (!$mdpCorrect) {
+                echo '<div class="msgConfirmation"><p>Mot de passe incorrect</p></div>';
+            } else {
+                ConnexionUtilisateur::connecter($utilisateurAVerifier->getLogin());
+                $session = Session::getInstance();
+                $session->enregistrer($cle, 1);
+            }
+        }
+
+
+        self::afficherAccueil();
+    }
+
+    public static function deconnecter()
+    {
+        ConnexionUtilisateur::deconnecter();
+    }
+
+    public static function afficherAccueil()
+    {
+        self::afficherVue("vueGenerale.php", ["contenu" => "index.html", "title" => "Accueil"]);
+    }
+
+    public static function afficherInscription()
+    {
         self::afficherVue("inscription.html");
     }
 
-    public static function afficherFormulaire(){
-        self::afficherVue("vueGenerale.php",["contenu" => "formulaireoffre.html","title" => "Création Offres"]);
+    public static function afficherFormulaire()
+    {
+        self::afficherVue("vueGenerale.php", ["contenu" => "formulaireoffre.php", "title" => "Création Offres"]);
     }
 
-    public static function afficherConnexion(){
+    public static function afficherConnexion()
+    {
         self::afficherVue("connexion.html");
     }
 
-    public static function afficherAucuneOffre(){
-        self::afficherVue("vueGenerale.php",["title" => "Indisponible", "contenu" => "vueAucuneOffres.php"]);
+    public static function afficherAucuneOffre()
+    {
+        self::afficherVue("vueGenerale.php", ["title" => "Indisponible", "contenu" => "vueAucuneOffres.php"]);
     }
 
-    public static function afficherDetail(){
+    public static function afficherDetail()
+    {
         self::afficherVue("vueGenerale.php", ["title" => "Detail offre", "contenu" => "vueDetail.php"]);
     }
 
-    public static function afficherFormulaireExterne(){
+    public static function afficherFormulaireExterne()
+    {
         self::afficherVue("vueGenerale.php", ["title" => "FormulaireExterne", "contenu" => "formulaireOffreExterneStage.html"]);
     }
-}
 
-?>
+    public static function seDeconnecter(){
+        ConnexionUtilisateur::deconnecter();
+        echo '<div class="msgConfirmation"><p>Vous êtes  bien déconnecté</p></div>';
+        self::afficherAccueil();
+    }
+
+    public static function estAdmin(){
+        ConnexionUtilisateur::connecter('admin');
+        $cle = 'secretariat';
+        $session = Session::getInstance();
+        $session->enregistrer($cle, 1);
+        $cle = "etudiant";
+        $session->enregistrer($cle, 1);
+        $cle = "entreprise";
+        $session->enregistrer($cle, 1);
+        self::afficherAccueil();
+    }
+
+//    public static function afficherSecretaire(){
+//        self::afficherVue("InscriptionSecretariat.html");
+//    }
+//
+//    public static function creerSecretaire(): void
+//    {
+//        $secretaire = Secretariat::construireDepuisFormulaire($_POST);
+//        SecretariatRepository::sauvegarder($secretaire);
+//        echo '<div class="msgConfirmation"><p> Le Secrétaire a bien été enregistrée </p></div>';
+//
+//    }
+
+}

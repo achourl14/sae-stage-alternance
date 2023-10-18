@@ -42,8 +42,8 @@ class StageRepository extends AbstractRepository
     }
 
     // si utiliser reprendre la fonction entière
-    public function construireDepuisTableau(array $stageFormatEtudiant) : Stage {
-        $stage = new Stage($stageFormatEtudiant['codeINE'],$stageFormatEtudiant['codeEtudiant'],$stageFormatEtudiant['promotion'],$stageFormatEtudiant['groupe'],$stageFormatEtudiant['nomEtudiant'],$stageFormatEtudiant['prenomEtudiant'],$stageFormatEtudiant['mailEtudiant'],$stageFormatEtudiant['telephoneEtudiant']);
+    public function construireDepuisTableau(array $stageFormatSecretariat) : Stage {
+        $stage = new Stage($stageFormatSecretariat['codeINE'],$stageFormatSecretariat['codeEtudiant'],$stageFormatSecretariat['promotion'],$stageFormatSecretariat['groupe'],$stageFormatSecretariat['nomEtudiant'],$stageFormatSecretariat['prenomEtudiant'],$stageFormatSecretariat['mailEtudiant'],$stageFormatSecretariat['telephoneEtudiant']);
         return $stage;
     }
 }

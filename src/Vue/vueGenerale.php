@@ -24,6 +24,12 @@
 </div>
 
 <?php
+
+use App\Lib\ConnexionUtilisateur;
+
+// BOUTON DEBUG
+$DEBUG = true;
+
 $accueil = "";
 $form = "";
 $offres = "";
@@ -32,30 +38,48 @@ $formExterne ="";
 
 if($contenu == "index.html"){
     $accueil = "actuel";
-}else if($contenu == "formulaireoffre.html"){
+}else if($contenu == "formulaireoffre.php"){
     $form = "actuel";
 } else if($contenu == "vueValiderOffre.php"){
     $valider = "actuel";
 } else if ($contenu == "vueOffres.php"){
     $offres = "actuel";
+}else{
+    $formExterne = 'actuel';
 }
 
 echo  '<nav>';
 echo  '<img src="img/LogoIutMontpellier.png" />';
 echo  '<h1> Stage / Alternance </h1>';
 echo  '<div><a href="controleurFrontal.php" id='.$accueil.'>Accueil</a></div>';
-echo  '<div><a href="controleurFrontal.php?action=afficherFormulaire" id='.$form.'>Creer Offres Par Entreprise</a></div>';
+if(ConnexionUtilisateur::estEntreprise()){
+    echo  '<div><a href="controleurFrontal.php?action=afficherFormulaire" id='.$form.'>Creer Offres Par Entreprise</a></div>';
+}
 echo  '<div><a href="controleurFrontal.php?action=consulterOffre" id='.$offres.'>Offres</a></div>';
-echo  '<div><a href="controleurFrontal.php?action=consulterOffreSecretaire" id='.$valider.'>Valider offre</a></div>';
-echo  '<div><a href="controleurFrontal.php?action=afficherFormulaireExterne" id='. $formExterne.'>Formulaire Externe</a></div>'
+if(ConnexionUtilisateur::estSecretariat()){
+    echo  '<div><a href="controleurFrontal.php?action=consulterOffreSecretaire" id='.$valider.'>Valider offre</a></div>';
+}
+if(ConnexionUtilisateur::estEtudiant()){
+    echo  '<div><a href="controleurFrontal.php?action=afficherFormulaireExterne" id='. $formExterne.'>Formulaire Externe</a></div>';
+}
+
+if(!ConnexionUtilisateur::estConnecte()){
+    echo '<a class="connexion" id="inscrip" href="controleurFrontal.php?action=afficherInscription">Inscription</a>';
+    echo '<a class="connexion" id="connex" href="controleurFrontal.php?action=afficherConnexion">Connexion</a>';
+}else{
+    echo '<a class="connexion" id="connex" href="controleurFrontal.php?action=seDeconnecter">Se déconnecter</a>';
+}
+
 ?>
-    <a class="connexion" id="inscrip" href="controleurFrontal.php?action=afficherInscription">Inscription</a>
-    <a class="connexion" id="connex" href="controleurFrontal.php?action=afficherConnexion">Connexion</a>
 </nav>
 
 
 <div class="contenupage">
+
     <?php
+    if($DEBUG == true){
+        echo "<a href='controleurFrontal.php?action=estAdmin'>Admin</a>";
+    }
     require __DIR__ . "/{$contenu}";
     ?>
 

@@ -2,11 +2,11 @@
 
 namespace App\Modele\Repository;
 
-use App\Modele\DataObject\Etudiant;
+use App\Modele\DataObject\Secretariat;
 
 class EtudiantRepository extends AbstractRepository
 {
-    public function sauvegarder(Etudiant $etudiant) : void {
+    public function sauvegarder(Secretariat $etudiant) : void {
         $sql = "INSERT INTO Etudiant VALUES(:codeINETag, :codeEtudiantTag, :promotionTag, :groupeTag, :nomEtudiantTag, :prenomEtudiantTag, :mailEtudiantTag, :telephoneEtudiantTag, :dateNaissaneEtudiantTag, :motDePasseTag)";
 
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
@@ -27,8 +27,8 @@ class EtudiantRepository extends AbstractRepository
         $pdoStatement->execute($values);
     }
 
-    public function construireDepuisTableau(array $etudiantFormatTableau) : Etudiant {
-        $offreDeStage = new Etudiant($etudiantFormatTableau['codeINE'],$etudiantFormatTableau['codeEtudiant'],$etudiantFormatTableau['promotion'],$etudiantFormatTableau['groupe'],$etudiantFormatTableau['nomEtudiant'],$etudiantFormatTableau['prenomEtudiant'],$etudiantFormatTableau['mailEtudiant'],$etudiantFormatTableau['telephoneEtudiant'],$etudiantFormatTableau['dateNaissanceEtudiant'],$etudiantFormatTableau['motDePasse']);
+    public function construireDepuisTableau(array $setudianttFormatTableau) : Secretariat {
+        $offreDeStage = new Secretariat($setudianttFormatTableau['codeINE'],$setudianttFormatTableau['codeEtudiant'],$setudianttFormatTableau['promotion'],$setudianttFormatTableau['groupe'],$setudianttFormatTableau['nomEtudiant'],$setudianttFormatTableau['prenomEtudiant'],$setudianttFormatTableau['mailEtudiant'],$setudianttFormatTableau['telephoneEtudiant'],$setudianttFormatTableau['dateNaissanceEtudiant'],$setudianttFormatTableau['motDePasse']);
         return $offreDeStage;
     }
 

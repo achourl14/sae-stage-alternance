@@ -2,9 +2,11 @@
 
 namespace App\Modele\DataObject;
 
+use App\Lib\MotDePasse;
+
 class Entreprise extends AbstractDataObject
 {
-    private int $num_siret;
+    private string $num_siret;
     private string $nom_entreprise;
     private string $adresse;
     private int $telephone;
@@ -25,7 +27,7 @@ class Entreprise extends AbstractDataObject
      * @param  $activite
      * @param  $mdp
      */
-    public function __construct(int $num_siret,string $nom_entreprise, string $adresse, int $telephone, string $mail, $interlocuteur, string $code_ape, $activite, $mdp)
+    public function __construct($num_siret,string $nom_entreprise, string $adresse, int $telephone, string $mail, $interlocuteur, string $code_ape, $activite, $mdp)
     {
         $this->num_siret = $num_siret;
         $this->nom_entreprise = $nom_entreprise;
@@ -43,7 +45,12 @@ class Entreprise extends AbstractDataObject
         return $this->nom_entreprise;
     }
 
-    public function getNumSiret(): int
+    public function getLogin(): string
+    {
+        return $this->num_siret;
+    }
+
+    public function getNumSiret(): string
     {
         return $this->num_siret;
     }
@@ -81,6 +88,11 @@ class Entreprise extends AbstractDataObject
     public function getMdp(): ? string
     {
         return $this->mdp;
+    }
+
+    public static function construireDepuisFormulaire(array $tableauFormulaire) : Entreprise{
+        $mdpHache = MotDePasse::hacher($tableauFormulaire['mdp']);
+        return new Entreprise($tableauFormulaire["num_siret"],$tableauFormulaire["nom_entreprise"],$tableauFormulaire["adresse"],$tableauFormulaire["telephone"],$tableauFormulaire["mail"],$tableauFormulaire["interlocuteur"],$tableauFormulaire["code_ape"],$tableauFormulaire["activite"],$mdpHache);
     }
 
     public function formatTableau(): array

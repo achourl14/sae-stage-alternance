@@ -34,6 +34,11 @@ class Etudiant extends AbstractDataObject
         return $this->codeINE;
     }
 
+    public function getLogin(): string
+    {
+        return $this->codeINE;
+    }
+
     public function getNumEtudiant(): int
     {
         return $this->numEtudiant;
@@ -64,7 +69,7 @@ class Etudiant extends AbstractDataObject
         return $this->email;
     }
 
-    public function getMotDePasse(): string
+    public function getMdp(): string
     {
         return $this->motDePasse;
     }
@@ -91,7 +96,7 @@ class Etudiant extends AbstractDataObject
             "mailEtudiantTag" => $this->getEmail(),
             "telephoneEtudiantTag" => $this->getNumTel(),
             "dateNaissanceEtudiantTag" => $this->getDateDeNaissance(),
-            "motDePasseTag" => $this->getMotDePasse()
+            "motDePasseTag" => $this->getMdp()
         );
     }
 

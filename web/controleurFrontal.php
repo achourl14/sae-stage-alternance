@@ -1,6 +1,7 @@
 <?php
 require_once( __DIR__ .'/../src/Lib/Psr4AutoloaderClass.php');
 use App\Controleur\Controleur;
+use App\Lib\MotDePasse;
 
 // initialisation
 $loader = new App\Lib\Psr4AutoloaderClass();
