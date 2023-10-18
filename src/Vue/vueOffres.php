@@ -25,6 +25,7 @@ if ($offresStage != null) {
     }
 }
 
+
 if ($offresAlternance != null) {
     foreach ($offresAlternance as $offre) {
         echo "<a href='controleurFrontal.php?action=consulterOffre&idAlternance=".$offre->getIdAlternance()."'>";
