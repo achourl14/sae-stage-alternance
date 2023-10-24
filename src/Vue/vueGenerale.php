@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title><?php echo "$title" ?></title>
     <link rel="stylesheet" type="text/css" href="styles/css/style.css">
-    <link rel="stylesheet" type="text/css" href="styles/css/style_accueil.css">
     <link rel="stylesheet" type="text/css" href="styles/css/style_form.css">
     <link rel="stylesheet" type="text/css" href="styles/css/consulterOffre.css">
     <link rel="stylesheet" type="text/css" href="styles/css/form_externe.css">
