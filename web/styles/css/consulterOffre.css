@@ -126,7 +126,7 @@
 
 .page a{
     color: white;
-    background: #202020;
+    background: #F44336;
     margin-left: 10px;
     margin-right: 10px;
     border-radius: 10px 10px;
@@ -135,7 +135,7 @@
 
 .page p{
     color: white;
-    background: #202020;
+    background: #F44336;
     border-radius: 10px 10px;
     padding:10px;
 }
