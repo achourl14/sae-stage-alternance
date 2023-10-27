@@ -1,57 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
-form{
-    font-family: 'Poppins',sans-serif;
-}
-form .user-details .input-box{
+form .user-details .input-textarea{
     margin-bottom: 15px;
-    width: calc(100% / 2 - 20px);
+    width: calc(100%);
 }
-form .input-box label.details{
+
+form .user-details .input-textarea label.details{
     display: block;
     font-weight: 500;
     margin-bottom: 5px;
 }
-.user-details .input-box input{
-    height: 45px;
+
+
+form select{
     width: 100%;
-    outline: none;
-    font-size: 16px;
-    border-radius: 5px;
-    padding-left: 15px;
+    min-height: 50px;
     border: 1px solid #ccc;
+    border-radius: 5px;
     border-bottom-width: 2px;
-    transition: all 0.3s ease;
-}
-.user-details .input-box input:focus,
-.user-details .input-box input:valid{
-    border-color: #F44336;
-}
-form .category{
-    display: flex;
-    width: 80%;
-    margin: 14px 0 ;
-    justify-content: space-between;
+    padding-left: 15px;
+    font-size: 16px;
+    background-color: white;
 }
 
-form .button{
-    height: 45px;
-    /*margin: 35px 50% 35px 0;*/
-}
-form .button input{
-    height: 100%;
+textarea{
+    height: 150px;
     width: 100%;
-    border-radius: 5px;
-    border: none;
-    color: #fff;
-    font-size: 18px;
-    font-weight: 500;
+    resize : none;
+    position: relative;
     letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    background-color: #F44336;
 }
-form .button input:hover{
-    transform: scale(0.97);
-    background-color:#F44336;
+textarea:focus,
+textarea:valid{
+    border-color: #F44336;
 }

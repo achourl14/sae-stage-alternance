@@ -52,9 +52,9 @@ echo  '<img src="img/LogoIutMontpellier.png" />';
 echo  '<h1> Stage / Alternance </h1>';
 echo  '<div><a href="controleurFrontal.php" id='.$accueil.'>Accueil</a></div>';
 if(ConnexionUtilisateur::estEntreprise()){
-    echo  '<div><a href="controleurFrontal.php?action=afficherFormulaire" id='.$form.'>Creer Offres Par Entreprise</a></div>';
+    echo  '<div><a href="controleurFrontal.php?action=afficherFormulaire" id='.$form.'>Creer Offre Par Entreprise</a></div>';
 }
-echo  '<div><a href="controleurFrontal.php?action=consulterOffre" id='.$offres.'>Offres</a></div>';
+echo  '<div><a href="controleurFrontal.php?action=consulterOffre" id='.$offres.'>Offre</a></div>';
 if(ConnexionUtilisateur::estSecretariat()){
     echo  '<div><a href="controleurFrontal.php?action=consulterOffreSecretaire" id='.$valider.'>Valider offre</a></div>';
 }
@@ -68,10 +68,8 @@ if(!ConnexionUtilisateur::estConnecte()){
 }else{
     echo '<a class="connexion" id="connex" href="controleurFrontal.php?action=seDeconnecter">Se déconnecter</a>';
 }
-
+echo '</nav>';
 ?>
-</nav>
-
 
 <div class="contenupage">
 
