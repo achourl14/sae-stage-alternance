@@ -69,15 +69,15 @@ echo '<form method="post" action="controleurFrontal.php?action=filtrer">
 
 
 echo "<div class='page'>";
-echo "<div> <a class='' href='controleurFrontal.php?action=consulterOffreSecretaire&page=" . $pageActuelle - 1 . "'> page précédente </a> </div>";
+echo "<div> <a class='' href='controleurFrontal.php?action=offres&page=" . $pageActuelle - 1 . "'> page précédente </a> </div>";
 if ($pageActuelle != 1) {
-    echo "<div> <a class='' href='controleurFrontal.php?action=consulterOffreSecretaire&page=" . $pageActuelle - 1 . "'>" . $pageActuelle - 1 . "</a> </div>";
+    echo "<div> <a class='' href='controleurFrontal.php?action=offres&page=" . $pageActuelle - 1 . "'>" . $pageActuelle - 1 . "</a> </div>";
 }
 echo "<div> <p> $pageActuelle </p> </div>";
 if ($pageActuelle != $nbrePages) {
-    echo "<div> <a class='' href='controleurFrontal.php?action=consulterOffreSecretaire&page=" . $pageActuelle + 1 . "'>" . $pageActuelle + 1 . "</a> </div>";
+    echo "<div> <a class='' href='controleurFrontal.php?action=offres&page=" . $pageActuelle + 1 . "'>" . $pageActuelle + 1 . "</a> </div>";
 }
-echo "<div> <a class='' href='controleurFrontal.php?action=consulterOffreSecretaire&page=" . $pageActuelle + 1 . "'> page suivante </a> </div>";
+echo "<div> <a class='' href='controleurFrontal.php?action=offres&page=" . $pageActuelle + 1 . "'> page suivante </a> </div>";
 echo "</div>";
 
 

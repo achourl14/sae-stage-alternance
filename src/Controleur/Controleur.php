@@ -127,7 +127,7 @@ class Controleur extends ControleurGenerique
                 $msg = "valider";
             }
             echo '<div class="msgConfirmation"><p> Vous avez bien ' . $msg . ' l\'offre de Stage : ' . $offre->getNomOffre() . '</p></div>';
-            self::consulterOffreSecretaire();
+            self::offres();
         } else {
             echo '<div class="msgConfirmation"><p>Vous n\'avez pas les droits de valider ou dévalider les offres</p></div>';
         }
@@ -160,7 +160,7 @@ class Controleur extends ControleurGenerique
 //            move_uploaded_file($nom, $nomdestination);
 //        }
         echo '<div class="msgConfirmation"><p> Vous avez bien créer votre offre : ' . $offre->getNomOffre() . '</p></div>';
-        self::consulterOffre();
+        self::offres();
     }
 
     public static function filtrer(){

@@ -55,7 +55,10 @@ echo  '<div><a href="controleurFrontal.php" id='.$accueil.'>Accueil</a></div>';
 if(ConnexionUtilisateur::estEntreprise()){
     echo  '<div><a href="controleurFrontal.php?action=afficherFormulaire" id='.$form.'>Creer Offre Par Entreprise</a></div>';
 }
-echo '<div><a href="controleurFrontal.php?action=offres">offres</a></div>';
+if(!ConnexionUtilisateur::estSecretariat()){
+    echo '<div><a href="controleurFrontal.php?action=offres">offres</a></div>';
+}
+
 if(ConnexionUtilisateur::estSecretariat()){
     echo '<div><a id='.$gestion.'>Gestionnaire ▾</a>';
     echo '<div class="submenu">';
