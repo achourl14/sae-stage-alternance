@@ -27,6 +27,7 @@ form .input-box label.details{
 .user-details .input-box input:valid{
     border-color: #F44336;
 }
+
 form .category{
     display: flex;
     width: 80%;
@@ -36,7 +37,7 @@ form .category{
 
 form .button{
     height: 45px;
-    /*margin: 35px 50% 35px 0;*/
+    margin: 35px 0 35px 0;
 }
 form .button input{
     height: 100%;
@@ -54,4 +55,65 @@ form .button input{
 form .button input:hover{
     transform: scale(0.97);
     background-color:#F44336;
+}
+
+form .user-details .input-textarea{
+    margin-bottom: 15px;
+    width: calc(100%);
+}
+
+form .user-details .input-box-search{
+    margin-bottom: 15px;
+    width: calc(100% /3 - 20px);
+}
+
+form .input-box-search span.details{
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.user-details .input-box-search input{
+    height: 45px;
+    width: 100%;
+    outline: none;
+    font-size: 16px;
+    border-radius: 5px;
+    padding-left: 15px;
+    border: 1px solid #ccc;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+}
+.user-details .input-box-search input:focus{
+    border-color: #F44336;
+}
+
+
+form .user-details .input-textarea label.details{
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+
+form select{
+    width: 100%;
+    min-height: 50px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    border-bottom-width: 2px;
+    padding-left: 15px;
+    font-size: 16px;
+    background-color: white;
+}
+
+textarea{
+    height: 150px;
+    width: 100%;
+    resize : none;
+    position: relative;
+    letter-spacing: 1px;
+}
+textarea:focus,
+textarea:valid{
+    border-color: #F44336;
 }

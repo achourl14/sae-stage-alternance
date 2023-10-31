@@ -2,20 +2,19 @@
 
 namespace App\Controleur;
 
+use App\ClassTest;
 use App\Lib\ConnexionUtilisateur;
 use App\Lib\MotDePasse;
 use App\Modele\DataObject\Alternance;
 use App\Modele\DataObject\Entreprise;
-use App\Modele\DataObject\OffreAlternance;
-use App\Modele\DataObject\OffredeStage;
+use App\Modele\DataObject\Offre;
 use App\Modele\DataObject\Stage;
 use App\Modele\HTTP\Session;
 use App\Modele\Repository\AbstractRepository;
 use App\Modele\Repository\AlternanceRepository;
 use App\Modele\Repository\EntrepriseRepository;
 use App\Modele\Repository\EtudiantRepository;
-use App\Modele\Repository\OffreAlternanceRepository;
-use App\Modele\Repository\OffredeStageRepository;
+use App\Modele\Repository\OffreRepository;
 use App\Modele\Repository\SecretariatRepository;
 use App\Modele\Repository\StageRepository;
 
@@ -71,112 +70,88 @@ class Controleur extends ControleurGenerique
 
     public static function consulterOffre()
     {
-        $offresDeStage = (new OffredeStageRepository())->recupererOffreStageValide();
-        $offresAlternance = (new OffreAlternanceRepository())->recupererOffreAlternanceValide();
+        $offres = (new OffreRepository())->recupererOffreValide();
 
         $tableauTout = null;
-        $tableauParPage = null;
-        if ($offresDeStage != null) {
-            foreach ($offresDeStage as $offreFormatTableau) {
-                $tableauTout[] = $offreFormatTableau;
-            }
-        }
-        if($offresAlternance != null){
-            foreach ($offresAlternance as $offreFormatTableau) {
-                $tableauTout[] = $offreFormatTableau;
-            }
-        }
 
-        //Pagination
-        $nombresOffre = count($offresDeStage) + count($offresAlternance);
-        $nbrePages = ceil($nombresOffre / 9);
-
-        $page = 1;
-        if (isset($_GET['page'])) {
-            $page = $_GET['page'];
-            if ($page > $nbrePages) {
-                $page = 1;
-            }
-        }
-        $y = $page * 9;
-        if($page * 9 > $nombresOffre){
-            $y = $nombresOffre;
-        }
-
-        if ($tableauTout == null) {
-            self::afficherAucuneOffre();
+        if ($offres == null) {
+            self::afficherErreur("Aucune offres disponible, veuillez revenir plus tard");
         } else {
-            for ($i = ($page-1) * 9; $i <$y; $i++) {
+            foreach ($offres as $offreFormatTableau) {
+                $tableauTout[] = $offreFormatTableau;
+            }
+
+            $tableauParPage = null;
+
+            //Pagination
+            $nombresOffre = count($offres);
+            $nbrePages = ceil($nombresOffre / 9);
+
+            $page = 1;
+            if (isset($_GET['page'])) {
+                $page = $_GET['page'];
+                if ($page > $nbrePages) {
+                    $page = $nbrePages;
+                }else if ($page <= 1){
+                    $page= 1;
+                }
+            }
+            $y = $page * 9;
+            if ($page * 9 > $nombresOffre) {
+                $y = $nombresOffre;
+            }
+
+            for ($i = ($page - 1) * 9; $i < $y; $i++) {
                 $tableauParPage[] = $tableauTout[$i];
             }
-            self::afficherVue("vueGenerale.php", ["contenu" => "vueOffres.php", "offreses" => $tableauParPage, "nbrePages" => $nbrePages ,"pageActuelle" => $page,"title" => "Liste des offres"]);
+            self::afficherVue("vueGenerale.php", ["contenu" => "vueOffres.php", "offreses" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Liste des offres"]);
         }
     }
 
     public static function consulterOffreSecretaire()
     {
 
-        $offresDeStage = (new OffredeStageRepository())->recuperer();
-        $offresAlternance = (new OffreAlternanceRepository())->recuperer();
+        $offres = (new OffreRepository())->recuperer();
 
-        $tableauTout = null;
-        $tableauParPage = null;
-        if ($offresDeStage != null) {
-            foreach ($offresDeStage as $offreFormatTableau) {
-                $tableauTout[] = $offreFormatTableau;
-            }
-        }
-        if($offresAlternance != null){
-            foreach ($offresAlternance as $offreFormatTableau) {
-                $tableauTout[] = $offreFormatTableau;
-            }
-        }
-
-        //Pagination
-        $nombresOffre = count($offresDeStage) + count($offresAlternance);
-        $nbrePages = ceil($nombresOffre / 9);
-
-        $page = 1;
-        if (isset($_GET['page'])) {
-            $page = $_GET['page'];
-            if ($page > $nbrePages) {
-                $page = 1;
-            }
-        }
-        $y = $page * 9;
-        if($page * 9 > $nombresOffre){
-            $y = $nombresOffre;
-        }
-
-        if ($tableauTout == null) {
-            self::afficherAucuneOffre();
+        if ($offres == null) {
+            self::afficherErreur("Aucune offres disponible, veuillez revenir plus tard");
         } else {
-            for ($i = ($page-1) * 9; $i <$y; $i++) {
+            foreach ($offres as $offreFormatTableau) {
+                $tableauTout[] = $offreFormatTableau;
+            }
+
+            $tableauParPage = null;
+
+            //Pagination
+            $nombresOffre = count($offres);
+            $nbrePages = ceil($nombresOffre / 9);
+
+            $page = 1;
+            if (isset($_GET['page'])) {
+                $page = $_GET['page'];
+                if ($page > $nbrePages) {
+                    $page = $nbrePages;
+                }else if ($page <= 1){
+                    $page= 1;
+                }
+            }
+            $y = $page * 9;
+            if ($page * 9 > $nombresOffre) {
+                $y = $nombresOffre;
+            }
+
+            for ($i = ($page - 1) * 9; $i < $y; $i++) {
                 $tableauParPage[] = $tableauTout[$i];
             }
-            self::afficherVue("vueGenerale.php", ["contenu" => "vueValiderOffre.php", "offreses" => $tableauParPage, "nbrePages" => $nbrePages ,"pageActuelle" => $page, "title" => "Liste des offres à valider"]);
+            self::afficherVue("vueGenerale.php", ["contenu" => "vueValiderOffre.php", "offreses" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Liste des offres à valider"]);
         }
     }
 
-    public static function validerOffreAlternance()
-    {
-        $offre = (new OffreAlternanceRepository())->recupererParClePrimaire($_GET['id']);
-        OffreAlternanceRepository::validerOffreDeAlternance($offre);
-        $msg = "";
-        if ($offre->getValidation()) {
-            $msg = "invalider";
-        } else {
-            $msg = "valider";
-        }
-        echo '<div class="msgConfirmation"><p> Vous avez bien ' . $msg . ' l\'offre d\'Alternance : ' . $offre->getNomOffre() . '</p></div>';
-        self::consulterOffreSecretaire();
-    }
-
-    public static function validerOffreStage()
+    public static function validerOffre()
     {
         if (ConnexionUtilisateur::estSecretariat()) {
-            $offre = (new OffredeStageRepository())->recupererParClePrimaire($_GET['id']);
-            OffredeStageRepository::validerOffreDeStage($offre);
+            $offre = (new OffreRepository())->recupererParClePrimaire($_GET['id']);
+            OffreRepository::validerOffre($offre);
             $msg = "";
             if ($offre->getValidation()) {
                 $msg = "invalider";
@@ -192,19 +167,31 @@ class Controleur extends ControleurGenerique
 
     public static function creerOffre()
     {
-        $type = $_POST['offre'];
         $offre = null;
-        $msg = "";
-        if ($type == 1) {
-            $offre = new OffredeStage($_POST["nomOffre"], $_POST["Entreprise"], $_POST["mission"], -9, -9, -9, 0);
-            OffredeStageRepository::sauvegarder($offre);
-            $msg = "de Stage";
-        } else {
-            $offre = new OffreAlternance($_POST["nomOffre"], $_POST["Entreprise"], $_POST["mission"], -9, -9, -9, 0);
-            OffreAlternanceRepository::sauvegarder($offre);
-            $msg = "d'Alternance";
-        }
-        echo '<div class="msgConfirmation"><p> Vous avez bien valider l\'offre ' . $msg . ' : ' . $offre->getNomOffre() . '</p></div>';
+        $offre = new Offre(-9, $_POST["idEntreprise"], $_POST["nomOffre"], $_POST["mission"], -9, -9, $_POST["dateDebut"], $_POST["dateFin"], $_POST["remuneration"], $_POST["but_annee"], $_POST["parcours"], $_POST["type"], 0);
+        OffreRepository::sauvegarder($offre);
+
+//        if ($_FILES['fichier']['error']) {
+//            switch ($_FILES['fichier']['error']){
+//                case 1: // UPLOAD_ERR_INI_SIZE
+//                    echo "Le fichier dépasse la limite autorisée par le serveur (fichier php.ini) !";
+//                    break;
+//                case 2: // UPLOAD_ERR_FORM_SIZE
+//                    echo "Le fichier dépasse la limite autorisée dans le formulaire HTML !";
+//                    break;
+//                case 3: // UPLOAD_ERR_PARTIAL
+//                    echo "L'envoi du fichier a été interrompu pendant le transfert !";
+//                    break;
+//                case 4: // UPLOAD_ERR_NO_FILE
+//                    echo "Le fichier que vous avez envoyé a une taille nulle !";
+//                    break;
+//            }
+//        }else{
+//            $nom = $_FILES['fichier']['tmp_name'];
+//            $nomdestination = '/FichierOffre';
+//            move_uploaded_file($nom, $nomdestination);
+//        }
+        echo '<div class="msgConfirmation"><p> Vous avez bien créer votre offre : ' . $offre->getNomOffre() . '</p></div>';
         self::consulterOffre();
     }
 
@@ -290,6 +277,11 @@ class Controleur extends ControleurGenerique
         ConnexionUtilisateur::deconnecter();
     }
 
+    public static function afficherErreur($message){
+        echo '<div class="msgConfirmation"><p>'.$message.'</p></div>';
+        self::afficherAccueil();
+    }
+
     public static function afficherAccueil()
     {
         self::afficherVue("vueGenerale.php", ["contenu" => "index.html", "title" => "Accueil"]);
@@ -302,17 +294,12 @@ class Controleur extends ControleurGenerique
 
     public static function afficherFormulaire()
     {
-        self::afficherVue("vueGenerale.php", ["contenu" => "formulaireoffre.php", "title" => "Création Offres"]);
+        self::afficherVue("vueGenerale.php", ["contenu" => "formulaireoffre.php", "title" => "Création Offre"]);
     }
 
     public static function afficherConnexion()
     {
         self::afficherVue("connexion.html");
-    }
-
-    public static function afficherAucuneOffre()
-    {
-        self::afficherVue("vueGenerale.php", ["title" => "Indisponible", "contenu" => "vueAucuneOffres.php"]);
     }
 
     public static function afficherDetail()
@@ -327,22 +314,33 @@ class Controleur extends ControleurGenerique
 
     public static function seDeconnecter()
     {
-        ConnexionUtilisateur::deconnecter();
-        echo '<div class="msgConfirmation"><p>Vous êtes  bien déconnecté</p></div>';
-        self::afficherAccueil();
+        if(ConnexionUtilisateur::estConnecte()){
+            ConnexionUtilisateur::deconnecter();
+            echo '<div class="msgConfirmation"><p>Vous êtes  bien déconnecté</p></div>';
+            self::afficherAccueil();
+        }else{
+            self::afficherErreur("Vous êtes pas connecté");
+            self::afficherAccueil();
+        }
+
     }
 
     public static function estAdmin()
     {
-        ConnexionUtilisateur::connecter('admin');
-        $cle = 'secretariat';
-        $session = Session::getInstance();
-        $session->enregistrer($cle, 1);
-        $cle = "etudiant";
-        $session->enregistrer($cle, 1);
-        $cle = "entreprise";
-        $session->enregistrer($cle, 1);
-        self::afficherAccueil();
+        if(ClassTest::$DEBUG == true){
+            ConnexionUtilisateur::connecter('admin');
+            $cle = 'secretariat';
+            $session = Session::getInstance();
+            $session->enregistrer($cle, 1);
+            $cle = "etudiant";
+            $session->enregistrer($cle, 1);
+            $cle = "entreprise";
+            $session->enregistrer($cle, 1);
+            self::afficherAccueil();
+        }else{
+            self::afficherErreur("Vous n'avez pas les droits");
+        }
+
     }
 
 //    public static function afficherSecretaire(){
@@ -356,5 +354,135 @@ class Controleur extends ControleurGenerique
 //        echo '<div class="msgConfirmation"><p> Le Secrétaire a bien été enregistrée </p></div>';
 //
 //    }
+
+    public static function afficherGestionEtudiant()
+    {
+        if(ConnexionUtilisateur::estSecretariat()){
+            $etudiants = (new EtudiantRepository())->recuperer();
+            if($etudiants == null){
+                self::afficherErreur("Aucun Etudiant inscrit sur la plateforme");
+            }else{
+                $tableauParPage = null;
+
+                //Pagination
+                $nombresEtudiant = count($etudiants);
+                $nbrePages = ceil($nombresEtudiant / 9);
+
+                $page = 1;
+                if (isset($_GET['page'])) {
+                    $page = $_GET['page'];
+                    if ($page > $nbrePages) {
+                        $page = $nbrePages;
+                    }else if ($page <= 1){
+                        $page= 1;
+                    }
+                }
+                $y = $page * 9;
+                if ($page * 9 > $nombresEtudiant) {
+                    $y = $nombresEtudiant;
+                }
+
+                for ($i = ($page - 1) * 9; $i < $y; $i++) {
+                    $tableauParPage[] = $etudiants[$i];
+                }
+                self::afficherVue("vueGenerale.php", ["contenu" => "Administration/vueGestionEtudiant.php", "etudiants" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Gestions des Etudiants"]);
+            }
+        }else{
+            self::afficherErreur("Vous n'avez pas les droits");
+        }
+    }
+    public static function afficherDetailEtudiant(){
+        if(ConnexionUtilisateur::estSecretariat()){
+            self::afficherVue("vueGenerale.php",["contenu" => "Administration/vueDetailEtudiant.php", "title" => "Detail Etudiant"]);
+        }else{
+            self::afficherErreur("Vous n'avez pas les droits");
+        }
+    }
+
+    public static function afficherGestionEntreprise(){
+        if(ConnexionUtilisateur::estSecretariat()){
+            $entreprises = (new EntrepriseRepository())->recuperer();
+            if($entreprises == null){
+                self::afficherErreur("Aucune Entreprise inscrit sur la plateforme");
+            }else{
+                $tableauParPage = null;
+
+                //Pagination
+                $nombreEntreprise = count($entreprises);
+                $nbrePages = ceil($nombreEntreprise / 9);
+
+                $page = 1;
+                if (isset($_GET['page'])) {
+                    $page = $_GET['page'];
+                    if ($page > $nbrePages) {
+                        $page = $nbrePages;
+                    }else if ($page <= 1){
+                        $page= 1;
+                    }
+                }
+                $y = $page * 9;
+                if ($page * 9 > $nombreEntreprise) {
+                    $y = $nombreEntreprise;
+                }
+
+                for ($i = ($page - 1) * 9; $i < $y; $i++) {
+                    $tableauParPage[] = $entreprises[$i];
+                }
+                self::afficherVue("vueGenerale.php", ["contenu" => "Administration/vueGestionEntreprise.php", "entreprises" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Gestion des Entreprises"]);
+            }
+        }else{
+            self::afficherErreur("Vous n'avez pas les droits");
+        }
+    }
+
+    public static function afficherDetailEntreprise(){
+        if(ConnexionUtilisateur::estSecretariat()){
+            self::afficherVue("vueGenerale.php",["contenu" => "Administration/vueDetailEntreprise.php", "title" => "Detail Entreprise"]);
+        }else{
+            self::afficherErreur("Vous n'avez pas les droits");
+        }
+    }
+
+    public static function afficherMAJEntreprise(){
+        if(ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_GET["numSiret"] || ConnexionUtilisateur::estSecretariat()){
+            $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($_GET["numSiret"]);
+            if($entreprise != null){
+                self::afficherVue("FormulaireMiseAJour/vueMiseAJourEntreprise.php", ["entreprise"=>$entreprise]);
+            }else{
+                self::afficherErreur("L'entreprise n'est pas enregistrée");
+            }
+
+        }else{
+            self::afficherErreur("Vous n'avez pas le droit d'effectuer cela");
+        }
+    }
+
+    public static function MAJEntreprise(){
+        if(isset($_POST["num_siret"])){
+            $entrepriseAVerifier = (new EntrepriseRepository())->recupererParClePrimaire($_POST["num_siret"]);
+            if(ConnexionUtilisateur::estSecretariat()){
+                $entreprise = new Entreprise($_POST["num_siret"],$_POST["nom_entreprise"],$_POST["adresse"],$_POST["telephone"],$_POST["mail"],$_POST["interlocuteur"],$_POST["code_ape"],$_POST["activite"],$entrepriseAVerifier->getMdp());
+                (new EntrepriseRepository())->mettreAJour($entreprise);
+                self::afficherErreur("Les informations de l'entreprise ".$entreprise->getNomEntreprise()." ont bien été mis à jour");
+            }else if(ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_POST["num_siret"]){
+                if(isset($_POST["mdp"])){
+                    $mdpCorrect = MotDePasse::verifier($_POST['mdp'], $entrepriseAVerifier->getMdp());
+                    if(!$mdpCorrect){
+                        self::afficherErreur("Mot de passe Incorrect");
+                    }else{
+                        $entreprise = Entreprise::construireDepuisFormulaire($_POST);
+                        (new EntrepriseRepository())->mettreAJour($entreprise);
+                        self::afficherErreur("Les informations de votre entreprise ".$entreprise->getNomEntreprise()." ont bien été mis à jour");
+                    }
+                }else{
+                    self::afficherErreur("Veuillez rentrer votre mot de passe");
+                }
+
+            }else{
+                self::afficherErreur("Vous n'avez pas les droits");
+            }
+        }
+        self::afficherAccueil();
+    }
 
 }

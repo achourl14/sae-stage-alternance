@@ -62,7 +62,7 @@ nav div a:hover{
   background-color: #f9f9f9;
   position:absolute;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  margin-top: 314px;
+  margin-top: 190px;
 }
 
 nav div:hover .submenu{
@@ -70,7 +70,7 @@ nav div:hover .submenu{
 }
 
 .submenu a {
-  color: #ffffff;
+  color: black;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
@@ -183,6 +183,31 @@ form{
   border-radius: 5px;
   background-color: #F44336;;
 }
+
+#monCompte img{
+  margin-top: 10px;
+  margin-right: 5px;
+  height: 32px;
+  width: 32px;
+}
+
+#monCompte{
+  border: solid #c7c4c3 2px;
+  padding-right: 15px;
+  border-radius: 5px;
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+  font-family: 'Open Sans', sans-serif;
+}
+
+#buttonCompte{
+  cursor: pointer;
+}
+#buttonCompte:hover #monCompte{
+  border: solid #F44336 2px;
+}
+
 
 footer{
   margin-top: 200px;

@@ -1,9 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
-*{
-    font-family:'Noto Sans', sans-serif;
-}
 .carte{
     margin : 20px;
     padding: 15px 15px 15px 15px;
@@ -71,6 +68,7 @@
     margin-left: 150px;
     margin-right: 150px;
     margin-bottom: 50px;
+    font-family:'Noto Sans', sans-serif;
 }
 
 .toutesLesCartes a{
@@ -84,7 +82,7 @@
     padding: 20px;
     border-radius: 15px 15px;
     border: solid #c7c4c3 1px;
-
+    font-family:'Noto Sans', sans-serif;
 }
 
 .offre_detail h1{
@@ -92,13 +90,14 @@
 }
 
 .offre_detail h2{
-    font-size: 19px;
+    font-size: 16px;
 }
 
-.offre_detail p{
-    font-size: 17px;
-    color : black;
+.offre_detail h3{
+    font-size: 16px;
+    font-weight: bold;
 }
+
 
 .buttonDeBase{
     padding: 7px 12px;
@@ -122,27 +121,67 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    font-weight: bold;
+    color: black;
 }
 
 .page a{
-    color: white;
-    background: #F44336;
+    border: solid #c7c4c3 2px;
     margin-left: 10px;
     margin-right: 10px;
-    border-radius: 10px 10px;
-    padding:10px;
+    border-radius: 5px;
+    padding: 8px 15px;
+}
+
+.page a:hover{
+    color:white;
+    background-color: #F44336;
 }
 
 .page p{
-    color: white;
-    background: #F44336;
-    border-radius: 10px 10px;
-    padding:10px;
+    color:white;
+    background-color: #F44336;
+    border: solid #c7c4c3 2px;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 8px 15px;
 }
 
 .hidden{
     visibility: hidden;
 }
 
+.supcase{
+    margin-top: 0;
+    display: flex;
+    flex-direction: row;
+    margin-left: 20px;
+}
+.case{
+    margin-top: 0;
+    margin-right: 20px;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #595959;
+    background-color: #F3F2F1;
+}
 
+.boutonsGeneral a{
+    border-radius: 5px;
+    color: #fff;
+    font-size: 18px;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: #F44336;
+    padding: 5px 20px;
+    margin-right: 20px;
+}
+.boutonsGeneral a:hover{
+    background-color: #fc5049;
+}
 
+hr{
+    margin-top: 30px;
+}
