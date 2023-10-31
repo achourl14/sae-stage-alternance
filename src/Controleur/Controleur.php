@@ -10,6 +10,7 @@ use App\Modele\DataObject\Entreprise;
 use App\Modele\DataObject\Offre;
 use App\Modele\DataObject\Stage;
 use App\Modele\HTTP\Session;
+use App\Modele\Repository\AbstractRepository;
 use App\Modele\Repository\AlternanceRepository;
 use App\Modele\Repository\EntrepriseRepository;
 use App\Modele\Repository\EtudiantRepository;
@@ -192,6 +193,45 @@ class Controleur extends ControleurGenerique
 //        }
         echo '<div class="msgConfirmation"><p> Vous avez bien créer votre offre : ' . $offre->getNomOffre() . '</p></div>';
         self::consulterOffre();
+    }
+
+    public static function filtrer(){
+        $stage = false;
+        $alternance= false;
+        $valider = false;
+        $invalider = false;
+        $sa = false;
+
+        if ( isset($_POST['Stage']) ){
+            $stage = true;
+            $type = "S";
+        }
+        if ( isset($_POST['Alternance']) ){
+            $alternance = true;
+            $type = "A";
+        }
+        if ( $stage == true && $alternance == true){
+            $sa = true;
+            $type = "SA";
+        }
+        if ( isset($_POST['Valider']) ){
+            $valider = true;
+            $validation = 1;
+        }
+        if ( isset($_POST['Avalider']) ){
+            $invalider = true;
+            $validation = 0;
+        }
+        if ( $valider == true && $invalider == true){
+            $validation = null;
+            echo " erreur valider et invalide ne peuvent pas etre valider simultanement";
+        }
+        $values = array(
+            "type" => $type,
+            "validation" =>$validation
+        );
+        AbstractRepository::recupererAvecFiltre($values);
+
     }
 
     public static function connecter()

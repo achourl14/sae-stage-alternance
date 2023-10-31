@@ -7,6 +7,17 @@ use App\Modele\Repository\EntrepriseRepository;
 echo '<div class="toutesLesCartes">';
 echo "<div class='title'> Offres disponible </div>";
 
+echo '<div class="filtres">
+            <div>
+                <label class="details" for="stage">Stage </label>
+                <input type="radio" placeholder="" name="offre" id="stage" value="stage" required/>
+            </div>
+            <div>
+                 <label class="details" for="alternance">Alternance </label>
+                 <input type="radio" placeholder="" name="offre" id="alternance" value="alternance" required/>
+            </div>
+        </div>';
+
 echo "<div class='page'>";
 echo "<div> <a class='' href='controleurFrontal.php?action=consulterOffre&page=". $pageActuelle-1 ."'> page précédente </a> </div>";
 if($pageActuelle != 1){
@@ -40,6 +51,9 @@ echo '<div class = "groupCartes">';
             echo "</div>";
             echo "</a>";
     }
+}
+echo '</div>';
+    require __DIR__ . "/{$contenuDetail}";
 echo '</div>';
 echo'</div>';
 ?>
