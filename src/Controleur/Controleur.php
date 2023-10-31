@@ -68,50 +68,17 @@ class Controleur extends ControleurGenerique
         }
     }
 
-    public static function consulterOffre()
+    public static function offres($offre=null)
     {
-        $offres = (new OffreRepository())->recupererOffreValide();
-
-        $tableauTout = null;
-
-        if ($offres == null) {
-            self::afficherErreur("Aucune offres disponible, veuillez revenir plus tard");
-        } else {
-            foreach ($offres as $offreFormatTableau) {
-                $tableauTout[] = $offreFormatTableau;
+        if(!isset($offre)) {
+            if (ConnexionUtilisateur::estSecretariat()) {
+                $offres = (new OffreRepository())->recuperer();
+            } else {
+                $offres = (new OffreRepository())->recupererOffreValide();
             }
-
-            $tableauParPage = null;
-
-            //Pagination
-            $nombresOffre = count($offres);
-            $nbrePages = ceil($nombresOffre / 9);
-
-            $page = 1;
-            if (isset($_GET['page'])) {
-                $page = $_GET['page'];
-                if ($page > $nbrePages) {
-                    $page = $nbrePages;
-                }else if ($page <= 1){
-                    $page= 1;
-                }
-            }
-            $y = $page * 9;
-            if ($page * 9 > $nombresOffre) {
-                $y = $nombresOffre;
-            }
-
-            for ($i = ($page - 1) * 9; $i < $y; $i++) {
-                $tableauParPage[] = $tableauTout[$i];
-            }
-            self::afficherVue("vueGenerale.php", ["contenu" => "vueOffres.php", "offreses" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Liste des offres"]);
+        }else{
+            $offres = $offre;
         }
-    }
-
-    public static function consulterOffreSecretaire()
-    {
-
-        $offres = (new OffreRepository())->recuperer();
 
         if ($offres == null) {
             self::afficherErreur("Aucune offres disponible, veuillez revenir plus tard");
@@ -143,7 +110,8 @@ class Controleur extends ControleurGenerique
             for ($i = ($page - 1) * 9; $i < $y; $i++) {
                 $tableauParPage[] = $tableauTout[$i];
             }
-            self::afficherVue("vueGenerale.php", ["contenu" => "vueValiderOffre.php", "offreses" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Liste des offres à valider"]);
+
+            self::afficherVue("vueGenerale.php", ["contenu" =>  "vueOffres.php", "offreses" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Liste des offres à valider"]);
         }
     }
 
@@ -200,7 +168,9 @@ class Controleur extends ControleurGenerique
         $alternance= false;
         $valider = false;
         $invalider = false;
+        $type = "SA";
         $sa = false;
+        $validation = null;
 
         if ( isset($_POST['Stage']) ){
             $stage = true;
@@ -211,7 +181,6 @@ class Controleur extends ControleurGenerique
             $type = "A";
         }
         if ( $stage == true && $alternance == true){
-            $sa = true;
             $type = "SA";
         }
         if ( isset($_POST['Valider']) ){
@@ -224,14 +193,20 @@ class Controleur extends ControleurGenerique
         }
         if ( $valider == true && $invalider == true){
             $validation = null;
-            echo " erreur valider et invalide ne peuvent pas etre valider simultanement";
         }
-        $values = array(
-            "type" => $type,
-            "validation" =>$validation
-        );
-        AbstractRepository::recupererAvecFiltre($values);
+        if(!isset($_POST['Stage']) && !isset($_POST['Alternance'])){
+            $type = null;
+        }
+        $values = null;
+        if($validation != null){
+            $values["validation"] = $validation;
+        }
+        if($type != null){
+            $values["type"] = $type;
+        }
 
+        $offres = (new OffreRepository())->recupererAvecFiltre($values);
+        self::offres($offres);
     }
 
     public static function connecter()

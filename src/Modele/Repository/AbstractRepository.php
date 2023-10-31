@@ -63,18 +63,28 @@ abstract class AbstractRepository
         $pdoStatement->execute($values);
     }
 
-    public function recupererAvecFiltre(array $parameters) : array{
+    public function recupererAvecFiltre(array $parameters) {
         $colonesql = "";
         $i=0;
         if($parameters != null){
             foreach($parameters as $clef => $valeur){
                 if($i != 0){
-                    $colonesql .= " AND ";
+                    $colonesql .= "AND";
                 }
-                $colonesql .= $clef . "=" . $valeur;
+                $i = $i + 1;
+                $colonesql .= " " . $clef . "=";
+                if(gettype($valeur) == "string"){
+                    $colonesql .= "'" . $valeur. "' ";
+                }else{
+                    $colonesql .= $valeur . " ";
+                }
             }
 
         }
+        var_dump($colonesql);
+        $tableau = null;
+        $sql = "SELECT * FROM ".$this->getNomTable(). " WHERE " . $colonesql;
+        var_dump($sql);
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query("SELECT * FROM ".$this->getNomTable(). " WHERE " . $colonesql);
         foreach ($pdoStatement as $objetFormatTableau) {
             $tableau[] = $this->construireDepuisTableau($objetFormatTableau);

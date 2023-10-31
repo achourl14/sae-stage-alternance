@@ -39,10 +39,11 @@ if($contenu == "index.html"){
     $accueil = "actuel";
 }else if($contenu == "formulaireoffre.php"){
     $form = "actuel";
-} else if($contenu == "vueValiderOffre.php" || $contenu == "Administration/vueGestionEtudiant.php" || $contenu == "Administration/vueGestionEntreprise.php" ){
+} else if($contenu == "Administration/vueGestionEtudiant.php" || $contenu == "Administration/vueGestionEntreprise.php" ){
     $gestion = "actuel";
 } else if ($contenu == "vueOffres.php"){
     $offres = "actuel";
+    $gestion = "actuel";
 }else{
     $formExterne = 'actuel';
 }
@@ -54,11 +55,11 @@ echo  '<div><a href="controleurFrontal.php" id='.$accueil.'>Accueil</a></div>';
 if(ConnexionUtilisateur::estEntreprise()){
     echo  '<div><a href="controleurFrontal.php?action=afficherFormulaire" id='.$form.'>Creer Offre Par Entreprise</a></div>';
 }
-echo  '<div><a href="controleurFrontal.php?action=consulterOffre" id='.$offres.'>Offre</a></div>';
+echo '<div><a href="controleurFrontal.php?action=offres">offres</a></div>';
 if(ConnexionUtilisateur::estSecretariat()){
     echo '<div><a id='.$gestion.'>Gestionnaire ▾</a>';
     echo '<div class="submenu">';
-    echo '<a href="controleurFrontal.php?action=consulterOffreSecretaire">Gestion offre</a>';
+    echo '<a href="controleurFrontal.php?action=offres">Gestion offre</a>';
     echo '<a href="controleurFrontal.php?action=afficherGestionEtudiant">Gestion Etudiant</a>';
     echo '<a href="controleurFrontal.php?action=afficherGestionEntreprise">Gestion Entreprise</a>';
     echo '</div>';
