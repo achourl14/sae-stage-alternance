@@ -114,9 +114,6 @@ class Offre extends AbstractDataObject
         return $this->type;
     }
 
-
-
-
     public function formatTableau(): array
     {
         return array(

@@ -2,6 +2,7 @@
 
 namespace App\Controleur;
 
+use App\ClassTest;
 use App\Lib\ConnexionUtilisateur;
 use App\Lib\MotDePasse;
 use App\Modele\DataObject\Alternance;
@@ -73,8 +74,8 @@ class Controleur extends ControleurGenerique
         $tableauTout = null;
 
         if ($offres == null) {
-            self::afficherAucuneOffre();
-        }else{
+            self::afficherErreur("Aucune offres disponible, veuillez revenir plus tard");
+        } else {
             foreach ($offres as $offreFormatTableau) {
                 $tableauTout[] = $offreFormatTableau;
             }
@@ -89,7 +90,9 @@ class Controleur extends ControleurGenerique
             if (isset($_GET['page'])) {
                 $page = $_GET['page'];
                 if ($page > $nbrePages) {
-                    $page = 1;
+                    $page = $nbrePages;
+                }else if ($page <= 1){
+                    $page= 1;
                 }
             }
             $y = $page * 9;
@@ -110,8 +113,8 @@ class Controleur extends ControleurGenerique
         $offres = (new OffreRepository())->recuperer();
 
         if ($offres == null) {
-            self::afficherAucuneOffre();
-        }else{
+            self::afficherErreur("Aucune offres disponible, veuillez revenir plus tard");
+        } else {
             foreach ($offres as $offreFormatTableau) {
                 $tableauTout[] = $offreFormatTableau;
             }
@@ -126,7 +129,9 @@ class Controleur extends ControleurGenerique
             if (isset($_GET['page'])) {
                 $page = $_GET['page'];
                 if ($page > $nbrePages) {
-                    $page = 1;
+                    $page = $nbrePages;
+                }else if ($page <= 1){
+                    $page= 1;
                 }
             }
             $y = $page * 9;
@@ -162,7 +167,7 @@ class Controleur extends ControleurGenerique
     public static function creerOffre()
     {
         $offre = null;
-        $offre = new Offre(-9,$_POST["idEntreprise"],$_POST["nomOffre"], $_POST["mission"], -9, -9, $_POST["dateDebut"],$_POST["dateFin"],$_POST["remuneration"],$_POST["but_annee"],$_POST["parcours"],$_POST["type"],0);
+        $offre = new Offre(-9, $_POST["idEntreprise"], $_POST["nomOffre"], $_POST["mission"], -9, -9, $_POST["dateDebut"], $_POST["dateFin"], $_POST["remuneration"], $_POST["but_annee"], $_POST["parcours"], $_POST["type"], 0);
         OffreRepository::sauvegarder($offre);
 
 //        if ($_FILES['fichier']['error']) {
@@ -232,6 +237,11 @@ class Controleur extends ControleurGenerique
         ConnexionUtilisateur::deconnecter();
     }
 
+    public static function afficherErreur($message){
+        echo '<div class="msgConfirmation"><p>'.$message.'</p></div>';
+        self::afficherAccueil();
+    }
+
     public static function afficherAccueil()
     {
         self::afficherVue("vueGenerale.php", ["contenu" => "index.html", "title" => "Accueil"]);
@@ -252,11 +262,6 @@ class Controleur extends ControleurGenerique
         self::afficherVue("connexion.html");
     }
 
-    public static function afficherAucuneOffre()
-    {
-        self::afficherVue("vueGenerale.php", ["title" => "Indisponible", "contenu" => "vueAucuneOffres.php"]);
-    }
-
     public static function afficherDetail()
     {
         self::afficherVue("vueGenerale.php", ["title" => "Detail offre", "contenu" => "vueDetail.php"]);
@@ -269,22 +274,33 @@ class Controleur extends ControleurGenerique
 
     public static function seDeconnecter()
     {
-        ConnexionUtilisateur::deconnecter();
-        echo '<div class="msgConfirmation"><p>Vous êtes  bien déconnecté</p></div>';
-        self::afficherAccueil();
+        if(ConnexionUtilisateur::estConnecte()){
+            ConnexionUtilisateur::deconnecter();
+            echo '<div class="msgConfirmation"><p>Vous êtes  bien déconnecté</p></div>';
+            self::afficherAccueil();
+        }else{
+            self::afficherErreur("Vous êtes pas connecté");
+            self::afficherAccueil();
+        }
+
     }
 
     public static function estAdmin()
     {
-        ConnexionUtilisateur::connecter('admin');
-        $cle = 'secretariat';
-        $session = Session::getInstance();
-        $session->enregistrer($cle, 1);
-        $cle = "etudiant";
-        $session->enregistrer($cle, 1);
-        $cle = "entreprise";
-        $session->enregistrer($cle, 1);
-        self::afficherAccueil();
+        if(ClassTest::$DEBUG == true){
+            ConnexionUtilisateur::connecter('admin');
+            $cle = 'secretariat';
+            $session = Session::getInstance();
+            $session->enregistrer($cle, 1);
+            $cle = "etudiant";
+            $session->enregistrer($cle, 1);
+            $cle = "entreprise";
+            $session->enregistrer($cle, 1);
+            self::afficherAccueil();
+        }else{
+            self::afficherErreur("Vous n'avez pas les droits");
+        }
+
     }
 
 //    public static function afficherSecretaire(){
@@ -298,5 +314,135 @@ class Controleur extends ControleurGenerique
 //        echo '<div class="msgConfirmation"><p> Le Secrétaire a bien été enregistrée </p></div>';
 //
 //    }
+
+    public static function afficherGestionEtudiant()
+    {
+        if(ConnexionUtilisateur::estSecretariat()){
+            $etudiants = (new EtudiantRepository())->recuperer();
+            if($etudiants == null){
+                self::afficherErreur("Aucun Etudiant inscrit sur la plateforme");
+            }else{
+                $tableauParPage = null;
+
+                //Pagination
+                $nombresEtudiant = count($etudiants);
+                $nbrePages = ceil($nombresEtudiant / 9);
+
+                $page = 1;
+                if (isset($_GET['page'])) {
+                    $page = $_GET['page'];
+                    if ($page > $nbrePages) {
+                        $page = $nbrePages;
+                    }else if ($page <= 1){
+                        $page= 1;
+                    }
+                }
+                $y = $page * 9;
+                if ($page * 9 > $nombresEtudiant) {
+                    $y = $nombresEtudiant;
+                }
+
+                for ($i = ($page - 1) * 9; $i < $y; $i++) {
+                    $tableauParPage[] = $etudiants[$i];
+                }
+                self::afficherVue("vueGenerale.php", ["contenu" => "Administration/vueGestionEtudiant.php", "etudiants" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Gestions des Etudiants"]);
+            }
+        }else{
+            self::afficherErreur("Vous n'avez pas les droits");
+        }
+    }
+    public static function afficherDetailEtudiant(){
+        if(ConnexionUtilisateur::estSecretariat()){
+            self::afficherVue("vueGenerale.php",["contenu" => "Administration/vueDetailEtudiant.php", "title" => "Detail Etudiant"]);
+        }else{
+            self::afficherErreur("Vous n'avez pas les droits");
+        }
+    }
+
+    public static function afficherGestionEntreprise(){
+        if(ConnexionUtilisateur::estSecretariat()){
+            $entreprises = (new EntrepriseRepository())->recuperer();
+            if($entreprises == null){
+                self::afficherErreur("Aucune Entreprise inscrit sur la plateforme");
+            }else{
+                $tableauParPage = null;
+
+                //Pagination
+                $nombreEntreprise = count($entreprises);
+                $nbrePages = ceil($nombreEntreprise / 9);
+
+                $page = 1;
+                if (isset($_GET['page'])) {
+                    $page = $_GET['page'];
+                    if ($page > $nbrePages) {
+                        $page = $nbrePages;
+                    }else if ($page <= 1){
+                        $page= 1;
+                    }
+                }
+                $y = $page * 9;
+                if ($page * 9 > $nombreEntreprise) {
+                    $y = $nombreEntreprise;
+                }
+
+                for ($i = ($page - 1) * 9; $i < $y; $i++) {
+                    $tableauParPage[] = $entreprises[$i];
+                }
+                self::afficherVue("vueGenerale.php", ["contenu" => "Administration/vueGestionEntreprise.php", "entreprises" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Gestion des Entreprises"]);
+            }
+        }else{
+            self::afficherErreur("Vous n'avez pas les droits");
+        }
+    }
+
+    public static function afficherDetailEntreprise(){
+        if(ConnexionUtilisateur::estSecretariat()){
+            self::afficherVue("vueGenerale.php",["contenu" => "Administration/vueDetailEntreprise.php", "title" => "Detail Entreprise"]);
+        }else{
+            self::afficherErreur("Vous n'avez pas les droits");
+        }
+    }
+
+    public static function afficherMAJEntreprise(){
+        if(ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_GET["numSiret"] || ConnexionUtilisateur::estSecretariat()){
+            $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($_GET["numSiret"]);
+            if($entreprise != null){
+                self::afficherVue("FormulaireMiseAJour/vueMiseAJourEntreprise.php", ["entreprise"=>$entreprise]);
+            }else{
+                self::afficherErreur("L'entreprise n'est pas enregistrée");
+            }
+
+        }else{
+            self::afficherErreur("Vous n'avez pas le droit d'effectuer cela");
+        }
+    }
+
+    public static function MAJEntreprise(){
+        if(isset($_POST["num_siret"])){
+            $entrepriseAVerifier = (new EntrepriseRepository())->recupererParClePrimaire($_POST["num_siret"]);
+            if(ConnexionUtilisateur::estSecretariat()){
+                $entreprise = new Entreprise($_POST["num_siret"],$_POST["nom_entreprise"],$_POST["adresse"],$_POST["telephone"],$_POST["mail"],$_POST["interlocuteur"],$_POST["code_ape"],$_POST["activite"],$entrepriseAVerifier->getMdp());
+                (new EntrepriseRepository())->mettreAJour($entreprise);
+                self::afficherErreur("Les informations de l'entreprise ".$entreprise->getNomEntreprise()." ont bien été mis à jour");
+            }else if(ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_POST["num_siret"]){
+                if(isset($_POST["mdp"])){
+                    $mdpCorrect = MotDePasse::verifier($_POST['mdp'], $entrepriseAVerifier->getMdp());
+                    if(!$mdpCorrect){
+                        self::afficherErreur("Mot de passe Incorrect");
+                    }else{
+                        $entreprise = Entreprise::construireDepuisFormulaire($_POST);
+                        (new EntrepriseRepository())->mettreAJour($entreprise);
+                        self::afficherErreur("Les informations de votre entreprise ".$entreprise->getNomEntreprise()." ont bien été mis à jour");
+                    }
+                }else{
+                    self::afficherErreur("Veuillez rentrer votre mot de passe");
+                }
+
+            }else{
+                self::afficherErreur("Vous n'avez pas les droits");
+            }
+        }
+        self::afficherAccueil();
+    }
 
 }

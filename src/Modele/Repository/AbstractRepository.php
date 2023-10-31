@@ -35,6 +35,54 @@ abstract class AbstractRepository
         return $this->construireDepuisTableau($objetFormatTableau);
     }
 
+    public function supprimer($valeurClePrimaire){
+        $sql = "DELETE FROM ". $this->getNomTable() ." WHERE ". $this->getNomClePrimaire() ." = :valeurClePrimaireTag";
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+
+        $values = array(
+            "valeurClePrimaireTag" => $valeurClePrimaire
+        );
+
+        $pdoStatement->execute($values);
+    }
+
+    public  function mettreAJour(AbstractDataObject $objet){
+        $colonesql ="";
+        $colones = $this->getNomsColones();
+        for($i=0;$i<count($colones);$i++){
+            $colonesql .= $colones[$i] . "= :" . $colones[$i] . "Tag";
+            if($i<count($colones)-1){
+                $colonesql .= ", ";
+            }
+        }
+        $sql = "UPDATE ". $this->getNomTable() ." SET ".$colonesql." WHERE ".$this->getNomClePrimaire()."= :" . $this->getNomClePrimaire()."Tag";
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+
+        $values = $objet->formatTableau();
+
+        $pdoStatement->execute($values);
+    }
+
+    public function recupererAvecFiltre(array $parameters) : array{
+        $colonesql = "";
+        $i=0;
+        if($parameters != null){
+            foreach($parameters as $clef => $valeur){
+                if($i != 0){
+                    $colonesql .= " AND ";
+                }
+                $colonesql .= $clef . "=" . $valeur;
+            }
+
+        }
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query("SELECT * FROM ".$this->getNomTable(). " WHERE " . $colonesql);
+        foreach ($pdoStatement as $objetFormatTableau) {
+            $tableau[] = $this->construireDepuisTableau($objetFormatTableau);
+        }
+        return $tableau;
+
+    }
+
     protected abstract function getNomTable(): string;
     protected abstract function getNomsColones(): array;
     protected abstract function getNomClePrimaire(): string;

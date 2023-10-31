@@ -4,24 +4,26 @@ namespace App\Modele\DataObject;
 
 class Etudiant extends AbstractDataObject
 {
-    private int $codeINE;
+    private string $codeINE;
     private int $numEtudiant;
     private string $groupe;
     private string $nom;
     private string $prenom;
-    private int $numTel;
+    private string $parcours;
+    private string $numTel;
     private string $email;
     private string $motDePasse;
     private string $dateDeNaissance;
 
     private string $promotion;
 
-    public function __construct(int $codeINE, int $numEtudiant,string $groupe ,string $nom, string $prenom, int $numTel, string $email, string $motDePasse, string $dateDeNaissance, string $promotion) {
+    public function __construct(string $codeINE, int $numEtudiant,string $groupe ,string $nom, string $prenom,string $parcours ,string $numTel, string $email, string $motDePasse, string $dateDeNaissance, string $promotion) {
         $this->codeINE = $codeINE;
         $this->numEtudiant = $numEtudiant;
         $this->groupe = $groupe;
         $this->nom = $nom;
         $this->prenom = $prenom;
+        $this->parcours = $parcours;
         $this->numTel = $numTel;
         $this->email = $email;
         $this->motDePasse = $motDePasse;
@@ -29,7 +31,7 @@ class Etudiant extends AbstractDataObject
         $this->promotion = $promotion;
     }
 
-    public function getCodeINE(): int
+    public function getCodeINE(): string
     {
         return $this->codeINE;
     }
@@ -59,7 +61,7 @@ class Etudiant extends AbstractDataObject
         return $this->prenom;
     }
 
-    public function getNumTel(): int
+    public function getNumTel(): string
     {
         return $this->numTel;
     }
@@ -84,6 +86,13 @@ class Etudiant extends AbstractDataObject
         return $this->promotion;
     }
 
+    public function getParcours(): string
+    {
+        return $this->parcours;
+    }
+
+
+
     public function formatTableau(): array
     {
         return array(
@@ -93,6 +102,7 @@ class Etudiant extends AbstractDataObject
             "groupeTag" => $this->getGroupe(),
             "nomEtudiantTag" => $this->getNom(),
             "prenomEtudiantTag" => $this->getPrenom(),
+            "parcoursTag" => $this->getParcours(),
             "mailEtudiantTag" => $this->getEmail(),
             "telephoneEtudiantTag" => $this->getNumTel(),
             "dateNaissanceEtudiantTag" => $this->getDateDeNaissance(),

@@ -16,7 +16,11 @@ if(isset($_GET["idOffre"])){
     echo "<h2> Entreprise : " . htmlspecialchars($entreprise->getNomEntreprise()) . "</h2>";
     echo "<h2> Adresse : ". $entreprise->getAdresse() ."</h2>";
 
-    echo '<a class="boutonGeneral"  href="#"> Postuler sur cette offre </a>';
+    if(\App\Lib\ConnexionUtilisateur::estEtudiant()){
+        echo '<div class="boutonsGeneral">';
+        echo '<a  href="#"> Postuler sur cette offre </a>';
+        echo '</div>';
+    }
 
     echo "<hr/>";
     echo "<h1> Detail du poste : </h1>";
@@ -36,11 +40,21 @@ if(isset($_GET["idOffre"])){
     echo "<p class='case'> Date de début : ".$offre->getDateDebut() ."</p>";
     echo "<p class='case'> Date de fin : ".$offre->getDateFin() ."</p>";
     echo "</div>";
+    $annee ="";
+    if($offre->getButAnnee() == 0){ $annee = "BUT 2 ou BUT 3"; }else {$annee = "BUT ". $offre->getButAnnee();}
+     echo "<h3> 🎯 Cible d'étudiant </h3>";
+    echo "<div class='supcase'>";
+    echo "<p class='case'>". $annee  ."</p>";
+    echo "<p class='case'> Parcours : ".$offre->getParcours() ."</p>";
+    echo "</div>";
+
 
     echo "<h3> Mission </h3>";
     echo("<p>" . htmlspecialchars($offre->getMission()) . "</p> ");
 
     echo'</div>';
+}else{
+    echo '<div class="msgConfirmation"><p> ⚠️ Cette offre est introuvable ⚠️ </p></div>';
 }
 
 

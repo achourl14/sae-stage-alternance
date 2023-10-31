@@ -38,7 +38,7 @@
                     <div class="input-box">
                         <label class="details" for="annee"> Offre pour année de BUT </label>
                     <select name="but_annee" id="annee">
-                        <option value="9">Toutes les années</option>
+                        <option value="0">Toutes les années</option>
                         <option value="2">BUT 2 (2ème année)</option>
                         <option value="3">BUT 3 (3ème année)</option>
                     </select>
@@ -72,7 +72,7 @@
                     <div class="input-textarea">
                         <label class="details" for="fich"> Ajouter un fichier </label>
                         <input type="hidden" name="MAX_FILE_SIZE" value="5" />
-                        <input type="file" placeholder="" name="fichier" id="fich" required/>
+                        <input type="file" placeholder="" name="fichier" id="fich" />
                     </div>
                 </div>
                     <div class="button">

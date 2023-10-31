@@ -62,7 +62,7 @@ class OffreRepository extends AbstractRepository
         else{
             $values = array(
                 "validationTag" => 0,
-                "idStageTag" => $offre->getIdOffre(),
+                "idOffreTag" => $offre->getIdOffre(),
             );
             $pdoStatement->execute($values);
         }

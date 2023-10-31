@@ -14,7 +14,7 @@
 
 <body>
 <div class="burger">
-    <img src="img/burger.png" alt="burger" width="50">
+    <img id="imgburger" src="img/burger.png" alt="burger" width="50">
     <div id="menu2">
         <div><a href="">Formulaire</a></div>
         <div><a href="">A mettre</a></div>
@@ -25,22 +25,22 @@
 <?php
 
 use App\Lib\ConnexionUtilisateur;
+use App\ClassTest;
 
 // BOUTON DEBUG
-$DEBUG = true;
 
 $accueil = "";
 $form = "";
 $offres = "";
-$valider = "";
+$gestion = "";
 $formExterne ="";
 
 if($contenu == "index.html"){
     $accueil = "actuel";
 }else if($contenu == "formulaireoffre.php"){
     $form = "actuel";
-} else if($contenu == "vueValiderOffre.php"){
-    $valider = "actuel";
+} else if($contenu == "vueValiderOffre.php" || $contenu == "Administration/vueGestionEtudiant.php" || $contenu == "Administration/vueGestionEntreprise.php" ){
+    $gestion = "actuel";
 } else if ($contenu == "vueOffres.php"){
     $offres = "actuel";
 }else{
@@ -56,7 +56,13 @@ if(ConnexionUtilisateur::estEntreprise()){
 }
 echo  '<div><a href="controleurFrontal.php?action=consulterOffre" id='.$offres.'>Offre</a></div>';
 if(ConnexionUtilisateur::estSecretariat()){
-    echo  '<div><a href="controleurFrontal.php?action=consulterOffreSecretaire" id='.$valider.'>Valider offre</a></div>';
+    echo '<div><a id='.$gestion.'>Gestionnaire ▾</a>';
+    echo '<div class="submenu">';
+    echo '<a href="controleurFrontal.php?action=consulterOffreSecretaire">Gestion offre</a>';
+    echo '<a href="controleurFrontal.php?action=afficherGestionEtudiant">Gestion Etudiant</a>';
+    echo '<a href="controleurFrontal.php?action=afficherGestionEntreprise">Gestion Entreprise</a>';
+    echo '</div>';
+    echo '</div>';
 }
 if(ConnexionUtilisateur::estEtudiant()){
     echo  '<div><a href="controleurFrontal.php?action=afficherFormulaireExterne" id='. $formExterne.'>Formulaire Externe</a></div>';
@@ -66,7 +72,22 @@ if(!ConnexionUtilisateur::estConnecte()){
     echo '<a class="connexion" id="inscrip" href="controleurFrontal.php?action=afficherInscription">Inscription</a>';
     echo '<a class="connexion" id="connex" href="controleurFrontal.php?action=afficherConnexion">Connexion</a>';
 }else{
-    echo '<a class="connexion" id="connex" href="controleurFrontal.php?action=seDeconnecter">Se déconnecter</a>';
+    echo '<div>';
+    echo '<a id="buttonCompte">';
+    echo '<div id="monCompte">';
+    echo '<img src="img/compte.png"/>';
+    echo '<p> Compte </p>';
+    echo '</div>';
+    echo '</a>';
+    echo '<div class="submenu">';
+    if(ConnexionUtilisateur::estEntreprise()){
+        echo '<a href="controleurFrontal.php?action=afficherMAJEntreprise&numSiret='.ConnexionUtilisateur::getLoginUtilisateurConnecte().'">Configuration</a>';
+    }else if(ConnexionUtilisateur::estEtudiant()){
+        echo '<a href="controleurFrontal.php?action=afficherMAJEntreprise&numSiret='.ConnexionUtilisateur::getLoginUtilisateurConnecte().'">Configurationnnn</a>';
+    }
+    echo '<a href="controleurFrontal.php?action=seDeconnecter">Se déconnecter</a>';
+    echo '</div>';
+    echo '</div>';
 }
 echo '</nav>';
 ?>
@@ -74,7 +95,7 @@ echo '</nav>';
 <div class="contenupage">
 
     <?php
-    if($DEBUG == true){
+    if(ClassTest::$DEBUG == true){
         echo "<a href='controleurFrontal.php?action=estAdmin'>Admin</a>";
     }
     require __DIR__ . "/{$contenu}";
