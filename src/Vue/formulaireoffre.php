@@ -14,7 +14,7 @@
 
         <div class="input-box">
             <label class="details" for="mission">Mission </label>
-            <textarea rows="5" cols="75" maxlength="500" id="mission" name="mission" required></textarea>
+            <textarea rows="5" cols="75" maxlength="10000" id="mission" name="mission" required></textarea>
         </div>
         <div class="category input-box">
             <fieldset>

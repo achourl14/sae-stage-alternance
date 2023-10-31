@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Controleur;
+
 use App\Lib\ConnexionUtilisateur;
 use App\Lib\MotDePasse;
 use App\Modele\DataObject\Alternance;
@@ -8,6 +10,7 @@ use App\Modele\DataObject\OffreAlternance;
 use App\Modele\DataObject\OffredeStage;
 use App\Modele\DataObject\Stage;
 use App\Modele\HTTP\Session;
+use App\Modele\Repository\AbstractRepository;
 use App\Modele\Repository\AlternanceRepository;
 use App\Modele\Repository\EntrepriseRepository;
 use App\Modele\Repository\EtudiantRepository;
@@ -68,27 +71,45 @@ class Controleur extends ControleurGenerique
 
     public static function consulterOffre()
     {
-
         $offresDeStage = (new OffredeStageRepository())->recupererOffreStageValide();
         $offresAlternance = (new OffreAlternanceRepository())->recupererOffreAlternanceValide();
 
-        $tableauStage = null;
-        $tableauAlternance = null;
+        $tableauTout = null;
+        $tableauParPage = null;
+        if ($offresDeStage != null) {
+            foreach ($offresDeStage as $offreFormatTableau) {
+                $tableauTout[] = $offreFormatTableau;
+            }
+        }
+        if($offresAlternance != null){
+            foreach ($offresAlternance as $offreFormatTableau) {
+                $tableauTout[] = $offreFormatTableau;
+            }
+        }
 
-        if ($offresDeStage == null & $offresAlternance == null) {
+        //Pagination
+        $nombresOffre = count($offresDeStage) + count($offresAlternance);
+        $nbrePages = ceil($nombresOffre / 9);
+
+        $page = 1;
+        if (isset($_GET['page'])) {
+            $page = $_GET['page'];
+            if ($page > $nbrePages) {
+                $page = 1;
+            }
+        }
+        $y = $page * 9;
+        if($page * 9 > $nombresOffre){
+            $y = $nombresOffre;
+        }
+
+        if ($tableauTout == null) {
             self::afficherAucuneOffre();
         } else {
-            if ($offresDeStage != null) {
-                foreach ($offresDeStage as $offreFormatTableau) {
-                    $tableauStage[] = $offreFormatTableau;
-                }
+            for ($i = ($page-1) * 9; $i <$y; $i++) {
+                $tableauParPage[] = $tableauTout[$i];
             }
-            if ($offresAlternance != null) {
-                foreach ($offresAlternance as $offreFormatTableau) {
-                    $tableauAlternance[] = $offreFormatTableau;
-                }
-            }
-            self::afficherVue("vueGenerale.php", ["contenu" => "vueOffres.php", "offresStage" => $tableauStage, "offresAlternance" => $tableauAlternance, "title" => "Liste des offres", "contenuDetail" => "vueDetail.php"]);
+            self::afficherVue("vueGenerale.php", ["contenu" => "vueOffres.php", "offreses" => $tableauParPage, "nbrePages" => $nbrePages ,"pageActuelle" => $page,"title" => "Liste des offres"]);
         }
     }
 
@@ -98,23 +119,42 @@ class Controleur extends ControleurGenerique
         $offresDeStage = (new OffredeStageRepository())->recuperer();
         $offresAlternance = (new OffreAlternanceRepository())->recuperer();
 
-        $tableauStage = null;
-        $tableauAlternance = null;
+        $tableauTout = null;
+        $tableauParPage = null;
+        if ($offresDeStage != null) {
+            foreach ($offresDeStage as $offreFormatTableau) {
+                $tableauTout[] = $offreFormatTableau;
+            }
+        }
+        if($offresAlternance != null){
+            foreach ($offresAlternance as $offreFormatTableau) {
+                $tableauTout[] = $offreFormatTableau;
+            }
+        }
 
-        if ($offresDeStage == null & $offresAlternance == null) {
+        //Pagination
+        $nombresOffre = count($offresDeStage) + count($offresAlternance);
+        $nbrePages = ceil($nombresOffre / 9);
+
+        $page = 1;
+        if (isset($_GET['page'])) {
+            $page = $_GET['page'];
+            if ($page > $nbrePages) {
+                $page = 1;
+            }
+        }
+        $y = $page * 9;
+        if($page * 9 > $nombresOffre){
+            $y = $nombresOffre;
+        }
+
+        if ($tableauTout == null) {
             self::afficherAucuneOffre();
         } else {
-            if ($offresDeStage != null) {
-                foreach ($offresDeStage as $offreFormatTableau) {
-                    $tableauStage[] = $offreFormatTableau;
-                }
+            for ($i = ($page-1) * 9; $i <$y; $i++) {
+                $tableauParPage[] = $tableauTout[$i];
             }
-            if ($offresAlternance != null) {
-                foreach ($offresAlternance as $offreFormatTableau) {
-                    $tableauAlternance[] = $offreFormatTableau;
-                }
-            }
-            self::afficherVue("vueGenerale.php", ["contenu" => "vueValiderOffre.php", "offresStage" => $tableauStage, "offresAlternance" => $tableauAlternance, "title" => "Liste des offres à valider", "contenuDetail" => "vueDetail.php"]);
+            self::afficherVue("vueGenerale.php", ["contenu" => "vueValiderOffre.php", "offreses" => $tableauParPage, "nbrePages" => $nbrePages ,"pageActuelle" => $page, "title" => "Liste des offres à valider"]);
         }
     }
 
@@ -134,7 +174,7 @@ class Controleur extends ControleurGenerique
 
     public static function validerOffreStage()
     {
-        if(ConnexionUtilisateur::estSecretariat()){
+        if (ConnexionUtilisateur::estSecretariat()) {
             $offre = (new OffredeStageRepository())->recupererParClePrimaire($_GET['id']);
             OffredeStageRepository::validerOffreDeStage($offre);
             $msg = "";
@@ -145,8 +185,7 @@ class Controleur extends ControleurGenerique
             }
             echo '<div class="msgConfirmation"><p> Vous avez bien ' . $msg . ' l\'offre de Stage : ' . $offre->getNomOffre() . '</p></div>';
             self::consulterOffreSecretaire();
-        }
-        else{
+        } else {
             echo '<div class="msgConfirmation"><p>Vous n\'avez pas les droits de valider ou dévalider les offres</p></div>';
         }
     }
@@ -169,6 +208,45 @@ class Controleur extends ControleurGenerique
         self::consulterOffre();
     }
 
+    public static function filtrer(){
+        $stage = false;
+        $alternance= false;
+        $valider = false;
+        $invalider = false;
+        $sa = false;
+
+        if ( isset($_POST['Stage']) ){
+            $stage = true;
+            $type = "S";
+        }
+        if ( isset($_POST['Alternance']) ){
+            $alternance = true;
+            $type = "A";
+        }
+        if ( $stage == true && $alternance == true){
+            $sa = true;
+            $type = "SA";
+        }
+        if ( isset($_POST['Valider']) ){
+            $valider = true;
+            $validation = 1;
+        }
+        if ( isset($_POST['Avalider']) ){
+            $invalider = true;
+            $validation = 0;
+        }
+        if ( $valider == true && $invalider == true){
+            $validation = null;
+            echo " erreur valider et invalide ne peuvent pas etre valider simultanement";
+        }
+        $values = array(
+            "type" => $type,
+            "validation" =>$validation
+        );
+        AbstractRepository::recupererAvecFiltre($values);
+
+    }
+
     public static function connecter()
     {
         $cle = "";
@@ -179,20 +257,20 @@ class Controleur extends ControleurGenerique
 
         if ($_POST['type_connexion'] == 'secretariat') {
             $utilisateurAVerifier = (new SecretariatRepository())->recupererParClePrimaire($_POST['login']);
-            $cle="secretariat";
+            $cle = "secretariat";
         } else if ($_POST['type_connexion'] == 'etudiant') {
             $utilisateurAVerifier = (new EtudiantRepository())->recupererParClePrimaire($_POST['login']);
             $cle = "etudiant";
         } else if ($_POST['type_connexion'] == 'entreprise') {
             $utilisateurAVerifier = (new EntrepriseRepository())->recupererParClePrimaire($_POST['login']);
             $cle = "entreprise";
-        }else{
+        } else {
             echo '<div class="msgConfirmation"><p>Erreur au niveau type de connexion</p></div>';
-    }
+        }
 
         if ($utilisateurAVerifier == null) {
             echo '<div class="msgConfirmation"><p>Aucun compte de ce login existe</p></div>';
-        }else{
+        } else {
             $mdpCorrect = MotDePasse::verifier($_POST['mdp'], $utilisateurAVerifier->getMdp());
             if (!$mdpCorrect) {
                 echo '<div class="msgConfirmation"><p>Mot de passe incorrect</p></div>';
@@ -247,13 +325,15 @@ class Controleur extends ControleurGenerique
         self::afficherVue("vueGenerale.php", ["title" => "FormulaireExterne", "contenu" => "formulaireOffreExterneStage.html"]);
     }
 
-    public static function seDeconnecter(){
+    public static function seDeconnecter()
+    {
         ConnexionUtilisateur::deconnecter();
         echo '<div class="msgConfirmation"><p>Vous êtes  bien déconnecté</p></div>';
         self::afficherAccueil();
     }
 
-    public static function estAdmin(){
+    public static function estAdmin()
+    {
         ConnexionUtilisateur::connecter('admin');
         $cle = 'secretariat';
         $session = Session::getInstance();

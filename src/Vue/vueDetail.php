@@ -3,7 +3,7 @@ use App\Modele\Repository\OffredeStageRepository;
 use App\Modele\Repository\EntrepriseRepository;
 use App\Modele\Repository\OffreAlternanceRepository;
 if(isset($_GET["idStage"])){
-    echo '<div class="offre_detail carte">';
+    echo '<div class="offre_detail">';
     $stage = (new OffredeStageRepository())->recupererParClePrimaire($_GET["idStage"]);
     $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($stage->getIdEntreprise());
     echo "<h1>".htmlspecialchars($stage->getNomOffre())."</h1>";
@@ -16,7 +16,7 @@ if(isset($_GET["idStage"])){
 }
 
 if(isset($_GET["idAlternance"])){
-    echo '<div class="offre_detail carte">';
+    echo '<div class="offre_detail">';
     $stage = (new OffreAlternanceRepository())->recupererParClePrimaire($_GET["idAlternance"]);
     $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($stage->getIdEntreprise());
     echo "<h1>".htmlspecialchars($stage->getNomOffre())."</h1>";
