@@ -35,6 +35,7 @@ abstract class AbstractRepository
         return $this->construireDepuisTableau($objetFormatTableau);
     }
 
+
     protected abstract function getNomTable(): string;
     protected abstract function getNomsColones(): array;
     protected abstract function getNomClePrimaire(): string;
