@@ -81,10 +81,7 @@ abstract class AbstractRepository
             }
 
         }
-        var_dump($colonesql);
         $tableau = null;
-        $sql = "SELECT * FROM ".$this->getNomTable(). " WHERE " . $colonesql;
-        var_dump($sql);
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query("SELECT * FROM ".$this->getNomTable(). " WHERE " . $colonesql);
         foreach ($pdoStatement as $objetFormatTableau) {
             $tableau[] = $this->construireDepuisTableau($objetFormatTableau);
