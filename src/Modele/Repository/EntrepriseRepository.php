@@ -38,12 +38,12 @@ class EntrepriseRepository extends AbstractRepository
         return "Entreprise";
     }
 
-    protected function getNomClePrimaire(): string
+    public function getNomClePrimaire(): string
     {
         return "numSiret";
     }
 
-    protected function getNomsColones(): array
+    public function getNomsColones(): array
     {
         return array(
           "nomEntreprise",

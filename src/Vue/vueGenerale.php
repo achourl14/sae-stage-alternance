@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="styles/css/style_form.css">
     <link rel="stylesheet" type="text/css" href="styles/css/consulterOffre.css">
     <link rel="stylesheet" type="text/css" href="styles/css/form_externe.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/mesCandidatures.css">
     <script src="styles/js/script.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -34,6 +35,7 @@ $form = "";
 $offres = "";
 $gestion = "";
 $formExterne ="";
+$compte = "";
 
 if($contenu == "index.html"){
     $accueil = "actuel";
@@ -43,9 +45,10 @@ if($contenu == "index.html"){
     $gestion = "actuel";
 } else if ($contenu == "vueOffres.php"){
     $offres = "actuel";
-    $gestion = "actuel";
-}else{
+}else if ($contenu == "formulaireOffreExterneStage.html"){
     $formExterne = 'actuel';
+}else{
+    $compte = 'actuel';
 }
 
 echo  '<nav>';
@@ -56,7 +59,7 @@ if(ConnexionUtilisateur::estEntreprise()){
     echo  '<div><a href="controleurFrontal.php?action=afficherFormulaire" id='.$form.'>Creer Offre Par Entreprise</a></div>';
 }
 if(!ConnexionUtilisateur::estSecretariat()){
-    echo '<div><a href="controleurFrontal.php?action=offres">offres</a></div>';
+    echo '<div><a  id="'.$offres.'" href="controleurFrontal.php?action=offres">offres</a></div>';
 }
 
 if(ConnexionUtilisateur::estSecretariat()){
@@ -87,7 +90,8 @@ if(!ConnexionUtilisateur::estConnecte()){
     if(ConnexionUtilisateur::estEntreprise()){
         echo '<a href="controleurFrontal.php?action=afficherMAJEntreprise&numSiret='.ConnexionUtilisateur::getLoginUtilisateurConnecte().'">Configuration</a>';
     }else if(ConnexionUtilisateur::estEtudiant()){
-        echo '<a href="controleurFrontal.php?action=afficherMAJEntreprise&numSiret='.ConnexionUtilisateur::getLoginUtilisateurConnecte().'">Configurationnnn</a>';
+        echo '<a href="controleurFrontal.php?action=afficherMenuPostulerOffre">Candidatures</a>';
+        echo '<a href="controleurFrontal.php?action=afficherMAJEtudiant&codeINE='.ConnexionUtilisateur::getLoginUtilisateurConnecte().'">Configuration</a>';
     }
     echo '<a href="controleurFrontal.php?action=seDeconnecter">Se déconnecter</a>';
     echo '</div>';
@@ -99,7 +103,7 @@ echo '</nav>';
 <div class="contenupage">
 
     <?php
-    if(ClassTest::$DEBUG == true){
+    if(ClassTest::$DEBUG == true && !ConnexionUtilisateur::estConnecte()){
         echo "<a href='controleurFrontal.php?action=estAdmin'>Admin</a>";
     }
     require __DIR__ . "/{$contenu}";

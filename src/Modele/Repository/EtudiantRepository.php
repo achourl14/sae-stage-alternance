@@ -7,7 +7,7 @@ use App\Modele\DataObject\Etudiant;
 class EtudiantRepository extends AbstractRepository
 {
     public function sauvegarder(Etudiant $etudiant) : void {
-        $sql = "INSERT INTO Etudiant VALUES(:codeINETag, :codeEtudiantTag, :promotionTag, :groupeTag, :nomEtudiantTag, :prenomEtudiantTag, :mailEtudiantTag, :telephoneEtudiantTag, :dateNaissaneEtudiantTag, :motDePasseTag)";
+        $sql = "INSERT INTO Etudiant VALUES(:codeINETag, :codeEtudiantTag, :promotionTag, :groupeTag, :parcoursTag,:nomEtudiantTag, :prenomEtudiantTag, :mailEtudiantTag, :telephoneEtudiantTag, :dateNaissanceEtudiantTag, :motDePasseTag)";
 
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
@@ -19,6 +19,7 @@ class EtudiantRepository extends AbstractRepository
             "nomEtudiantTag" => $etudiant->getNom(),
             "prenomEtudiantTag" => $etudiant->getPrenom(),
             "mailEtudiantTag" => $etudiant->getEmail(),
+            "parcoursTag" => $etudiant->getParcours(),
             "telephoneEtudiantTag" => $etudiant->getNumTel(),
             "dateNaissanceEtudiantTag" => $etudiant->getDateDeNaissance(),
             "motDePasseTag" => $etudiant->getMdp()
@@ -74,12 +75,12 @@ class EtudiantRepository extends AbstractRepository
         return "Etudiant";
     }
 
-    protected function getNomClePrimaire(): string
+    public function getNomClePrimaire(): string
     {
         return "codeINE";
     }
 
-    protected function getNomsColones(): array
+    public function getNomsColones(): array
     {
         return array(
             "codeEtudiant",

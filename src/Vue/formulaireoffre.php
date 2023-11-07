@@ -44,7 +44,6 @@
                     </select>
                     </div>
 
-
                     <div class="input-box">
                         <label class="details" for="parcoursCible"> Parcours cible </label>
                         <select name="parcours" id="parcoursCible">

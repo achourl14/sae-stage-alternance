@@ -2,6 +2,8 @@
 
 namespace App\Modele\DataObject;
 
+use App\Lib\MotDePasse;
+
 class Etudiant extends AbstractDataObject
 {
     private string $codeINE;
@@ -108,6 +110,11 @@ class Etudiant extends AbstractDataObject
             "dateNaissanceEtudiantTag" => $this->getDateDeNaissance(),
             "motDePasseTag" => $this->getMdp()
         );
+    }
+
+    public static function construireDepuisFormulaire(array $tableauFormulaire) : Etudiant{
+        $mdpHache = MotDePasse::hacher($tableauFormulaire['mdp']);
+        return new Etudiant($tableauFormulaire["codeINE"],$tableauFormulaire["codeEtudiant"],$tableauFormulaire["groupe"],$tableauFormulaire["nomEtudiant"],$tableauFormulaire["prenomEtudiant"],$tableauFormulaire["parcours"],$tableauFormulaire["telephone"],$tableauFormulaire["mail"],$mdpHache,$tableauFormulaire["dateDeNaissance"],$tableauFormulaire["promotion"]);
     }
 
 

@@ -81,9 +81,6 @@ abstract class AbstractRepository
             }
 
         }
-//        var_dump($colonesql);
-//        echo "<br/>";
-//        var_dump($values);
         $tableau = null;
         $sql = "SELECT * FROM ".$this->getNomTable(). " WHERE " . $colonesql;
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);

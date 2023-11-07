@@ -2,9 +2,9 @@
 use App\Modele\Repository\EntrepriseRepository;
 use App\Modele\Repository\OffreRepository;
 
-if(isset($_GET["idOffre"])){
+if(isset($offreDetail)){
     echo '<div class="offre_detail">';
-    $offre = (new OffreRepository())->recupererParClePrimaire($_GET["idOffre"]);
+    $offre = (new OffreRepository())->recupererParClePrimaire($offreDetail);
     $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($offre->getIdEntreprise());
     $type = "Stage et Alternance";
     if($offre->getType() == "S"){
@@ -18,7 +18,7 @@ if(isset($_GET["idOffre"])){
 
     if(\App\Lib\ConnexionUtilisateur::estEtudiant()){
         echo '<div class="boutonsGeneral">';
-        echo '<a  href="#"> Postuler sur cette offre </a>';
+        echo '<a  href="controleurFrontal.php?action=postuler&idOffre='.$offre->getIdOffre().'"> Postuler sur cette offre </a>';
         echo '</div>';
     }
 

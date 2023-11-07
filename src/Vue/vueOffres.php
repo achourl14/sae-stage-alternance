@@ -8,26 +8,6 @@ $buttonValider = "";
 echo '<div class="toutesLesCartes">';
 echo "<div class='title'> Gérer les offres </div>";
 
-
-/*echo '<div class="filtres">
-            <div>
-                <label class="details" for="stage">Stage </label>
-                <input type="radio" placeholder="" name="offre" id="stage" value="stage" required/>
-            </div>
-            <div>
-                 <label class="details" for="alternance">Alternance </label>
-                 <input type="radio" placeholder="" name="offre" id="alternance" value="alternance" required/>
-            </div>
-            <div>
-                <label class="details" for="valider">Valider </label>
-                <input type="radio" placeholder="" name="offre" id="stage" value="valider" required/>
-            </div>
-            <div>
-                 <label class="details" for="non_valider">Pas encore valider </label>
-                 <input type="radio" placeholder="" name="offre" id="alternance" value="invalider" required/>
-            </div>
-        </div>';*/
-
 echo '<form method="post" action="controleurFrontal.php?action=filtrer">
           <article class="feature1">
             <input type="checkbox" name="Stage" id="feature1" value="stage"/>

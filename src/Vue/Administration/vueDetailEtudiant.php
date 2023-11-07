@@ -10,7 +10,7 @@ if(isset($_GET['codeINE'])){
     echo "<h2> Numéro Etudiant : ". htmlspecialchars($etudiant->getNumEtudiant()) ."</h2>";
 
     echo '<div class="boutonsGeneral">';
-    echo '<a  href="#"> Modifier les informations de l\'Etudiant </a>';
+    echo '<a  href="controleurFrontal.php?action=afficherMAJEtudiant&codeINE='.$etudiant->getCodeINE().'"> Modifier les informations de l\'Etudiant </a>';
     echo '<a  href="#"> Supprimer le compte de l\'Etudiant </a>';
     echo '</div>';
     $stageTrouve = "";
