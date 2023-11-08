@@ -86,7 +86,7 @@ if(!ConnexionUtilisateur::estConnecte()){
     echo '<p> Compte </p>';
     echo '</div>';
     echo '</a>';
-    echo '<div class="submenu">';
+    echo '<div class="submenu submenuCompte">';
     if(ConnexionUtilisateur::estEntreprise()){
         echo '<a href="controleurFrontal.php?action=afficherMAJEntreprise&numSiret='.ConnexionUtilisateur::getLoginUtilisateurConnecte().'">Configuration</a>';
     }else if(ConnexionUtilisateur::estEtudiant()){

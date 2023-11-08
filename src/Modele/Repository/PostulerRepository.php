@@ -69,6 +69,28 @@ class PostulerRepository
         }
     }
 
+    public function recupererParOffre(int $idOffre)
+    {
+        $sql = "SELECT * from " . $this->getNomTable() . " WHERE idOffre = :idOffreTag";
+        // Préparation de la requête
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+
+        $values = array(
+            "idOffreTag" => $idOffre
+        );
+        // On donne les valeurs et on exécute la requête
+        $pdoStatement->execute($values);
+
+        $tableau = null;
+        foreach ($pdoStatement as $objetFormatTableau) {
+            $tableau[] = $this->construireDepuisTableau($objetFormatTableau);
+            if ($tableau == null) {
+                return null;
+            }
+            return $tableau;
+        }
+    }
+
 
     public function construireDepuisTableau(array $offreFormatTableau) : Postuler {
         $offre = new Postuler($offreFormatTableau['codeINE'],$offreFormatTableau['idOffre']);

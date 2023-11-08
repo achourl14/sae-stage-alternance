@@ -18,9 +18,16 @@ if(isset($offreDetail)){
 
     if(\App\Lib\ConnexionUtilisateur::estEtudiant()){
         echo '<div class="boutonsGeneral">';
-        echo '<a  href="controleurFrontal.php?action=postuler&idOffre='.$offre->getIdOffre().'"> Postuler sur cette offre </a>';
+        echo '<a  href="controleurFrontal.php?action=afficherVuePostuler&idOffre='.$offre->getIdOffre().'"> Postuler sur cette offre </a>';
         echo '</div>';
     }
+
+    if(\App\Lib\ConnexionUtilisateur::estEntreprise()){
+        echo '<div class="boutonsGeneral">';
+        echo '<a  href="controleurFrontal.php?action=afficherVueEntrepriseCandidature&idOffre='.$offre->getIdOffre().'"> Consulter les candidatures </a>';
+        echo '</div>';
+    }
+
 
     echo "<hr/>";
     echo "<h1> Detail du poste : </h1>";
@@ -48,6 +55,20 @@ if(isset($offreDetail)){
     echo "<p class='case'> Parcours : ".$offre->getParcours() ."</p>";
     echo "</div>";
 
+    $emplacementFichier = null;
+    if(file_exists("../upload_offres/offre_".$offre->getIdOffre()."." ."pdf")){
+        $emplacementFichier = "../upload_offres/offre_".$offre->getIdOffre()."." ."pdf";
+    }else if(file_exists("../upload_offres/offre_".$offre->getIdOffre()."." ."txt")){
+        $emplacementFichier = "../upload_offres/offre_".$offre->getIdOffre()."." ."txt";
+    }else if (file_exists("../upload_offres/offre_".$offre->getIdOffre()."." ."docx")){
+        $emplacementFichier = "../upload_offres/offre_".$offre->getIdOffre()."." ."docx";
+    }
+    if($emplacementFichier != null){
+        echo "<h3> Fichier ajouté à l'offre </h3>";
+        echo '<div class="boutonsGeneral">';
+        echo '<a href="'.$emplacementFichier.'">Télécharger Fichier</a>';
+        echo '</div>';
+    }
 
     echo "<h3> Mission </h3>";
     echo("<p>" . htmlspecialchars($offre->getMission()) . "</p> ");
@@ -56,5 +77,3 @@ if(isset($offreDetail)){
 }else{
     echo '<div class="msgConfirmation"><p> ⚠️ Cette offre est introuvable ⚠️ </p></div>';
 }
-
-

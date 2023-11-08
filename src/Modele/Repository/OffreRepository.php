@@ -67,6 +67,15 @@ class OffreRepository extends AbstractRepository
             $pdoStatement->execute($values);
         }
     }
+
+    public function derniereOffre() : Offre
+    {
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query("SELECT * FROM Offre WHERE idOffre = (SELECT MAX(idOffre) FROM Offre)");
+
+        $derniereOffre = $pdoStatement->fetch();
+        return $this->construireDepuisTableau($derniereOffre);
+    }
+
     protected function getNomsColones(): array
     {
         return array(

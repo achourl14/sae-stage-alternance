@@ -138,54 +138,44 @@ class Controleur extends ControleurGenerique
 
     public static function creerOffre()
     {
-        $offre = null;
-        $offre = new Offre(-9, $_POST["idEntreprise"], $_POST["nomOffre"], $_POST["mission"], -9, -9, $_POST["dateDebut"], $_POST["dateFin"], $_POST["remuneration"], $_POST["but_annee"], $_POST["parcours"], $_POST["type"], 0);
-        OffreRepository::sauvegarder($offre);
+        $nomFichier = $_FILES["fileToUpload"]["name"];
+        $dossier = $_FILES["fileToUpload"]["tmp_name"];
+        move_uploaded_file("$dossier", "../upload_offres/$nomFichier");
+        $file_parts = pathinfo("../upload_offres/$nomFichier");
+        if ($file_parts['extension'] != "pdf" && $file_parts['extension'] != "docx" && $file_parts['extension'] != "txt") {
+            unlink("../upload_offres/$nomFichier");
+            echo '<div class="msgConfirmation"><p> Impossible de créer l\'offre : Le fichier n\'est pas dans les extensions demandées (.pdf, .docx, .txt)</p></div>';
+        } else {
+            $offre = null;
+            $offre = new Offre(-9, $_POST["idEntreprise"], $_POST["nomOffre"], $_POST["mission"], -9, -9, $_POST["dateDebut"], $_POST["dateFin"], $_POST["remuneration"], $_POST["but_annee"], $_POST["parcours"], $_POST["type"], 0);
+            OffreRepository::sauvegarder($offre);
 
-//        if ($_FILES['fichier']['error']) {
-//            switch ($_FILES['fichier']['error']){
-//                case 1: // UPLOAD_ERR_INI_SIZE
-//                    echo "Le fichier dépasse la limite autorisée par le serveur (fichier php.ini) !";
-//                    break;
-//                case 2: // UPLOAD_ERR_FORM_SIZE
-//                    echo "Le fichier dépasse la limite autorisée dans le formulaire HTML !";
-//                    break;
-//                case 3: // UPLOAD_ERR_PARTIAL
-//                    echo "L'envoi du fichier a été interrompu pendant le transfert !";
-//                    break;
-//                case 4: // UPLOAD_ERR_NO_FILE
-//                    echo "Le fichier que vous avez envoyé a une taille nulle !";
-//                    break;
-//            }
-//        }else{
-//            $nom = $_FILES['fichier']['tmp_name'];
-//            $nomdestination = '/FichierOffre';
-//            move_uploaded_file($nom, $nomdestination);
-//        }
-        echo '<div class="msgConfirmation"><p> Vous avez bien créer votre offre : ' . $offre->getNomOffre() . '</p></div>';
+
+            $offreCree = (new OffreRepository())->derniereOffre();
+            rename("../upload_offres/$nomFichier", "../upload_offres/offre_" . $offreCree->getIdOffre() . "." . $file_parts['extension']);
+
+            echo '<div class="msgConfirmation"><p> Vous avez bien créer votre offre : ' . $offre->getNomOffre() . '</p></div>';
+        }
         self::offres();
     }
 
     public static function filtrer()
     {
-        $stage = false;
-        $alternance = false;
         $valider = false;
         $invalider = false;
-        $type = "SA";
+        $type = "";
         $validation = null;
-
-        if (isset($_POST['Stage'])) {
-            $stage = true;
-            $type = "S";
-        }
-        if (isset($_POST['Alternance'])) {
-            $alternance = true;
-            $type = "A";
-        }
-        if ($stage == true && $alternance == true) {
+        if(isset($_POST['Stage']) && isset($_POST['Alternance'])){
             $type = "SA";
+        }else{
+            if (isset($_POST['Stage'])) {
+                $type = "S";
+            }
+            if (isset($_POST['Alternance'])) {
+                $type = "A";
+            }
         }
+
         if (isset($_POST['Valider'])) {
             $valider = true;
             $validation = 1;
@@ -194,18 +184,20 @@ class Controleur extends ControleurGenerique
             $invalider = true;
             $validation = 0;
         }
+
         if ($valider == true && $invalider == true) {
             $validation = null;
         }
-        if (!isset($_POST['Stage']) && !isset($_POST['Alternance'])) {
-            $type = null;
-        }
+
         $values = null;
-        var_dump($validation);
-        if ($validation == 0 || $validation == 1) {
+        if(isset($_POST['nosOffres'])){
+            $values["idEntreprise"] = ConnexionUtilisateur::getLoginUtilisateurConnecte();
+        }
+
+        if ($validation != null) {
             $values["validation"] = $validation;
         }
-        if ($type != null) {
+        if ($type != "") {
             $values["type"] = $type;
         }
         Session::getInstance()->enregistrer("requeteFiltreOffre", $values);
@@ -287,10 +279,10 @@ class Controleur extends ControleurGenerique
 
     public static function afficherDetail()
     {
-        if(!isset($_GET["idOffre"])){
+        if (!isset($_GET["idOffre"])) {
             self::afficherErreur("L'id de l'offre n'est pas renseigné");
-        }else{
-            self::afficherVue("vueGenerale.php", ["title" => "Detail offre", "contenu" => "vueDetail.php", "offreDetail" => $_GET["idOffre"] ]);
+        } else {
+            self::afficherVue("vueGenerale.php", ["title" => "Detail offre", "contenu" => "vueDetail.php", "offreDetail" => $_GET["idOffre"]]);
         }
     }
 
@@ -627,8 +619,7 @@ class Controleur extends ControleurGenerique
         if (ConnexionUtilisateur::estEtudiant()) {
             $postulers = (new PostulerRepository())->recupererParEtudiant(ConnexionUtilisateur::getLoginUtilisateurConnecte());
             $offresCandidate = null;
-            if ($postulers != null)
-            {
+            if ($postulers != null) {
                 foreach ($postulers as $postuler) {
                     $offresCandidate[] = (new OffreRepository())->recupererParClePrimaire($postuler->getIdOffre());
                 }
@@ -637,18 +628,63 @@ class Controleur extends ControleurGenerique
         }
     }
 
-    public static function postuler(){
-        if(ConnexionUtilisateur::estEtudiant()){
-            $postulerExiste = (new PostulerRepository())->recupererParClePrimaire(ConnexionUtilisateur::getLoginUtilisateurConnecte(),$_GET['idOffre']);
-            if($postulerExiste != null){
-                self::afficherErreur("Vous avez déjà postuler à cette offre","offres");
-            }else{
-                $postuler = new Postuler(ConnexionUtilisateur::getLoginUtilisateurConnecte(),$_GET['idOffre']);
-                (new PostulerRepository())->sauvegarder($postuler);
-                self::afficherErreur("Vous avez bien postulé pour cette offre");
+    public static function afficherVuePostuler()
+    {
+        self::afficherVue("vueGenerale.php", ["contenu" => "vuePostuler.php", "title" => "Ajouter CV", "offreId" => $_GET['idOffre']]);
+    }
 
+    public static function postulerBD()
+    {
+        $postulerExiste = (new PostulerRepository())->recupererParClePrimaire(ConnexionUtilisateur::getLoginUtilisateurConnecte(), $_GET['idOffre']);
+        if ($postulerExiste != null) {
+            self::afficherErreur("Vous avez déjà postuler à cette offre", "offres");
+        } else {
+            $postuler = new Postuler(ConnexionUtilisateur::getLoginUtilisateurConnecte(), $_GET['idOffre']);
+            (new PostulerRepository())->sauvegarder($postuler);
+            self::afficherErreur("Vous avez bien postulé pour cette offre");
+        }
+    }
+
+    public static function postuler()
+    {
+        if (ConnexionUtilisateur::estEtudiant()) {
+            $nomFichier = $_FILES["cvEtu"]["name"];
+            $dossier = $_FILES["cvEtu"]["tmp_name"];
+            move_uploaded_file("$dossier", "../upload_postuler/$nomFichier");
+            $file_parts = pathinfo("../upload_postuler/$nomFichier");
+            if ($file_parts['extension'] != "pdf" && $file_parts['extension'] != "docx" && $file_parts['extension'] != "txt") {
+                unlink("../upload_postuler/$nomFichier");
+                echo '<div class="msgConfirmation"><p> Impossible de postuler : Le fichier CV n\'est pas dans les extensions demandées (.pdf, .docx, .txt)</p></div>';
+            } else {
+                rename("../upload_postuler/$nomFichier", "../upload_postuler/cv_postuler_" . $_GET['idOffre'] . "_" . ConnexionUtilisateur::getLoginUtilisateurConnecte() . "." . $file_parts['extension']);
+
+                if (file_exists($_FILES['lettreMotivation']['tmp_name']) && is_uploaded_file($_FILES['lettreMotivation']['tmp_name'])) {
+                    $nomFichier = $_FILES["lettreMotivation"]["name"];
+                    $dossier = $_FILES["lettreMotivation"]["tmp_name"];
+                    move_uploaded_file("$dossier", "../upload_postuler/$nomFichier");
+                    $file_parts = pathinfo("../upload_postuler/$nomFichier");
+                    if ($file_parts['extension'] != "pdf" && $file_parts['extension'] != "docx" && $file_parts['extension'] != "txt") {
+                        unlink("../upload_postuler/$nomFichier");
+                        echo '<div class="msgConfirmation"><p> Impossible de postuler : Le fichier CV n\'est pas dans les extensions demandées (.pdf, .docx, .txt)</p></div>';
+                    } else {
+                        rename("../upload_postuler/$nomFichier", "../upload_postuler/lettre_postuler_" . $_GET['idOffre'] . "_" . ConnexionUtilisateur::getLoginUtilisateurConnecte() . "." . $file_parts['extension']);
+                        self::postulerBD();
+                    }
+                } else {
+                    self::postulerBD();
+                }
             }
         }
     }
 
+    public static function afficherVueEntrepriseCandidature(){
+        $offre = (new OffreRepository())->recupererParClePrimaire($_GET['idOffre']);
+        if($offre->getIdEntreprise() == ConnexionUtilisateur::getLoginUtilisateurConnecte()){
+            $postulers = (new PostulerRepository())->recupererParOffre($_GET['idOffre']);
+            self::afficherVue("vueGenerale.php", ["contenu" => "vueEntrepriseCandidature.php", "title" => "Candidatures", "postulers"=>$postulers]);
+        }else{
+            self::afficherErreur("Vous n'avez pas le droit de faire cela");
+        }
+
+    }
 }

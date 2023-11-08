@@ -25,26 +25,40 @@ echo '<form method="post" action="controleurFrontal.php?action=filtrer">
                  </div>
           </article>
       
-          <article class="feature3">
+       ';
+
+if(\App\Lib\ConnexionUtilisateur::estSecretariat()){
+    echo '<article class="feature3">
             <input type="checkbox" name="Valider" id="feature3" value="valider"/>
                 <div>
                     <span> Valider </span>
                 </div>
          </article>
-      
          <article class="feature4">
             <input type="checkbox" name="Avalider" id="feature4" value="avalider"/>
                 <div>
                  <span> A Valider </span>
                  </div>
-        </article>
-         <article>
+        </article>';
+         
+}
+
+if(\App\Lib\ConnexionUtilisateur::estEntreprise()){
+    echo '<article class="feature5">
+            <input type="checkbox" name="nosOffres" id="feature5" value="nosOffres"/>
+                <div>
+                    <span> NosOffres </span>
+                </div>
+         </article>';
+}
+
+echo '<article>
             <input type="submit" value="Envoyer" />
              <div >
                 <span> Envoyer </span>
             </div>
         </article>
-</form>';
+    </form>';
 
 
 

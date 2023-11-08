@@ -4,5 +4,5 @@ namespace App;
 
 class ClassTest
 {
-    public static bool $DEBUG = true;
+    public static bool $DEBUG = false;
 }

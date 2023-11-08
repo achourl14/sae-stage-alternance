@@ -70,11 +70,11 @@ abstract class AbstractRepository
         if($parameters != null){
             foreach($parameters as $clef => $valeur){
                 if($i != 0){
-                    $colonesql .= "AND";
+                    $colonesql .= " AND ";
                 }
                 $i = $i + 1;
-                $colonesql .= " " . $clef . "= ";
-                $colonesql .= ":".$clef . "Tag ";
+                $colonesql .= $clef . "= ";
+                $colonesql .= ":".$clef . "Tag";
 
                 $expression = $clef . "Tag";
                 $values[$expression] = $valeur;
@@ -84,6 +84,8 @@ abstract class AbstractRepository
         $tableau = null;
         $sql = "SELECT * FROM ".$this->getNomTable(). " WHERE " . $colonesql;
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+
+
 
         $pdoStatement->execute($values);
 
