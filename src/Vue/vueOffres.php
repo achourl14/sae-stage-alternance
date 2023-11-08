@@ -9,56 +9,42 @@ echo '<div class="toutesLesCartes">';
 echo "<div class='title'> Gérer les offres </div>";
 
 echo '<form method="post" action="controleurFrontal.php?action=filtrer">
-          <article class="feature1">
-            <input type="checkbox" name="Stage" id="feature1" value="stage"/>
-            <div>
-              <span>
-                    Stage
-                </span>
-            </div>
-          </article>
+          <article>
+            <span>Stage</span>
+            <input type="checkbox" name="Stage" value="stage"/>
+          <article>
       
-          <article class="feature2">
-            <input type="checkbox" name="Alternance" id="feature2" value="alternance"/>
-                 <div>
-                    <span> Alternance </span>
-                 </div>
-          </article>
-      
+          <article>
+            <span> Alternance </span>
+            <input type="checkbox" name="Alternance" value="alternance"/>              
+                             
+          </article>          
        ';
 
 if(\App\Lib\ConnexionUtilisateur::estSecretariat()){
-    echo '<article class="feature3">
-            <input type="checkbox" name="Valider" id="feature3" value="valider"/>
-                <div>
-                    <span> Valider </span>
-                </div>
-         </article>
-         <article class="feature4">
-            <input type="checkbox" name="Avalider" id="feature4" value="avalider"/>
-                <div>
-                 <span> A Valider </span>
-                 </div>
+    echo '<article>
+            <span> Valider </span>
+            <input type="checkbox" name="Valider" value="valider"/>
+          </article>
+      
+         <article>
+            <span> A Valider </span>
+            <input type="checkbox" name="Avalider" value="avalider"/> 
         </article>';
-         
+
 }
 
 if(\App\Lib\ConnexionUtilisateur::estEntreprise()){
-    echo '<article class="feature5">
-            <input type="checkbox" name="nosOffres" id="feature5" value="nosOffres"/>
-                <div>
-                    <span> NosOffres </span>
-                </div>
+    echo '<article>
+            <span> NosOffres </span>
+            <input type="checkbox" name="nosOffres"  value="nosOffres"/>
          </article>';
 }
 
 echo '<article>
             <input type="submit" value="Envoyer" />
-             <div >
-                <span> Envoyer </span>
-            </div>
         </article>
-    </form>';
+</form>';
 
 
 
