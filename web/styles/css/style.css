@@ -48,7 +48,7 @@ nav div a {
   color: rgb(0, 0, 0);
   padding: 15px 20px;
   font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   text-decoration: none;
   cursor: pointer;
 }
@@ -143,9 +143,6 @@ nav div:hover .submenu{
   display: block;
 }
 
-form{
-  margin-left: 10%;
-}
 
 #actuel{
   color: #F44336;
@@ -168,7 +165,7 @@ form{
 
 .title{
   font-family: 'Poppins',sans-serif;
-  font-size: 25px;
+  font-size: 23px;
   font-weight: 500;
   position: relative;
   margin-bottom: 50px;
@@ -211,7 +208,6 @@ form{
 #buttonCompte:hover #monCompte{
   border: solid #F44336 2px;
 }
-
 
 footer{
   margin-top: 200px;

@@ -55,7 +55,7 @@ div.boutonAlternanceStage {
 /*
 formulaire
  */
-form {
+.formulaire{
     padding-right: 15%;
     padding-bottom: 2%;
     margin-left: 10%;

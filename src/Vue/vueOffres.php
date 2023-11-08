@@ -12,12 +12,11 @@ echo '<form method="post" action="controleurFrontal.php?action=filtrer">
           <article>
             <span>Stage</span>
             <input type="checkbox" name="Stage" value="stage"/>
-          <article>
+          </article>
       
           <article>
             <span> Alternance </span>
-            <input type="checkbox" name="Alternance" value="alternance"/>              
-                             
+            <input type="checkbox" name="Alternance" value="alternance"/>                        
           </article>          
        ';
 
@@ -43,8 +42,8 @@ if(\App\Lib\ConnexionUtilisateur::estEntreprise()){
 
 echo '<article>
             <input type="submit" value="Envoyer" />
-        </article>
-</form>';
+        </article>';
+echo '</form>';
 
 
 
