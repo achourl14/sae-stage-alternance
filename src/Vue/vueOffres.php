@@ -2,33 +2,81 @@
 
 use App\Modele\DataObject\Offre;
 use App\Modele\Repository\EntrepriseRepository;
+use App\Modele\HTTP\Session;
 
 $class = null;
 $buttonValider = "";
+$stage = "";
+$alternance = "";
+$sa = "";
+
+$validation = "";
+$aValider = "";
+if(Session::getInstance()->contient("requeteFiltreOffre")){
+    $values = Session::getInstance()->lire("requeteFiltreOffre");
+    if(isset($values["type"])){
+        $array = $values["type"];
+        if(in_array("S",$array)){
+            $stage = "checked";
+        }
+        if(in_array("A",$array)){
+            $alternance = "checked";
+        }
+        if(in_array("SA",$array)){
+            $sa = "checked";
+        }
+    }else{
+        $stage = "checked";
+        $alternance = "checked";
+        $sa = "checked";
+    }
+
+    if(isset($values["validation"])){
+        if($values["validation"] == 0){
+            $aValider = "checked";
+        }else{
+            $validation = "checked";
+        }
+    }else{
+        $validation = "checked";
+        $aValider = "checked";
+    }
+}else{
+    $stage = "checked";
+    $alternance = "checked";
+    $sa = "checked";
+    $validation = "checked";
+    $aValider = "checked";
+}
 echo '<div class="toutesLesCartes">';
 echo "<div class='title'> Gérer les offres </div>";
 
 echo '<form method="post" action="controleurFrontal.php?action=filtrer">
           <article>
             <span>Stage</span>
-            <input type="checkbox" name="Stage" value="stage"/>
+            <input type="checkbox" name="Stage" value="stage" '.$stage.' />
           </article>
       
           <article>
             <span> Alternance </span>
-            <input type="checkbox" name="Alternance" value="alternance"/>                        
-          </article>          
+            <input type="checkbox" name="Alternance" value="alternance" '.$alternance.'/>                        
+          </article>         
+          
+          <article>
+            <span> Stage et Alternance</span>
+            <input type="checkbox" name="StageAlternance" value="stageAlternance" '.$sa.'/>                        
+          </article>   
        ';
 
 if(\App\Lib\ConnexionUtilisateur::estSecretariat()){
     echo '<article>
             <span> Valider </span>
-            <input type="checkbox" name="Valider" value="valider"/>
+            <input type="checkbox" name="Valider" value="valider" '.$validation.'/>
           </article>
       
          <article>
             <span> A Valider </span>
-            <input type="checkbox" name="Avalider" value="avalider"/> 
+            <input type="checkbox" name="Avalider" value="avalider" '.$aValider.'/> 
         </article>';
 
 }

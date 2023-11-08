@@ -161,44 +161,38 @@ class Controleur extends ControleurGenerique
 
     public static function filtrer()
     {
-        $valider = false;
-        $invalider = false;
-        $type = "";
-        $validation = null;
-        if(isset($_POST['Stage']) && isset($_POST['Alternance'])){
-            $type = "SA";
+        $type = null;
+        $values = null;
+        if(isset($_POST['Stage']) && isset($_POST['Alternance']) && isset($_POST["StageAlternance"]) || !isset($_POST['Stage']) && !isset($_POST['Alternance']) && !isset($_POST["StageAlternance"]) ){
+            $type = null;
         }else{
             if (isset($_POST['Stage'])) {
-                $type = "S";
+                $type[] = "S";
             }
             if (isset($_POST['Alternance'])) {
-                $type = "A";
+                $type[] = "A";
             }
+            if (isset($_POST['StageAlternance'])) {
+                $type[] = "SA";
+            }
+            $values["type"] = $type;
         }
+            if(isset($_POST['Avalider']) && isset($_POST['Valider'])){
 
-        if (isset($_POST['Valider'])) {
-            $valider = true;
-            $validation = 1;
-        }
-        if (isset($_POST['Avalider'])) {
-            $invalider = true;
-            $validation = 0;
-        }
+            }else if(isset($_POST['Avalider']) || isset($_POST['Valider'])) {
+                if (isset($_POST['Valider'])) {
+                    $validation = 1;
+                    $values["validation"] = $validation;
+                }
+                if (isset($_POST['Avalider'])) {
+                    $validation = 0;
+                    $values["validation"] = $validation;
+                }
 
-        if ($valider == true && $invalider == true) {
-            $validation = null;
-        }
+            }
 
-        $values = null;
         if(isset($_POST['nosOffres'])){
             $values["idEntreprise"] = ConnexionUtilisateur::getLoginUtilisateurConnecte();
-        }
-
-        if ($validation != null) {
-            $values["validation"] = $validation;
-        }
-        if ($type != "") {
-            $values["type"] = $type;
         }
         Session::getInstance()->enregistrer("requeteFiltreOffre", $values);
         self::offres();
@@ -322,22 +316,24 @@ class Controleur extends ControleurGenerique
 
     }
 
-    public static function afficherSecretaire()
-    {
-        self::afficherVue("InscriptionSecretariat.html");
-    }
+//    public static function afficherSecretaire()
+//    {
+//        self::afficherVue("InscriptionSecretariat.html");
+//    }
+
+//    public static function creerSecretaire(): void
+//    {
+//        $secretaire = Secretariat::construireDepuisFormulaire($_POST);
+//        SecretariatRepository::sauvegarder($secretaire);
+//        echo '<div class="msgConfirmation"><p> Le Secrétaire a bien été enregistrée </p></div>';
+//    }
 
     public static function afficherEtudiant()
     {
         self::afficherVue("InscriptionEtudiant.html");
     }
 
-    public static function creerSecretaire(): void
-    {
-        $secretaire = Secretariat::construireDepuisFormulaire($_POST);
-        SecretariatRepository::sauvegarder($secretaire);
-        echo '<div class="msgConfirmation"><p> Le Secrétaire a bien été enregistrée </p></div>';
-    }
+
 
     public static function creerEtudiant(): void
     {
