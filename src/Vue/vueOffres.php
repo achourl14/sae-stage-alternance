@@ -12,6 +12,8 @@ $sa = "";
 
 $validation = "";
 $aValider = "";
+
+$nosOffres = "";
 if(Session::getInstance()->contient("requeteFiltreOffre")){
     $values = Session::getInstance()->lire("requeteFiltreOffre");
     if(isset($values["type"])){
@@ -40,6 +42,10 @@ if(Session::getInstance()->contient("requeteFiltreOffre")){
     }else{
         $validation = "checked";
         $aValider = "checked";
+    }
+
+    if(isset($values["idEntreprise"])){
+        $nosOffres = "checked";
     }
 }else{
     $stage = "checked";
@@ -84,7 +90,7 @@ if(\App\Lib\ConnexionUtilisateur::estSecretariat()){
 if(\App\Lib\ConnexionUtilisateur::estEntreprise()){
     echo '<article>
             <span> NosOffres </span>
-            <input type="checkbox" name="nosOffres"  value="nosOffres"/>
+            <input type="checkbox" name="nosOffres"  value="nosOffres" '.$nosOffres.'/>
          </article>';
 }
 

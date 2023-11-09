@@ -113,8 +113,12 @@ class Controleur extends ControleurGenerique
             for ($i = ($page - 1) * 9; $i < $y; $i++) {
                 $tableauParPage[] = $tableauTout[$i];
             }
+            $title = "Liste des offres";
+            if(ConnexionUtilisateur::estSecretariat()){
+                $title = "Gestions des offres";
+            }
 
-            self::afficherVue("vueGenerale.php", ["contenu" => "vueOffres.php", "offreses" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Liste des offres à valider"]);
+            self::afficherVue("vueGenerale.php", ["contenu" => "vueOffres.php", "offreses" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => $title]);
         }
     }
 
