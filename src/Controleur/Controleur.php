@@ -17,6 +17,7 @@ use App\Modele\Repository\EtudiantRepository;
 use App\Modele\Repository\OffreRepository;
 use App\Modele\Repository\SecretariatRepository;
 use App\Modele\Repository\StageRepository;
+use App\Modele\Repository\ConnexionBaseDeDonnee;
 
 
 class Controleur extends ControleurGenerique
@@ -161,6 +162,20 @@ class Controleur extends ControleurGenerique
 //        }
         echo '<div class="msgConfirmation"><p> Vous avez bien créer votre offre : ' . $offre->getNomOffre() . '</p></div>';
         self::offres();
+    }
+
+    public static function supprimerCompteEntreprise():void{
+
+        $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($_GET['numSiret']);
+        echo '<div class="msgConfirmation"><p> L\'entreprise ' . $entreprise->getNomEntreprise().' a été supprimée ainsi que toutes les offres associées</p></div>';
+        self::afficherVue('vueGenerale.php', ["contenu" => "index.html","title"=>"Accueil"]);
+        (new OffreRepository())->supprimer($_GET['idEntreprise']);
+        (new EntrepriseRepository())->supprimer($_GET['numSiret']);
+    }
+
+    public static function afficherDeleteEntreprise(){
+        $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($_GET["numSiret"]);
+        self::afficherVue('vueGenerale.php',["contenu"=> "formulaireSuppressionEntreprise.php","title"=> "Supprimer Entreprise",["entreprise"=> $entreprise]]);
     }
 
     public static function filtrer(){
