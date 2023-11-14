@@ -1,5 +1,5 @@
 
-.formulaire{
+.formulaireSuppressionEntreprise{
     font-family: 'Poppins',sans-serif;
 
     height: 250px;
@@ -12,23 +12,23 @@
 
 }
 
-.button > .oui{
+.buttonSuppressionEntreprise > .oui{
     background-color: green;
     margin: 10px;
 }
 
-.button > .non{
+.buttonSuppressionEntreprise > .non{
     background-color: red;
     margin: 10px;
 
 }
 
-.button > .oui:hover  {
+.buttonSuppressionEntreprise > .oui:hover  {
     transform: scale(0.97);
     background-color: green;
 }
 
-.button > .non:hover  {
+.buttonSuppressionEntreprise > .non:hover  {
     transform: scale(0.97);
     background-color: red;
 }
