@@ -53,13 +53,13 @@ if($personnel->getRole() == "M"){
                 <div class="input-box">
                     <label class="details" for="roleCible"> Rôle </label>
                     <select name="role" id="roleCible" required>
-                        <option value="T" selected=<?php echo $t; ?>> Tuteur </option>
-                        <option value="S" selected=<?php echo $s; ?>> Secretariat </option>
-                        <option value="M" selected=<?php echo $m; ?>> Maitre Stage/Alternance (Admin) </option>
+                        <option value="T" <?php echo $t; ?>> Tuteur </option>
+                        <option value="S" <?php echo $s; ?>> Secretariat </option>
+                        <option value="M" <?php echo $m; ?>> Maitre Stage/Alternance (Admin) </option>
                     </select>
                 </div>
                 <?php
-                if(!\App\Lib\ConnexionUtilisateur::estSecretariat()){
+                if(!\App\Lib\ConnexionUtilisateur::estMaitreSA()){
                     echo '<div class="input-box">';
                     echo '<span class="details">Entrez votre mot de passe</span>';
                     echo '<input type="password" name="mdp" minlength="8" maxlength="50" required>';

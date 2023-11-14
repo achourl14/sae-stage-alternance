@@ -998,11 +998,11 @@ class Controleur extends ControleurGenerique
 
     public static function MAJPersonnel()
     {
-        if (ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_GET["idSecretariat"] || ConnexionUtilisateur::estMaitreSA()) {
+        if (ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_POST["idSecretariat"] || ConnexionUtilisateur::estMaitreSA()) {
             if (isset($_POST["idSecretariat"])) {
                 $secretaireAVerifier = (new SecretariatRepository())->recupererParClePrimaire($_POST["idSecretariat"]);
-                if (ConnexionUtilisateur::estSecretariat()) {
-                    $secretaire = new Secretariat($_POST["idSecretariat"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"], $secretaireAVerifier->getMdp());
+                if (ConnexionUtilisateur::estMaitreSA()) {
+                    $secretaire = new Secretariat($_POST["idSecretariat"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"],$_POST["role"],$secretaireAVerifier->getMdp());
                     (new SecretariatRepository())->mettreAJour($secretaire);
                     self::afficherErreur("Les informations du personnel " . $secretaire->getIdSecretariat() . " ont bien été mis à jour");
                 } else if (ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_POST["idSecretariat"]) {
@@ -1011,7 +1011,7 @@ class Controleur extends ControleurGenerique
                         if (!$mdpCorrect) {
                             self::afficherErreur("Mot de passe Incorrect");
                         } else {
-                            $secretaire = new Secretariat($_POST["idSecretariat"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"], $secretaireAVerifier->getMdp());
+                            $secretaire = new Secretariat($_POST["idSecretariat"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"],$_POST["role"], $secretaireAVerifier->getMdp());
                             (new SecretariatRepository())->mettreAJour($secretaire);
                             self::afficherErreur("Vos informations " . $secretaire->getIdSecretariat() . " ont bien été mis à jour");
                         }
@@ -1023,7 +1023,8 @@ class Controleur extends ControleurGenerique
                     self::afficherErreur("Vous n'avez pas les droits");
                 }
             }
-            self::afficherAccueil();
+        }else{
+            self::afficherErreur("Vous n'avez pas les droits");
         }
     }
 
