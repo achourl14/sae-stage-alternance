@@ -3,6 +3,7 @@
 namespace App\Modele\DataObject;
 
 use App\Modele\Repository\ConnexionBaseDeDonnee;
+use DateTime;
 
 class Alternance extends AbstractDataObject
 {
@@ -82,8 +83,6 @@ class Alternance extends AbstractDataObject
     {
         return $this->numSiretEntrepriseExterieur;
     }
-
-
 
     public function formatTableau(): array
     {

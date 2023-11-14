@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="styles/css/form_externe.css">
     <link rel="stylesheet" type="text/css" href="styles/css/mesCandidatures.css">
     <link rel="stylesheet" type="text/css" href="styles/css/form_supp.css">
-    <script src="styles/js/script.js"></script>
+    <script src="styles/js/scriptFormulaireStageExterne.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 

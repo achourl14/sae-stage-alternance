@@ -3,6 +3,7 @@
 namespace App\Modele\DataObject;
 
 use App\Modele\Repository\ConnexionBaseDeDonnee;
+use DateTime;
 
 class Stage extends AbstractDataObject
 {
@@ -100,8 +101,6 @@ class Stage extends AbstractDataObject
     {
         return $this->numSIRET;
     }
-
-
 
     public function formatTableau(): array
     {
