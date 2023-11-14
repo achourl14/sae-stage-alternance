@@ -16,11 +16,8 @@ if(isset($_GET['numSiret'])){
     echo "<h2> Numéro SIRET : " . htmlspecialchars($entreprise->getNumSiret()) . "</h2>";
 
     echo '<div class="boutonsGeneral">';
-    if(\App\Lib\ConnexionUtilisateur::estMaitreSA()){
-        echo '<a  href="controleurFrontal.php?action=afficherMAJEntreprise&numSiret='.$entreprise->getNumSiret().'"> Modifier les informations de l\'Entreprise </a>';
-        echo '<a  href="#"> Supprimer le compte de l\'Entreprise </a>';
-    }
-
+    echo '<a  href="controleurFrontal.php?action=afficherMAJEntreprise&numSiret='.$entreprise->getNumSiret().'"> Modifier les informations de l\'Entreprise </a>';
+    echo '<a  href="controleurFrontal.php?action=afficherDeleteEntreprise&numSiret='.$entreprise->getNumSiret().'"> Supprimer le compte de l\'Entreprise </a>';
     echo '</div>';
 
     echo '<hr/>';

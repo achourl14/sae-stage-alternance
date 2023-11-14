@@ -1,0 +1,34 @@
+
+.formulaire{
+    font-family: 'Poppins',sans-serif;
+
+    height: 250px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-bottom-width: 2px;
+    box-shadow: 1px 1px 5px 5px rgba(145, 145, 145, 0.2);
+    margin: 60px;
+    padding: 20px;
+
+}
+
+.button > .oui{
+    background-color: green;
+    margin: 10px;
+}
+
+.button > .non{
+    background-color: red;
+    margin: 10px;
+
+}
+
+.button > .oui:hover  {
+    transform: scale(0.97);
+    background-color: green;
+}
+
+.button > .non:hover  {
+    transform: scale(0.97);
+    background-color: red;
+}

@@ -20,6 +20,7 @@ use App\Modele\Repository\OffreRepository;
 use App\Modele\Repository\PostulerRepository;
 use App\Modele\Repository\SecretariatRepository;
 use App\Modele\Repository\StageRepository;
+use App\Modele\Repository\ConnexionBaseDeDonnee;
 
 
 class Controleur extends ControleurGenerique
@@ -154,6 +155,28 @@ class Controleur extends ControleurGenerique
             $offre = new Offre(-9, $_POST["idEntreprise"], $_POST["nomOffre"], $_POST["mission"], -9, -9, $_POST["dateDebut"], $_POST["dateFin"], $_POST["remuneration"], $_POST["but_annee"], $_POST["parcours"], $_POST["type"], 0);
             OffreRepository::sauvegarder($offre);
 
+    public static function supprimerCompteEntreprise():void{
+
+        $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($_GET['numSiret']);
+        echo '<div class="msgConfirmation"><p> L\'entreprise ' . $entreprise->getNomEntreprise().' a été supprimée ainsi que toutes les offres associées</p></div>';
+        self::afficherVue('vueGenerale.php', ["contenu" => "index.html","title"=>"Accueil"]);
+        (new OffreRepository())->supprimer($_GET['idEntreprise']);
+        (new EntrepriseRepository())->supprimer($_GET['numSiret']);
+    }
+
+    public static function afficherDeleteEntreprise(){
+        $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($_GET["numSiret"]);
+        self::afficherVue('vueGenerale.php',["contenu"=> "formulaireSuppressionEntreprise.php","title"=> "Supprimer Entreprise",["entreprise"=> $entreprise]]);
+    }
+
+    public static function filtrer(){
+        $stage = false;
+        $alternance= false;
+        $valider = false;
+        $invalider = false;
+        $type = "SA";
+        $sa = false;
+        $validation = null;
 
             $offreCree = (new OffreRepository())->derniereOffre();
             rename("../upload_offres/$nomFichier", "../upload_offres/offre_" . $offreCree->getIdOffre() . "." . $file_parts['extension']);
