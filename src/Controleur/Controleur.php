@@ -68,8 +68,6 @@ class Controleur extends ControleurGenerique
         }
     }
 
-
-
     public static function creerStageExterne(): void
     {
         $stage = $_POST['stage'];
@@ -88,7 +86,7 @@ class Controleur extends ControleurGenerique
     public static function offres()
     {
         if (!Session::getInstance()->contient("requeteFiltreOffre")) {
-            if (ConnexionUtilisateur::estSecretariat()) {
+            if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
                 $offres = (new OffreRepository())->recuperer();
             } else {
                 $offres = (new OffreRepository())->recupererOffreValide();
@@ -127,14 +125,18 @@ class Controleur extends ControleurGenerique
             for ($i = ($page - 1) * 9; $i < $y; $i++) {
                 $tableauParPage[] = $tableauTout[$i];
             }
+            $title = "Liste des offres";
+            if(ConnexionUtilisateur::estMaitreSA()){
+                $title = "Gestions des offres";
+            }
 
-            self::afficherVue("vueGenerale.php", ["contenu" => "vueOffres.php", "offreses" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Liste des offres à valider"]);
+            self::afficherVue("vueGenerale.php", ["contenu" => "vueOffres.php", "offreses" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => $title]);
         }
     }
 
     public static function validerOffre()
     {
-        if (ConnexionUtilisateur::estSecretariat()) {
+        if (ConnexionUtilisateur::estMaitreSA()) {
             $offre = (new OffreRepository())->recupererParClePrimaire($_GET['id']);
             OffreRepository::validerOffre($offre);
             $msg = "";
@@ -173,46 +175,54 @@ class Controleur extends ControleurGenerique
         self::offres();
     }
 
+    public static function supprimerCompteEntreprise():void{
+
+        $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($_GET['numSiret']);
+        echo '<div class="msgConfirmation"><p> L\'entreprise ' . $entreprise->getNomEntreprise().' a été supprimée ainsi que toutes les offres associées</p></div>';
+        self::afficherVue('vueGenerale.php', ["contenu" => "index.html","title"=>"Accueil"]);
+        (new OffreRepository())->supprimer($_GET['idEntreprise']);
+        (new EntrepriseRepository())->supprimer($_GET['numSiret']);
+    }
+
+    public static function afficherDeleteEntreprise(){
+        $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($_GET["numSiret"]);
+        self::afficherVue('vueGenerale.php',["contenu"=> "formulaireSuppressionEntreprise.php","title"=> "Supprimer Entreprise",["entreprise"=> $entreprise]]);
+    }
+
     public static function filtrer()
     {
-        $valider = false;
-        $invalider = false;
-        $type = "";
-        $validation = null;
-        if(isset($_POST['Stage']) && isset($_POST['Alternance'])){
-            $type = "SA";
+        $type = null;
+        $values = null;
+        if(isset($_POST['Stage']) && isset($_POST['Alternance']) && isset($_POST["StageAlternance"]) || !isset($_POST['Stage']) && !isset($_POST['Alternance']) && !isset($_POST["StageAlternance"]) ){
+            $type = null;
         }else{
             if (isset($_POST['Stage'])) {
-                $type = "S";
+                $type[] = "S";
             }
             if (isset($_POST['Alternance'])) {
-                $type = "A";
+                $type[] = "A";
             }
+            if (isset($_POST['StageAlternance'])) {
+                $type[] = "SA";
+            }
+            $values["type"] = $type;
         }
+            if(isset($_POST['Avalider']) && isset($_POST['Valider'])){
 
-        if (isset($_POST['Valider'])) {
-            $valider = true;
-            $validation = 1;
-        }
-        if (isset($_POST['Avalider'])) {
-            $invalider = true;
-            $validation = 0;
-        }
+            }else if(isset($_POST['Avalider']) || isset($_POST['Valider'])) {
+                if (isset($_POST['Valider'])) {
+                    $validation = 1;
+                    $values["validation"] = $validation;
+                }
+                if (isset($_POST['Avalider'])) {
+                    $validation = 0;
+                    $values["validation"] = $validation;
+                }
 
-        if ($valider == true && $invalider == true) {
-            $validation = null;
-        }
+            }
 
-        $values = null;
         if(isset($_POST['nosOffres'])){
             $values["idEntreprise"] = ConnexionUtilisateur::getLoginUtilisateurConnecte();
-        }
-
-        if ($validation != null) {
-            $values["validation"] = $validation;
-        }
-        if ($type != "") {
-            $values["type"] = $type;
         }
         Session::getInstance()->enregistrer("requeteFiltreOffre", $values);
         self::offres();
@@ -527,31 +537,42 @@ class Controleur extends ControleurGenerique
 
     public static function afficherSecretaire()
     {
-        self::afficherVue("InscriptionSecretariat.html");
-    }
-
-    public static function afficherEtudiant()
-    {
-        self::afficherVue("InscriptionEtudiant.html");
+        if(ConnexionUtilisateur::estMaitreSA()){
+            self::afficherVue("InscriptionSecretariat.html");
+        }
     }
 
     public static function creerSecretaire(): void
     {
-        $secretaire = Secretariat::construireDepuisFormulaire($_POST);
-        SecretariatRepository::sauvegarder($secretaire);
-        echo '<div class="msgConfirmation"><p> Le Secrétaire a bien été enregistrée </p></div>';
+        if(ConnexionUtilisateur::estMaitreSA()){
+            $secretaire = Secretariat::construireDepuisFormulaire($_POST);
+            SecretariatRepository::sauvegarder($secretaire);
+            echo '<div class="msgConfirmation"><p> Le Secrétaire a bien été enregistrée </p></div>';
+            self::afficherAccueil();
+        }
     }
+
+    public static function afficherEtudiant()
+    {
+        if(ConnexionUtilisateur::estMaitreSA()){
+            self::afficherVue("InscriptionEtudiant.html");
+        }
+    }
+
+
 
     public static function creerEtudiant(): void
     {
-        $etudiant = Etudiant::construireDepuisFormulaire($_POST);
-        (new EtudiantRepository())->sauvegarder($etudiant);
-        echo '<div class="msgConfirmation"><p> L\'étudiant a bien été enregistrée </p></div>';
+        if(ConnexionUtilisateur::estMaitreSA()){
+            $etudiant = Etudiant::construireDepuisFormulaire($_POST);
+            (new EtudiantRepository())->sauvegarder($etudiant);
+            echo '<div class="msgConfirmation"><p> L\'étudiant a bien été enregistrée </p></div>';
+        }
     }
 
     public static function afficherGestionEtudiant()
     {
-        if (ConnexionUtilisateur::estSecretariat()) {
+        if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
             if (!Session::getInstance()->contient("requeteFiltreEtudiant")) {
                 $etudiants = (new EtudiantRepository())->recuperer();
             } else {
@@ -594,7 +615,7 @@ class Controleur extends ControleurGenerique
 
     public static function afficherDetailEtudiant()
     {
-        if (ConnexionUtilisateur::estSecretariat()) {
+        if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
             self::afficherVue("vueGenerale.php", ["contenu" => "Administration/vueDetailEtudiant.php", "title" => "Detail Etudiant"]);
         } else {
             self::afficherErreur("Vous n'avez pas les droits");
@@ -603,7 +624,7 @@ class Controleur extends ControleurGenerique
 
     public static function afficherGestionEntreprise()
     {
-        if (ConnexionUtilisateur::estSecretariat()) {
+        if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
             if (!Session::getInstance()->contient("requeteFiltreEntreprise")) {
                 $entreprises = (new EntrepriseRepository())->recuperer();
             } else {
@@ -644,7 +665,7 @@ class Controleur extends ControleurGenerique
 
     public static function afficherDetailEntreprise()
     {
-        if (ConnexionUtilisateur::estSecretariat()) {
+        if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
             self::afficherVue("vueGenerale.php", ["contenu" => "Administration/vueDetailEntreprise.php", "title" => "Detail Entreprise"]);
         } else {
             self::afficherErreur("Vous n'avez pas les droits");
@@ -653,7 +674,7 @@ class Controleur extends ControleurGenerique
 
     public static function afficherMAJEntreprise()
     {
-        if (ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_GET["numSiret"] || ConnexionUtilisateur::estSecretariat()) {
+        if (ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_GET["numSiret"] || ConnexionUtilisateur::estMaitreSA()) {
             $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($_GET["numSiret"]);
             if ($entreprise != null) {
                 self::afficherVue("FormulaireMiseAJour/vueMiseAJourEntreprise.php", ["entreprise" => $entreprise]);
@@ -670,7 +691,7 @@ class Controleur extends ControleurGenerique
     {
         if (isset($_POST["num_siret"])) {
             $entrepriseAVerifier = (new EntrepriseRepository())->recupererParClePrimaire($_POST["num_siret"]);
-            if (ConnexionUtilisateur::estSecretariat()) {
+            if (ConnexionUtilisateur::estMaitreSA()) {
                 $entreprise = new Entreprise($_POST["num_siret"], $_POST["nom_entreprise"], $_POST["adresse"], $_POST["telephone"], $_POST["mail"], $_POST["interlocuteur"], $_POST["code_ape"], $_POST["activite"], $entrepriseAVerifier->getMdp());
                 (new EntrepriseRepository())->mettreAJour($entreprise);
                 self::afficherErreur("Les informations de l'entreprise " . $entreprise->getNomEntreprise() . " ont bien été mis à jour");
@@ -697,7 +718,7 @@ class Controleur extends ControleurGenerique
 
     public static function afficherMAJEtudiant()
     {
-        if (ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_GET["codeINE"] || ConnexionUtilisateur::estSecretariat()) {
+        if (ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_GET["codeINE"] || ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
             $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_GET["codeINE"]);
             if ($etudiant != null) {
                 self::afficherVue("FormulaireMiseAJour/vueMiseAJourEtudiant.php", ["etudiant" => $etudiant]);
@@ -714,7 +735,7 @@ class Controleur extends ControleurGenerique
     {
         if (isset($_POST["code_INE"])) {
             $etudiantAVerifier = (new EtudiantRepository())->recupererParClePrimaire($_POST["code_INE"]);
-            if (ConnexionUtilisateur::estSecretariat()) {
+            if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
                 $etudiant = new Etudiant($_POST["code_INE"], $_POST["num_etudiant"], $_POST["groupe"], $_POST["nom"], $_POST["prenom"], $_POST["parcours"], $_POST["telephone"], $_POST["mail"], $etudiantAVerifier->getMdp(), $_POST["date_de_naissance"], $_POST["promotion"]);
                 (new EtudiantRepository())->mettreAJour($etudiant);
                 self::afficherErreur("Les informations de l'étudiant " . $etudiant->getCodeINE() . " ont bien été mis à jour");
@@ -838,13 +859,15 @@ class Controleur extends ControleurGenerique
 
     public static function postulerBD()
     {
-        $postulerExiste = (new PostulerRepository())->recupererParClePrimaire(ConnexionUtilisateur::getLoginUtilisateurConnecte(), $_GET['idOffre']);
-        if ($postulerExiste != null) {
-            self::afficherErreur("Vous avez déjà postuler à cette offre", "offres");
-        } else {
-            $postuler = new Postuler(ConnexionUtilisateur::getLoginUtilisateurConnecte(), $_GET['idOffre']);
-            (new PostulerRepository())->sauvegarder($postuler);
-            self::afficherErreur("Vous avez bien postulé pour cette offre");
+        if(ConnexionUtilisateur::estEtudiant()) {
+            $postulerExiste = (new PostulerRepository())->recupererParClePrimaire(ConnexionUtilisateur::getLoginUtilisateurConnecte(), $_GET['idOffre']);
+            if ($postulerExiste != null) {
+                self::afficherErreur("Vous avez déjà postuler à cette offre", "offres");
+            } else {
+                $postuler = new Postuler(ConnexionUtilisateur::getLoginUtilisateurConnecte(), $_GET['idOffre'], -9);
+                (new PostulerRepository())->sauvegarder($postuler);
+                self::afficherErreur("Vous avez bien postulé pour cette offre");
+            }
         }
     }
 
@@ -877,6 +900,8 @@ class Controleur extends ControleurGenerique
                     self::postulerBD();
                 }
             }
+        }else{
+            self::afficherErreur("Vous n'avez pas la possibilité de postuler à une offre");
         }
     }
 
@@ -889,5 +914,151 @@ class Controleur extends ControleurGenerique
             self::afficherErreur("Vous n'avez pas le droit de faire cela");
         }
 
+    }
+
+    public static function accepterCandidature(){
+        $postuler = (new PostulerRepository())->recupererParClePrimaire($_GET["codeINE"],$_GET["idOffre"]);
+        $postuler->setEtat(1);
+        (new PostulerRepository())->mettreAJourEtat($postuler);
+    }
+
+    public static function refuserCandidature(){
+        $postuler = (new PostulerRepository())->recupererParClePrimaire($_GET["codeINE"],$_GET["idOffre"]);
+        $postuler->setEtat(2);
+        (new PostulerRepository())->mettreAJourEtat($postuler);
+    }
+
+
+    public static function afficherGestionPersonnel()
+    {
+        if (ConnexionUtilisateur::estMaitreSA()) {
+            if (!Session::getInstance()->contient("requeteFiltrePersonnel")) {
+                $personnel = (new SecretariatRepository())->recuperer();
+            } else {
+                $personnel = (new SecretariatRepository())->recupererAvecFiltre(Session::getInstance()->lire("requeteFiltrePersonnel"));
+            }
+            $tableauParPage = null;
+            if ($personnel == null) {
+                $nbrePages = 1;
+                $page = 1;
+            } else {
+
+                //Pagination
+                $nombresPersonnel = count($personnel);
+                $nbrePages = ceil($nombresPersonnel / 9);
+
+                $page = 1;
+                if (isset($_GET['page'])) {
+                    $page = $_GET['page'];
+                    if ($page > $nbrePages) {
+                        $page = $nbrePages;
+                    } else if ($page <= 1) {
+                        $page = 1;
+                    }
+                }
+                $y = $page * 9;
+                if ($page * 9 > $nombresPersonnel) {
+                    $y = $nombresPersonnel;
+                }
+
+                for ($i = ($page - 1) * 9; $i < $y; $i++) {
+                    $tableauParPage[] = $personnel[$i];
+                }
+
+            }
+            self::afficherVue("vueGenerale.php", ["contenu" => "Administration/vueGestionPersonnel.php", "personnels" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Gestions du Personnel"]);
+        } else {
+            self::afficherErreur("Vous n'avez pas les droits");
+        }
+    }
+
+    public static function afficherDetailPersonnel()
+    {
+        if (ConnexionUtilisateur::estMaitreSA()) {
+            self::afficherVue("vueGenerale.php", ["contenu" => "Administration/vueDetailPersonnel.php", "title" => "Detail Personnel"]);
+        } else {
+            self::afficherErreur("Vous n'avez pas les droits");
+        }
+    }
+
+    public static function afficherMAJPersonnel()
+    {
+        if (ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_GET["idSecretariat"] || ConnexionUtilisateur::estMaitreSA()) {
+            $personnel = (new SecretariatRepository())->recupererParClePrimaire($_GET["idSecretariat"]);
+            if ($personnel != null) {
+                self::afficherVue("FormulaireMiseAJour/vueMiseAJourPersonnel.php", ["personnel" => $personnel]);
+            } else {
+                self::afficherErreur("Le personnel de l'iut n'est pas enregistrée");
+            }
+
+        } else {
+            self::afficherErreur("Vous n'avez pas le droit d'effectuer cela");
+        }
+    }
+
+    public static function MAJPersonnel()
+    {
+        if (ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_GET["idSecretariat"] || ConnexionUtilisateur::estMaitreSA()) {
+            if (isset($_POST["idSecretariat"])) {
+                $secretaireAVerifier = (new SecretariatRepository())->recupererParClePrimaire($_POST["idSecretariat"]);
+                if (ConnexionUtilisateur::estSecretariat()) {
+                    $secretaire = new Secretariat($_POST["idSecretariat"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"], $secretaireAVerifier->getMdp());
+                    (new SecretariatRepository())->mettreAJour($secretaire);
+                    self::afficherErreur("Les informations du personnel " . $secretaire->getIdSecretariat() . " ont bien été mis à jour");
+                } else if (ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_POST["idSecretariat"]) {
+                    if (isset($_POST["mdp"])) {
+                        $mdpCorrect = MotDePasse::verifier($_POST['mdp'], $secretaireAVerifier->getMdp());
+                        if (!$mdpCorrect) {
+                            self::afficherErreur("Mot de passe Incorrect");
+                        } else {
+                            $secretaire = new Secretariat($_POST["idSecretariat"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"], $secretaireAVerifier->getMdp());
+                            (new SecretariatRepository())->mettreAJour($secretaire);
+                            self::afficherErreur("Vos informations " . $secretaire->getIdSecretariat() . " ont bien été mis à jour");
+                        }
+                    } else {
+                        self::afficherErreur("Veuillez rentrer votre mot de passe");
+                    }
+
+                } else {
+                    self::afficherErreur("Vous n'avez pas les droits");
+                }
+            }
+            self::afficherAccueil();
+        }
+    }
+
+    public static function rechercherPersonnel()
+    {
+        $values = null;
+        if (isset($_POST["idSecretariat"]) && $_POST["idSecretariat"] != "") {
+            $values['idSecretariat'] = $_POST["idSecretariat"];
+        }
+        if (isset($_POST["nomSecretariat"]) && $_POST["nomSecretariat"] != "") {
+            $values['nomSecretariat'] = $_POST["nomSecretariat"];
+        }
+        if (isset($_POST["prenomSecretariat"]) && $_POST["prenomSecretariat"] != "") {
+            $values['prenomSecretariat'] = $_POST["prenomSecretariat"];
+        }
+        if (isset($_POST['adresseMail']) && $_POST["adresseMail"] != "") {
+            $values['adresseMail'] = $_POST['adresseMail'];
+        }
+        if (isset($_POST['telephone']) && $_POST["telephone"] != "") {
+            $values['telephone'] = $_POST['telephone'];
+        }
+        if (isset($_POST['dateDeNaissance']) && $_POST["dateDeNaissance"] != "") {
+            $values['dateDeNaissance'] = $_POST['dateDeNaissance'];
+        }
+        if (isset($_POST['role']) && $_POST["role"] != "") {
+            $values['role'] = $_POST['role'];
+        }
+
+        Session::getInstance()->enregistrer("requeteFiltrePersonnel", $values);
+        self::afficherGestionPersonnel();
+    }
+
+    public static function supprimerFiltrePersonnel()
+    {
+        Session::getInstance()->supprimer("requeteFiltrePersonnel");
+        self::afficherGestionPersonnel();
     }
 }

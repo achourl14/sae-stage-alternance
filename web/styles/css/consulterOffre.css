@@ -190,3 +190,28 @@ hr{
 
 /* --------------------------------------------------*/
 
+.filtre_offre{
+    display: flex;
+    flex-direction: row;
+}
+.filtre_offre article{
+    margin-right: 20px;
+    border-radius: 5px;
+
+}
+article input[type=submit]{
+    padding: 10px 20px;
+    background-color: #fc5049;
+    color: white;
+    border: none;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+article input[type=submit]:hover{
+    transform: scale(0.95);
+    background-color: #ff6e68;
+    transition: transform 1s,
+                background-color 1s;
+}

@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="styles/css/consulterOffre.css">
     <link rel="stylesheet" type="text/css" href="styles/css/form_externe.css">
     <link rel="stylesheet" type="text/css" href="styles/css/mesCandidatures.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/form_supp.css">
     <script src="styles/js/scriptFormulaireStageExterne.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -17,8 +18,8 @@
 <div class="burger">
     <img id="imgburger" src="img/burger.png" alt="burger" width="50">
     <div id="menu2">
-        <div><a href="">Formulaire</a></div>
-        <div><a href="">A mettre</a></div>
+        <div><a href="controleurFrontal.php">Accueil</a></div>
+        <div><a href="controleurFrontal.php?action=offres">Offres</a></div>
         <div><a href="">A mettre</a></div>
     </div>
 </div>
@@ -52,22 +53,28 @@ if($contenu == "index.html"){
 }
 
 echo  '<nav>';
+
+echo '<div id="logoSite">';
 echo  '<img src="img/LogoIutMontpellier.png" />';
 echo  '<h1> Stage / Alternance </h1>';
+echo '</div>';
+
+echo '<div id="navButton">';
 echo  '<div><a href="controleurFrontal.php" id='.$accueil.'>Accueil</a></div>';
 if(ConnexionUtilisateur::estEntreprise()){
     echo  '<div><a href="controleurFrontal.php?action=afficherFormulaire" id='.$form.'>Creer Offre Par Entreprise</a></div>';
 }
-if(!ConnexionUtilisateur::estSecretariat()){
+if(!ConnexionUtilisateur::estPersonnel()){
     echo '<div><a  id="'.$offres.'" href="controleurFrontal.php?action=offres">offres</a></div>';
 }
 
-if(ConnexionUtilisateur::estSecretariat()){
-    echo '<div><a id='.$gestion.'>Gestionnaire ▾</a>';
+if(ConnexionUtilisateur::estMaitreSA()){
+    echo '<div><a id='.$gestion.'>Gestionnaire▾</a>';
     echo '<div class="submenu">';
     echo '<a href="controleurFrontal.php?action=offres">Gestion offre</a>';
     echo '<a href="controleurFrontal.php?action=afficherGestionEtudiant">Gestion Etudiant</a>';
     echo '<a href="controleurFrontal.php?action=afficherGestionEntreprise">Gestion Entreprise</a>';
+    echo '<a href="controleurFrontal.php?action=afficherGestionPersonnel">Gestion du personnel de l\'IUT</a>';
     echo '</div>';
     echo '</div>';
 }
@@ -76,8 +83,11 @@ if(ConnexionUtilisateur::estEtudiant()){
 }
 
 if(!ConnexionUtilisateur::estConnecte()){
-    echo '<a class="connexion" id="inscrip" href="controleurFrontal.php?action=afficherInscription">Inscription</a>';
-    echo '<a class="connexion" id="connex" href="controleurFrontal.php?action=afficherConnexion">Connexion</a>';
+    echo '</div>';
+    echo "<div class='comptesButton'>";
+    echo '<a class="connexion"  href="controleurFrontal.php?action=afficherInscription">Inscription</a>';
+    echo '<a class="connexion"  href="controleurFrontal.php?action=afficherConnexion">Connexion</a>';
+    echo '</div>';
 }else{
     echo '<div>';
     echo '<a id="buttonCompte">';
@@ -87,6 +97,9 @@ if(!ConnexionUtilisateur::estConnecte()){
     echo '</div>';
     echo '</a>';
     echo '<div class="submenu submenuCompte">';
+    if(ConnexionUtilisateur::estPersonnel()){
+        echo '<a href="controleurFrontal.php?action=afficherMAJPersonnel&idSecretariat='.ConnexionUtilisateur::getLoginUtilisateurConnecte().'">Configuration</a>';
+    }
     if(ConnexionUtilisateur::estEntreprise()){
         echo '<a href="controleurFrontal.php?action=afficherMAJEntreprise&numSiret='.ConnexionUtilisateur::getLoginUtilisateurConnecte().'">Configuration</a>';
     }else if(ConnexionUtilisateur::estEtudiant()){
@@ -96,7 +109,9 @@ if(!ConnexionUtilisateur::estConnecte()){
     echo '<a href="controleurFrontal.php?action=seDeconnecter">Se déconnecter</a>';
     echo '</div>';
     echo '</div>';
+    echo '</div>';
 }
+
 echo '</nav>';
 ?>
 

@@ -15,11 +15,9 @@ abstract class AbstractRepository
         return $tableau;
     }
 
-
     public function recupererParClePrimaire(string $valeurClePrimaire): ?AbstractDataObject{
         $sql = "SELECT * from ".$this->getNomTable()." WHERE ". $this->getNomClePrimaire()." = :valeurClePrimaireTag";
         // Préparation de la requête
-
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
         $values = array(
@@ -58,6 +56,7 @@ abstract class AbstractRepository
             }
         }
         $sql = "UPDATE ". $this->getNomTable() ." SET ".$colonesql." WHERE ".$this->getNomClePrimaire()."= :" . $this->getNomClePrimaire()."Tag";
+
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
         $values = $objet->formatTableau();
@@ -65,32 +64,48 @@ abstract class AbstractRepository
         $pdoStatement->execute($values);
     }
 
-    public function recupererAvecFiltre(array $parameters): ?array {
+    public function recupererAvecFiltre(array $parameters) : ?array {
         $colonesql = "";
         $values = null;
         $i=0;
+        $j=0;
         if($parameters != null){
             foreach($parameters as $clef => $valeur){
                 if($i != 0){
                     $colonesql .= " AND ";
                 }
                 $i = $i + 1;
-                $colonesql .= $clef . "= ";
-                $colonesql .= ":".$clef . "Tag";
+                // type spécial
+                if($clef == "type"){
+                    $colonesql .= $clef . " IN (";
+                    $cpt = count($valeur);
+                    foreach($valeur as $valIn){
+                        $colonesql .= ":".$valIn . "Tag";
+                        if($cpt-1 != $j){
+                            $colonesql .= ",";
+                        }
+                        $expressionType = $valIn . "Tag";
+                        $values[$expressionType] = $valIn;
+                        $j+=1;
+                    }
+                    $colonesql .= ")";
 
-                $expression = $clef . "Tag";
-                $values[$expression] = $valeur;
+
+                }else{
+                    $colonesql .= $clef . " = ";
+                    $colonesql .= ":".$clef . "Tag";
+
+                    $expression = $clef . "Tag";
+                    $values[$expression] = $valeur;
+                }
             }
 
         }
         $tableau = null;
-        $sql = "SELECT * FROM ".$this->getNomTable(). " WHERE " . $colonesql;
+        $sql = "SELECT * FROM ".$this->getNomTable(). " WHERE ". $colonesql;
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
-
-
         $pdoStatement->execute($values);
-
         foreach ($pdoStatement as $objetFormatTableau) {
             $tableau[] = $this->construireDepuisTableau($objetFormatTableau);
         }
