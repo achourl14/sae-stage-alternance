@@ -4,6 +4,7 @@ namespace App\Lib;
 
 use App\Modele\HTTP\Cookie;
 use App\Modele\HTTP\Session;
+use App\Modele\Repository\SecretariatRepository;
 
 class ConnexionUtilisateur
 {
@@ -49,9 +50,35 @@ class ConnexionUtilisateur
         }
     }
 
-    public static function estSecretariat() : bool{
+    public static function estPersonnel(): bool{
         if(Session::getInstance()->contient('secretariat')){
             return true;
+        }else{
+            return false;
+        }
+    }
+
+    public static function estSecretariat() : bool{
+        if(Session::getInstance()->contient('secretariat')){
+            $personnel = (new SecretariatRepository())->recupererParClePrimaire(self::getLoginUtilisateurConnecte());
+            if($personnel->getRole() == "S"){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
+    public static function estMaitreSA() : bool{
+        if(Session::getInstance()->contient('secretariat')){
+            $personnel = (new SecretariatRepository())->recupererParClePrimaire(self::getLoginUtilisateurConnecte());
+            if($personnel->getRole() == "M"){
+                return true;
+            }else{
+                return false;
+            }
         }else{
             return false;
         }

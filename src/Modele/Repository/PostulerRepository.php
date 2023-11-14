@@ -91,9 +91,21 @@ class PostulerRepository
         }
     }
 
+    public function mettreAJourEtat(Postuler $postuler){
+        $sql = "UPDATE Postuler SET etat = :etatTag WHERE codeINE = :codeINETag AND idOffre = :idOffreTag";
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+
+        $values = array(
+            "codeINETag" => $postuler->getCodeINE(),
+            "idOffreTag" => $postuler->getIdOffre(),
+            "etatTag" => $postuler->getEtat()
+        );
+        $pdoStatement->execute($values);
+    }
+
 
     public function construireDepuisTableau(array $offreFormatTableau) : Postuler {
-        $offre = new Postuler($offreFormatTableau['codeINE'],$offreFormatTableau['idOffre']);
+        $offre = new Postuler($offreFormatTableau['codeINE'],$offreFormatTableau['idOffre'],$offreFormatTableau['etat']);
         return $offre;
     }
 
