@@ -1,9 +1,26 @@
 .offre_candidature{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
     margin : 150px;
     padding: 20px;
     border-radius: 15px 15px;
     border: solid #c7c4c3 1px;
     font-family:'Noto Sans', sans-serif;
+}
+
+.offre_candidature img{
+    width: 12%;
+    height: auto;
+}
+
+.etat{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .toutesCandidature a{

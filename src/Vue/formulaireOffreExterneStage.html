@@ -1,68 +1,75 @@
 <div class="container">
     <div class="boutonAlternanceStage">
-        <input id="buttonStage" class="buttonStage" type="button" value="Stage" onclick="submitValue('Stage')">
-        <input id="buttonAlternance" class="buttonAlternance" type="button" value="Alternance" onclick="submitValue('Alternance')">
+        <input id="buttonStage" class="buttonStage" type="button" value="Stage">
+        <input id="buttonAlternance" class="buttonAlternance" type="button" value="Alternance">
     </div>
     <div class="content">
-        <form class="formulaire" method="post" action="controleurFrontal.php?action=creerStageExterne">
+        <form class="formulaire" method="post" action="controleurFrontal.php?action=creerStageExterne" id="stageExterneForm">
                 <input type="hidden" id="stage" name="stage" value="Stage">
-            <div class="title">Partie Stage</div>
-            <div class="user-details">
-                <div class="input-box">
-                    <span class="details">Code INE</span>
-                    <input type="text" placeholder="" name="idEtudiantStage" required>
-                </div>
-                <div class="input-box">
-                    <span class="details">Numéro Maitre De Stage</span>
-                    <input type="text" placeholder="" name="numMaitreStage" required>
-                </div>
-                <div class="input-box">
-                    <span class="details">Numéro Tuteur Stage</span>
-                    <input type="text" placeholder="" name="idTuteurStage" required>
-                </div>
-                <div class="input-box">
-                    <span class="details">Date De Début</span>
-                    <input type="date" placeholder="" name="dateDebutStage" required>
-                </div>
-                <div class="input-box">
-                    <span class="details">Date De Fin</span>
-                    <input type="date" placeholder="" name="dateFinStage" required>
-                </div>
-                <div class="input-box">
-                    <span class="details">Rémunération</span>
-                    <input type="text" placeholder="" name="remuneration" required>
-                </div>
-            </div>
             <div class="title">Partie Entreprise</div>
             <div class="user-details">
 
                 <div class="input-box">
                     <span class="details">Numéro SIRET</span>
-                    <input type="text" name="num_siret" required/>
+                    <input type="text" name="num_siret" id="idEntreprise" maxlength="14" required/>
                 </div>
                 <div class="input-box">
                     <span class="details">Nom de l'entreprise</span>
-                    <input type="text" placeholder="" name="nom_entreprise" required>
+                    <input type="text" placeholder="" id="nomEntreprise" name="nom_entreprise" required>
                 </div>
                 <div class="input-box">
                     <span class="details">Adresse</span>
-                    <input type="text" placeholder="" name="adresse" required>
+                    <input type="text" placeholder="" id="adresseEntreprise" name="adresse" required>
                 </div>
                 <div class="input-box">
                     <span class="details">Telephone</span>
-                    <input type="tel" placeholder="" name="telephone" required>
+                    <input type="tel" placeholder="" id="telephoneEntreprise" name="telephone" required>
+                    <div id="telephoneMessage"></div>
                 </div>
                 <div class="input-box">
-                    <span class="details">Adresse mail</span>
-                    <input type="email" placeholder="" name="mail" required>
+                    <span class="details" >Adresse mail</span>
+                    <input type="text" placeholder="" name="mail" required id="email">
+                    <div id="emailMessage"></div> <!-- Nouvel élément pour afficher le message -->
                 </div>
                 <div class="input-box">
                     <span class="details">Code APE</span>
-                    <input type="text" placeholder="" name="code_ape" required>
+                    <input type="text" placeholder="" id="codeAPE" name="code_ape">
+                </div>
+            </div>
+            <div class="title">Partie Stage</div>
+            <div class="user-details">
+                <div class="input-box">
+                    <span class="details">Code INE</span>
+                    <input type="text" placeholder="" name="idEtudiantStage"  id="idEtudiantStage">
+                    <div id="codeINEMessage"></div>
+                </div>
+                <div class="input-box">
+                    <span class="details">Numéro Maitre De Stage</span>
+                    <input type="text" placeholder="" name="numMaitreStage" id="numMaitreStage">
+                    <div id="idMaitreMessage"></div>
+                </div>
+                <div class="input-box">
+                    <span class="details">Numéro Tuteur Stage</span>
+                    <input type="text" placeholder="" name="idTuteurStage" id="idTuteur">
+                    <div id="idTuteurMessage"></div>
+                </div>
+                <div class="input-box">
+                    <span class="details">Date De Début</span>
+                    <input type="date" placeholder="" name="dateDebutStage" id="dateDebut" >
+                    <div id="dateDebutMessage"></div>
+                </div>
+                <div class="input-box">
+                    <span class="details">Date De Fin</span>
+                    <input type="date" placeholder="" name="dateFinStage" id="dateFin" >
+                    <div id="dateFinMessage"></div>
+                </div>
+                <div class="input-box">
+                    <span class="details">Rémunération</span>
+                    <input type="text" placeholder="" id="remuneration" name="remuneration">
                 </div>
             </div>
             <div class="button">
-                <input type="submit" value="Envoyer">
+                <input type="submit" value="Envoyer" id="buttonFormulaire">
             </div>
         </form>
     </div>

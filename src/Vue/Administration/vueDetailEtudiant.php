@@ -3,6 +3,9 @@
 use App\Modele\Repository\EtudiantRepository;
 
 if(isset($_GET['codeINE'])){
+    if(\App\Lib\ConnexionUtilisateur::estPersonnel()){
+        echo '<a  class="boutonRetour" href="controleurFrontal.php?action=afficherGestionEtudiant"> < Retour à la gestion des étudiants </a>';
+    }
     echo '<div class="offre_detail">';
     $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_GET["codeINE"]);
     echo "<h1>".htmlspecialchars($etudiant->getPrenom())." ".htmlspecialchars($etudiant->getNom())."</h1>";

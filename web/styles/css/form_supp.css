@@ -1,0 +1,34 @@
+
+.formulaireSuppressionEntreprise{
+    font-family: 'Poppins',sans-serif;
+
+    height: 250px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-bottom-width: 2px;
+    box-shadow: 1px 1px 5px 5px rgba(145, 145, 145, 0.2);
+    margin: 60px;
+    padding: 20px;
+
+}
+
+.buttonSuppressionEntreprise > .oui{
+    background-color: green;
+    margin: 10px;
+}
+
+.buttonSuppressionEntreprise > .non{
+    background-color: red;
+    margin: 10px;
+
+}
+
+.buttonSuppressionEntreprise > .oui:hover  {
+    transform: scale(0.97);
+    background-color: green;
+}
+
+.buttonSuppressionEntreprise > .non:hover  {
+    transform: scale(0.97);
+    background-color: red;
+}

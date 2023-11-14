@@ -57,7 +57,7 @@ if(Session::getInstance()->contient("requeteFiltreOffre")){
 echo '<div class="toutesLesCartes">';
 echo "<div class='title'> Gérer les offres </div>";
 
-echo '<form method="post" action="controleurFrontal.php?action=filtrer">
+echo '<form class="filtre_offre" method="post" action="controleurFrontal.php?action=filtrer">
           <article>
             <span>Stage</span>
             <input type="checkbox" name="Stage" value="stage" '.$stage.' />

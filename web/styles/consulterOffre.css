@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+.carte{
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 15px 15px;
+    border: solid #c7c4c3 1px;
+    cursor : pointer;
+}
+
+.carte:hover{
+    box-shadow: 0px 2px 2px 2px rgba(145, 145, 145, 0.2);
+}
+
+.carte h1{
+    font-family:'Noto Sans', sans-serif;;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.carte h2{
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 15px;
+}
+
+.carte p{
+    font-size: 13px;
+    color : #7c7c7c;
+}
+
+.toutesLesCartesS{
+    margin-top: 50px;
+    margin-left: 100px;
+    margin-right: 30%;
+}
+
+.toutesLesCartesA{
+    margin-top: 50px;
+}
+
+.offres{
+    display: flex;
+    flex-direction: row;
+}
+
+#nav-consulter{
+    color: #F44336;
+}
