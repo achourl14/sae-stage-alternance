@@ -3,6 +3,13 @@
 use App\Modele\Repository\EntrepriseRepository;
 
 if(isset($_GET['numSiret'])){
+
+    if(\App\Lib\ConnexionUtilisateur::estPersonnel()){
+        echo '<a  class="boutonRetour" href="controleurFrontal.php?action=afficherGestionEntreprise"> < Retour à la gestion des entreprises </a>';
+    }
+    if(\App\Lib\ConnexionUtilisateur::estEtudiant()){
+        echo '<a  class="boutonRetour" href="controleurFrontal.php?action=afficherMenuPostulerOffre"> < Retour aux candidatures </a>';
+    }
     echo '<div class="offre_detail">';
     $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($_GET["numSiret"]);
     echo "<h1>".htmlspecialchars($entreprise->getNomEntreprise())."</h1>";

@@ -4,8 +4,8 @@
 .carte{
     margin : 20px;
     padding: 15px 15px 15px 15px;
-    min-width : 350px;
-    max-width : 350px;
+    min-width : 330px;
+    max-width : 330px;
     border-radius: 15px 15px;
     border: solid #c7c4c3 1px;
     cursor : pointer;
@@ -49,11 +49,12 @@
 }
 
 .carte h2{
-    font-size: 15px;
+    font-size: 16px;
+    font-weight: normal;
 }
 
 .carte p{
-    font-size: 15px;
+    font-size: 12px;
     color : #7c7c7c;
 }
 
@@ -68,7 +69,7 @@
     margin-left: 150px;
     margin-right: 150px;
     margin-bottom: 50px;
-    font-family:'Noto Sans', sans-serif;
+    font-family: 'Noto Sans', sans-serif;
 }
 
 .toutesLesCartes a{
@@ -123,6 +124,7 @@
     align-items: center;
     font-weight: bold;
     color: black;
+    font-size: 15px;
 }
 
 .page a{
@@ -184,4 +186,32 @@
 
 hr{
     margin-top: 30px;
+}
+
+/* --------------------------------------------------*/
+
+.filtre_offre{
+    display: flex;
+    flex-direction: row;
+}
+.filtre_offre article{
+    margin-right: 20px;
+    border-radius: 5px;
+
+}
+article input[type=submit]{
+    padding: 10px 20px;
+    background-color: #fc5049;
+    color: white;
+    border: none;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+article input[type=submit]:hover{
+    transform: scale(0.95);
+    background-color: #ff6e68;
+    transition: transform 1s,
+                background-color 1s;
 }
