@@ -14,12 +14,17 @@ use App\Modele\DataObject\Secretariat;
 use App\Modele\DataObject\Stage;
 use App\Modele\HTTP\Session;
 use App\Modele\Repository\AlternanceRepository;
+use App\Modele\Repository\ConnexionBaseDeDonnee;
 use App\Modele\Repository\EntrepriseRepository;
 use App\Modele\Repository\EtudiantRepository;
+use App\Modele\Repository\MaitreStageRepository;
 use App\Modele\Repository\OffreRepository;
 use App\Modele\Repository\PostulerRepository;
 use App\Modele\Repository\SecretariatRepository;
 use App\Modele\Repository\StageRepository;
+use App\Modele\Repository\TuteurStageRepository;
+use Cassandra\Date;
+use DateTime;
 
 
 class Controleur extends ControleurGenerique
@@ -50,11 +55,20 @@ class Controleur extends ControleurGenerique
     */
     public static function entrepriseStageExterne(): void
     {
-        $entreprise = new Entreprise($_POST["num_siret"], $_POST["nom_entreprise"], $_POST["adresse"], $_POST["telephone"], $_POST["mail"], null, $_POST["code_ape"], null, null);
-        EntrepriseRepository::sauvegarder($entreprise);
-        echo '<div class="msgConfirmation"><p> Vous avez bien inscrit votre entreprise du nom de : ' . $_POST["nom_entreprise"] . '</p></div>';
-        self::afficherAccueil();
+        $entrepriseExistante = (new EntrepriseRepository())->recupererParClePrimaire($_POST["num_siret"]);
+
+        if ($entrepriseExistante == null) {
+            $entreprise = new Entreprise($_POST["num_siret"], $_POST["nom_entreprise"], $_POST["adresse"], $_POST["telephone"], $_POST["mail"], null, $_POST["code_ape"], null, null);
+            EntrepriseRepository::sauvegarder($entreprise);
+            echo '<div class="msgConfirmation"><p> Vous avez bien inscrit votre entreprise du nom de : ' . $_POST["nom_entreprise"] . '</p></div>';
+        }
+        else {
+            echo '<div class="msgConfirmation"><p> Votre entreprise est déjà inscrite </p></div>';
+            self::afficherAccueil();
+        }
     }
+
+
 
     public static function creerStageExterne(): void
     {
@@ -63,8 +77,8 @@ class Controleur extends ControleurGenerique
         self::entrepriseStageExterne();
 
         if ($stage == "Stage") {
-            $alternanceStageEtudiant = new Stage($_POST["idEtudiantStage"], 0, $_POST["numMaitreStage"], $_POST["idTuteurStage"], $_POST["dateDebutStage"], $_POST["dateFinStage"], $_POST["remuneration"], $_POST["num_siret"]);
-            StageRepository::sauvegarder($alternanceStageEtudiant);
+            $stageEtudiant = new Stage($_POST["idEtudiantStage"], 0, $_POST["numMaitreStage"], $_POST["idTuteurStage"], $_POST["dateDebutStage"], $_POST["dateFinStage"], $_POST["remuneration"], $_POST["num_siret"]);
+            StageRepository::sauvegarder($stageEtudiant);
         } else {
             $alternanceExterneEtudiant = new Alternance($_POST["idEtudiantStage"], 0, $_POST["numMaitreStage"], $_POST["idTuteurStage"], $_POST["dateDebutStage"], $_POST["dateFinStage"], $_POST["remuneration"], $_POST["num_siret"]);
             AlternanceRepository::sauvegarder($alternanceExterneEtudiant);
@@ -247,6 +261,190 @@ class Controleur extends ControleurGenerique
         ConnexionUtilisateur::deconnecter();
     }
 
+    public static function verifierEtudiantExistant() {
+        if (isset($_POST['codeINE'])) {
+            $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_POST['codeINE']);
+            // Retourner l'étudiant en format JSON
+            header('Content-Type: application/json');
+            echo json_encode(['etudiant' => $etudiant]);
+        } else {
+            // Retourner null en format JSON
+            header('Content-Type: application/json');
+            echo json_encode(['etudiant' => null]);
+        }
+    }
+
+    public static function verifierTuteurExistant() {
+        if (isset($_POST['idTuteur'])) {
+            $tuteur = (new TuteurStageRepository())->recupererParClePrimaire($_POST['idTuteur']);
+
+            // Retourner l'étudiant en format JSON
+            header('Content-Type: application/json');
+            echo json_encode(['tuteur' => $tuteur]);
+        } else {
+            // Retourner null en format JSON
+            header('Content-Type: application/json');
+            echo json_encode(['tuteur' => null]);
+        }
+    }
+
+
+    public static function verifierMaitreStageExistant() {
+        if (isset($_POST['numMaitreStage'])) {
+            $maitreStage = (new MaitreStageRepository())->recupererParClePrimaire($_POST['numMaitreStage']);
+            // Retourner l'étudiant en format JSON
+            header('Content-Type: application/json');
+            echo json_encode(['maitreStage' => $maitreStage]);
+        } else {
+            // Retourner null en format JSON
+            header('Content-Type: application/json');
+            echo json_encode(['maitreStage' => null]);
+        }
+    }
+
+    public static function verifierDate() {
+        // continue cette fontion tu peux le faire tu sais quoi faire bg
+        if (isset($_POST['dateDebutStage']) && isset($_POST['dateFinStage']) && isset($_POST['codeINE']) && isset($_POST['stage'])) {
+            $dateDebut = DateTime::createFromFormat('Y-m-d', $_POST['dateDebutStage']);
+            $dateFin = DateTime::createFromFormat('Y-m-d', $_POST['dateFinStage']);
+            $valeurStage = $_POST['stage'];
+
+            $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_POST['codeINE']);
+
+            if ((new EtudiantRepository())->stageEnCoursTrouve($etudiant, $dateDebut, $dateFin)) {
+                header('Content-Type: application/json');
+                $message = 'vous possédez déjà un stage ou une alternance en cours';
+                echo json_encode(['date' => false, 'date2' => false, 'messageError' => $message]);
+            }
+            else if ($valeurStage == "Stage") {
+                if ($etudiant->getPromotion() == 2) {
+                    $diff = $dateFin->diff($dateDebut);
+                    if ($dateDebut->format('m') != 4) {
+                        header('Content-Type: application/json');
+                        $message = 'La date de début doit être au mois d\'avril';
+                        echo json_encode(['date' => false, 'date2' => true, 'messageError' => $message]);
+                    } else if ($dateDebut->format('d') < 8 && $dateDebut->format('m') == 4) {
+                        header('Content-Type: application/json');
+                        $message = 'La date de début doit être au moins le 8 avril';
+                        echo json_encode(['date' => false, 'date2' => true, 'messageError' => $message]);
+                    } else if ($dateFin->format('d') > 5 && $dateFin->format('m') == 7) {
+                        header('Content-Type: application/json');
+                        $message = 'La date de fin doit être au plus le 5 juillet';
+                        echo json_encode(['date' => true, 'date2' => false, 'messageError' => $message]);
+                    } else if ($dateDebut->format('Y') != (new DateTime())->format('Y') && $dateDebut->format('Y') != (new DateTime())->modify('+1 year')->format('Y')) {
+                        header('Content-Type: application/json');
+                        $message = 'La date de début doit être dans l\'année en cours ou l\'année suivante';
+                        echo json_encode(['date' => false, 'date2' => true, 'messageError' => $message]);
+                    } else if ($dateFin->format('m') != 7) {
+                        header('Content-Type: application/json');
+                        $message = 'La date de fin doit être au mois de juillet';
+                        echo json_encode(['date' => true, 'date2' => false, 'messageError' => $message]);
+                    } else if ($dateFin->format('Y') != (new DateTime())->format('Y') && $dateFin->format('Y') != (new DateTime())->modify('+1 year')->format('Y')) {
+                        header('Content-Type: application/json');
+                        $message = 'La date de fin doit être dans l\'année en cours ou l\'année suivante';
+                        echo json_encode(['date' => true, 'date2' => false, 'messageError' => $message]);
+                    } else if ($dateDebut > $dateFin) {
+                        header('Content-Type: application/json');
+                        $message = 'La date de début doit être avant la date de fin';
+                        echo json_encode(['date' => false, 'date2' => true, 'messageError' => $message]);
+                    } else if ($diff->days < 70) {
+                        header('Content-Type: application/json');
+                        $message = 'La durée du stage doit être de 70 jours minimum';
+                        echo json_encode(['date' => false, 'date2' => false, 'messageError' => $message]);
+                    } else {
+                        header('Content-Type: application/json');
+                        echo json_encode(['date' => true, 'date2' => true]);
+                    }
+                } else if ($etudiant->getPromotion() == 3) {
+                    $diff = $dateFin->diff($dateDebut);
+                    if ($dateDebut->format('m') != 3) {
+                        header('Content-Type: application/json');
+                        echo json_encode(['date' => false, 'date2' => true]);
+                    } else if ($dateDebut->format('d') < 25 && $dateDebut->format('m') == 3) {
+                        header('Content-Type: application/json');
+                        echo json_encode(['date' => false, 'date2' => true]);
+                    } else if ($dateFin->format('d') > 28 && $dateFin->format('m') == 8) {
+                        header('Content-Type: application/json');
+                        echo json_encode(['date' => true, 'date2' => false]);
+                    } else if ($dateDebut->format('Y') != (new DateTime())->modify('+1 year')->format('Y')) {
+                        header('Content-Type: application/json');
+                        echo json_encode(['date' => false, 'date2' => true]);
+                    } else if ($dateFin->format('m') != 7) {
+                        header('Content-Type: application/json');
+                        echo json_encode(['date' => true, 'date2' => false]);
+                    } else if ($dateFin->format('Y') != (new DateTime())->modify('+1 year')->format('Y')) {
+                        header('Content-Type: application/json');
+                        echo json_encode(['date' => true, 'date2' => false]);
+                    } else if ($dateDebut && $dateFin && $dateDebut > $dateFin) {
+                        header('Content-Type: application/json');
+                        echo json_encode(['date' => false, 'date2' => true]);
+                    } else if ($dateDebut < new DateTime()) {
+                        header('Content-Type: application/json');
+                        echo json_encode(['date' => false, 'date2' => true]);
+                    } else if ($dateFin < new DateTime()) {
+                        header('Content-Type: application/json');
+                        echo json_encode(['date' => true, 'date2' => false]);
+                    } else if ($diff->days < 70) {
+                        header('Content-Type: application/json');
+                        echo json_encode(['date' => false, 'date2' => false]);
+                    } else {
+                        header('Content-Type: application/json');
+                        echo json_encode(['date' => true, 'date2' => true]);
+                    }
+                }
+            }
+            else if ($valeurStage == "Alternance") {
+                // elle peut commencer de semtembre de l'année en cours jusqu'a la fin de la formation
+
+                if ($etudiant->getPromotion() == 2) {
+                    // peut quand on veut a partir du moment ou la personne est passé en deuxième année et a validé ces spé
+                    $anneeDebutAlternance = (new DateTime())->format('Y');
+                    $jourPossibleDebutAlternance = 20;
+                    $moisPossibleDebutAlternance = 7;
+
+                    $anneeFinAlternance = (new DateTime())->modify('+1 year')->format('Y');
+                    $moisPossibleFinAlternance = 8;
+                    $jourPossibleFinAlternance = 31;
+
+                    if($dateDebut < DateTime::createFromFormat('Y-m-d', $anneeDebutAlternance.'-'.$moisPossibleDebutAlternance.'-'.$jourPossibleDebutAlternance)) {
+                        $message = 'La date de début doit être au mois de juillet';
+                        header('Content-Type: application/json');
+                        echo json_encode(['date' => false, 'date2' => true, 'messageError' => $message]);
+                    }
+                    else if ($dateFin > DateTime::createFromFormat('Y-m-d', $anneeFinAlternance.'-'.$moisPossibleFinAlternance.'-'.$jourPossibleFinAlternance)) {
+                        $message = 'La date de fin dois se terminer max en Aout de l\'année suivante';
+                        header('Content-Type: application/json');
+                        echo json_encode(['date' => true, 'date2' => false, 'messageError' => $message]);
+                    }
+                    else if ($dateDebut < new DateTime()) {
+                        $message = 'La date de début doit être après la date du jour';
+                        header('Content-Type: application/json');
+                        echo json_encode(['date' => false, 'date2' => false, 'messageError' => $message]);
+                    }
+                    else if ($dateFin > new DateTime()) {
+                        $message = 'La date de fin doit être après la date du jour';
+                        header('Content-Type: application/json');
+                        echo json_encode(['date' => false, 'date2' => false, 'messageError' => $message]);
+                    }
+                    else {
+                        header('Content-Type: application/json');
+                        echo json_encode(['date' => true, 'date2' => true]);
+                    }
+                }
+            }
+            else {
+                header('Content-Type: application/json');
+                echo json_encode(['date' => true, 'date2'=> true]);
+            }
+        }
+        // a voir si je dois le laisser ou aps car je ne sais pas si je dois le laisser ou pas
+        /*else {
+            header('Content-Type: application/json');
+            echo json_encode(['date' => false, 'date2'=> false]);
+        }*/
+        return 0;
+    }
+
     public static function afficherErreur($message, $vue = null)
     {
         echo '<div class="msgConfirmation"><p>' . $message . '</p></div>';
@@ -288,7 +486,12 @@ class Controleur extends ControleurGenerique
 
     public static function afficherFormulaireExterne()
     {
-        self::afficherVue("vueGenerale.php", ["title" => "FormulaireExterne", "contenu" => "formulaireOffreExterneStage.html"]);
+        if (ConnexionUtilisateur::estConnecte() && ConnexionUtilisateur::estEtudiant() || ConnexionUtilisateur::estSecretariat()) {
+            self::afficherVue("vueGenerale.php", ["title" => "FormulaireExterne", "contenu" => "formulaireOffreExterneStage.html"]);
+        }
+        else {
+            self::afficherErreur("Vous n'avez pas les droits pour accéder a cette fontionnalité");
+        }
     }
 
     public static function seDeconnecter()

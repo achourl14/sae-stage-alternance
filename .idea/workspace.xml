@@ -4,34 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84102632-0c24-41d7-8f5e-6518e84410ab" name="Changes" comment="amélioration merge">
-      <change afterPath="$PROJECT_DIR$/src/ClassTest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Vue/Administration/vueDetailEntreprise.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Vue/Administration/vueDetailEtudiant.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Vue/Administration/vueGestionEntreprise.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Vue/Administration/vueGestionEtudiant.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Vue/FormulaireMiseAJour/vueMiseAJourEntreprise.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Vue/vueErreur.php" afterDir="false" />
+    <list default="true" id="84102632-0c24-41d7-8f5e-6518e84410ab" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_08_10_2023_12_50__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_08_10_2023_12_50__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ClassTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/ClassTest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controleur/Controleur.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controleur/Controleur.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Modele/DataObject/Entreprise.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Modele/DataObject/Entreprise.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Modele/DataObject/Etudiant.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Modele/DataObject/Etudiant.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Modele/DataObject/Offre.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Modele/DataObject/Offre.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Modele/DataObject/Alternance.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Modele/DataObject/Alternance.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Modele/DataObject/Stage.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Modele/DataObject/Stage.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Modele/Repository/AbstractRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Modele/Repository/AbstractRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Modele/Repository/EtudiantRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Modele/Repository/EtudiantRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Modele/Repository/OffreRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Modele/Repository/OffreRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Vue/connexion.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/Vue/connexion.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Modele/Repository/SecretariatRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Modele/Repository/SecretariatRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Modele/Repository/StageRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Modele/Repository/StageRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Vue/formulaireOffreExterneStage.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/Vue/formulaireOffreExterneStage.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Vue/formulaireoffre.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Vue/formulaireoffre.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Vue/inscription.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/Vue/inscription.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Vue/vueAucuneOffres.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Vue/vueDetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Vue/vueDetail.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Vue/vueGenerale.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Vue/vueGenerale.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Vue/vueOffres.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Vue/vueOffres.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Vue/vueValiderOffre.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Vue/vueValiderOffre.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/styles/css/consulterOffre.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/styles/css/consulterOffre.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/styles/css/form_externe.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/styles/css/form_externe.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/styles/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/styles/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/styles/css/style_form.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/styles/css/style_form.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/styles/js/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/styles/js/script.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +49,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -79,7 +73,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;changementsOffres&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;FormulaireOffreExterne&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/crepi/Desktop/BUT/BUT2/sae-stage-alternance/src/Vue/Administration&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -128,6 +122,11 @@
       <workItem from="1698492282731" duration="1404000" />
       <workItem from="1698495366337" duration="21497000" />
       <workItem from="1698765113516" duration="2183000" />
+      <workItem from="1699440355742" duration="2372000" />
+      <workItem from="1699568437543" duration="571000" />
+      <workItem from="1699864403066" duration="517000" />
+      <workItem from="1699883873558" duration="1563000" />
+      <workItem from="1699967145501" duration="245000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />

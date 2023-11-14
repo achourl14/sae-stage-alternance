@@ -38,8 +38,8 @@ class SecretariatRepository extends AbstractRepository
     protected function getNomsColones(): array
     {
         return array(
+            "idSecretariat",
             "nomSecretariat",
-            "prenomSecretariat",
             "prenomSecretariat",
             "mdp"
         );

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="3f80e22d-21be-4f8a-9178-1ea9eafa165c" name="webinfoIUT" url="https://webinfo.iutmontp.univ-montp2.fr/~trouchex/SAE/web/controleurFrontal.php">
+        <fileTransfer accessType="SFTP" host="ftpinfo.iutmontp.univ-montp2.fr" port="22" sshConfigId="ccd483ed-c5ae-40e2-876d-383dd060fb58" sshConfig="trouchex@ftpinfo.iutmontp.univ-montp2.fr:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

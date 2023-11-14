@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
 
 body{
   background-color: rgb(255, 255, 255);
@@ -39,7 +38,7 @@ nav img{
 nav h1{
   margin-top: 2%;
   margin-left: 3%;
-  margin-right: 5%;
+  margin-right: 15%;
   font-family: 'Open Sans', sans-serif;
   font-size: 25px;
 }
@@ -48,7 +47,7 @@ nav div a {
   color: rgb(0, 0, 0);
   padding: 15px 20px;
   font-family: 'Open Sans', sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   text-decoration: none;
   cursor: pointer;
 }
@@ -62,7 +61,7 @@ nav div a:hover{
   background-color: #f9f9f9;
   position:absolute;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  margin-top: 190px;
+  margin-top: 314px;
 }
 
 nav div:hover .submenu{
@@ -70,7 +69,7 @@ nav div:hover .submenu{
 }
 
 .submenu a {
-  color: black;
+  color: #ffffff;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
@@ -143,77 +142,18 @@ nav div:hover .submenu{
   display: block;
 }
 
-
-#actuel{
-  color: #F44336;
-  border-color: #F44336;
+form{
+  margin-left: 10%;
 }
-
-.msgConfirmation{
-  display: block;
-  font-weight: bold;
-  border-radius: 10px 10px;
-  box-shadow: 1px 1px 5px 5px rgba(145, 145, 145, 0.2);
-  margin-top: 15px;
-}
-
-.msgConfirmation > p{
-  margin-left: 5%;
-  font-family: 'Noto Sans', sans-serif;
-  padding: 3px 0px;
-}
-
-.title{
-  font-family: 'Poppins',sans-serif;
-  font-size: 23px;
-  font-weight: 500;
-  position: relative;
-  margin-bottom: 50px;
-}
-
-.title::before{
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 3px;
-  width: 30px;
-  border-radius: 5px;
-  background-color: #F44336;;
-}
-
-#monCompte img{
-  margin-top: 10px;
-  margin-right: 5px;
-  height: 32px;
-  width: 32px;
-}
-
-#monCompte{
-  border: solid #c7c4c3 2px;
-  padding-right: 15px;
-  border-radius: 5px;
-  margin-top: 5px;
-  display: flex;
-  flex-direction: row;
-  font-family: 'Open Sans', sans-serif;
-}
-#buttonCompte{
-  cursor: pointer;
-}
-
-.submenuCompte{
-  margin-top: 120px;
-}
-#buttonCompte:hover #monCompte{
-  border: solid #F44336 2px;
+h1{
+  font-family: 'Roboto Slab', serif;
+  font-size: 34px;
 }
 
 footer{
-  margin-top: 200px;
-  background-color: #000000;
+  background-color: #ffffff;
   padding: 5px 5px;
-  color: #ffffff;
+  color: #000000;
   font-family: 'Open Sans', sans-serif;
   font-weight: bold;
 }
@@ -228,54 +168,3 @@ footer{
     display: inline-block;
   }
 }
-/*---------------------------*/
-/*
-article {
-  display: inline-flex;
-  width: 8%;
-  height: 5%;
-  margin: 5px;
-  float: left;
-  border: 2px solid #FF5660;
-  box-sizing: border-box;
-  border-radius: 10px 10px;
-  padding: 5px;
-}
-
-article div {
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  line-height: 25px;
-  transition: .5s ease;
-  border-radius: 10px 10px;
-}
-/*
-article input {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 140px;
-  height: 100px;
-  opacity: 0;
-  cursor: pointer;
-}
-
-input[type=checkbox]:checked ~ div {
-  background-color: #FF5660;
-}
-
-@keyframes slidein {
-  from {
-    margin-top: 100%;
-    width: 300%;
-  }
-
-  to {
-    margin: 0%;
-    width: 100%;
-  }
-}
-
- */

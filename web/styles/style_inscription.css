@@ -1,83 +1,31 @@
-/*
-Button
- */
-
-#buttonStage , #buttonAlternance {
-    cursor: pointer;
-}
-
-#buttonStage:hover {
-    background: red;
-    color: black;
-}
-
-#buttonAlternance:hover {
-    background: black;
-    color: white;
-}
-
-
-div.boutonAlternanceStage {
-    display: flex;
-}
-
-.container .buttonStage,
-.container .buttonAlternance {
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
     margin: 0;
-}
-
-
-.container .buttonStage {
-    width: 100%;
-    font-size: 3vh;
-    background: red;
-    font-family: 'Montserrat', sans-serif;
-    text-align: center;
-    padding: 2%;
-    color: black;
-    border-bottom-left-radius: 5px;
-    border-top-left-radius: 5px;
-}
-
-.container .buttonAlternance {
-    width: 100%;
-    font-size: 3vh;
-    background: white;
-    color: black;
-    border: 2px solid #000;
-    font-family: 'Montserrat', sans-serif;
-    padding: 2%;
-    text-align: center;
-    border-bottom-right-radius: 5px;
-    border-top-right-radius: 5px;
-}
-
-/*
-formulaire
- */
-.formulaire{
-    padding-right: 15%;
-    padding-bottom: 2%;
-    margin-left: 10%;
+    padding: 0;
+    box-sizing: border-box;
     font-family: 'Poppins',sans-serif;
 }
-
-.container {
+body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: #F44336;
+}
+.container{
     max-width: 700px;
     width: 100%;
     background-color: #fff;
+    padding: 25px 30px;
     border-radius: 5px;
-    margin: 5vh auto auto auto;
     box-shadow: 0 5px 10px rgba(0,0,0,0.15);
 }
-
 .container .title{
     font-size: 25px;
     font-weight: 500;
     position: relative;
-    margin: 5% auto auto auto;
 }
-
 .container .title::before{
     content: "";
     position: absolute;

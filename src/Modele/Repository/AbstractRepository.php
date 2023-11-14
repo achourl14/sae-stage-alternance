@@ -15,9 +15,11 @@ abstract class AbstractRepository
         return $tableau;
     }
 
+
     public function recupererParClePrimaire(string $valeurClePrimaire): ?AbstractDataObject{
         $sql = "SELECT * from ".$this->getNomTable()." WHERE ". $this->getNomClePrimaire()." = :valeurClePrimaireTag";
         // Préparation de la requête
+
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
         $values = array(
@@ -63,7 +65,7 @@ abstract class AbstractRepository
         $pdoStatement->execute($values);
     }
 
-    public function recupererAvecFiltre(array $parameters) {
+    public function recupererAvecFiltre(array $parameters): ?array {
         $colonesql = "";
         $values = null;
         $i=0;
@@ -93,7 +95,6 @@ abstract class AbstractRepository
             $tableau[] = $this->construireDepuisTableau($objetFormatTableau);
         }
         return $tableau;
-
     }
 
     protected abstract function getNomTable(): string;
