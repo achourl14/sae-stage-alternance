@@ -85,52 +85,56 @@ class Controleur extends ControleurGenerique
 
     public static function offres()
     {
-        if (!Session::getInstance()->contient("requeteFiltreOffre")) {
-            if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
-                $offres = (new OffreRepository())->recuperer();
-            } else {
-                $offres = (new OffreRepository())->recupererOffreValide();
-            }
-        } else {
-            $offres = (new OffreRepository())->recupererAvecFiltre(Session::getInstance()->lire("requeteFiltreOffre"));
-        }
-
-        if ($offres == null) {
-            self::afficherErreur("Aucune offres disponible, veuillez revenir plus tard", "offres");
-        } else {
-            foreach ($offres as $offreFormatTableau) {
-                $tableauTout[] = $offreFormatTableau;
-            }
-
-            $tableauParPage = null;
-
-            //Pagination
-            $nombresOffre = count($offres);
-            $nbrePages = ceil($nombresOffre / 9);
-
-            $page = 1;
-            if (isset($_GET['page'])) {
-                $page = $_GET['page'];
-                if ($page > $nbrePages) {
-                    $page = $nbrePages;
-                } else if ($page <= 1) {
-                    $page = 1;
+        if(ConnexionUtilisateur::estConnecte()){
+            if (!Session::getInstance()->contient("requeteFiltreOffre")) {
+                if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
+                    $offres = (new OffreRepository())->recuperer();
+                } else {
+                    $offres = (new OffreRepository())->recupererOffreValide();
                 }
-            }
-            $y = $page * 9;
-            if ($page * 9 > $nombresOffre) {
-                $y = $nombresOffre;
+            } else {
+                $offres = (new OffreRepository())->recupererAvecFiltre(Session::getInstance()->lire("requeteFiltreOffre"));
             }
 
-            for ($i = ($page - 1) * 9; $i < $y; $i++) {
-                $tableauParPage[] = $tableauTout[$i];
-            }
-            $title = "Liste des offres";
-            if(ConnexionUtilisateur::estMaitreSA()){
-                $title = "Gestions des offres";
-            }
+            if ($offres == null) {
+                self::afficherErreur("Aucune offres disponible, veuillez revenir plus tard", "offres");
+            } else {
+                foreach ($offres as $offreFormatTableau) {
+                    $tableauTout[] = $offreFormatTableau;
+                }
 
-            self::afficherVue("vueGenerale.php", ["contenu" => "vueOffres.php", "offreses" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => $title]);
+                $tableauParPage = null;
+
+                //Pagination
+                $nombresOffre = count($offres);
+                $nbrePages = ceil($nombresOffre / 9);
+
+                $page = 1;
+                if (isset($_GET['page'])) {
+                    $page = $_GET['page'];
+                    if ($page > $nbrePages) {
+                        $page = $nbrePages;
+                    } else if ($page <= 1) {
+                        $page = 1;
+                    }
+                }
+                $y = $page * 9;
+                if ($page * 9 > $nombresOffre) {
+                    $y = $nombresOffre;
+                }
+
+                for ($i = ($page - 1) * 9; $i < $y; $i++) {
+                    $tableauParPage[] = $tableauTout[$i];
+                }
+                $title = "Liste des offres";
+                if(ConnexionUtilisateur::estMaitreSA()){
+                    $title = "Gestions des offres";
+                }
+
+                self::afficherVue("vueGenerale.php", ["contenu" => "vueOffres.php", "offreses" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => $title]);
+            }
+        }else{
+            self::afficherErreur("Vous n'avez pas les droits", "afficherAccueil");
         }
     }
 
