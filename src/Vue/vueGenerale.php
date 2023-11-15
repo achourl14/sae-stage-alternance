@@ -64,17 +64,20 @@ echo  '<div><a href="controleurFrontal.php" id='.$accueil.'>Accueil</a></div>';
 if(ConnexionUtilisateur::estEntreprise()){
     echo  '<div><a href="controleurFrontal.php?action=afficherFormulaire" id='.$form.'>Creer Offre Par Entreprise</a></div>';
 }
-if(!ConnexionUtilisateur::estPersonnel()){
+if(ConnexionUtilisateur::estEtudiant() || ConnexionUtilisateur::estSecretariat()){
     echo '<div><a  id="'.$offres.'" href="controleurFrontal.php?action=offres">offres</a></div>';
 }
 
-if(ConnexionUtilisateur::estMaitreSA()){
+if(ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estSecretariat()){
     echo '<div><a id='.$gestion.'>Gestionnaire▾</a>';
     echo '<div class="submenu">';
-    echo '<a href="controleurFrontal.php?action=offres">Gestion offre</a>';
+    if(ConnexionUtilisateur::estMaitreSA()){
+        echo '<a href="controleurFrontal.php?action=offres">Gestion offre</a>';
+        echo '<a href="controleurFrontal.php?action=afficherGestionEntreprise">Gestion Entreprise</a>';
+        echo '<a href="controleurFrontal.php?action=afficherGestionPersonnel">Gestion du personnel de l\'IUT</a>';
+    }
     echo '<a href="controleurFrontal.php?action=afficherGestionEtudiant">Gestion Etudiant</a>';
-    echo '<a href="controleurFrontal.php?action=afficherGestionEntreprise">Gestion Entreprise</a>';
-    echo '<a href="controleurFrontal.php?action=afficherGestionPersonnel">Gestion du personnel de l\'IUT</a>';
+
     echo '</div>';
     echo '</div>';
 }
