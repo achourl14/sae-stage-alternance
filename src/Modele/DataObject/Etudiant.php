@@ -16,10 +16,11 @@ class Etudiant extends AbstractDataObject
     private string $email;
     private string $motDePasse;
     private string $dateDeNaissance;
-
+    private string $mailPerso;
+    private string $sexe;
     private string $promotion;
 
-    public function __construct(string $codeINE, int $numEtudiant,string $groupe ,string $nom, string $prenom,string $parcours ,string $numTel, string $email, string $motDePasse, string $dateDeNaissance, string $promotion) {
+    public function __construct(string $codeINE, int $numEtudiant,string $groupe ,string $nom, string $prenom,string $parcours ,string $numTel, string $email, string $motDePasse, string $dateDeNaissance,string $mailPerso,string $sexe, string $promotion) {
         $this->codeINE = $codeINE;
         $this->numEtudiant = $numEtudiant;
         $this->groupe = $groupe;
@@ -30,6 +31,8 @@ class Etudiant extends AbstractDataObject
         $this->email = $email;
         $this->motDePasse = $motDePasse;
         $this->dateDeNaissance = $dateDeNaissance;
+        $this->mailPerso = $mailPerso;
+        $this->sexe = $sexe;
         $this->promotion = $promotion;
     }
 
@@ -93,6 +96,16 @@ class Etudiant extends AbstractDataObject
         return $this->parcours;
     }
 
+    public function getMailPerso(): string
+    {
+        return $this->mailPerso;
+    }
+
+    public function getSexe(): string
+    {
+        return $this->sexe;
+    }
+
 
 
     public function formatTableau(): array
@@ -108,13 +121,15 @@ class Etudiant extends AbstractDataObject
             "mailEtudiantTag" => $this->getEmail(),
             "telephoneEtudiantTag" => $this->getNumTel(),
             "dateNaissanceEtudiantTag" => $this->getDateDeNaissance(),
+            "mailPersoTag" => $this->getMailPerso(),
+            "sexeTag" => $this->getSexe(),
             "motDePasseTag" => $this->getMdp()
         );
     }
 
     public static function construireDepuisFormulaire(array $tableauFormulaire) : Etudiant{
         $mdpHache = MotDePasse::hacher($tableauFormulaire['mdp']);
-        return new Etudiant($tableauFormulaire["codeINE"],$tableauFormulaire["codeEtudiant"],$tableauFormulaire["groupe"],$tableauFormulaire["nomEtudiant"],$tableauFormulaire["prenomEtudiant"],$tableauFormulaire["parcours"],$tableauFormulaire["telephone"],$tableauFormulaire["mail"],$mdpHache,$tableauFormulaire["dateDeNaissance"],$tableauFormulaire["promotion"]);
+        return new Etudiant($tableauFormulaire["codeINE"],$tableauFormulaire["codeEtudiant"],$tableauFormulaire["groupe"],$tableauFormulaire["nomEtudiant"],$tableauFormulaire["prenomEtudiant"],$tableauFormulaire["parcours"],$tableauFormulaire["telephone"],$tableauFormulaire["mail"],$mdpHache,$tableauFormulaire["dateDeNaissance"],$tableauFormulaire["mailPerso"],$tableauFormulaire["sexe"],$tableauFormulaire["promotion"]);
     }
 
 

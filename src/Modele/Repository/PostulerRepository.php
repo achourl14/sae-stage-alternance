@@ -7,7 +7,7 @@ use App\Modele\DataObject\Postuler;
 class PostulerRepository
 {
     public function sauvegarder(Postuler $postuler) : void {
-        $sql = "INSERT INTO Postuler VALUES(:codeINETag, :idOffreTag)";
+        $sql = "INSERT INTO Postuler VALUES(:codeINETag, :idOffreTag, 0)";
 
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
@@ -62,11 +62,8 @@ class PostulerRepository
         $tableau = null;
         foreach ($pdoStatement as $objetFormatTableau) {
             $tableau[] = $this->construireDepuisTableau($objetFormatTableau);
-            if ($tableau == null) {
-                return null;
-            }
-            return $tableau;
         }
+        return $tableau;
     }
 
     public function recupererParOffre(int $idOffre)

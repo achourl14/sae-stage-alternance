@@ -74,7 +74,7 @@ echo '<form class="filtre_offre" method="post" action="controleurFrontal.php?act
           </article>   
        ';
 
-if(\App\Lib\ConnexionUtilisateur::estSecretariat()){
+if(\App\Lib\ConnexionUtilisateur::estMaitreSA()){
     echo '<article>
             <span> Valider </span>
             <input type="checkbox" name="Valider" value="valider" '.$validation.'/>
@@ -123,7 +123,7 @@ foreach ($offreses as $offre) {
         $type = "Alternance";
     }
 
-    if(\App\Lib\ConnexionUtilisateur::estSecretariat()){
+    if(\App\Lib\ConnexionUtilisateur::estMaitreSA()){
         if ($offre->getValidation()) {
             $class = "valide";
             $buttonValider = "Invalidez Offre";
@@ -143,7 +143,7 @@ foreach ($offreses as $offre) {
 
     echo("<p> " . htmlspecialchars($offre->getStatut()) . " </p>");
     echo("<h3 class='type'>" . $type . "</h3>");
-    if(\App\Lib\ConnexionUtilisateur::estSecretariat()){
+    if(\App\Lib\ConnexionUtilisateur::estMaitreSA()){
         echo("<a class='buttonDeBase " . $classButton . "' href='controleurFrontal.php?action=validerOffre&id=" . $offre->getIdOffre() . "'>" . $buttonValider . "</a>");
     }
     echo "</div>";

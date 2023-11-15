@@ -9,7 +9,7 @@ use DateTime;
 class EtudiantRepository extends AbstractRepository
 {
     public function sauvegarder(Etudiant $etudiant) : void {
-        $sql = "INSERT INTO Etudiant VALUES(:codeINETag, :codeEtudiantTag, :promotionTag, :groupeTag, :parcoursTag,:nomEtudiantTag, :prenomEtudiantTag, :mailEtudiantTag, :telephoneEtudiantTag, :dateNaissanceEtudiantTag, :motDePasseTag)";
+        $sql = "INSERT INTO Etudiant VALUES(:codeINETag, :codeEtudiantTag, :promotionTag, :groupeTag, :parcoursTag,:nomEtudiantTag, :prenomEtudiantTag, :mailEtudiantTag, :telephoneEtudiantTag, :dateNaissanceEtudiantTag, :mailPersoTag , :sexeTag ,:motDePasseTag)";
 
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
@@ -24,6 +24,8 @@ class EtudiantRepository extends AbstractRepository
             "parcoursTag" => $etudiant->getParcours(),
             "telephoneEtudiantTag" => $etudiant->getNumTel(),
             "dateNaissanceEtudiantTag" => $etudiant->getDateDeNaissance(),
+            "mailPersoTag" => $etudiant->getMailPerso(),
+            "sexeTag" => $etudiant->getSexe(),
             "motDePasseTag" => $etudiant->getMdp()
         );
 
@@ -45,11 +47,10 @@ class EtudiantRepository extends AbstractRepository
         $tableau = null;
         $pdoStatement->execute($values);
         if($pdoStatement->fetch() != null){
-            foreach ($pdoStatement as $etudianttFormatTableau) {
-                $tableau[] = $this->construireDepuisTableau($etudianttFormatTableau);
-            }
+            return true;
+        }else{
+            return false;
         }
-        return $tableau;
     }
 
     /*public function stageEnCoursTrouve(Etudiant $etudiant, DateTime $dateDebutStage, DateTime $dateFinStage) : bool
@@ -167,7 +168,7 @@ class EtudiantRepository extends AbstractRepository
     }
 
     public function construireDepuisTableau(array $etudianttFormatTableau) : Etudiant {
-        $etudiant= new Etudiant($etudianttFormatTableau['codeINE'],$etudianttFormatTableau['codeEtudiant'],$etudianttFormatTableau['groupe'],$etudianttFormatTableau['nomEtudiant'],$etudianttFormatTableau['prenomEtudiant'],$etudianttFormatTableau['parcours'],$etudianttFormatTableau['telephoneEtudiant'],$etudianttFormatTableau['mailEtudiant'],$etudianttFormatTableau['motDePasse'],$etudianttFormatTableau['dateNaissanceEtudiant'],$etudianttFormatTableau['promotion']);
+        $etudiant= new Etudiant($etudianttFormatTableau['codeINE'],$etudianttFormatTableau['codeEtudiant'],$etudianttFormatTableau['groupe'],$etudianttFormatTableau['nomEtudiant'],$etudianttFormatTableau['prenomEtudiant'],$etudianttFormatTableau['parcours'],$etudianttFormatTableau['telephoneEtudiant'],$etudianttFormatTableau['mailEtudiant'],$etudianttFormatTableau['motDePasse'],$etudianttFormatTableau['dateNaissanceEtudiant'],$etudianttFormatTableau['mailPerso'],$etudianttFormatTableau['sexe'],$etudianttFormatTableau['promotion']);
         return $etudiant;
     }
 
@@ -193,6 +194,8 @@ class EtudiantRepository extends AbstractRepository
             "mailEtudiant",
             "telephoneEtudiant",
             "dateNaissanceEtudiant",
+            "mailPerso",
+            "sexe",
             "motDePasse"
         );
     }

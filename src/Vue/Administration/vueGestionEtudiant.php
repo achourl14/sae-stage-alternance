@@ -85,9 +85,14 @@ if ($pageActuelle != $nbrePages) {
 }
 echo "<div> <a class='' href='controleurFrontal.php?action=afficherGestionEtudiant&page=" . $pageActuelle + 1 . "'> page suivante </a> </div>";
 echo "</div>";
+
+echo '<div class="page">';
+echo "<div> <a class='' href='controleurFrontal.php?action=afficherEtudiant'> Ajouter un étudiant </a> </div>";
+echo '</div>';
+
 echo '<div class = "groupCartes">';
 if ($etudiants == null) {
-    echo '<div class="msgConfirmation"><p> Aucunes Offres trouvé </p></div>';
+    echo '<div class="msgConfirmation"><p> Aucun Etudiants trouvé </p></div>';
 } else {
     foreach ($etudiants as $etudiant) {
 

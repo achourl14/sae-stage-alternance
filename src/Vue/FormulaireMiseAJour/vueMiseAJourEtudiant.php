@@ -17,43 +17,54 @@
             <div class="user-details">
                 <div class="input-box">
                     <span class="details">Code INE</span>
-                    <input type="text" name="code_INE" maxlength="11" value=<?php echo $personnel->getLogin() ?> required readonly/>
+                    <input type="text" name="code_INE" maxlength="11" value=<?php echo $etudiant->getLogin() ?> required readonly/>
                 </div>
                 <div class="input-box">
                     <span class="details">Numéro Etudiant</span>
-                    <input type="text" value=<?php echo $personnel->getNumEtudiant() ?> name="num_etudiant" maxlength="11" required readonly>
+                    <input type="text" value=<?php echo $etudiant->getNumEtudiant() ?> name="num_etudiant" maxlength="11" required readonly>
                 </div>
                 <div class="input-box">
                     <span class="details">Promotion</span>
-                    <input type="text" value=<?php echo $personnel->getPromotion() ?> name="promotion" pattern="[0-3]{1}" maxlength="1" required <?php if(!ConnexionUtilisateur::estSecretariat() || !ConnexionUtilisateur::estMaitreSA()){ echo 'readonly'; } ?>>
+                    <input type="text" value=<?php echo $etudiant->getPromotion() ?> name="promotion" pattern="[0-3]{1}" maxlength="1" required <?php if(!ConnexionUtilisateur::estSecretariat() || !ConnexionUtilisateur::estMaitreSA()){ echo 'readonly'; } ?>>
                 </div>
                 <div class="input-box">
                     <span class="details">Parcours</span>
-                    <input type="text" value=<?php echo $personnel->getParcours() ?> name="parcours" maxlength="5" required <?php if(!ConnexionUtilisateur::estSecretariat() || !ConnexionUtilisateur::estMaitreSA()){ echo 'readonly'; } ?>>
+                    <input type="text" value=<?php echo $etudiant->getParcours() ?> name="parcours" maxlength="5" required <?php if(!ConnexionUtilisateur::estSecretariat() || !ConnexionUtilisateur::estMaitreSA()){ echo 'readonly'; } ?>>
                 </div>
                 <div class="input-box">
                     <span class="details">Groupe</span>
-                    <input type="text" value=<?php echo $personnel->getGroupe() ?> name="groupe" maxlength="2" required <?php if(!ConnexionUtilisateur::estSecretariat() || !ConnexionUtilisateur::estMaitreSA()){ echo 'readonly'; } ?>>
+                    <input type="text" value=<?php echo $etudiant->getGroupe() ?> name="groupe" maxlength="2" required <?php if(!ConnexionUtilisateur::estSecretariat() || !ConnexionUtilisateur::estMaitreSA()){ echo 'readonly'; } ?>>
                 </div>
                 <div class="input-box">
                     <span class="details">Nom</span>
-                    <input type="text" value=<?php echo $personnel->getNom() ?> name="nom" maxlength="50" required <?php if(!ConnexionUtilisateur::estSecretariat() || !ConnexionUtilisateur::estMaitreSA()){ echo 'readonly'; } ?>>
+                    <input type="text" value=<?php echo $etudiant->getNom() ?> name="nom" maxlength="50" required <?php if(!ConnexionUtilisateur::estSecretariat() || !ConnexionUtilisateur::estMaitreSA()){ echo 'readonly'; } ?>>
                 </div>
                 <div class="input-box">
                     <span class="details">Prénom</span>
-                    <input type="text" name="prenom" maxlength="50" value=<?php echo $personnel->getPrenom() ?>  required <?php if(!ConnexionUtilisateur::estSecretariat() || !ConnexionUtilisateur::estMaitreSA()){ echo 'readonly'; } ?>>
+                    <input type="text" name="prenom" maxlength="50" value=<?php echo $etudiant->getPrenom() ?>  required <?php if(!ConnexionUtilisateur::estSecretariat() || !ConnexionUtilisateur::estMaitreSA()){ echo 'readonly'; } ?>>
                 </div>
                 <div class="input-box">
                     <span class="details">Date de Naissance </span>
-                    <input type="date" value=<?php echo $personnel->getDateDeNaissance() ?> name="date_de_naissance" required <?php if(!ConnexionUtilisateur::estSecretariat() || !ConnexionUtilisateur::estMaitreSA()){ echo 'readonly'; } ?>>
+                    <input type="date" value=<?php echo $etudiant->getDateDeNaissance() ?> name="date_de_naissance" required <?php if(!ConnexionUtilisateur::estSecretariat() || !ConnexionUtilisateur::estMaitreSA()){ echo 'readonly'; } ?>>
                 </div>
                 <div class="input-box">
-                    <span class="details">Mail</span>
-                    <input type="email" value=<?php echo $personnel->getEmail() ?> name="mail" maxlength="100" required>
+                    <span class="details">Mail Etudiant</span>
+                    <input type="email" value=<?php echo $etudiant->getEmail() ?> name="mail" maxlength="100" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">mail Personnel</span>
+                    <input type="tel" placeholder="" value=<?php echo $etudiant->getMailPerso() ?> name="mailPerso" maxlength="100" value="" required>
+                </div>
+                <div class="input-box">
+                    <label class="details" for="sex"> Sexe </label>
+                    <select name="sexe" id="sex" required>
+                        <option value="M">Masculin</option>
+                        <option value="F"> Féminin </option>
+                    </select>
                 </div>
                 <div class="input-box">
                     <span class="details">Téléphone</span>
-                    <input type="tel" value=<?php echo $personnel->getNumTel() ?> name="telephone" pattern="[0-9]{10}" maxlength="10" required>
+                    <input type="tel" value=<?php echo $etudiant->getNumTel() ?> name="telephone" pattern="[0-9]{10}" maxlength="10" required>
                 </div>
                 <?php
                 if(!ConnexionUtilisateur::estSecretariat() || !ConnexionUtilisateur::estMaitreSA()){

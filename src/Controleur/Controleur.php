@@ -547,14 +547,14 @@ class Controleur extends ControleurGenerique
         if(ConnexionUtilisateur::estMaitreSA()){
             $secretaire = Secretariat::construireDepuisFormulaire($_POST);
             SecretariatRepository::sauvegarder($secretaire);
-            echo '<div class="msgConfirmation"><p> Le Secrétaire a bien été enregistrée </p></div>';
-            self::afficherAccueil();
+            echo '<div class="msgConfirmation"><p> Le Personnel de l\IUT a bien été enregistrée </p></div>';
+            self::afficherGestionPersonnel();
         }
     }
 
     public static function afficherEtudiant()
     {
-        if(ConnexionUtilisateur::estMaitreSA()){
+        if(ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estSecretariat()){
             self::afficherVue("InscriptionEtudiant.html");
         }
     }
@@ -563,10 +563,11 @@ class Controleur extends ControleurGenerique
 
     public static function creerEtudiant(): void
     {
-        if(ConnexionUtilisateur::estMaitreSA()){
+        if(ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estSecretariat()){
             $etudiant = Etudiant::construireDepuisFormulaire($_POST);
             (new EtudiantRepository())->sauvegarder($etudiant);
             echo '<div class="msgConfirmation"><p> L\'étudiant a bien été enregistrée </p></div>';
+            self::afficherEtudiant();
         }
     }
 

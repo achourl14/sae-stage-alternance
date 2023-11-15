@@ -90,6 +90,11 @@ if ($pageActuelle != $nbrePages) {
 }
 echo "<div> <a class='' href='controleurFrontal.php?action=afficherGestionPersonnel&page=" . $pageActuelle + 1 . "'> page suivante </a> </div>";
 echo "</div>";
+
+echo '<div class="page">';
+echo "<div> <a class='' href='controleurFrontal.php?action=afficherSecretaire'> Ajouter un Personnel de l'IUT </a> </div>";
+echo '</div>';
+
 echo '<div class = "groupCartes">';
 if ($personnels == null) {
     echo '<div class="msgConfirmation"><p> Aucun personnel de l\'IUT trouvé </p></div>';
