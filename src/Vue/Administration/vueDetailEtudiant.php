@@ -14,7 +14,7 @@ if(isset($_GET['codeINE'])){
 
     echo '<div class="boutonsGeneral">';
     echo '<a  href="controleurFrontal.php?action=afficherMAJEtudiant&codeINE='.$etudiant->getCodeINE().'"> Modifier les informations de l\'Etudiant </a>';
-    echo '<a  href="#"> Supprimer le compte de l\'Etudiant </a>';
+    echo '<a  href="controleurFrontal.php?action=afficherDeleteEtu&codeINE='.$etudiant->getCodeINE().'"> Supprimer le compte de l\'Etudiant </a>';
     echo '</div>';
     $stageTrouve = "";
     if((new EtudiantRepository())->stageTrouve($etudiant) == true){

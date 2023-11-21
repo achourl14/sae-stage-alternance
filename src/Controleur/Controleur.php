@@ -193,6 +193,19 @@ class Controleur extends ControleurGenerique
         self::afficherVue('vueGenerale.php',["contenu"=> "formulaireSuppressionEntreprise.php","title"=> "Supprimer Entreprise",["entreprise"=> $entreprise]]);
     }
 
+    public static function supprimerEtu():void{
+
+        $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_GET['codeINE']);
+        echo '<div class="msgConfirmation"><p> L\'étudiant ' . $etudiant->getNom().' a été supprimé</p></div>';
+        self::afficherVue('vueGenerale.php', ["contenu" => "index.html","title"=>"Accueil"]);
+        (new EtudiantRepository())->supprimer($_GET['codeINE']);
+    }
+
+    public static function afficherDeleteEtu(){
+        $etudiant = (new EntrepriseRepository())->recupererParClePrimaire($_GET["codeINE"]);
+        self::afficherVue('vueGenerale.php',["contenu"=> "formulaireSuppressionEtu.php","title"=> "Supprimer Etudiant",["etudiant"=> $etudiant]]);
+    }
+
     public static function filtrer()
     {
         $type = null;
