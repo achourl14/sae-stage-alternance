@@ -78,4 +78,41 @@ class ControleurGenerique
     {
         self::afficherVue("Generale/connexion.html");
     }
+
+    public static function seDeconnecter()
+    {
+        if (ConnexionUtilisateur::estConnecte()) {
+            ConnexionUtilisateur::deconnecter();
+            echo '<div class="msgConfirmation"><p>Vous êtes  bien déconnecté</p></div>';
+            self::afficherAccueil();
+        } else {
+            self::afficherErreur("Vous êtes pas connecté");
+            self::afficherAccueil();
+        }
+    }
+
+    public static function estAdmin()
+    {
+        if (ClassTest::$DEBUG) {
+            ConnexionUtilisateur::connecter('admin');
+            $cle = 'secretariat';
+            $session = Session::getInstance();
+            $session->enregistrer($cle, 1);
+            $cle = "etudiant";
+            $session->enregistrer($cle, 1);
+            $cle = "entreprise";
+            $session->enregistrer($cle, 1);
+            self::afficherAccueil();
+        } else {
+            self::afficherErreur("Vous n'avez pas les droits");
+        }
+    }
+
+    public static function afficherLDAP(){
+        self::afficherVue("LDAP.php");
+    }
+
+    public static function afficherCreationConvention(){
+        self::afficherVue("Personnel/vueConventions.php");
+    }
 }
