@@ -13,7 +13,7 @@
 <div class="container">
     <div class="title">Mise à jour des informations</div>
     <div class="content">
-        <form method="post" name="inscription" action="controleurFrontal.php?action=MAJEtudiant">
+        <form method="post" name="inscription" action="controleurFrontal.php?controleur=etudiant&action=MAJEtudiant">
             <div class="user-details">
                 <div class="input-box">
                     <span class="details">Code INE</span>
@@ -67,7 +67,7 @@
                     <input type="tel" value=<?php echo $etudiant->getNumTel() ?> name="telephone" pattern="[0-9]{10}" maxlength="10" required>
                 </div>
                 <?php
-                if(!ConnexionUtilisateur::estSecretariat() || !ConnexionUtilisateur::estMaitreSA()){
+                if(!ConnexionUtilisateur::estSecretariat() && !ConnexionUtilisateur::estMaitreSA()){
                     echo '<div class="input-box">';
                     echo '<span class="details">Entrez votre mot de passe</span>';
                     echo '<input type="password" name="mdp" minlength="8" maxlength="50" required>';

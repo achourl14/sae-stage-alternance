@@ -24,7 +24,7 @@ if($personnel->getRole() == "M"){
 <div class="container">
     <div class="title">Mise à jour des informations</div>
     <div class="content">
-        <form method="post" name="inscription" action="controleurFrontal.php?action=MAJPersonnel">
+        <form method="post" name="inscription" action="controleurFrontal.php?controleur=personnel&action=MAJPersonnel">
             <div class="user-details">
                 <div class="input-box">
                     <span class="details">Login</span>

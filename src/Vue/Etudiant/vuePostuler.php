@@ -1,5 +1,5 @@
 <?php
-echo '<form method="post" action="controleurFrontal.php?action=postuler&idOffre='.$offreId.'" enctype="multipart/form-data">';
+echo '<form method="post" action="controleurFrontal.php?controleur=etudiant&action=postuler&idOffre='.$offreId.'" enctype="multipart/form-data">';
     ?>
     <div class="title"> Création d'une offre par une entreprise</div>
     <div class="user-details">

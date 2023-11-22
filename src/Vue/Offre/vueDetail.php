@@ -3,7 +3,7 @@ use App\Modele\Repository\EntrepriseRepository;
 use App\Modele\Repository\OffreRepository;
 
 if(isset($offreDetail)){
-    echo '<a  class="boutonRetour" href="controleurFrontal.php?action=offres"> < Retour aux offres </a>';
+    echo '<a  class="boutonRetour" href="controleurFrontal.php?controleur=offres&action=offres"> < Retour aux offres </a>';
     echo '<div class="offre_detail">';
     $offre = (new OffreRepository())->recupererParClePrimaire($offreDetail);
     $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($offre->getIdEntreprise());
@@ -19,13 +19,13 @@ if(isset($offreDetail)){
 
     if(\App\Lib\ConnexionUtilisateur::estEtudiant()){
         echo '<div class="boutonsGeneral">';
-        echo '<a  href="controleurFrontal.php?action=afficherVuePostuler&idOffre='.$offre->getIdOffre().'"> Postuler sur cette offre </a>';
+        echo '<a  href="controleurFrontal.php?controleur=etudiant&action=afficherVuePostuler&idOffre='.$offre->getIdOffre().'"> Postuler sur cette offre </a>';
         echo '</div>';
     }
 
     if(\App\Lib\ConnexionUtilisateur::estEntreprise()){
         echo '<div class="boutonsGeneral">';
-        echo '<a  href="controleurFrontal.php?action=afficherVueEntrepriseCandidature&idOffre='.$offre->getIdOffre().'"> Consulter les candidatures </a>';
+        echo '<a  href="controleurFrontal.php?controleur=entreprise&action=afficherVueEntrepriseCandidature&idOffre='.$offre->getIdOffre().'"> Consulter les candidatures </a>';
         echo '</div>';
     }
 

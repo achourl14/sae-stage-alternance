@@ -5,10 +5,10 @@ use App\Modele\Repository\EntrepriseRepository;
 if(isset($_GET['numSiret'])){
 
     if(\App\Lib\ConnexionUtilisateur::estPersonnel()){
-        echo '<a  class="boutonRetour" href="controleurFrontal.php?action=afficherGestionEntreprise"> < Retour à la gestion des entreprises </a>';
+        echo '<a  class="boutonRetour" href="controleurFrontal.php?controleur=entreprise&action=afficherGestionEntreprise"> < Retour à la gestion des entreprises </a>';
     }
     if(\App\Lib\ConnexionUtilisateur::estEtudiant()){
-        echo '<a  class="boutonRetour" href="controleurFrontal.php?action=afficherMenuPostulerOffre"> < Retour aux candidatures </a>';
+        echo '<a  class="boutonRetour" href="controleurFrontal.php?controleur=etudiant&action=afficherMenuPostulerOffre"> < Retour aux candidatures </a>';
     }
     echo '<div class="offre_detail">';
     $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($_GET["numSiret"]);
@@ -17,8 +17,8 @@ if(isset($_GET['numSiret'])){
 
     if(\App\Lib\ConnexionUtilisateur::estMaitreSA()){
         echo '<div class="boutonsGeneral">';
-        echo '<a  href="controleurFrontal.php?action=afficherMAJEntreprise&numSiret='.$entreprise->getNumSiret().'"> Modifier les informations de l\'Entreprise </a>';
-        echo '<a  href="controleurFrontal.php?action=afficherDeleteEntreprise&numSiret='.$entreprise->getNumSiret().'"> Supprimer le compte de l\'Entreprise </a>';
+        echo '<a  href="controleurFrontal.php?controleur=entreprise&action=afficherMAJEntreprise&numSiret='.$entreprise->getNumSiret().'"> Modifier les informations de l\'Entreprise </a>';
+        echo '<a  href="controleurFrontal.php?controleur=entreprise&action=afficherDeleteEntreprise&numSiret='.$entreprise->getNumSiret().'"> Supprimer le compte de l\'Entreprise </a>';
         echo '</div>';
     }
 

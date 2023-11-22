@@ -57,60 +57,62 @@ if(Session::getInstance()->contient("requeteFiltreOffre")){
 echo '<div class="toutesLesCartes">';
 echo "<div class='title'> Gérer les offres </div>";
 
-echo '<form class="filtre_offre" method="post" action="controleurFrontal.php?action=filtrer">
+if(!\App\Lib\ConnexionUtilisateur::estEntreprise()) {
+    echo '<form class="filtre_offre" method="post" action="controleurFrontal.php?controleur=offre&action=filtrer">
           <article>
             <span>Stage</span>
-            <input type="checkbox" name="Stage" value="stage" '.$stage.' />
+            <input type="checkbox" name="Stage" value="stage" ' . $stage . ' />
           </article>
       
           <article>
             <span> Alternance </span>
-            <input type="checkbox" name="Alternance" value="alternance" '.$alternance.'/>                        
+            <input type="checkbox" name="Alternance" value="alternance" ' . $alternance . '/>                        
           </article>         
           
           <article>
             <span> Stage et Alternance</span>
-            <input type="checkbox" name="StageAlternance" value="stageAlternance" '.$sa.'/>                        
+            <input type="checkbox" name="StageAlternance" value="stageAlternance" ' . $sa . '/>                        
           </article>   
        ';
 
-if(\App\Lib\ConnexionUtilisateur::estMaitreSA()){
-    echo '<article>
+    if (\App\Lib\ConnexionUtilisateur::estMaitreSA()) {
+        echo '<article>
             <span> Valider </span>
-            <input type="checkbox" name="Valider" value="valider" '.$validation.'/>
+            <input type="checkbox" name="Valider" value="valider" ' . $validation . '/>
           </article>
       
          <article>
             <span> A Valider </span>
-            <input type="checkbox" name="Avalider" value="avalider" '.$aValider.'/> 
+            <input type="checkbox" name="Avalider" value="avalider" ' . $aValider . '/> 
         </article>';
 
-}
+    }
 
-if(\App\Lib\ConnexionUtilisateur::estEntreprise()){
-    echo '<article>
+    if (\App\Lib\ConnexionUtilisateur::estEntreprise()) {
+        echo '<article>
             <span> NosOffres </span>
-            <input type="checkbox" name="nosOffres"  value="nosOffres" '.$nosOffres.'/>
+            <input type="checkbox" name="nosOffres"  value="nosOffres" ' . $nosOffres . '/>
          </article>';
-}
+    }
 
-echo '<article>
+    echo '<article>
             <input type="submit" value="Envoyer" />
         </article>';
-echo '</form>';
+    echo '</form>';
+}
 
 
 
 echo "<div class='page'>";
-echo "<div> <a class='' href='controleurFrontal.php?action=offres&page=" . $pageActuelle - 1 . "'> page précédente </a> </div>";
+echo "<div> <a class='' href='controleurFrontal.php?controleur=offre&action=offres&page=" . $pageActuelle - 1 . "'> page précédente </a> </div>";
 if ($pageActuelle != 1) {
-    echo "<div> <a class='' href='controleurFrontal.php?action=offres&page=" . $pageActuelle - 1 . "'>" . $pageActuelle - 1 . "</a> </div>";
+    echo "<div> <a class='' href='controleurFrontal.php?controleur=offre&action=offres&page=" . $pageActuelle - 1 . "'>" . $pageActuelle - 1 . "</a> </div>";
 }
 echo "<div> <p> $pageActuelle </p> </div>";
 if ($pageActuelle != $nbrePages) {
-    echo "<div> <a class='' href='controleurFrontal.php?action=offres&page=" . $pageActuelle + 1 . "'>" . $pageActuelle + 1 . "</a> </div>";
+    echo "<div> <a class='' href='controleurFrontal.php?controleur=offre&action=offres&page=" . $pageActuelle + 1 . "'>" . $pageActuelle + 1 . "</a> </div>";
 }
-echo "<div> <a class='' href='controleurFrontal.php?action=offres&page=" . $pageActuelle + 1 . "'> page suivante </a> </div>";
+echo "<div> <a class='' href='controleurFrontal.php?controleur=offre&action=offres&page=" . $pageActuelle + 1 . "'> page suivante </a> </div>";
 echo "</div>";
 
 
@@ -135,7 +137,7 @@ foreach ($offreses as $offre) {
         }
     }
 
-    echo "<a href='controleurFrontal.php?action=afficherDetail&idOffre=" . $offre->getIdOffre() . "'>";
+    echo "<a href='controleurFrontal.php?controleur=offre&action=afficherDetail&idOffre=" . $offre->getIdOffre() . "'>";
     echo '<div class ="carte ' . $class . '">';
     echo("<h1>" . htmlspecialchars($offre->getNomOffre()) . "</h1>");
     echo "<h2> Entreprise : " . htmlspecialchars((new EntrepriseRepository())->recupererParClePrimaire($offre->getIdEntreprise())->getNomEntreprise()) . "</h2>";
@@ -144,7 +146,7 @@ foreach ($offreses as $offre) {
     echo("<p> " . htmlspecialchars($offre->getStatut()) . " </p>");
     echo("<h3 class='type'>" . $type . "</h3>");
     if(\App\Lib\ConnexionUtilisateur::estMaitreSA()){
-        echo("<a class='buttonDeBase " . $classButton . "' href='controleurFrontal.php?action=validerOffre&id=" . $offre->getIdOffre() . "'>" . $buttonValider . "</a>");
+        echo("<a class='buttonDeBase " . $classButton . "' href='controleurFrontal.php?controleur=offre&action=validerOffre&id=" . $offre->getIdOffre() . "'>" . $buttonValider . "</a>");
     }
     echo "</div>";
     echo "</a>";

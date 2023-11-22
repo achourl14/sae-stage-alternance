@@ -4,7 +4,7 @@ use App\Modele\Repository\SecretariatRepository;
 
 if(isset($_GET['idSecretariat'])){
     if(\App\Lib\ConnexionUtilisateur::estPersonnel()){
-        echo '<a  class="boutonRetour" href="controleurFrontal.php?action=afficherGestionPersonnel"> < Retour à la gestion du Personnel </a>';
+        echo '<a  class="boutonRetour" href="controleurFrontal.php?controleur=personnelaction=afficherGestionPersonnel"> < Retour à la gestion du Personnel </a>';
     }
     echo '<div class="offre_detail">';
     $personnel = (new SecretariatRepository())->recupererParClePrimaire($_GET["idSecretariat"]);
@@ -12,7 +12,7 @@ if(isset($_GET['idSecretariat'])){
     echo "<h2> login : " . htmlspecialchars($personnel->getIdSecretariat()) . "</h2>";
 
     echo '<div class="boutonsGeneral">';
-    echo '<a  href="controleurFrontal.php?action=afficherMAJPersonnel&idSecretariat='.$personnel->getIdSecretariat().'"> Modifier les informations du Personnel de l\'IUT </a>';
+    echo '<a  href="controleurFrontal.php?controleur=personnel&action=afficherMAJPersonnel&idSecretariat='.$personnel->getIdSecretariat().'"> Modifier les informations du Personnel de l\'IUT </a>';
     echo '<a  href="#"> Supprimer le compte du personnel de l\'IUT </a>';
     echo '</div>';
     //remplacer par la gestion des tuteurs
