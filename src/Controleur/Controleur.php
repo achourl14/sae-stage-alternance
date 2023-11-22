@@ -1067,4 +1067,8 @@ class Controleur extends ControleurGenerique
         Session::getInstance()->supprimer("requeteFiltrePersonnel");
         self::afficherGestionPersonnel();
     }
+
+    public static function afficherLDAP(){
+        self::afficherVue("LDAP.php");
+    }
 }
