@@ -65,11 +65,6 @@ class ControleurGenerique
         self::afficherAccueil();
     }
 
-    public static function deconnecter()
-    {
-        ConnexionUtilisateur::deconnecter();
-    }
-
     public static function afficherAccueil()
     {
         self::afficherVue("vueGenerale.php", ["contenu" => "Generale/index.html", "title" => "Accueil"]);
