@@ -18,7 +18,7 @@ foreach((new \App\Modele\Repository\EtudiantRepository())->getNomsColones() as $
     }
 }
 ?>
-    <form method="post" action="controleurFrontal.php?action=rechercherEtudiant">
+    <form method="post" action="controleurFrontal.php?controleur=etudiant&action=rechercherEtudiant">
         <div class="user-details">
             <div class="input-box-search">
                 <span class="details">Code INE</span>
@@ -68,26 +68,26 @@ foreach((new \App\Modele\Repository\EtudiantRepository())->getNomsColones() as $
         </div>
         <div class="button">
             <input type="submit" value="Rechercher">
-            <a href="controleurFrontal.php?action=supprimerFiltreEtudiant"> Rénitialiser </a>
+            <a href="controleurFrontal.php?controleur=etudiant&action=supprimerFiltreEtudiant"> Rénitialiser </a>
         </div>
     </form>
     </div>
     </div>
 <?php
 echo "<div class='page'>";
-echo "<div> <a class='' href='controleurFrontal.php?action=afficherGestionEtudiant&page=" . $pageActuelle - 1 . "'> page précédente </a> </div>";
+echo "<div> <a class='' href='controleurFrontal.php?controleur=etudiant&action=afficherGestionEtudiant&page=" . $pageActuelle - 1 . "'> page précédente </a> </div>";
 if ($pageActuelle != 1) {
-    echo "<div> <a class='' href='controleurFrontal.php?action=afficherGestionEtudiant&page=" . $pageActuelle - 1 . "'>" . $pageActuelle - 1 . "</a> </div>";
+    echo "<div> <a class='' href='controleurFrontal.php?controleur=etudiant&action=afficherGestionEtudiant&page=" . $pageActuelle - 1 . "'>" . $pageActuelle - 1 . "</a> </div>";
 }
 echo "<div> <p> $pageActuelle </p> </div>";
 if ($pageActuelle != $nbrePages) {
-    echo "<div> <a class='' href='controleurFrontal.php?action=afficherGestionEtudiant&page=" . $pageActuelle + 1 . "'>" . $pageActuelle + 1 . "</a> </div>";
+    echo "<div> <a class='' href='controleurFrontal.php?controleur=etudiant&action=afficherGestionEtudiant&page=" . $pageActuelle + 1 . "'>" . $pageActuelle + 1 . "</a> </div>";
 }
-echo "<div> <a class='' href='controleurFrontal.php?action=afficherGestionEtudiant&page=" . $pageActuelle + 1 . "'> page suivante </a> </div>";
+echo "<div> <a class='' href='controleurFrontal.php?controleur=etudiant&action=afficherGestionEtudiant&page=" . $pageActuelle + 1 . "'> page suivante </a> </div>";
 echo "</div>";
 
 echo '<div class="page">';
-echo "<div> <a class='' href='controleurFrontal.php?action=afficherEtudiant'> Ajouter un étudiant </a> </div>";
+echo "<div> <a class='' href='controleurFrontal.php?controleur=etudiant&action=afficherEtudiant'> Ajouter un étudiant </a> </div>";
 echo '</div>';
 
 echo '<div class = "groupCartes">';
@@ -96,7 +96,7 @@ if ($etudiants == null) {
 } else {
     foreach ($etudiants as $etudiant) {
 
-        echo "<a href='controleurFrontal.php?action=afficherDetailEtudiant&codeINE=" . $etudiant->getCodeINE() . "'>";
+        echo "<a href='controleurFrontal.php?controleur=etudiant&action=afficherDetailEtudiant&codeINE=" . $etudiant->getCodeINE() . "'>";
         echo '<div class ="carte">';
         echo("<h1> Numéro INE : " . htmlspecialchars($etudiant->getCodeINE()) . "</h1>");
         echo "<h2> code Etudiant : " . htmlspecialchars($etudiant->getNumEtudiant()) . " </h2>";

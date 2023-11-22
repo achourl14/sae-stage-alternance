@@ -13,7 +13,7 @@
 <div class="container">
     <div class="title">Mise à jour des informations</div>
     <div class="content">
-        <form method="post" name="inscription" action="controleurFrontal.php?action=MAJEntreprise">
+        <form method="post" name="inscription" action="controleurFrontal.php?controleur=entreprise&action=MAJEntreprise">
             <div class="user-details">
                 <div class="input-box">
                     <span class="details">Numéro SIRET</span>
@@ -48,7 +48,7 @@
                     <input type="text" value=<?php echo $entreprise->getActivite() ?> name="activite" maxlength="50" required>
                 </div>
                 <?php
-                if(!\App\Lib\ConnexionUtilisateur::estSecretariat()){
+                if(!\App\Lib\ConnexionUtilisateur::estMaitreSA()){
                     echo '<div class="input-box">';
                     echo '<span class="details">Entrez votre mot de passe</span>';
                     echo '<input type="password" name="mdp" minlength="8" maxlength="50" required>';

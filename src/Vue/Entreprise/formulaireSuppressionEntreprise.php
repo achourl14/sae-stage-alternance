@@ -8,8 +8,8 @@
         </div>
         <div class="buttonSuppressionEntreprise">
             <?php $num = $_GET['numSiret'];
-            echo "<input class='oui' type='submit' value='Oui' formaction='controleurFrontal.php?action=supprimerCompteEntreprise&numSiret={$_GET['numSiret']}'>";
-            echo "<input class='non' type='submit' value='Non' formaction='controleurFrontal.php?action=afficherDetailEntreprise&numSiret={$_GET['numSiret']}'>";
+            echo "<input class='oui' type='submit' value='Oui' formaction='controleurFrontal.php?controleur=entreprise&action=supprimerCompteEntreprise&numSiret={$_GET['numSiret']}'>";
+            echo "<input class='non' type='submit' value='Non' formaction='controleurFrontal.php?controleur=entreprise&action=afficherDetailEntreprise&numSiret={$_GET['numSiret']}'>";
 
             ?>
             </div>

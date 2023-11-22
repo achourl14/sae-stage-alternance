@@ -35,7 +35,7 @@ if(isset($recherche["role"])) {
 }
 
 ?>
-    <form method="post" action="controleurFrontal.php?action=rechercherPersonnel">
+    <form method="post" action="controleurFrontal.php?controleur=personnel&action=rechercherPersonnel">
         <div class="user-details">
             <div class="input-box-search">
                 <span class="details">Login</span>
@@ -73,26 +73,26 @@ if(isset($recherche["role"])) {
         </div>
         <div class="button">
             <input type="submit" value="Rechercher">
-            <a href="controleurFrontal.php?action=supprimerFiltrePersonnel"> Rénitialiser </a>
+            <a href="controleurFrontal.php?controleur=personnel&action=supprimerFiltrePersonnel"> Rénitialiser </a>
         </div>
     </form>
     </div>
     </div>
 <?php
 echo "<div class='page'>";
-echo "<div> <a class='' href='controleurFrontal.php?action=afficherGestionPersonnel&page=" . $pageActuelle - 1 . "'> page précédente </a> </div>";
+echo "<div> <a class='' href='controleurFrontal.php?controleur=personnel&action=afficherGestionPersonnel&page=" . $pageActuelle - 1 . "'> page précédente </a> </div>";
 if ($pageActuelle != 1) {
-    echo "<div> <a class='' href='controleurFrontal.php?action=afficherGestionPersonnel&page=" . $pageActuelle - 1 . "'>" . $pageActuelle - 1 . "</a> </div>";
+    echo "<div> <a class='' href='controleurFrontal.php?controleur=personnel&action=afficherGestionPersonnel&page=" . $pageActuelle - 1 . "'>" . $pageActuelle - 1 . "</a> </div>";
 }
 echo "<div> <p> $pageActuelle </p> </div>";
 if ($pageActuelle != $nbrePages) {
-    echo "<div> <a class='' href='controleurFrontal.php?action=afficherGestionPersonnel&page=" . $pageActuelle + 1 . "'>" . $pageActuelle + 1 . "</a> </div>";
+    echo "<div> <a class='' href='controleurFrontal.php?controleur=personnel&action=afficherGestionPersonnel&page=" . $pageActuelle + 1 . "'>" . $pageActuelle + 1 . "</a> </div>";
 }
-echo "<div> <a class='' href='controleurFrontal.php?action=afficherGestionPersonnel&page=" . $pageActuelle + 1 . "'> page suivante </a> </div>";
+echo "<div> <a class='' href='controleurFrontal.php?controleur=personnel&action=afficherGestionPersonnel&page=" . $pageActuelle + 1 . "'> page suivante </a> </div>";
 echo "</div>";
 
 echo '<div class="page">';
-echo "<div> <a class='' href='controleurFrontal.php?action=afficherSecretaire'> Ajouter un Personnel de l'IUT </a> </div>";
+echo "<div> <a class='' href='controleurFrontal.php?controleur=personnel&action=afficherSecretaire'> Ajouter un Personnel de l'IUT </a> </div>";
 echo '</div>';
 
 echo '<div class = "groupCartes">';
@@ -101,7 +101,7 @@ if ($personnels == null) {
 } else {
     foreach ($personnels as $personnel) {
 
-        echo "<a href='controleurFrontal.php?action=afficherDetailPersonnel&idSecretariat=" . $personnel->getIdSecretariat() . "'>";
+        echo "<a href='controleurFrontal.php?controleur=personnel&action=afficherDetailPersonnel&idSecretariat=" . $personnel->getIdSecretariat() . "'>";
         echo '<div class ="carte">';
         echo("<h1> login : " . htmlspecialchars($personnel->getIdSecretariat()) . "</h1>");
         echo("<p> Prénom : " . htmlspecialchars($personnel->getPrenomSecretariat()) . " </p>");

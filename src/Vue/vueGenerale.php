@@ -62,34 +62,35 @@ echo '</div>';
 echo '<div id="navButton">';
 echo  '<div><a href="controleurFrontal.php" id='.$accueil.'>Accueil</a></div>';
 if(ConnexionUtilisateur::estEntreprise()){
-    echo  '<div><a href="controleurFrontal.php?action=afficherFormulaire" id='.$form.'>Creer Offre Par Entreprise</a></div>';
+    echo  '<div><a href="controleurFrontal.php?controleur=offre&action=afficherFormulaire" id='.$form.'>Creer Offre</a></div>';
+    echo '<div><a  id="'.$offres.'" href="controleurFrontal.php?controleur=offre&action=offres"> Mes offre</a></div>';
 }
 if(ConnexionUtilisateur::estEtudiant() || ConnexionUtilisateur::estSecretariat()){
-    echo '<div><a  id="'.$offres.'" href="controleurFrontal.php?action=offres">offres</a></div>';
+    echo '<div><a  id="'.$offres.'" href="controleurFrontal.php?controleur=offre&action=offres">offres</a></div>';
 }
 
 if(ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estSecretariat()){
     echo '<div><a id='.$gestion.'>Gestionnaire▾</a>';
     echo '<div class="submenu">';
     if(ConnexionUtilisateur::estMaitreSA()){
-        echo '<a href="controleurFrontal.php?action=offres">Gestion offre</a>';
-        echo '<a href="controleurFrontal.php?action=afficherGestionEntreprise">Gestion Entreprise</a>';
-        echo '<a href="controleurFrontal.php?action=afficherGestionPersonnel">Gestion du personnel de l\'IUT</a>';
+        echo '<a href="controleurFrontal.php?controleur=offre&action=offres">Gestion offre</a>';
+        echo '<a href="controleurFrontal.php?controleur=entreprise&action=afficherGestionEntreprise">Gestion Entreprise</a>';
+        echo '<a href="controleurFrontal.php?controleur=personnel&action=afficherGestionPersonnel">Gestion du personnel de l\'IUT</a>';
     }
-    echo '<a href="controleurFrontal.php?action=afficherGestionEtudiant">Gestion Etudiant</a>';
+    echo '<a href="controleurFrontal.php?controleur=etudiant&action=afficherGestionEtudiant">Gestion Etudiant</a>';
 
     echo '</div>';
     echo '</div>';
 }
 if(ConnexionUtilisateur::estEtudiant()){
-    echo  '<div><a href="controleurFrontal.php?action=afficherFormulaireExterne" id='. $formExterne.'>Formulaire Externe</a></div>';
+    echo  '<div><a href="controleurFrontal.php?controleur=offre&action=afficherFormulaireExterne" id='. $formExterne.'>Formulaire Externe</a></div>';
 }
 
 if(!ConnexionUtilisateur::estConnecte()){
     echo '</div>';
     echo "<div class='comptesButton'>";
-    echo '<a class="connexion"  href="controleurFrontal.php?action=afficherInscription">Inscription</a>';
-    echo '<a class="connexion"  href="controleurFrontal.php?action=afficherConnexion">Connexion</a>';
+    echo '<a class="connexion"  href="controleurFrontal.php?controleur=generique&action=afficherInscription">Inscription</a>';
+    echo '<a class="connexion"  href="controleurFrontal.php?controleur=generique&action=afficherConnexion">Connexion</a>';
     echo '</div>';
 }else{
     echo '<div>';
@@ -101,15 +102,15 @@ if(!ConnexionUtilisateur::estConnecte()){
     echo '</a>';
     echo '<div class="submenu submenuCompte">';
     if(ConnexionUtilisateur::estPersonnel()){
-        echo '<a href="controleurFrontal.php?action=afficherMAJPersonnel&idSecretariat='.ConnexionUtilisateur::getLoginUtilisateurConnecte().'">Configuration</a>';
+        echo '<a href="controleurFrontal.php?controleur=personnel&action=afficherMAJPersonnel&idSecretariat='.ConnexionUtilisateur::getLoginUtilisateurConnecte().'">Configuration</a>';
     }
     if(ConnexionUtilisateur::estEntreprise()){
-        echo '<a href="controleurFrontal.php?action=afficherMAJEntreprise&numSiret='.ConnexionUtilisateur::getLoginUtilisateurConnecte().'">Configuration</a>';
+        echo '<a href="controleurFrontal.php?controleur=entreprise&action=afficherMAJEntreprise&numSiret='.ConnexionUtilisateur::getLoginUtilisateurConnecte().'">Configuration</a>';
     }else if(ConnexionUtilisateur::estEtudiant()){
-        echo '<a href="controleurFrontal.php?action=afficherMenuPostulerOffre">Candidatures</a>';
-        echo '<a href="controleurFrontal.php?action=afficherMAJEtudiant&codeINE='.ConnexionUtilisateur::getLoginUtilisateurConnecte().'">Configuration</a>';
+        echo '<a href="controleurFrontal.php?controleur=offre&action=afficherMenuPostulerOffre">Candidatures</a>';
+        echo '<a href="controleurFrontal.php?controleur=etudiant&action=afficherMAJEtudiant&codeINE='.ConnexionUtilisateur::getLoginUtilisateurConnecte().'">Configuration</a>';
     }
-    echo '<a href="controleurFrontal.php?action=seDeconnecter">Se déconnecter</a>';
+    echo '<a href="controleurFrontal.php?controleur=generique&action=seDeconnecter">Se déconnecter</a>';
     echo '</div>';
     echo '</div>';
     echo '</div>';
@@ -122,7 +123,7 @@ echo '</nav>';
 
     <?php
     if(ClassTest::$DEBUG == true && !ConnexionUtilisateur::estConnecte()){
-        echo "<a href='controleurFrontal.php?action=estAdmin'>Admin</a>";
+        echo "<a href='controleurFrontal.php?controleur=generique&action=estAdmin'>Admin</a>";
     }
     require __DIR__ . "/{$contenu}";
     ?>

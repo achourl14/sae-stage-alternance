@@ -2,7 +2,7 @@
     <div class="container">
 
         <div class="content">
-            <form method="post" class="formulaire" action="controleurFrontal.php?action=creerOffre" enctype="multipart/form-data">
+            <form method="post" class="formulaire" action="controleurFrontal.php?controleur=offre&action=creerOffre" enctype="multipart/form-data">
                 <div class="title"> Création d'une offre par une entreprise</div>
 
                 <div class="user-details">

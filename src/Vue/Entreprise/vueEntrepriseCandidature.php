@@ -29,8 +29,8 @@ if($postulers == null){
             echo "<p>, Refusé, vous n'avez pas été retenu pour ce poste </p>";
         }
         echo "</div>";
-        echo "<a href='controleurFrontal.php?action=accepterCandidature&idOffre=".$postuler->getIdOffre()."&codeINE=".$postuler->getCodeINE()."'> Accepter </a>";
-        echo "<a href='controleurFrontal.php?action=refuserCandidature&idOffre=".$postuler->getIdOffre()."&codeINE=".$postuler->getCodeINE()."'> Refuser </a>";
+        echo "<a href='controleurFrontal.php?controleur=entreprise&action=accepterCandidature&idOffre=".$postuler->getIdOffre()."&codeINE=".$postuler->getCodeINE()."'> Accepter </a>";
+        echo "<a href='controleurFrontal.php?controleur=entreprise&action=refuserCandidature&idOffre=".$postuler->getIdOffre()."&codeINE=".$postuler->getCodeINE()."'> Refuser </a>";
         echo "</div>";
 
     }

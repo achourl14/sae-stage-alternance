@@ -22,7 +22,7 @@ foreach((new \App\Modele\Repository\EntrepriseRepository())->getNomsColones() as
 }
 ?>
 
-    <form method="post" action="controleurFrontal.php?action=rechercherEntreprise">
+    <form method="post" action="controleurFrontal.php?controleur=entreprise&action=rechercherEntreprise">
         <div class="user-details">
             <div class="input-box-search">
                 <span class="details">Numéro siret</span>
@@ -66,20 +66,20 @@ foreach((new \App\Modele\Repository\EntrepriseRepository())->getNomsColones() as
     </div>
 <?php
 echo "<div class='page'>";
-echo "<div> <a class='' href='controleurFrontal.php?action=afficherGestionEntreprise&page=" . $pageActuelle - 1 . "'> page précédente </a> </div>";
+echo "<div> <a class='' href='controleurFrontal.php?controleur=entreprise&action=afficherGestionEntreprise&page=" . $pageActuelle - 1 . "'> page précédente </a> </div>";
 if ($pageActuelle != 1) {
-    echo "<div> <a class='' href='controleurFrontal.php?action=afficherGestionEntreprise&page=" . $pageActuelle - 1 . "'>" . $pageActuelle - 1 . "</a> </div>";
+    echo "<div> <a class='' href='controleurFrontal.php?controleur=entreprise&action=afficherGestionEntreprise&page=" . $pageActuelle - 1 . "'>" . $pageActuelle - 1 . "</a> </div>";
 }
 echo "<div> <p> $pageActuelle </p> </div>";
 if ($pageActuelle != $nbrePages) {
-    echo "<div> <a class='' href='controleurFrontal.php?action=afficherGestionEntreprise&page=" . $pageActuelle + 1 . "'>" . $pageActuelle + 1 . "</a> </div>";
+    echo "<div> <a class='' href='controleurFrontal.php?controleur=entreprise&action=afficherGestionEntreprise&page=" . $pageActuelle + 1 . "'>" . $pageActuelle + 1 . "</a> </div>";
 }
-echo "<div> <a class='' href='controleurFrontal.php?action=afficherGestionEntreprise&page=" . $pageActuelle + 1 . "'> page suivante </a> </div>";
+echo "<div> <a class='' href='controleurFrontal.php?controleur=entreprise&action=afficherGestionEntreprise&page=" . $pageActuelle + 1 . "'> page suivante </a> </div>";
 echo "</div>";
 echo '<div class = "groupCartes">';
 foreach ($entreprises as $entreprise) {
 
-    echo "<a href='controleurFrontal.php?action=afficherDetailEntreprise&numSiret=" . $entreprise->getNumSiret() . "'>";
+    echo "<a href='controleurFrontal.php?controleur=entreprise&action=afficherDetailEntreprise&numSiret=" . $entreprise->getNumSiret() . "'>";
     echo '<div class ="carte">';
     echo("<h1> Nom Entreprise: " . htmlspecialchars($entreprise->getNomEntreprise()) . "</h1>");
     echo "<h2> Numéro Siret: " . htmlspecialchars($entreprise->getNumSiret()) . " </h2>";

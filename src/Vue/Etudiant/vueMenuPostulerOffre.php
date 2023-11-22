@@ -8,7 +8,7 @@ if($offresCandidate == null){
 }else{
     echo "<div class='toutesCandidature'>";
     foreach ($offresCandidate as $offre) {
-        echo "<a href='controleurFrontal.php?action=afficherDetail&idOffre=" . $offre->getIdOffre() . "'>";
+        echo "<a href='controleurFrontal.php?controleur=offre&action=afficherDetail&idOffre=" . $offre->getIdOffre() . "'>";
         echo "<div class='offre_candidature'>";
         echo "<div>";
         $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($offre->getIdEntreprise());
