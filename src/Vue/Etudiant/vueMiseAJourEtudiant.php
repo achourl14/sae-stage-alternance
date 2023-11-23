@@ -16,8 +16,8 @@
         <form method="post" name="inscription" action="controleurFrontal.php?controleur=etudiant&action=MAJEtudiant">
             <div class="user-details">
                 <div class="input-box">
-                    <span class="details">Code INE</span>
-                    <input type="text" name="code_INE" maxlength="11" value=<?php echo $etudiant->getLogin() ?> required readonly/>
+                    <span class="details">Login</span>
+                    <input type="text" name="login" maxlength="11" value=<?php echo $etudiant->getLogin() ?> required readonly/>
                 </div>
                 <div class="input-box">
                     <span class="details">Numéro Etudiant</span>

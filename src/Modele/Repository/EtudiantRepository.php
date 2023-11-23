@@ -9,12 +9,12 @@ use DateTime;
 class EtudiantRepository extends AbstractRepository
 {
     public function sauvegarder(Etudiant $etudiant) : void {
-        $sql = "INSERT INTO Etudiant VALUES(:codeINETag, :codeEtudiantTag, :promotionTag, :groupeTag, :parcoursTag,:nomEtudiantTag, :prenomEtudiantTag, :mailEtudiantTag, :telephoneEtudiantTag, :dateNaissanceEtudiantTag, :mailPersoTag , :sexeTag ,:motDePasseTag)";
+        $sql = "INSERT INTO Etudiant VALUES(:loginTag, :codeEtudiantTag, :nomEtudiantTag, :prenomEtudiantTag, :mailEtudiantTag, :promotionTag, :groupeTag, :parcoursTag, :telephoneEtudiantTag, :dateNaissanceEtudiantTag, :mailPersoTag , :sexeTag ,:motDePasseTag)";
 
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
         $values = array(
-            "codeINETag" => $etudiant->getCodeINE(),
+            "loginTag" => $etudiant->getLogin(),
             "codeEtudiantTag" => $etudiant->getNumEtudiant(),
             "promotionTag" => $etudiant->getPromotion(),
             "groupeTag" => $etudiant->getGroupe(),
@@ -36,12 +36,12 @@ class EtudiantRepository extends AbstractRepository
 
 
     public function stageTrouve($etudiant) {
-        $sql ="SELECT codeINE FROM Etudiant e JOIN Stage s ON e.codeINE = s.idEtudiantStage WHERE e.codeINE = :codeINETag";
+        $sql ="SELECT login FROM Etudiant e JOIN Stage s ON e.login = s.loginEtuStage WHERE e.login = :loginTag";
 
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
         $values = array(
-            "codeINETag" => $etudiant->getCodeINE()
+            "loginTag" => $etudiant->getLogin()
         );
 
         $tableau = null;
@@ -103,14 +103,14 @@ class EtudiantRepository extends AbstractRepository
         // Vérification pour les stages
         $sqlStage = "SELECT COUNT(*) as count_stage
                  FROM Stage
-                 WHERE idEtudiantStage = :codeINETag
+                 WHERE loginEtuStage = :loginTag
                    AND dateDebutStage <= :dateFinStage
                    AND dateFinStage >= :dateDebutStage";
 
         $pdoStatementStage = $pdo->prepare($sqlStage);
 
         $valuesStage = array(
-            "codeINETag" => $etudiant->getCodeINE(),
+            "loginTag" => $etudiant->getLogin(),
             "dateDebutStage" => $dateDebutStage->format('Y-m-d'),
             "dateFinStage" => $dateFinStage->format('Y-m-d')
         );
@@ -125,14 +125,14 @@ class EtudiantRepository extends AbstractRepository
         // Vérification pour les alternances
         $sqlAlternance = "SELECT COUNT(*) as count_alternance
                       FROM Alternance
-                      WHERE idEtudiantAlternant = :codeINETag
+                      WHERE loginEtuAlternant = :loginTag
                         AND dateDebutAlternance <= :dateFinStage
                         AND dateFinAlternance >= :dateDebutStage";
 
         $pdoStatementAlternance = $pdo->prepare($sqlAlternance);
 
         $valuesAlternance = array(
-            "codeINETag" => $etudiant->getCodeINE(),
+            "loginTag" => $etudiant->getLogin(),
             "dateDebutStage" => $dateDebutStage->format('Y-m-d'),
             "dateFinStage" => $dateFinStage->format('Y-m-d')
         );
@@ -150,12 +150,12 @@ class EtudiantRepository extends AbstractRepository
 
 
     public function alternanceTrouve($etudiant){
-        $sql ="SELECT codeINE FROM Etudiant e JOIN Alternance a ON e.codeINE = a.idEtudiantAlternant WHERE e.codeINE = :codeINETag";
+        $sql ="SELECT login FROM Etudiant e JOIN Alternance a ON e.login = a.loginEtuAlternant WHERE e.login = :loginTag";
 
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
         $values = array(
-            "codeINETag" => $etudiant->getCodeINE()
+            "loginTag" => $etudiant->getLogin()
         );
 
         $pdoStatement->execute($values);
@@ -168,7 +168,7 @@ class EtudiantRepository extends AbstractRepository
     }
 
     public function construireDepuisTableau(array $etudianttFormatTableau) : Etudiant {
-        $etudiant= new Etudiant($etudianttFormatTableau['codeINE'],$etudianttFormatTableau['codeEtudiant'],$etudianttFormatTableau['groupe'],$etudianttFormatTableau['nomEtudiant'],$etudianttFormatTableau['prenomEtudiant'],$etudianttFormatTableau['parcours'],$etudianttFormatTableau['telephoneEtudiant'],$etudianttFormatTableau['mailEtudiant'],$etudianttFormatTableau['motDePasse'],$etudianttFormatTableau['dateNaissanceEtudiant'],$etudianttFormatTableau['mailPerso'],$etudianttFormatTableau['sexe'],$etudianttFormatTableau['promotion']);
+        $etudiant= new Etudiant($etudianttFormatTableau['login'],$etudianttFormatTableau['codeEtudiant'],$etudianttFormatTableau['nomEtudiant'],$etudianttFormatTableau['prenomEtudiant'],$etudianttFormatTableau['mailEtudiant'],$etudianttFormatTableau['promotion'],$etudianttFormatTableau['groupe'],$etudianttFormatTableau['parcours'],$etudianttFormatTableau['telephoneEtudiant'],$etudianttFormatTableau['motDePasse'],$etudianttFormatTableau['dateNaissanceEtudiant'],$etudianttFormatTableau['mailPerso'],$etudianttFormatTableau['sexe']);
         return $etudiant;
     }
 
@@ -179,19 +179,19 @@ class EtudiantRepository extends AbstractRepository
 
     public function getNomClePrimaire(): string
     {
-        return "codeINE";
+        return "login";
     }
 
     public function getNomsColones(): array
     {
         return array(
             "codeEtudiant",
-            "promotion",
-            "groupe",
             "nomEtudiant",
             "prenomEtudiant",
-            "parcours",
             "mailEtudiant",
+            "promotion",
+            "groupe",
+            "parcours",
             "telephoneEtudiant",
             "dateNaissanceEtudiant",
             "mailPerso",

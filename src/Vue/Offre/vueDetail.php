@@ -3,7 +3,7 @@ use App\Modele\Repository\EntrepriseRepository;
 use App\Modele\Repository\OffreRepository;
 
 if(isset($offreDetail)){
-    echo '<a  class="boutonRetour" href="controleurFrontal.php?controleur=offres&action=offres"> < Retour aux offres </a>';
+    echo '<a  class="boutonRetour" href="controleurFrontal.php?controleur=offre&action=offres"> < Retour aux offres </a>';
     echo '<div class="offre_detail">';
     $offre = (new OffreRepository())->recupererParClePrimaire($offreDetail);
     $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($offre->getIdEntreprise());

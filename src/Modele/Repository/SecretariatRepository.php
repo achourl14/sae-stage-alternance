@@ -7,12 +7,12 @@ class SecretariatRepository extends AbstractRepository
 {
 
     public static function sauvegarder(Secretariat $secretariat) : void {
-        $sql = "INSERT INTO Secretariat VALUES(:idSecretariatTag, :prenomSecretariatTag, :nomSecretariatTag,:mailTag,:telephoneTag,:dateDeNaissanceTag,:roleTag ,:motDePasseTag)";
+        $sql = "INSERT INTO Secretariat VALUES(:loginTag, :prenomSecretariatTag, :nomSecretariatTag,:mailTag,:telephoneTag,:dateDeNaissanceTag,:roleTag ,:motDePasseTag)";
 
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
         $values = array(
-            "idSecretariatTag" => $secretariat->getIdSecretariat(),
+            "loginTag" => $secretariat->getLogin(),
             "prenomSecretariatTag" => $secretariat->getPrenomSecretariat(),
             "nomSecretariatTag" => $secretariat->getNomSecretariat(),
             "mailTag" => $secretariat->getMail(),
@@ -25,7 +25,7 @@ class SecretariatRepository extends AbstractRepository
         $pdoStatement->execute($values);
     }
     public function construireDepuisTableau(array $secretariatFormatTableau) : Secretariat {
-        $secretariat = new Secretariat($secretariatFormatTableau['idSecretariat'],$secretariatFormatTableau['nomSecretariat'],$secretariatFormatTableau['prenomSecretariat'],$secretariatFormatTableau["adresseMail"],$secretariatFormatTableau["telephone"],$secretariatFormatTableau["dateDeNaissance"],$secretariatFormatTableau["role"],$secretariatFormatTableau['mdp']);
+        $secretariat = new Secretariat($secretariatFormatTableau['login'],$secretariatFormatTableau['nomSecretariat'],$secretariatFormatTableau['prenomSecretariat'],$secretariatFormatTableau["adresseMail"],$secretariatFormatTableau["telephone"],$secretariatFormatTableau["dateDeNaissance"],$secretariatFormatTableau["role"],$secretariatFormatTableau['mdp']);
         return $secretariat;
     }
 
@@ -36,7 +36,7 @@ class SecretariatRepository extends AbstractRepository
 
     public function getNomClePrimaire(): string
     {
-        return "idSecretariat";
+        return "login";
     }
 
     public function getNomsColones(): array

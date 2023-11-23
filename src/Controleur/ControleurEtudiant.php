@@ -16,22 +16,22 @@ class ControleurEtudiant extends ControleurGenerique
 
     public static function supprimerEtu():void{
 
-        $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_GET['codeINE']);
+        $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_GET['login']);
         echo '<div class="msgConfirmation"><p> L\'étudiant ' . $etudiant->getNom().' a été supprimé</p></div>';
         self::afficherVue('vueGenerale.php', ["contenu" => "Generale/index.html","title"=>"Accueil"]);
-        (new EtudiantRepository())->supprimer($_GET['codeINE']);
+        (new EtudiantRepository())->supprimer($_GET['login']);
     }
 
 
     public static function afficherDeleteEtu(){
-        $etudiant = (new EntrepriseRepository())->recupererParClePrimaire($_GET["codeINE"]);
+        $etudiant = (new EntrepriseRepository())->recupererParClePrimaire($_GET["login"]);
         self::afficherVue('vueGenerale.php',["contenu"=> "Etudiant/formulaireSuppressionEtu.php","title"=> "Supprimer Etudiant",["etudiant"=> $etudiant]]);
     }
 
 
     public static function verifierEtudiantExistant() {
-        if (isset($_POST['codeINE'])) {
-            $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_POST['codeINE']);
+        if (isset($_POST['login'])) {
+            $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_POST['login']);
             // Retourner l'étudiant en format JSON
             header('Content-Type: application/json');
             echo json_encode(['etudiant' => $etudiant]);
@@ -118,8 +118,8 @@ class ControleurEtudiant extends ControleurGenerique
 
     public static function afficherMAJEtudiant()
     {
-        if (ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_GET["codeINE"] || ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
-            $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_GET["codeINE"]);
+        if (ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_GET["login"] || ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
+            $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_GET["login"]);
             if ($etudiant != null) {
                 self::afficherVue("Etudiant/vueMiseAJourEtudiant.php", ["etudiant" => $etudiant]);
             } else {
@@ -134,20 +134,20 @@ class ControleurEtudiant extends ControleurGenerique
     public static function MAJEtudiant()
     {
         if (isset($_POST["code_INE"])) {
-            $etudiantAVerifier = (new EtudiantRepository())->recupererParClePrimaire($_POST["code_INE"]);
+            $etudiantAVerifier = (new EtudiantRepository())->recupererParClePrimaire($_POST["login"]);
             if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
-                $etudiant = new Etudiant($_POST["code_INE"], $_POST["num_etudiant"], $_POST["groupe"], $_POST["nom"], $_POST["prenom"], $_POST["parcours"], $_POST["telephone"], $_POST["mail"], $etudiantAVerifier->getMdp(), $_POST["date_de_naissance"],$_POST["mailPerso"],$_POST["sexe"] ,$_POST["promotion"]);
+                $etudiant = new Etudiant($_POST["login"], $_POST["num_etudiant"],$_POST["nom"], $_POST["prenom"], $_POST["mail"],$_POST["promotion"],$_POST["groupe"], $_POST["parcours"], $_POST["telephone"], $etudiantAVerifier->getMdp(), $_POST["date_de_naissance"],$_POST["mailPerso"],$_POST["sexe"]);
                 (new EtudiantRepository())->mettreAJour($etudiant);
-                self::afficherErreur("Les informations de l'étudiant " . $etudiant->getCodeINE() . " ont bien été mis à jour");
-            } else if (ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_POST["code_INE"]) {
+                self::afficherErreur("Les informations de l'étudiant " . $etudiant->getLogin() . " ont bien été mis à jour");
+            } else if (ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_POST["login"]) {
                 if (isset($_POST["mdp"])) {
                     $mdpCorrect = MotDePasse::verifier($_POST['mdp'], $etudiantAVerifier->getMdp());
                     if (!$mdpCorrect) {
                         self::afficherErreur("Mot de passe Incorrect");
                     } else {
-                        $etudiant = new Etudiant($_POST["code_INE"], $_POST["num_etudiant"], $_POST["groupe"], $_POST["nom"], $_POST["prenom"], $_POST["parcours"], $_POST["telephone"], $_POST["mail"], $etudiantAVerifier->getMdp(), $_POST["date_de_naissance"],$_POST["mailPerso"],$_POST["sexe"], $_POST["promotion"]);
+                        $etudiant = new Etudiant($_POST["login"], $_POST["num_etudiant"],$_POST["nom"], $_POST["prenom"], $_POST["mail"],$_POST["promotion"],$_POST["groupe"], $_POST["parcours"], $_POST["telephone"], $etudiantAVerifier->getMdp(), $_POST["date_de_naissance"],$_POST["mailPerso"],$_POST["sexe"]);
                         (new EtudiantRepository())->mettreAJour($etudiant);
-                        self::afficherErreur("Vos informations " . $etudiant->getCodeINE() . " ont bien été mis à jour");
+                        self::afficherErreur("Vos informations " . $etudiant->getLogin() . " ont bien été mis à jour");
                     }
                 } else {
                     self::afficherErreur("Veuillez rentrer votre mot de passe");
@@ -163,8 +163,8 @@ class ControleurEtudiant extends ControleurGenerique
     public static function rechercherEtudiant()
     {
         $values = null;
-        if (isset($_POST["code_INE"]) && $_POST["code_INE"] != "") {
-            $values['codeINE'] = $_POST["code_INE"];
+        if (isset($_POST["login"]) && $_POST["login"] != "") {
+            $values['login'] = $_POST["login"];
         }
         if (isset($_POST["num_etudiant"]) && $_POST["num_etudiant"] != "") {
             $values['codeEtudiant'] = $_POST["num_etudiant"];

@@ -28,7 +28,7 @@ if($personnel->getRole() == "M"){
             <div class="user-details">
                 <div class="input-box">
                     <span class="details">Login</span>
-                    <input type="text" name="idSecretariat" maxlength="50" value=<?php echo $personnel->getLogin() ?> required readonly/>
+                    <input type="text" name="login" maxlength="50" value=<?php echo $personnel->getLogin() ?> required readonly/>
                 </div>
                 <div class="input-box">
                     <span class="details">Nom</span>

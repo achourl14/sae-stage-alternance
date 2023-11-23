@@ -7,12 +7,12 @@ use App\Modele\DataObject\Postuler;
 class PostulerRepository
 {
     public function sauvegarder(Postuler $postuler) : void {
-        $sql = "INSERT INTO Postuler VALUES(:codeINETag, :idOffreTag, 0)";
+        $sql = "INSERT INTO Postuler VALUES(:loginEtuTag, :idOffreTag, 0)";
 
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
         $values = array(
-            "codeINETag" => $postuler->getCodeINE(),
+            "loginEtuTag" => $postuler->getloginEtu(),
             "idOffreTag" => $postuler->getIdOffre()
         );
 
@@ -26,14 +26,14 @@ class PostulerRepository
         return $tableau;
     }
 
-    public function recupererParClePrimaire(string $codeINE, string $idOffre): ?Postuler{
-        $sql = "SELECT * from ".$this->getNomTable()." WHERE idOffre = :idOffreTag AND codeINE = :codeINETag";
+    public function recupererParClePrimaire(string $loginEtu, string $idOffre): ?Postuler{
+        $sql = "SELECT * from ".$this->getNomTable()." WHERE idOffre = :idOffreTag AND loginEtu = :loginEtuTag";
         // Préparation de la requête
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
         $values = array(
             "idOffreTag" => $idOffre,
-            "codeINETag" => $codeINE
+            "loginEtuTag" => $loginEtu
         );
         // On donne les valeurs et on exécute la requête
         $pdoStatement->execute($values);
@@ -47,14 +47,14 @@ class PostulerRepository
         return $this->construireDepuisTableau($objetFormatTableau);
     }
 
-    public function recupererParEtudiant(string $codeINE)
+    public function recupererParEtudiant(string $loginEtu)
     {
-        $sql = "SELECT * from " . $this->getNomTable() . " WHERE codeINE = :codeINETag";
+        $sql = "SELECT * from " . $this->getNomTable() . " WHERE loginEtu = :loginEtuTag";
         // Préparation de la requête
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
         $values = array(
-            "codeINETag" => $codeINE
+            "loginEtuTag" => $loginEtu
         );
         // On donne les valeurs et on exécute la requête
         $pdoStatement->execute($values);
@@ -89,11 +89,11 @@ class PostulerRepository
     }
 
     public function mettreAJourEtat(Postuler $postuler){
-        $sql = "UPDATE Postuler SET etat = :etatTag WHERE codeINE = :codeINETag AND idOffre = :idOffreTag";
+        $sql = "UPDATE Postuler SET etat = :etatTag WHERE loginEtu = :loginEtuTag AND idOffre = :idOffreTag";
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
         $values = array(
-            "codeINETag" => $postuler->getCodeINE(),
+            "loginEtuTag" => $postuler->getLoginEtu(),
             "idOffreTag" => $postuler->getIdOffre(),
             "etatTag" => $postuler->getEtat()
         );
@@ -102,7 +102,7 @@ class PostulerRepository
 
 
     public function construireDepuisTableau(array $offreFormatTableau) : Postuler {
-        $offre = new Postuler($offreFormatTableau['codeINE'],$offreFormatTableau['idOffre'],$offreFormatTableau['etat']);
+        $offre = new Postuler($offreFormatTableau['loginEtu'],$offreFormatTableau['idOffre'],$offreFormatTableau['etat']);
         return $offre;
     }
 

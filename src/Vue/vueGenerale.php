@@ -102,13 +102,13 @@ if(!ConnexionUtilisateur::estConnecte()){
     echo '</a>';
     echo '<div class="submenu submenuCompte">';
     if(ConnexionUtilisateur::estPersonnel()){
-        echo '<a href="controleurFrontal.php?controleur=personnel&action=afficherMAJPersonnel&idSecretariat='.ConnexionUtilisateur::getLoginUtilisateurConnecte().'">Configuration</a>';
+        echo '<a href="controleurFrontal.php?controleur=personnel&action=afficherMAJPersonnel&login='.ConnexionUtilisateur::getLoginUtilisateurConnecte().'">Configuration</a>';
     }
     if(ConnexionUtilisateur::estEntreprise()){
         echo '<a href="controleurFrontal.php?controleur=entreprise&action=afficherMAJEntreprise&numSiret='.ConnexionUtilisateur::getLoginUtilisateurConnecte().'">Configuration</a>';
     }else if(ConnexionUtilisateur::estEtudiant()){
         echo '<a href="controleurFrontal.php?controleur=offre&action=afficherMenuPostulerOffre">Candidatures</a>';
-        echo '<a href="controleurFrontal.php?controleur=etudiant&action=afficherMAJEtudiant&codeINE='.ConnexionUtilisateur::getLoginUtilisateurConnecte().'">Configuration</a>';
+        echo '<a href="controleurFrontal.php?controleur=etudiant&action=afficherMAJEtudiant&login='.ConnexionUtilisateur::getLoginUtilisateurConnecte().'">Configuration</a>';
     }
     echo '<a href="controleurFrontal.php?controleur=generique&action=seDeconnecter">Se déconnecter</a>';
     echo '</div>';

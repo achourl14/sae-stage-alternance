@@ -6,25 +6,25 @@ use App\Modele\Repository\AbstractRepository;
 
 class Postuler extends AbstractDataObject
 {
-    private string $codeINE;
+    private string $loginEtu;
     private int $idOffre;
 
     private int $etat;
 
     /**
-     * @param string $codeINE
+     * @param string $loginEtu
      * @param int $idOffre
      */
-    public function __construct(string $codeINE, int $idOffre,int $etat)
+    public function __construct(string $loginEtu, int $idOffre,int $etat)
     {
-        $this->codeINE = $codeINE;
+        $this->loginEtu = $loginEtu;
         $this->idOffre = $idOffre;
         $this->etat = $etat;
     }
 
-    public function getCodeINE(): string
+    public function getLoginEtu(): string
     {
-        return $this->codeINE;
+        return $this->loginEtu;
     }
 
     public function getIdOffre(): int
@@ -46,7 +46,7 @@ class Postuler extends AbstractDataObject
     public function formatTableau(): array
     {
         return array(
-            "codeINETag" => $this->getCodeINE(),
+            "loginEtuTag" => $this->getLoginEtu(),
             "idOffreTag" => $this->getIdOffre(),
             "etatTag" => $this->getEtat()
         );

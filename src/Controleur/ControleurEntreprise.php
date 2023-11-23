@@ -208,14 +208,14 @@ class ControleurEntreprise extends ControleurGenerique
     }
 
     public static function accepterCandidature(){
-        $postuler = (new PostulerRepository())->recupererParClePrimaire($_GET["codeINE"],$_GET["idOffre"]);
+        $postuler = (new PostulerRepository())->recupererParClePrimaire($_GET["login"],$_GET["idOffre"]);
         $postuler->setEtat(1);
         (new PostulerRepository())->mettreAJourEtat($postuler);
         ControleurOffre::offres();
     }
 
     public static function refuserCandidature(){
-        $postuler = (new PostulerRepository())->recupererParClePrimaire($_GET["codeINE"],$_GET["idOffre"]);
+        $postuler = (new PostulerRepository())->recupererParClePrimaire($_GET["login"],$_GET["idOffre"]);
         $postuler->setEtat(2);
         (new PostulerRepository())->mettreAJourEtat($postuler);
         ControleurOffre::offres();

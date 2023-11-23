@@ -115,8 +115,8 @@ class ControleurPersonnel extends ControleurGenerique
 
     public static function afficherMAJPersonnel()
     {
-        if (ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_GET["idSecretariat"] || ConnexionUtilisateur::estMaitreSA()) {
-            $personnel = (new SecretariatRepository())->recupererParClePrimaire($_GET["idSecretariat"]);
+        if (ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_GET["login"] || ConnexionUtilisateur::estMaitreSA()) {
+            $personnel = (new SecretariatRepository())->recupererParClePrimaire($_GET["login"]);
             if ($personnel != null) {
                 self::afficherVue("Personnel/vueMiseAJourPersonnel.php", ["personnel" => $personnel]);
             } else {
@@ -130,22 +130,22 @@ class ControleurPersonnel extends ControleurGenerique
 
     public static function MAJPersonnel()
     {
-        if (ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_POST["idSecretariat"] || ConnexionUtilisateur::estMaitreSA()) {
-            if (isset($_POST["idSecretariat"])) {
-                $secretaireAVerifier = (new SecretariatRepository())->recupererParClePrimaire($_POST["idSecretariat"]);
+        if (ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_POST["login"] || ConnexionUtilisateur::estMaitreSA()) {
+            if (isset($_POST["login"])) {
+                $secretaireAVerifier = (new SecretariatRepository())->recupererParClePrimaire($_POST["login"]);
                 if (ConnexionUtilisateur::estMaitreSA()) {
-                    $secretaire = new Secretariat($_POST["idSecretariat"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"],$_POST["role"],$secretaireAVerifier->getMdp());
+                    $secretaire = new Secretariat($_POST["login"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"],$_POST["role"],$secretaireAVerifier->getMdp());
                     (new SecretariatRepository())->mettreAJour($secretaire);
-                    self::afficherErreur("Les informations du personnel " . $secretaire->getIdSecretariat() . " ont bien été mis à jour");
-                } else if (ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_POST["idSecretariat"]) {
+                    self::afficherErreur("Les informations du personnel " . $secretaire->getLogin() . " ont bien été mis à jour");
+                } else if (ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_POST["login"]) {
                     if (isset($_POST["mdp"])) {
                         $mdpCorrect = MotDePasse::verifier($_POST['mdp'], $secretaireAVerifier->getMdp());
                         if (!$mdpCorrect) {
                             self::afficherErreur("Mot de passe Incorrect");
                         } else {
-                            $secretaire = new Secretariat($_POST["idSecretariat"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"],$_POST["role"], $secretaireAVerifier->getMdp());
+                            $secretaire = new Secretariat($_POST["login"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"],$_POST["role"], $secretaireAVerifier->getMdp());
                             (new SecretariatRepository())->mettreAJour($secretaire);
-                            self::afficherErreur("Vos informations " . $secretaire->getIdSecretariat() . " ont bien été mis à jour");
+                            self::afficherErreur("Vos informations " . $secretaire->getLogin() . " ont bien été mis à jour");
                         }
                     } else {
                         self::afficherErreur("Veuillez rentrer votre mot de passe");
@@ -163,8 +163,8 @@ class ControleurPersonnel extends ControleurGenerique
     public static function rechercherPersonnel()
     {
         $values = null;
-        if (isset($_POST["idSecretariat"]) && $_POST["idSecretariat"] != "") {
-            $values['idSecretariat'] = $_POST["idSecretariat"];
+        if (isset($_POST["login"]) && $_POST["login"] != "") {
+            $values['login'] = $_POST["login"];
         }
         if (isset($_POST["nomSecretariat"]) && $_POST["nomSecretariat"] != "") {
             $values['nomSecretariat'] = $_POST["nomSecretariat"];

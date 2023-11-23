@@ -39,7 +39,7 @@ if(isset($recherche["role"])) {
         <div class="user-details">
             <div class="input-box-search">
                 <span class="details">Login</span>
-               <?php echo '<input type="text" name="idSecretariat" maxlength="50" value="'.$recherche["idSecretariat"].'" />'; ?>
+               <?php echo '<input type="text" name="login" maxlength="50" value="'.$recherche["login"].'" />'; ?>
             </div>
             <div class="input-box-search">
                 <span class="details">Nom</span>
@@ -63,7 +63,7 @@ if(isset($recherche["role"])) {
             </div>
             <div class="input-box">
                 <label class="details" for="roleCible"> Rôle </label>
-                <select name="role" id="roleCible" required>
+                <select name="role" id="roleCible">
                     <option value="" <?php echo $a; ?>> Tout role </option>
                     <option value="T" <?php echo $t; ?>> Tuteur </option>
                     <option value="S" <?php echo $s; ?>> Secretariat </option>
@@ -101,9 +101,9 @@ if ($personnels == null) {
 } else {
     foreach ($personnels as $personnel) {
 
-        echo "<a href='controleurFrontal.php?controleur=personnel&action=afficherDetailPersonnel&idSecretariat=" . $personnel->getIdSecretariat() . "'>";
+        echo "<a href='controleurFrontal.php?controleur=personnel&action=afficherDetailPersonnel&login=" . $personnel->getLogin() . "'>";
         echo '<div class ="carte">';
-        echo("<h1> login : " . htmlspecialchars($personnel->getIdSecretariat()) . "</h1>");
+        echo("<h1> login : " . htmlspecialchars($personnel->getLogin()) . "</h1>");
         echo("<p> Prénom : " . htmlspecialchars($personnel->getPrenomSecretariat()) . " </p>");
         echo("<p> Nom : " . htmlspecialchars($personnel->getNomSecretariat()) . " </p>");
         echo "</div>";

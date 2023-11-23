@@ -2,19 +2,19 @@
 
 use App\Modele\Repository\EtudiantRepository;
 
-if(isset($_GET['codeINE'])){
+if(isset($_GET['login'])){
     if(\App\Lib\ConnexionUtilisateur::estPersonnel()){
         echo '<a  class="boutonRetour" href="controleurFrontal.php?controleur=etudiant&action=afficherGestionEtudiant"> < Retour à la gestion des étudiants </a>';
     }
     echo '<div class="offre_detail">';
-    $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_GET["codeINE"]);
+    $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_GET["login"]);
     echo "<h1>".htmlspecialchars($etudiant->getPrenom())." ".htmlspecialchars($etudiant->getNom())."</h1>";
-    echo "<h2> Numéro INE : " . htmlspecialchars($etudiant->getCodeINE()) . "</h2>";
+    echo "<h2> Login : " . htmlspecialchars($etudiant->getLogin()) . "</h2>";
     echo "<h2> Numéro Etudiant : ". htmlspecialchars($etudiant->getNumEtudiant()) ."</h2>";
 
     echo '<div class="boutonsGeneral">';
-    echo '<a  href="controleurFrontal.php?controleur=etudiant&action=afficherMAJEtudiant&codeINE='.$etudiant->getCodeINE().'"> Modifier les informations de l\'Etudiant </a>';
-    echo '<a  href="controleurFrontal.php?controleur=etudiant&action=afficherDeleteEtu&codeINE='.$etudiant->getCodeINE().'"> Supprimer le compte de l\'Etudiant </a>';
+    echo '<a  href="controleurFrontal.php?controleur=etudiant&action=afficherMAJEtudiant&login='.$etudiant->getLogin().'"> Modifier les informations de l\'Etudiant </a>';
+    echo '<a  href="controleurFrontal.php?controleur=etudiant&action=afficherDeleteEtu&login='.$etudiant->getLogin().'"> Supprimer le compte de l\'Etudiant </a>';
     echo '</div>';
     $stageTrouve = "";
     if((new EtudiantRepository())->stageTrouve($etudiant) == true){

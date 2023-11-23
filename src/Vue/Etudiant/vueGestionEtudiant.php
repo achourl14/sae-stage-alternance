@@ -21,8 +21,8 @@ foreach((new \App\Modele\Repository\EtudiantRepository())->getNomsColones() as $
     <form method="post" action="controleurFrontal.php?controleur=etudiant&action=rechercherEtudiant">
         <div class="user-details">
             <div class="input-box-search">
-                <span class="details">Code INE</span>
-               <?php echo '<input type="text" name="code_INE" pattern="[0-9]{14}" minlength="14" maxlength="14" value="'.$recherche["codeINE"].'" />'; ?>
+                <span class="details">Login</span>
+               <?php echo '<input type="text" name="login" pattern="[0-9]{14}" minlength="14" maxlength="14" value="'.$recherche["login"].'" />'; ?>
             </div>
             <div class="input-box-search">
                 <span class="details">Numéro Etudiant</span>
@@ -96,9 +96,9 @@ if ($etudiants == null) {
 } else {
     foreach ($etudiants as $etudiant) {
 
-        echo "<a href='controleurFrontal.php?controleur=etudiant&action=afficherDetailEtudiant&codeINE=" . $etudiant->getCodeINE() . "'>";
+        echo "<a href='controleurFrontal.php?controleur=etudiant&action=afficherDetailEtudiant&login=" . $etudiant->getLogin() . "'>";
         echo '<div class ="carte">';
-        echo("<h1> Numéro INE : " . htmlspecialchars($etudiant->getCodeINE()) . "</h1>");
+        echo("<h1> Login : " . htmlspecialchars($etudiant->getLogin()) . "</h1>");
         echo "<h2> code Etudiant : " . htmlspecialchars($etudiant->getNumEtudiant()) . " </h2>";
         echo("<p> Prénom : " . htmlspecialchars($etudiant->getPrenom()) . " </p>");
         echo("<p> Nom : " . htmlspecialchars($etudiant->getNom()) . " </p>");

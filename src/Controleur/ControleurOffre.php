@@ -33,7 +33,8 @@ class ControleurOffre extends ControleurGenerique
 
 
             if ($offres == null) {
-                self::afficherErreur("Aucune offres disponible, veuillez revenir plus tard", "offres");
+                echo '<div class="msgConfirmation"><p>Aucune offres disponible, veuillez revenir plus tard</p></div>';
+                self::afficherAccueil();
             } else {
                 foreach ($offres as $offreFormatTableau) {
                     $tableauTout[] = $offreFormatTableau;
@@ -70,7 +71,8 @@ class ControleurOffre extends ControleurGenerique
                 self::afficherVue("vueGenerale.php", ["contenu" => "Offre/vueOffres.php", "offreses" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => $title]);
             }
         }else{
-            self::afficherErreur("Vous n'avez pas les droits", "afficherAccueil");
+            echo '<div class="msgConfirmation"><p>Vous n\'avez pas les droits</p></div>';
+            self::afficherAccueil();
         }
     }
 
@@ -95,22 +97,29 @@ class ControleurOffre extends ControleurGenerique
 
     public static function creerOffre()
     {
-        $nomFichier = $_FILES["fileToUpload"]["name"];
-        $dossier = $_FILES["fileToUpload"]["tmp_name"];
-        move_uploaded_file("$dossier", "../upload_offres/$nomFichier");
-        $file_parts = pathinfo("../upload_offres/$nomFichier");
-        if ($file_parts['extension'] != "pdf" && $file_parts['extension'] != "docx" && $file_parts['extension'] != "txt") {
-            unlink("../upload_offres/$nomFichier");
-            echo '<div class="msgConfirmation"><p> Impossible de créer l\'offre : Le fichier n\'est pas dans les extensions demandées (.pdf, .docx, .txt)</p></div>';
-        } else {
+        if($_FILES["fileToUpload"]["name"]){
+            $nomFichier = $_FILES["fileToUpload"]["name"];
+            $dossier = $_FILES["fileToUpload"]["tmp_name"];
+            move_uploaded_file("$dossier", "../upload_offres/$nomFichier");
+            $file_parts = pathinfo("../upload_offres/$nomFichier");
+            if ($file_parts['extension'] != "pdf" && $file_parts['extension'] != "docx" && $file_parts['extension'] != "txt") {
+                unlink("../upload_offres/$nomFichier");
+                echo '<div class="msgConfirmation"><p> Impossible de créer l\'offre : Le fichier n\'est pas dans les extensions demandées (.pdf, .docx, .txt)</p></div>';
+            }else{
+                $offre = null;
+                $offre = new Offre(-9, $_POST["idEntreprise"], $_POST["nomOffre"], $_POST["mission"], -9, -9, $_POST["dateDebut"], $_POST["dateFin"], $_POST["remuneration"], $_POST["but_annee"], $_POST["parcours"], $_POST["type"], 0);
+                OffreRepository::sauvegarder($offre);
+
+
+                $offreCree = (new OffreRepository())->derniereOffre();
+                rename("../upload_offres/$nomFichier", "../upload_offres/offre_" . $offreCree->getIdOffre() . "." . $file_parts['extension']);
+
+                echo '<div class="msgConfirmation"><p> Vous avez bien créer votre offre : ' . $offre->getNomOffre() . '</p></div>';
+            }
+        }else{
             $offre = null;
             $offre = new Offre(-9, $_POST["idEntreprise"], $_POST["nomOffre"], $_POST["mission"], -9, -9, $_POST["dateDebut"], $_POST["dateFin"], $_POST["remuneration"], $_POST["but_annee"], $_POST["parcours"], $_POST["type"], 0);
             OffreRepository::sauvegarder($offre);
-
-
-            $offreCree = (new OffreRepository())->derniereOffre();
-            rename("../upload_offres/$nomFichier", "../upload_offres/offre_" . $offreCree->getIdOffre() . "." . $file_parts['extension']);
-
             echo '<div class="msgConfirmation"><p> Vous avez bien créer votre offre : ' . $offre->getNomOffre() . '</p></div>';
         }
         self::offres();
@@ -165,6 +174,7 @@ class ControleurOffre extends ControleurGenerique
     public static function afficherDetail()
     {
         if (!isset($_GET["idOffre"])) {
+
             self::afficherErreur("L'id de l'offre n'est pas renseigné");
         } else {
             self::afficherVue("vueGenerale.php", ["title" => "Detail offre", "contenu" => "Offre/vueDetail.php", "offreDetail" => $_GET["idOffre"]]);
@@ -200,12 +210,12 @@ class ControleurOffre extends ControleurGenerique
 
     public static function verifierDate() {
         // continue cette fontion tu peux le faire tu sais quoi faire bg
-        if (isset($_POST['dateDebutStage']) && isset($_POST['dateFinStage']) && isset($_POST['codeINE']) && isset($_POST['stage'])) {
+        if (isset($_POST['dateDebutStage']) && isset($_POST['dateFinStage']) && isset($_POST['login']) && isset($_POST['stage'])) {
             $dateDebut = DateTime::createFromFormat('Y-m-d', $_POST['dateDebutStage']);
             $dateFin = DateTime::createFromFormat('Y-m-d', $_POST['dateFinStage']);
             $valeurStage = $_POST['stage'];
 
-            $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_POST['codeINE']);
+            $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_POST['login']);
 
             if ((new EtudiantRepository())->stageEnCoursTrouve($etudiant, $dateDebut, $dateFin)) {
                 header('Content-Type: application/json');

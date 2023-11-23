@@ -2,17 +2,17 @@
 
 use App\Modele\Repository\SecretariatRepository;
 
-if(isset($_GET['idSecretariat'])){
+if(isset($_GET['login'])){
     if(\App\Lib\ConnexionUtilisateur::estPersonnel()){
         echo '<a  class="boutonRetour" href="controleurFrontal.php?controleur=personnelaction=afficherGestionPersonnel"> < Retour à la gestion du Personnel </a>';
     }
     echo '<div class="offre_detail">';
-    $personnel = (new SecretariatRepository())->recupererParClePrimaire($_GET["idSecretariat"]);
+    $personnel = (new SecretariatRepository())->recupererParClePrimaire($_GET["login"]);
     echo "<h1>".htmlspecialchars($personnel->getPrenomSecretariat())." ".htmlspecialchars($personnel->getNomSecretariat())."</h1>";
-    echo "<h2> login : " . htmlspecialchars($personnel->getIdSecretariat()) . "</h2>";
+    echo "<h2> login : " . htmlspecialchars($personnel->getLogin()) . "</h2>";
 
     echo '<div class="boutonsGeneral">';
-    echo '<a  href="controleurFrontal.php?controleur=personnel&action=afficherMAJPersonnel&idSecretariat='.$personnel->getIdSecretariat().'"> Modifier les informations du Personnel de l\'IUT </a>';
+    echo '<a  href="controleurFrontal.php?controleur=personnel&action=afficherMAJPersonnel&login='.$personnel->getLogin().'"> Modifier les informations du Personnel de l\'IUT </a>';
     echo '<a  href="#"> Supprimer le compte du personnel de l\'IUT </a>';
     echo '</div>';
     //remplacer par la gestion des tuteurs

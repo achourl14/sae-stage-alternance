@@ -6,7 +6,7 @@ use App\Lib\MotDePasse;
 
 class Secretariat extends AbstractDataObject
 {
-    private string $idSecretariat;
+    private string $login;
     private string $nomSecretariat;
     private string $prenomSecretariat;
     private string $mailSecretariat;
@@ -16,14 +16,13 @@ class Secretariat extends AbstractDataObject
     private string $mdp;
 
     /**
-     * @param int $idSecretariat
      * @param string $nomSecretariat
      * @param string $prenomSecretariat
      * @param int $mdp
      */
-    public function __construct(string $idSecretariat, string $nomSecretariat, string $prenomSecretariat, string $mail, string $telephone, string $dateDeNaissance, string $role, string $mdp)
+    public function __construct(string $login, string $nomSecretariat, string $prenomSecretariat, string $mail, string $telephone, string $dateDeNaissance, string $role, string $mdp)
     {
-        $this->idSecretariat = $idSecretariat;
+        $this->login = $login;
         $this->nomSecretariat = $nomSecretariat;
         $this->prenomSecretariat = $prenomSecretariat;
         $this->mailSecretariat = $mail;
@@ -33,14 +32,9 @@ class Secretariat extends AbstractDataObject
         $this->mdp = $mdp;
     }
 
-    public function getIdSecretariat(): string
-    {
-        return $this->idSecretariat;
-    }
-
     public function getLogin(): string
     {
-        return $this->idSecretariat;
+        return $this->login;
     }
 
     public function getNomSecretariat(): string
@@ -79,13 +73,13 @@ class Secretariat extends AbstractDataObject
 
     public static function construireDepuisFormulaire(array $tableauFormulaire) : Secretariat{
         $mdpHache = MotDePasse::hacher($tableauFormulaire['mdp']);
-        return new Secretariat($tableauFormulaire["idSecretariat"],$tableauFormulaire["nomSecretariat"],$tableauFormulaire["prenomSecretariat"],$tableauFormulaire["mailSecretariat"],$tableauFormulaire["telephoneSecretariat"],$tableauFormulaire["dateDeNaissanceSecretariat"],$tableauFormulaire["role"],$mdpHache);
+        return new Secretariat($tableauFormulaire["login"],$tableauFormulaire["nomSecretariat"],$tableauFormulaire["prenomSecretariat"],$tableauFormulaire["mailSecretariat"],$tableauFormulaire["telephoneSecretariat"],$tableauFormulaire["dateDeNaissanceSecretariat"],$tableauFormulaire["role"],$mdpHache);
     }
 
     public function formatTableau(): array
     {
         return array(
-            "idSecretariatTag" => $this->getIdSecretariat(),
+            "loginTag" => $this->getLogin(),
             "nomSecretariatTag" => $this->getNomSecretariat(),
             "prenomSecretariatTag" => $this->getPrenomSecretariat(),
             "adresseMailTag" => $this->getMail(),

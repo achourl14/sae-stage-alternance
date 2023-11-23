@@ -11,9 +11,9 @@ if($postulers == null){
     foreach ($postulers as $postuler) {
         echo "<div class='offre_candidature'>";
         echo "<div>";
-        $etudiant = (new EtudiantRepository())->recupererParClePrimaire($postuler->getCodeINE());
+        $etudiant = (new EtudiantRepository())->recupererParClePrimaire($postuler->getLogin());
         echo "<h1>".htmlspecialchars($etudiant->getPrenom())." ".htmlspecialchars($etudiant->getNom())."</h1>";
-        echo "<h2> Numéro INE : " . htmlspecialchars($etudiant->getCodeINE()) . "</h2>";
+        echo "<h2> Numéro INE : " . htmlspecialchars($etudiant->getLogin()) . "</h2>";
         echo "<h2> Numéro Etudiant : ". htmlspecialchars($etudiant->getNumEtudiant()) ."</h2>";
         echo '</div>';
 
@@ -29,8 +29,8 @@ if($postulers == null){
             echo "<p>, Refusé, vous n'avez pas été retenu pour ce poste </p>";
         }
         echo "</div>";
-        echo "<a href='controleurFrontal.php?controleur=entreprise&action=accepterCandidature&idOffre=".$postuler->getIdOffre()."&codeINE=".$postuler->getCodeINE()."'> Accepter </a>";
-        echo "<a href='controleurFrontal.php?controleur=entreprise&action=refuserCandidature&idOffre=".$postuler->getIdOffre()."&codeINE=".$postuler->getCodeINE()."'> Refuser </a>";
+        echo "<a href='controleurFrontal.php?controleur=entreprise&action=accepterCandidature&idOffre=".$postuler->getIdOffre()."&login=".$postuler->getLogin()."'> Accepter </a>";
+        echo "<a href='controleurFrontal.php?controleur=entreprise&action=refuserCandidature&idOffre=".$postuler->getIdOffre()."&login=".$postuler->getLogin()."'> Refuser </a>";
         echo "</div>";
 
     }

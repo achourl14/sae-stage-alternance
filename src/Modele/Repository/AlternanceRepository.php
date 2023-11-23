@@ -43,7 +43,7 @@ class AlternanceRepository extends AbstractRepository
 
     // si utiliser reprendre la fonction entière
     public function construireDepuisTableau(array $stageFormatSecretariat) : Alternance {
-        $alternance = new Alternance($stageFormatSecretariat['codeINE'],$stageFormatSecretariat['codeEtudiant'],$stageFormatSecretariat['promotion'],$stageFormatSecretariat['groupe'],$stageFormatSecretariat['nomEtudiant'],$stageFormatSecretariat['prenomEtudiant'],$stageFormatSecretariat['mailEtudiant'],$stageFormatSecretariat['telephoneEtudiant']);
+        $alternance = new Alternance($stageFormatSecretariat['login'],$stageFormatSecretariat['codeEtudiant'],$stageFormatSecretariat['promotion'],$stageFormatSecretariat['groupe'],$stageFormatSecretariat['nomEtudiant'],$stageFormatSecretariat['prenomEtudiant'],$stageFormatSecretariat['mailEtudiant'],$stageFormatSecretariat['telephoneEtudiant']);
         return $alternance;
     }
 

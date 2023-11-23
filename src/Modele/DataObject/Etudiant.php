@@ -6,7 +6,7 @@ use App\Lib\MotDePasse;
 
 class Etudiant extends AbstractDataObject
 {
-    private string $codeINE;
+    private string $login;
     private int $numEtudiant;
     private string $groupe;
     private string $nom;
@@ -20,8 +20,8 @@ class Etudiant extends AbstractDataObject
     private string $sexe;
     private string $promotion;
 
-    public function __construct(string $codeINE, int $numEtudiant,string $groupe ,string $nom, string $prenom,string $parcours ,string $numTel, string $email, string $motDePasse, string $dateDeNaissance,string $mailPerso,string $sexe, string $promotion) {
-        $this->codeINE = $codeINE;
+    public function __construct(string $login, int $numEtudiant,string $nom, string $prenom,string $promotion,string $groupe ,string $parcours ,string $numTel, string $email, string $motDePasse, string $dateDeNaissance,string $mailPerso,string $sexe) {
+        $this->login = $login;
         $this->numEtudiant = $numEtudiant;
         $this->groupe = $groupe;
         $this->nom = $nom;
@@ -36,14 +36,9 @@ class Etudiant extends AbstractDataObject
         $this->promotion = $promotion;
     }
 
-    public function getCodeINE(): string
-    {
-        return $this->codeINE;
-    }
-
     public function getLogin(): string
     {
-        return $this->codeINE;
+        return $this->login;
     }
 
     public function getNumEtudiant(): int
@@ -111,7 +106,7 @@ class Etudiant extends AbstractDataObject
     public function formatTableau(): array
     {
         return array(
-            "codeINETag" => $this->getCodeINE(),
+            "loginTag" => $this->getLogin(),
             "codeEtudiantTag" => $this->getNumEtudiant(),
             "promotionTag" => $this->getPromotion(),
             "groupeTag" => $this->getGroupe(),
@@ -129,7 +124,7 @@ class Etudiant extends AbstractDataObject
 
     public static function construireDepuisFormulaire(array $tableauFormulaire) : Etudiant{
         $mdpHache = MotDePasse::hacher($tableauFormulaire['mdp']);
-        return new Etudiant($tableauFormulaire["codeINE"],$tableauFormulaire["codeEtudiant"],$tableauFormulaire["groupe"],$tableauFormulaire["nomEtudiant"],$tableauFormulaire["prenomEtudiant"],$tableauFormulaire["parcours"],$tableauFormulaire["telephone"],$tableauFormulaire["mail"],$mdpHache,$tableauFormulaire["dateDeNaissance"],$tableauFormulaire["mailPerso"],$tableauFormulaire["sexe"],$tableauFormulaire["promotion"]);
+        return new Etudiant($tableauFormulaire["login"],$tableauFormulaire["codeEtudiant"],$tableauFormulaire["nomEtudiant"],$tableauFormulaire["prenomEtudiant"],$tableauFormulaire["mail"],$tableauFormulaire["promotion"],$tableauFormulaire["groupe"],$tableauFormulaire["parcours"],$tableauFormulaire["telephone"],$mdpHache,$tableauFormulaire["dateDeNaissance"],$tableauFormulaire["mailPerso"],$tableauFormulaire["sexe"]);
     }
 
 
