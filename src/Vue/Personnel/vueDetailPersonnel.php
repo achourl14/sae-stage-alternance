@@ -3,11 +3,31 @@
 use App\Modele\Repository\SecretariatRepository;
 
 if(isset($_GET['login'])){
+
+    $personnel = (new SecretariatRepository())->recupererParClePrimaire($_GET["login"]);
+
+    $isTelephone = $personnel->getTelephone();
+    $telephone = "Non Renseigné";
+    if(isset($isTelephone)){
+        $telephone = htmlspecialchars($personnel->getTelephone());
+    }
+    $isDateDeNaissance = $personnel->getDateDeNaissance();
+    $dateDeNaissance = "Non Renseignée";
+    if(isset($isDateDeNaissance)){
+        $dateDeNaissance = htmlspecialchars($personnel->getDateDeNaissance());
+    }
+
+    $isMail = $personnel->getMail();
+    $mail = "Non Renseigné";
+    if(isset($isMail)){
+        $mail = htmlspecialchars($isMail);
+    }
+
+
     if(\App\Lib\ConnexionUtilisateur::estPersonnel()){
-        echo '<a  class="boutonRetour" href="controleurFrontal.php?controleur=personnelaction=afficherGestionPersonnel"> < Retour à la gestion du Personnel </a>';
+        echo '<a  class="boutonRetour" href="controleurFrontal.php?controleur=personnel&action=afficherGestionPersonnel"> < Retour à la gestion du Personnel </a>';
     }
     echo '<div class="offre_detail">';
-    $personnel = (new SecretariatRepository())->recupererParClePrimaire($_GET["login"]);
     echo "<h1>".htmlspecialchars($personnel->getPrenomSecretariat())." ".htmlspecialchars($personnel->getNomSecretariat())."</h1>";
     echo "<h2> login : " . htmlspecialchars($personnel->getLogin()) . "</h2>";
 
@@ -38,11 +58,11 @@ if(isset($_GET['login'])){
     echo '<hr/>';
 
     echo "<h3> &#9993; Adresse mail </h3>";
-    echo '<p>'. htmlspecialchars($personnel->getMail()) .'</p>';
+    echo '<p>'. $mail .'</p>';
     echo "<h3> &#9742; Téléphone </h3>";
-    echo '<p>'. htmlspecialchars($personnel->getTelephone() ).'</p>';
+    echo '<p>'. $telephone .'</p>';
     echo "<h3> Date de naissance : </h3>";
-    echo '<p>'. htmlspecialchars($personnel->getDateDeNaissance()) .'</p>';
+    echo '<p>'. $dateDeNaissance .'</p>';
     echo '</div>';
 }else{
     echo '<div class="msgConfirmation"><p> ⚠️ Ce Personnel de l\'IUT est introuvable ⚠️ </p></div>';

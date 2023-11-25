@@ -30,9 +30,10 @@ class ControleurGenerique
     public static function connecter()
     {
         $cle = "";
+        $utilisateurAVerifier = null;
 
-        if (!isset($_POST['login']) || !isset($_POST['mdp'])) {
-            echo '<div class="msgConfirmation"><p>Veuillez rentrer l\'ensemble des champs</p></div>';
+        if (!isset($_POST['login'])) {
+            echo '<div class="msgConfirmation"><p>Veuillez rentrer le champ login</p></div>';
         }
 
         if ($_POST['type_connexion'] == 'secretariat') {
@@ -58,8 +59,21 @@ class ControleurGenerique
                 ConnexionUtilisateur::connecter($utilisateurAVerifier->getLogin());
                 $session = Session::getInstance();
                 $session->enregistrer($cle, 1);
+                if($_POST['type_connexion'] == 'secretariat' || $_POST['type_connexion'] == 'etudiant'){
+                    if($utilisateurAVerifier->getPremiereConnexion() == 0){
+                        if($_POST['type_connexion'] == 'secretariat'){
+                            header("Location: controleurFrontal.php?controleur=personnel&action=afficherMAJPersonnel&login=".ConnexionUtilisateur::getLoginUtilisateurConnecte());
+                            die();
+                        }else{
+                            header("Location: controleurFrontal.php?controleur=etudiant&action=afficherMAJEtudiant&login=".ConnexionUtilisateur::getLoginUtilisateurConnecte());
+                            die();
+                        }
+                    }
+                }
             }
         }
+
+
 
 
         self::afficherAccueil();

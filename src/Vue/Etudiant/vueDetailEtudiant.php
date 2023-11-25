@@ -3,14 +3,48 @@
 use App\Modele\Repository\EtudiantRepository;
 
 if(isset($_GET['login'])){
+    $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_GET["login"]);
+
+    $isCodeEtudiant = $etudiant->getNumEtudiant();
+    $codeEtudiant = "Non Renseigné";
+    if(isset($isCodeEtudiant)){
+        $codeEtudiant = htmlspecialchars($isCodeEtudiant);
+    }
+    $isTelephone = $etudiant->getNumTel();
+    $telephone = "Non Renseigné";
+    if(isset($isTelephone)){
+        $telephone = htmlspecialchars($isTelephone);
+    }
+    $isDateDeNaissance = $etudiant->getDateDeNaissance();
+    $dateDeNaissance = "Non Renseignée";
+    if(isset($isDateDeNaissance)){
+        $dateDeNaissance = htmlspecialchars($etudiant->getDateDeNaissance());
+    }
+
+    $isMail = $etudiant->getEmail();
+    $mail = "Non Renseigné";
+    if(isset($isMail)){
+        $mail = htmlspecialchars($isMail);
+    }
+
+    $isGroupe = $etudiant->getGroupe();
+    $groupe = "Non Renseigné";
+    if(isset($isGroupe)){
+        $groupe = htmlspecialchars($isGroupe);
+    }
+
+    $isParcours = $etudiant->getParcours();
+    $parcours = "Non Renseigné";
+    if(isset($isParcours)){
+        $parcours = htmlspecialchars($isParcours);
+    }
     if(\App\Lib\ConnexionUtilisateur::estPersonnel()){
         echo '<a  class="boutonRetour" href="controleurFrontal.php?controleur=etudiant&action=afficherGestionEtudiant"> < Retour à la gestion des étudiants </a>';
     }
     echo '<div class="offre_detail">';
-    $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_GET["login"]);
     echo "<h1>".htmlspecialchars($etudiant->getPrenom())." ".htmlspecialchars($etudiant->getNom())."</h1>";
     echo "<h2> Login : " . htmlspecialchars($etudiant->getLogin()) . "</h2>";
-    echo "<h2> Numéro Etudiant : ". htmlspecialchars($etudiant->getNumEtudiant()) ."</h2>";
+    echo "<h2> Numéro Etudiant : ". $codeEtudiant ."</h2>";
 
     echo '<div class="boutonsGeneral">';
     echo '<a  href="controleurFrontal.php?controleur=etudiant&action=afficherMAJEtudiant&login='.$etudiant->getLogin().'"> Modifier les informations de l\'Etudiant </a>';
@@ -38,13 +72,13 @@ if(isset($_GET['login'])){
     echo '<hr/>';
 
     echo "<h3> &#9993; Adresse mail </h3>";
-    echo '<p>'. htmlspecialchars($etudiant->getEmail()) .'</p>';
+    echo '<p>'. $mail .'</p>';
     echo "<h3> &#9742; Téléphone </h3>";
-    echo '<p>'. htmlspecialchars($etudiant->getNumTel() ).'</p>';
+    echo '<p>'. $telephone.'</p>';
     echo "<h3> Date de naissance : </h3>";
-    echo '<p>'. htmlspecialchars($etudiant->getDateDeNaissance()) .'</p>';
+    echo '<p>'. $dateDeNaissance .'</p>';
     echo "<h3> Année de sa promotion / Groupe / Parcours </h3>";
-    echo '<p> Année '. htmlspecialchars($etudiant->getPromotion()) .', Groupe '. htmlspecialchars($etudiant->getGroupe()) .', Parcours '.htmlspecialchars($etudiant->getParcours()) .'</p>';
+    echo '<p> Année '. htmlspecialchars($etudiant->getPromotion()) .', Groupe '. $groupe .', Parcours '. $parcours .'</p>';
     echo '</div>';
     echo '</div>';
 }else{

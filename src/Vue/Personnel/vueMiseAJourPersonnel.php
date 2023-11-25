@@ -28,27 +28,27 @@ if($personnel->getRole() == "M"){
             <div class="user-details">
                 <div class="input-box">
                     <span class="details">Login</span>
-                    <input type="text" name="login" maxlength="50" value=<?php echo $personnel->getLogin() ?> required readonly/>
+                    <input type="text" name="login" maxlength="50" value=<?php echo $personnel->getLogin() ?> "" required readonly/>
                 </div>
                 <div class="input-box">
                     <span class="details">Nom</span>
-                    <input type="text" value=<?php echo $personnel->getNomSecretariat() ?> name="nomSecretariat" maxlength="50" required>
+                    <input type="text" value=<?php echo $personnel->getNomSecretariat() ?> "" name="nomSecretariat" maxlength="50" required>
                 </div>
                 <div class="input-box">
                     <span class="details">Prénom</span>
-                    <input type="text" name="prenomSecretariat" maxlength="50" value=<?php echo $personnel->getPrenomSecretariat() ?>  required >
+                    <input type="text" name="prenomSecretariat" maxlength="50" value=<?php echo $personnel->getPrenomSecretariat() ?> ""  required >
                 </div>
                 <div class="input-box">
                     <span class="details">Date de Naissance </span>
-                    <input type="date" value=<?php echo $personnel->getDateDeNaissance() ?> name="dateDeNaissanceSecretariat" required>
+                    <input type="date" value=<?php echo $personnel->getDateDeNaissance() ?> "" name="dateDeNaissanceSecretariat" required>
                 </div>
                 <div class="input-box">
                     <span class="details">Mail</span>
-                    <input type="email" value=<?php echo $personnel->getMail() ?> name="mailSecretariat" maxlength="100" required>
+                    <input type="email" value=<?php echo $personnel->getMail() ?> "" name="mailSecretariat" maxlength="100" required readonly>
                 </div>
                 <div class="input-box">
                     <span class="details">Téléphone</span>
-                    <input type="tel" value=<?php echo $personnel->getTelephone() ?> name="telephoneSecretariat" pattern="[0-9]{10}" maxlength="10" required>
+                    <input type="tel" value=<?php echo $personnel->getTelephone() ?> "" name="telephoneSecretariat" pattern="[0-9]{10}" maxlength="10" required>
                 </div>
                 <div class="input-box">
                     <label class="details" for="roleCible"> Rôle </label>
@@ -59,10 +59,20 @@ if($personnel->getRole() == "M"){
                     </select>
                 </div>
                 <?php
-                if(!\App\Lib\ConnexionUtilisateur::estMaitreSA()){
+                if(!\App\Lib\ConnexionUtilisateur::estMaitreSA() && $personnel->getPremiereConnexion() != 0){
                     echo '<div class="input-box">';
                     echo '<span class="details">Entrez votre mot de passe</span>';
                     echo '<input type="password" name="mdp" minlength="8" maxlength="50" required>';
+                    echo '</div>';
+                }
+                if ($personnel->getPremiereConnexion() == 0) {
+                    echo '<div class="input-box">';
+                    echo '<span class="details">Mot de passe </span>';
+                    echo '<input type="password" placeholder="Entrez votre mot de passe" name="mdp" minlength="8" maxlength="50" required>';
+                    echo '</div>';
+                    echo '<div class="input-box">';
+                    echo '<span class="details">Confirmez mot de passe</span>';
+                    echo '<input type="password" placeholder="Confirmez votre mot de passe" name="mdp2" minlength="8" maxlength="50" required>';
                     echo '</div>';
                 }
                 ?>

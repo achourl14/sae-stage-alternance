@@ -133,17 +133,30 @@ class ControleurPersonnel extends ControleurGenerique
         if (ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_POST["login"] || ConnexionUtilisateur::estMaitreSA()) {
             if (isset($_POST["login"])) {
                 $secretaireAVerifier = (new SecretariatRepository())->recupererParClePrimaire($_POST["login"]);
-                if (ConnexionUtilisateur::estMaitreSA()) {
-                    $secretaire = new Secretariat($_POST["login"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"],$_POST["role"],$secretaireAVerifier->getMdp());
-                    (new SecretariatRepository())->mettreAJour($secretaire);
-                    self::afficherErreur("Les informations du personnel " . $secretaire->getLogin() . " ont bien été mis à jour");
+                if (ConnexionUtilisateur::estMaitreSA() || $secretaireAVerifier->getPremiereConnexion() == 0) {
+                    if($secretaireAVerifier->getPremiereConnexion() == 0){
+                        if ($_POST['mdp'] != $_POST['mdp2']) {
+                            echo '<div class="msgConfirmation"><p> ⚠️ Vos 2 champs de mot de passe ne correspondent pas ⚠️  </p></div>';
+                            self::afficherMAJPersonnel();
+                        } else {
+                            $mdpHache = MotDePasse::hacher($_POST['mdp']);
+                            $secretaire = new Secretariat($_POST["login"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"],$_POST["role"],$mdpHache,1);
+                            (new SecretariatRepository())->mettreAJour($secretaire);
+                            echo '<div class="msgConfirmation"><p> Votre compte a bien été mis à jour </p></div>';
+                            self::afficherAccueil();
+                        }
+                    }else{
+                        $secretaire = new Secretariat($_POST["login"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"],$_POST["role"],$secretaireAVerifier->getMdp(),1);
+                        (new SecretariatRepository())->mettreAJour($secretaire);
+                        self::afficherErreur("Les informations du personnel " . $secretaire->getLogin() . " ont bien été mis à jour");
+                    }
                 } else if (ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_POST["login"]) {
                     if (isset($_POST["mdp"])) {
                         $mdpCorrect = MotDePasse::verifier($_POST['mdp'], $secretaireAVerifier->getMdp());
                         if (!$mdpCorrect) {
                             self::afficherErreur("Mot de passe Incorrect");
                         } else {
-                            $secretaire = new Secretariat($_POST["login"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"],$_POST["role"], $secretaireAVerifier->getMdp());
+                            $secretaire = new Secretariat($_POST["login"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"],$_POST["role"], $secretaireAVerifier->getMdp(),1);
                             (new SecretariatRepository())->mettreAJour($secretaire);
                             self::afficherErreur("Vos informations " . $secretaire->getLogin() . " ont bien été mis à jour");
                         }
