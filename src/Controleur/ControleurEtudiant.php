@@ -133,19 +133,34 @@ class ControleurEtudiant extends ControleurGenerique
 
     public static function MAJEtudiant()
     {
-        if (isset($_POST["code_INE"])) {
+        if (isset($_POST["login"])) {
             $etudiantAVerifier = (new EtudiantRepository())->recupererParClePrimaire($_POST["login"]);
-            if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
-                $etudiant = new Etudiant($_POST["login"], $_POST["num_etudiant"],$_POST["nom"], $_POST["prenom"], $_POST["mail"],$_POST["promotion"],$_POST["groupe"], $_POST["parcours"], $_POST["telephone"], $etudiantAVerifier->getMdp(), $_POST["date_de_naissance"],$_POST["mailPerso"],$_POST["sexe"]);
-                (new EtudiantRepository())->mettreAJour($etudiant);
-                self::afficherErreur("Les informations de l'étudiant " . $etudiant->getLogin() . " ont bien été mis à jour");
+            if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA() || $etudiantAVerifier->getPremiereConnexion() == 0) {
+                if($etudiantAVerifier->getPremiereConnexion() == 0){
+                    if ($_POST['mdp'] != $_POST['mdp2']) {
+                        echo '<div class="msgConfirmation"><p> ⚠️ Vos 2 champs de mot de passe ne correspondent pas ⚠️  </p></div>';
+                        self::afficherMAJEtudiant();
+                    } else {
+                        $mdpHache = MotDePasse::hacher($_POST['mdp']);
+                        $etudiant = new Etudiant($_POST["login"], $_POST["num_etudiant"],$_POST["nom"], $_POST["prenom"], $_POST["mail"],$_POST["promotion"],$_POST["groupe"], $_POST["parcours"], $_POST["telephone"], $mdpHache, $_POST["date_de_naissance"],$_POST["mailPerso"],$_POST["sexe"],1);
+                        (new EtudiantRepository())->mettreAJour($etudiant);
+                        echo '<div class="msgConfirmation"><p> L\'étudiant a bien été mis à jour </p></div>';
+                        self::afficherAccueil();
+                    }
+                }else{
+                    $etudiant = new Etudiant($_POST["login"], $_POST["num_etudiant"],$_POST["nom"], $_POST["prenom"], $_POST["mail"],$_POST["promotion"],$_POST["groupe"], $_POST["parcours"], $_POST["telephone"], $etudiantAVerifier->getMdp(), $_POST["date_de_naissance"],$_POST["mailPerso"],$_POST["sexe"],1);
+                    (new EtudiantRepository())->mettreAJour($etudiant);
+                    echo '<div class="msgConfirmation"><p> Les informations de l\'étudiant ' . $etudiant->getLogin() . ' ont bien été mis à jour </p></div>';
+                    self::afficherAccueil();
+                }
+
             } else if (ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_POST["login"]) {
                 if (isset($_POST["mdp"])) {
                     $mdpCorrect = MotDePasse::verifier($_POST['mdp'], $etudiantAVerifier->getMdp());
                     if (!$mdpCorrect) {
                         self::afficherErreur("Mot de passe Incorrect");
                     } else {
-                        $etudiant = new Etudiant($_POST["login"], $_POST["num_etudiant"],$_POST["nom"], $_POST["prenom"], $_POST["mail"],$_POST["promotion"],$_POST["groupe"], $_POST["parcours"], $_POST["telephone"], $etudiantAVerifier->getMdp(), $_POST["date_de_naissance"],$_POST["mailPerso"],$_POST["sexe"]);
+                        $etudiant = new Etudiant($_POST["login"], $_POST["num_etudiant"],$_POST["nom"], $_POST["prenom"], $_POST["mail"],$_POST["promotion"],$_POST["groupe"], $_POST["parcours"], $_POST["telephone"], $etudiantAVerifier->getMdp(), $_POST["date_de_naissance"],$_POST["mailPerso"],$_POST["sexe"],1);
                         (new EtudiantRepository())->mettreAJour($etudiant);
                         self::afficherErreur("Vos informations " . $etudiant->getLogin() . " ont bien été mis à jour");
                     }
@@ -157,7 +172,6 @@ class ControleurEtudiant extends ControleurGenerique
                 self::afficherErreur("Vous n'avez pas les droits");
             }
         }
-        self::afficherAccueil();
     }
 
     public static function rechercherEtudiant()

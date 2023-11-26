@@ -7,20 +7,21 @@ use App\Lib\MotDePasse;
 class Etudiant extends AbstractDataObject
 {
     private string $login;
-    private int $numEtudiant;
-    private string $groupe;
+    private int|null $numEtudiant;
+    private string|null $groupe;
     private string $nom;
     private string $prenom;
-    private string $parcours;
-    private string $numTel;
-    private string $email;
-    private string $motDePasse;
-    private string $dateDeNaissance;
-    private string $mailPerso;
-    private string $sexe;
-    private string $promotion;
+    private string|null $parcours;
+    private string|null $numTel;
+    private string|null $email;
+    private string|null $motDePasse;
+    private string|null $dateDeNaissance;
+    private string|null $mailPerso;
+    private string|null $sexe;
+    private string|null $promotion;
+    private int $premiereConnexion;
 
-    public function __construct(string $login, int $numEtudiant,string $nom, string $prenom,string $promotion,string $groupe ,string $parcours ,string $numTel, string $email, string $motDePasse, string $dateDeNaissance,string $mailPerso,string $sexe) {
+    public function __construct(string $login, int|null $numEtudiant,string $nom, string $prenom, string|null $email,string $promotion,string|null $groupe ,string|null $parcours ,string|null $numTel, string|null $motDePasse, string|null $dateDeNaissance,string|null $mailPerso,string|null $sexe, int $premiereConnexion) {
         $this->login = $login;
         $this->numEtudiant = $numEtudiant;
         $this->groupe = $groupe;
@@ -34,6 +35,7 @@ class Etudiant extends AbstractDataObject
         $this->mailPerso = $mailPerso;
         $this->sexe = $sexe;
         $this->promotion = $promotion;
+        $this->premiereConnexion = $premiereConnexion;
     }
 
     public function getLogin(): string
@@ -41,12 +43,12 @@ class Etudiant extends AbstractDataObject
         return $this->login;
     }
 
-    public function getNumEtudiant(): int
+    public function getNumEtudiant()
     {
         return $this->numEtudiant;
     }
 
-    public function getGroupe(): string
+    public function getGroupe()
     {
         return $this->groupe;
     }
@@ -61,45 +63,51 @@ class Etudiant extends AbstractDataObject
         return $this->prenom;
     }
 
-    public function getNumTel(): string
+    public function getNumTel()
     {
         return $this->numTel;
     }
 
-    public function getEmail(): string
+    public function getEmail()
     {
         return $this->email;
     }
 
-    public function getMdp(): string
+    public function getMdp()
     {
         return $this->motDePasse;
     }
 
-    public function getDateDeNaissance(): string
+    public function getDateDeNaissance()
     {
         return $this->dateDeNaissance;
     }
 
-    public function getPromotion(): string
+    public function getPromotion()
     {
         return $this->promotion;
     }
 
-    public function getParcours(): string
+    public function getParcours()
     {
         return $this->parcours;
     }
 
-    public function getMailPerso(): string
+    public function getMailPerso()
     {
         return $this->mailPerso;
     }
 
-    public function getSexe(): string
+    public function getSexe()
     {
         return $this->sexe;
     }
+
+    public function getPremiereConnexion(): int
+    {
+        return $this->premiereConnexion;
+    }
+
 
 
 
@@ -118,13 +126,14 @@ class Etudiant extends AbstractDataObject
             "dateNaissanceEtudiantTag" => $this->getDateDeNaissance(),
             "mailPersoTag" => $this->getMailPerso(),
             "sexeTag" => $this->getSexe(),
+            "premiereConnexionTag" => $this->getPremiereConnexion(),
             "motDePasseTag" => $this->getMdp()
         );
     }
 
     public static function construireDepuisFormulaire(array $tableauFormulaire) : Etudiant{
         $mdpHache = MotDePasse::hacher($tableauFormulaire['mdp']);
-        return new Etudiant($tableauFormulaire["login"],$tableauFormulaire["codeEtudiant"],$tableauFormulaire["nomEtudiant"],$tableauFormulaire["prenomEtudiant"],$tableauFormulaire["mail"],$tableauFormulaire["promotion"],$tableauFormulaire["groupe"],$tableauFormulaire["parcours"],$tableauFormulaire["telephone"],$mdpHache,$tableauFormulaire["dateDeNaissance"],$tableauFormulaire["mailPerso"],$tableauFormulaire["sexe"]);
+        return new Etudiant($tableauFormulaire["login"],$tableauFormulaire["codeEtudiant"],$tableauFormulaire["nomEtudiant"],$tableauFormulaire["prenomEtudiant"],$tableauFormulaire["mail"],$tableauFormulaire["promotion"],$tableauFormulaire["groupe"],$tableauFormulaire["parcours"],$tableauFormulaire["telephone"],$mdpHache,$tableauFormulaire["dateDeNaissance"],$tableauFormulaire["mailPerso"],$tableauFormulaire["sexe"],0);
     }
 
 

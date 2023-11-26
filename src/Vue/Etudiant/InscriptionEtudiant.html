@@ -17,7 +17,7 @@
                 <div class="user-details">
                     <div class="input-box">
                         <span class="details">login</span>
-                        <input type="text" name="login" maxlength="11" required/>
+                        <input type="text" name="login" maxlength="50" required/>
                     </div>
                     <div class="input-box">
                         <span class="details">code Etudiant</span>
@@ -39,17 +39,19 @@
                         <span class="details">Groupe</span>
                         <input type="text" placeholder="" name="groupe" maxlength="2" required>
                     </div>
-                    <div class="input-box">
-                        <span class="details">Parcours</span>
-                        <input type="text" placeholder="" name="parcours" maxlength="5" required>
-                    </div>
+                    <label class="details" for="parcoursCible"> Parcours </label>
+                    <select name="parcours" id="parcoursCible" required>
+                        <option value="RACDV"> RACDV </option>
+                        <option value="IAMSI"> IAMSI </option>
+                        <option value="DACS"> DACS </option>
+                    </select>
                     <div class="input-box">
                         <span class="details">mailEtudiant</span>
                         <input type="email" placeholder="" name="mail" maxlength="100" required>
                     </div>
                     <div class="input-box">
                         <span class="details">mail Personel</span>
-                        <input type="tel" placeholder="" name="mailPerso" maxlength="100" required>
+                        <input type="email" placeholder="" name="mailPerso" maxlength="100" required>
                     </div>
                     <div class="input-box">
                         <label class="details" for="sex"> Sexe </label>

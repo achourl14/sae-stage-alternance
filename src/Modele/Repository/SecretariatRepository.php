@@ -7,7 +7,7 @@ class SecretariatRepository extends AbstractRepository
 {
 
     public static function sauvegarder(Secretariat $secretariat) : void {
-        $sql = "INSERT INTO Secretariat VALUES(:loginTag, :prenomSecretariatTag, :nomSecretariatTag,:mailTag,:telephoneTag,:dateDeNaissanceTag,:roleTag ,:motDePasseTag)";
+        $sql = "INSERT INTO Secretariat VALUES(:loginTag, :prenomSecretariatTag, :nomSecretariatTag,:mailTag,:telephoneTag,:dateDeNaissanceTag,:roleTag, :premiereConnexionTag ,:motDePasseTag)";
 
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
@@ -19,13 +19,14 @@ class SecretariatRepository extends AbstractRepository
             "telephoneTag" => $secretariat->getTelephone(),
             "dateDeNaissanceTag" => $secretariat->getDateDeNaissance(),
             "roleTag" => $secretariat->getRole(),
-            "motDePasseTag" => $secretariat->getMdp()
+            "motDePasseTag" => $secretariat->getMdp(),
+            "premiereConnexionTag" => $secretariat->getPremiereConnexion()
         );
 
         $pdoStatement->execute($values);
     }
     public function construireDepuisTableau(array $secretariatFormatTableau) : Secretariat {
-        $secretariat = new Secretariat($secretariatFormatTableau['login'],$secretariatFormatTableau['nomSecretariat'],$secretariatFormatTableau['prenomSecretariat'],$secretariatFormatTableau["adresseMail"],$secretariatFormatTableau["telephone"],$secretariatFormatTableau["dateDeNaissance"],$secretariatFormatTableau["role"],$secretariatFormatTableau['mdp']);
+        $secretariat = new Secretariat($secretariatFormatTableau['login'],$secretariatFormatTableau['nomSecretariat'],$secretariatFormatTableau['prenomSecretariat'],$secretariatFormatTableau["adresseMail"],$secretariatFormatTableau["telephone"],$secretariatFormatTableau["dateDeNaissance"],$secretariatFormatTableau["role"],$secretariatFormatTableau['mdp'],$secretariatFormatTableau["premiereConnexion"]);
         return $secretariat;
     }
 
@@ -48,6 +49,7 @@ class SecretariatRepository extends AbstractRepository
             "telephone",
             "dateDeNaissance",
             "role",
+            "premiereConnexion",
             "mdp"
         );
     }

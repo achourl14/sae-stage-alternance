@@ -99,7 +99,6 @@ if ($etudiants == null) {
         echo "<a href='controleurFrontal.php?controleur=etudiant&action=afficherDetailEtudiant&login=" . $etudiant->getLogin() . "'>";
         echo '<div class ="carte">';
         echo("<h1> Login : " . htmlspecialchars($etudiant->getLogin()) . "</h1>");
-        echo "<h2> code Etudiant : " . htmlspecialchars($etudiant->getNumEtudiant()) . " </h2>";
         echo("<p> Prénom : " . htmlspecialchars($etudiant->getPrenom()) . " </p>");
         echo("<p> Nom : " . htmlspecialchars($etudiant->getNom()) . " </p>");
         echo "</div>";

@@ -9,23 +9,24 @@ use DateTime;
 class EtudiantRepository extends AbstractRepository
 {
     public function sauvegarder(Etudiant $etudiant) : void {
-        $sql = "INSERT INTO Etudiant VALUES(:loginTag, :codeEtudiantTag, :nomEtudiantTag, :prenomEtudiantTag, :mailEtudiantTag, :promotionTag, :groupeTag, :parcoursTag, :telephoneEtudiantTag, :dateNaissanceEtudiantTag, :mailPersoTag , :sexeTag ,:motDePasseTag)";
+        $sql = "INSERT INTO Etudiant VALUES(:loginTag, :codeEtudiantTag, :nomEtudiantTag, :prenomEtudiantTag, :mailEtudiantTag, :promotionTag, :groupeTag, :parcoursTag, :telephoneEtudiantTag, :dateNaissanceEtudiantTag, :mailPersoTag, :sexeTag, :premiereConnexionTag ,:motDePasseTag)";
 
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
         $values = array(
             "loginTag" => $etudiant->getLogin(),
             "codeEtudiantTag" => $etudiant->getNumEtudiant(),
-            "promotionTag" => $etudiant->getPromotion(),
-            "groupeTag" => $etudiant->getGroupe(),
             "nomEtudiantTag" => $etudiant->getNom(),
             "prenomEtudiantTag" => $etudiant->getPrenom(),
             "mailEtudiantTag" => $etudiant->getEmail(),
+            "promotionTag" => $etudiant->getPromotion(),
+            "groupeTag" => $etudiant->getGroupe(),
             "parcoursTag" => $etudiant->getParcours(),
             "telephoneEtudiantTag" => $etudiant->getNumTel(),
             "dateNaissanceEtudiantTag" => $etudiant->getDateDeNaissance(),
             "mailPersoTag" => $etudiant->getMailPerso(),
             "sexeTag" => $etudiant->getSexe(),
+            "premiereConnexionTag" => $etudiant->getPremiereConnexion(),
             "motDePasseTag" => $etudiant->getMdp()
         );
 
@@ -150,7 +151,7 @@ class EtudiantRepository extends AbstractRepository
 
 
     public function alternanceTrouve($etudiant){
-        $sql ="SELECT login FROM Etudiant e JOIN Alternance a ON e.login = a.loginEtuAlternant WHERE e.login = :loginTag";
+        $sql ="SELECT login FROM Etudiant e JOIN Alternance a ON e.login = a.loginEtuAlternance WHERE e.login = :loginTag";
 
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
@@ -168,7 +169,7 @@ class EtudiantRepository extends AbstractRepository
     }
 
     public function construireDepuisTableau(array $etudianttFormatTableau) : Etudiant {
-        $etudiant= new Etudiant($etudianttFormatTableau['login'],$etudianttFormatTableau['codeEtudiant'],$etudianttFormatTableau['nomEtudiant'],$etudianttFormatTableau['prenomEtudiant'],$etudianttFormatTableau['mailEtudiant'],$etudianttFormatTableau['promotion'],$etudianttFormatTableau['groupe'],$etudianttFormatTableau['parcours'],$etudianttFormatTableau['telephoneEtudiant'],$etudianttFormatTableau['motDePasse'],$etudianttFormatTableau['dateNaissanceEtudiant'],$etudianttFormatTableau['mailPerso'],$etudianttFormatTableau['sexe']);
+        $etudiant= new Etudiant($etudianttFormatTableau['login'],$etudianttFormatTableau['codeEtudiant'],$etudianttFormatTableau['nomEtudiant'],$etudianttFormatTableau['prenomEtudiant'],$etudianttFormatTableau['mailEtudiant'],$etudianttFormatTableau['promotion'],$etudianttFormatTableau['groupe'],$etudianttFormatTableau['parcours'],$etudianttFormatTableau['telephoneEtudiant'],$etudianttFormatTableau['motDePasse'],$etudianttFormatTableau['dateNaissanceEtudiant'],$etudianttFormatTableau['mailPerso'],$etudianttFormatTableau['sexe'],$etudianttFormatTableau['premiereConnexion']);
         return $etudiant;
     }
 
@@ -196,6 +197,7 @@ class EtudiantRepository extends AbstractRepository
             "dateNaissanceEtudiant",
             "mailPerso",
             "sexe",
+            "premiereConnexion",
             "motDePasse"
         );
     }
