@@ -25,7 +25,6 @@ class Cookie
     }
 
     public static function supprimer($cle) : void{
-        unset($_COOKIE["TestCookie"]);
-        setcookie ("TestCookie", "", 1);
+        unset($_COOKIE[$cle]);
     }
 }

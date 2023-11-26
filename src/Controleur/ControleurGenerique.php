@@ -2,6 +2,7 @@
 
 namespace App\Controleur;
 
+use App\ClassTest;
 use App\Lib\ConnexionUtilisateur;
 use App\Lib\MotDePasse;
 use App\Modele\HTTP\Session;
