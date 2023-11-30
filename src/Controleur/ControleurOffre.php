@@ -160,6 +160,29 @@ class ControleurOffre extends ControleurGenerique
         if(isset($_POST['nosOffres'])){
             $values["idEntreprise"] = ConnexionUtilisateur::getLoginUtilisateurConnecte();
         }
+
+
+        if (isset($_POST["idEntreprise"]) && $_POST["idEntreprise"] != "") {
+            $values['idEntreprise'] = $_POST["idEntreprise"];
+        }
+        if (isset($_POST["nomOffre"]) && $_POST["nomOffre"] != "") {
+            $values['nomOffre'] = $_POST["nomOffre"];
+        }
+        if (isset($_POST["remuneration"]) && $_POST["remuneration"] != "") {
+            $values['remuneration'] = $_POST["remuneration"];
+        }
+        if (isset($_POST['but_annee']) && $_POST["but_annee"] != "") {
+            $values['but_annee'] = $_POST['but_annee'];
+        }
+        if (isset($_POST['parcours']) && $_POST["parcours"] != "") {
+            $values['parcours'] = $_POST['parcours'];
+        }
+        if (isset($_POST['ville']) && $_POST["ville"] != "") {
+            $values['ville'] = $_POST['ville'];
+        }
+        if (isset($_POST['codePostal']) && $_POST["codePostal"] != "") {
+            $values['codePostal'] = $_POST['codePostal'];
+        }
         Session::getInstance()->enregistrer("requeteFiltreOffre", $values);
         ControleurOffre::offres();
     }
@@ -350,6 +373,7 @@ class ControleurOffre extends ControleurGenerique
         }*/
         return 0;
     }
+
 
 
 }

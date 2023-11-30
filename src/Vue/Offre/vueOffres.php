@@ -3,6 +3,7 @@
 use App\Modele\DataObject\Offre;
 use App\Modele\Repository\EntrepriseRepository;
 use App\Modele\HTTP\Session;
+use App\Modele\Repository\OffreRepository;
 
 $class = null;
 $buttonValider = "";
@@ -16,6 +17,7 @@ $aValider = "";
 $nosOffres = "";
 if(Session::getInstance()->contient("requeteFiltreOffre")){
     $values = Session::getInstance()->lire("requeteFiltreOffre");
+
     if(isset($values["type"])){
         $array = $values["type"];
         if(in_array("S",$array)){
@@ -54,12 +56,41 @@ if(Session::getInstance()->contient("requeteFiltreOffre")){
     $validation = "checked";
     $aValider = "checked";
 }
+
+if(!isset($values["idEntreprise"])){
+    $values["idEntreprise"] = "";
+}
+if(!isset($values["nomOffre"])){
+    $values["nomOffre"] = "";
+}
+if(!isset($values["remuneration"])){
+    $values["remuneration"] = "";
+}
+if(!isset($values["but_annee"])){
+    $values["but_annee"] = "";
+}
+if(!isset($values["parcours"])){
+    $values["parcours"] = "";
+}
+if(!isset($values["ville"])){
+    $values["ville"] = "";
+}
+if(!isset($values["codePostal"])){
+    $values["codePostal"] = "";
+}
+
 echo '<div class="toutesLesCartes">';
 echo "<div class='title'> Gérer les offres </div>";
+?>
 
+    <div class="contient">
+    <div class="content">
+<form method="post" action="controleurFrontal.php?controleur=offre&action=filtrer">
+        <div class="user-details">
+
+            <?php
 if(!\App\Lib\ConnexionUtilisateur::estEntreprise()) {
-    echo '<form class="filtre_offre" method="post" action="controleurFrontal.php?controleur=offre&action=filtrer">
-          <article>
+    echo '<article>
             <span>Stage</span>
             <input type="checkbox" name="Stage" value="stage" ' . $stage . ' />
           </article>
@@ -87,19 +118,46 @@ if(!\App\Lib\ConnexionUtilisateur::estEntreprise()) {
         </article>';
 
     }
+}?>
+            <div class="input-box-search">
+                <span class="details">Numéro siret de l'entreprise</span>
+                <?php echo '<input type="text" name="idEntreprise" pattern="[0-9]{14}" minlength="14" maxlength="14" value="'.$values["idEntreprise"].'"/>'; ?>
+            </div>
+            <div class="input-box-search">
+                <span class="details">Nom de l'offre</span>
+                <?php echo '<input type="text" placeholder="" name="nomOffre" maxlength="50" value="'.$values["nomOffre"].'">'; ?>
+            </div>
+            <div class="input-box-search">
+                <span class="details">Rémunération </span>
+                <?php echo '<input type="text" placeholder="" name="remuneration" maxlength="50" value="'.$values["remuneration"].'">'; ?>
+            </div>
+            <div class="input-box-search">
+                <span class="details">Année des élèves rechercher</span>
+                <?php echo '<input type="text" placeholder="" name="but_annee" maxlength="50" value="'.$values["but_annee"].'">'; ?>
+            </div>
+            <div class="input-box-search">
+                <span class="details">Parcours </span>
+                <?php echo '<input type="email" placeholder="" name="parcours" maxlength="100" value="'.$values["parcours"].'">'; ?>
+            </div>
+            <div class="input-box-search">
+                <span class="details">Ville de l'offre</span>
+                <?php echo '<input type="tel" placeholder="" name="ville" pattern="[0-9]{10}" maxlength="10" value="'.$values["ville"].'">' ?>
+            </div>
+            <div class="input-box-search">
+                <span class="details">Code postal de l'offre</span>
+                <?php echo '<input type="tel" placeholder="" name="codePostal" pattern="[0-9]{10}" maxlength="10" value="'.$values["codePostal"].'">' ?>
+            </div>
 
-    if (\App\Lib\ConnexionUtilisateur::estEntreprise()) {
-        echo '<article>
-            <span> NosOffres </span>
-            <input type="checkbox" name="nosOffres"  value="nosOffres" ' . $nosOffres . '/>
-         </article>';
-    }
-
-    echo '<article>
-            <input type="submit" value="Envoyer" />
-        </article>';
-    echo '</form>';
-}
+<?php
+    echo '
+</div>
+<div class="button">
+            <input type="submit" value="Rechercher">
+            <a href="controleurFrontal.php?action=supprimerFiltreEntreprise"> Rénitialiser </a>
+        </div>
+        </form>
+</div>
+    </div>';
 
 
 
@@ -114,6 +172,8 @@ if ($pageActuelle != $nbrePages) {
 }
 echo "<div> <a class='' href='controleurFrontal.php?controleur=offre&action=offres&page=" . $pageActuelle + 1 . "'> page suivante </a> </div>";
 echo "</div>";
+
+
 
 
 echo '<div class="groupCartes">';
