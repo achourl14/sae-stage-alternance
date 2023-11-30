@@ -56,7 +56,45 @@ if(Session::getInstance()->contient("requeteFiltreOffre")){
 }
 echo '<div class="toutesLesCartes">';
 echo "<div class='title'> Gérer les offres </div>";
+?>
 
+<form method="post" action="controleurFrontal.php?controleur=Offre&action=rechercherEntreprise">
+        <div class="user-details">
+            <div class="input-box-search">
+                <span class="details">Numéro siret de l'entreprise</span>
+                <?php echo '<input type="text" name="idEntreprise" pattern="[0-9]{14}" minlength="14" maxlength="14" value="'.$recherche["idEntreprise"].'"/>'; ?>
+            </div>
+            <div class="input-box-search">
+                <span class="details">Nom de l'offre</span>
+                <?php echo '<input type="text" placeholder="" name="nomOffre" maxlength="50" value="'.$recherche["nomOffre"].'">'; ?>
+            </div>
+            <div class="input-box-search">
+                <span class="details">Rémunération </span>
+                <?php echo '<input type="text" placeholder="" name="remuneration" maxlength="50" value="'.$recherche["remuneration"].'">'; ?>
+            </div>
+            <div class="input-box-search">
+                <span class="details">Année des élèves rechercher</span>
+                <?php echo '<input type="text" placeholder="" name="but_annee" maxlength="50" value="'.$recherche["but_annee"].'">'; ?>
+            </div>
+            <div class="input-box-search">
+                <span class="details">Parcours </span>
+                <?php echo '<input type="email" placeholder="" name="parcours" maxlength="100" value="'.$recherche["parcours"].'">'; ?>
+            </div>
+            <div class="input-box-search">
+                <span class="details">Ville de l'offre</span>
+                <?php echo '<input type="tel" placeholder="" name="ville" pattern="[0-9]{10}" maxlength="10" value="'.$recherche["ville"].'">' ?>
+            </div>
+            <div class="input-box-search">
+                <span class="details">Code postal de l'offre</span>
+                <?php echo '<input type="tel" placeholder="" name="codePostal" pattern="[0-9]{10}" maxlength="10" value="'.$recherche["codePostal"].'">' ?>
+            </div>
+        </div>
+        <div class="button">
+            <input type="submit" value="Rechercher">
+            <a href="controleurFrontal.php?action=supprimerFiltreEntreprise"> Rénitialiser </a>
+        </div>
+    </form>
+<?php
 if(!\App\Lib\ConnexionUtilisateur::estEntreprise()) {
     echo '<form class="filtre_offre" method="post" action="controleurFrontal.php?controleur=offre&action=filtrer">
           <article>
@@ -114,6 +152,8 @@ if ($pageActuelle != $nbrePages) {
 }
 echo "<div> <a class='' href='controleurFrontal.php?controleur=offre&action=offres&page=" . $pageActuelle + 1 . "'> page suivante </a> </div>";
 echo "</div>";
+
+
 
 
 echo '<div class="groupCartes">';
