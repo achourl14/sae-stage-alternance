@@ -1,28 +1,32 @@
 <?php
+
 use App\Modele\HTTP\Session;
 use App\Modele\Repository\SecretariatRepository;
+
 echo '<div class="toutesLesCartes">';
 echo "<div class='title'> Gestion du Personnel de l'IUT </div>";
 
 echo '<div class="contient">';
 echo '<div class="content">';
 $recherche = null;
-    if(Session::getInstance()->contient("requeteFiltrePersonnel")){
-        $recherche = Session::getInstance()->lire("requeteFiltrePersonnel");
-    }
-foreach((new SecretariatRepository())->getNomsColones() as $nomCol){
-    if(!isset($recherche[$nomCol])){
+
+if (Session::getInstance()->contient("requeteFiltrePersonnel")) {
+    $recherche = Session::getInstance()->lire("requeteFiltrePersonnel");
+}
+
+foreach ((new SecretariatRepository())->getNomsColones() as $nomCol) {
+    if (!isset($recherche[$nomCol])) {
         $recherche[$nomCol] = "";
     }
-    if(!isset($recherche[(new SecretariatRepository())->getNomClePrimaire()])){
+    if (!isset($recherche[(new SecretariatRepository())->getNomClePrimaire()])) {
         $recherche[(new SecretariatRepository())->getNomClePrimaire()] = "";
     }
 }
-$m ="";
+$m = "";
 $s = "";
 $t = "";
 $a = "";
-if(isset($recherche["role"])) {
+if (isset($recherche["role"])) {
     if ($recherche["role"] == "M") {
         $m = "selected";
     } else if ($recherche["role"] == "S") {
@@ -39,35 +43,35 @@ if(isset($recherche["role"])) {
         <div class="user-details">
             <div class="input-box-search">
                 <span class="details">Login</span>
-               <?php echo '<input type="text" name="login" maxlength="50" value="'.$recherche["login"].'" />'; ?>
+                <?php echo '<input type="text" name="login" maxlength="50" value="' . $recherche["login"] . '" />'; ?>
             </div>
             <div class="input-box-search">
                 <span class="details">Nom</span>
-              <?php echo '<input type="text" placeholder="" name="nomSecretariat" maxlength="50" value="'.$recherche["nomSecretariat"].'">'; ?>
+                <?php echo '<input type="text" placeholder="" name="nomSecretariat" maxlength="50" value="' . $recherche["nomSecretariat"] . '">'; ?>
             </div>
             <div class="input-box-search">
                 <span class="details">Prénom</span>
-              <?php echo '<input type="text" placeholder="" name="prenomSecretariat" maxlength="50" value="'.$recherche["prenomSecretariat"].'">'; ?>
+                <?php echo '<input type="text" placeholder="" name="prenomSecretariat" maxlength="50" value="' . $recherche["prenomSecretariat"] . '">'; ?>
             </div>
             <div class="input-box-search">
                 <span class="details">Adresse mail</span>
-               <?php echo '<input type="email" placeholder="" name="mailSecretariat" maxlength="100" value="'.$recherche["adresseMail"].'">'; ?>
+                <?php echo '<input type="email" placeholder="" name="mailSecretariat" maxlength="100" value="' . $recherche["adresseMail"] . '">'; ?>
             </div>
             <div class="input-box-search">
                 <span class="details">Téléphone</span>
-               <?php echo '<input type="tel" placeholder="" name="telephoneSecretariat" pattern="[0-9]{10}" maxlength="10" value="'.$recherche["telephone"].'">'; ?>
+                <?php echo '<input type="tel" placeholder="" name="telephoneSecretariat" pattern="[0-9]{10}" maxlength="10" value="' . $recherche["telephone"] . '">'; ?>
             </div>
             <div class="input-box-search">
                 <span class="details">Date de Naissance</span>
-                <?php echo '<input type="date" placeholder="" name="dateDeNaissanceSecretariat" value="'.$recherche["dateDeNaissance"].'">'; ?>
+                <?php echo '<input type="date" placeholder="" name="dateDeNaissanceSecretariat" value="' . $recherche["dateDeNaissance"] . '">'; ?>
             </div>
             <div class="input-box">
                 <label class="details" for="roleCible"> Rôle </label>
                 <select name="role" id="roleCible">
-                    <option value="" <?php echo $a; ?>> Tout role </option>
-                    <option value="T" <?php echo $t; ?>> Tuteur </option>
-                    <option value="S" <?php echo $s; ?>> Secretariat </option>
-                    <option value="M" <?php echo $m; ?>> Maitre Stage/Alternance (Admin) </option>
+                    <option value="" <?php echo $a; ?>> Tout role</option>
+                    <option value="T" <?php echo $t; ?>> Tuteur</option>
+                    <option value="S" <?php echo $s; ?>> Secretariat</option>
+                    <option value="M" <?php echo $m; ?>> Maitre Stage/Alternance (Admin)</option>
                 </select>
             </div>
         </div>
