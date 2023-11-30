@@ -7,6 +7,7 @@ use App\Lib\ConnexionUtilisateur;
 use App\Lib\MotDePasse;
 use App\Modele\DataObject\Secretariat;
 use App\Modele\HTTP\Session;
+use App\Modele\Repository\ConventionStageRepository;
 use App\Modele\Repository\MaitreStageRepository;
 use App\Modele\Repository\SecretariatRepository;
 use App\Modele\Repository\TuteurStageRepository;

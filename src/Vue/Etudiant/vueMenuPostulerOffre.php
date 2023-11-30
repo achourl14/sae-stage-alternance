@@ -32,6 +32,10 @@ if($offresCandidate == null){
         echo "</div>";
         echo "</div>";
         echo "</a>";
+
+        echo '<div class="page">';
+        echo "<a href=''> Choisir cet offre définitivement </a>";
+        echo '</div>';
     }
     echo "</div>";
 }

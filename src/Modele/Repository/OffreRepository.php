@@ -10,13 +10,13 @@ class OffreRepository extends AbstractRepository
 {
 
     public function construireDepuisTableau(array $offreFormatTableau) : Offre {
-        $offre = new Offre($offreFormatTableau['idOffre'],$offreFormatTableau['idEntreprise'],$offreFormatTableau['nomOffre'],$offreFormatTableau['mission'],$offreFormatTableau['statut'],$offreFormatTableau['validation'],$offreFormatTableau['dateDebut'],$offreFormatTableau['dateFin'],$offreFormatTableau['remuneration'],$offreFormatTableau['but_annee'],$offreFormatTableau['parcours'],$offreFormatTableau['type'],1);
+        $offre = new Offre($offreFormatTableau['idOffre'],$offreFormatTableau['idEntreprise'],$offreFormatTableau["adresseDeOffre"],$offreFormatTableau['ville'],$offreFormatTableau["codePostal"],$offreFormatTableau['nomOffre'],$offreFormatTableau['mission'],$offreFormatTableau['statut'],$offreFormatTableau['validation'],$offreFormatTableau['dateDebut'],$offreFormatTableau['dateFin'],$offreFormatTableau['remuneration'],$offreFormatTableau['but_annee'],$offreFormatTableau['parcours'],$offreFormatTableau['type'],1);
         return $offre;
     }
 
     public static function sauvegarder(Offre $offre) : void {
 
-        $sql = "INSERT INTO Offre (idEntreprise, nomOffre, mission, dateDebut, dateFin, remuneration,but_annee,parcours,type) VALUES (:idEntrepriseTag, :nomOffreTag,:missionTag, :dateDebutTag, :dateFinTag, :remunerationTag, :but_anneeTag,:parcoursTag,:typeTag)";
+        $sql = "INSERT INTO Offre (idEntreprise, nomOffre, mission, dateDebut, dateFin, remuneration,but_annee,parcours,type,adresseDeOffre) VALUES (:idEntrepriseTag, :nomOffreTag,:missionTag, :dateDebutTag, :dateFinTag, :remunerationTag, :but_anneeTag,:parcoursTag,:typeTag, :adresseDeOffreTag, :villeTag, :codePostalTag)";
 
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
@@ -29,7 +29,10 @@ class OffreRepository extends AbstractRepository
             "remunerationTag" => $offre->getRemuneration(),
             "but_anneeTag" => $offre->getButAnnee(),
             "parcoursTag" => $offre->getParcours(),
-            "typeTag" => $offre->getType()
+            "typeTag" => $offre->getType(),
+            "adresseDeOffreTag" => $offre->getAdresseDeOffre(),
+            "villeTag" => $offre->getVille(),
+            "codePostalTag" => $offre->getCodePostal()
 
         );
         $pdoStatement->execute($values);
@@ -89,7 +92,10 @@ class OffreRepository extends AbstractRepository
             "remuneration",
             "but_annee",
             "parcours",
-            "type"
+            "type",
+            "adresseDeOffre",
+            "ville",
+            "codePostal",
         );
     }
 

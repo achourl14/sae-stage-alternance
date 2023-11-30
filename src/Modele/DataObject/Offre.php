@@ -17,6 +17,9 @@ class Offre extends AbstractDataObject
         private string $parcours;
 
         private string $type;
+        private string $adresseDeOffre;
+        private string $ville;
+        private string $codePostal;
 
     /**
      * @param int $idOffre
@@ -31,9 +34,12 @@ class Offre extends AbstractDataObject
      * @param int $but_annee
      * @param string $parcours
      */
-    public function __construct(int $idOffre, string $idEntreprise, string $nomOffre, string $mission, string $statut, int $validation, string $dateDebut, string $dateFin, int $remuneration, int $but_annee, string $parcours,string $type,int $inOut)
+    public function __construct(int $idOffre, string $idEntreprise, string $adresseDeOffre,string $ville, string $codePostal,string $nomOffre, string $mission, string $statut, int $validation, string $dateDebut, string $dateFin, int $remuneration, int $but_annee, string $parcours,string $type,int $inOut)
     {
         $this->idEntreprise = $idEntreprise;
+        $this->adresseDeOffre = $adresseDeOffre;
+        $this->ville = $ville;
+        $this->codePostal = $codePostal;
         $this->nomOffre = $nomOffre;
         $this->mission = $mission;
         $this->dateDebut = $dateDebut;
@@ -114,6 +120,24 @@ class Offre extends AbstractDataObject
         return $this->type;
     }
 
+    public function getAdresseDeOffre(): string
+    {
+        return $this->adresseDeOffre;
+    }
+
+    public function getVille(): string
+    {
+        return $this->ville;
+    }
+
+    public function getCodePostal(): string
+    {
+        return $this->codePostal;
+    }
+
+
+
+
     public function formatTableau(): array
     {
         return array(
@@ -128,7 +152,10 @@ class Offre extends AbstractDataObject
             "remunationTag" => $this->getRemuneration(),
             "but_anneeTag" => $this->getButAnnee(),
             "parcoursTag" => $this->getParcours(),
-            "typeTag" => $this->getType()
+            "typeTag" => $this->getType(),
+            "adresseDeOffreTag" => $this->getAdresseDeOffre(),
+            "villeTag" => $this->getVille(),
+            "codePostalTag" => $this->getCodePostal()
         );
     }
 

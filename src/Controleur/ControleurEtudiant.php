@@ -14,22 +14,25 @@ use App\Modele\Repository\PostulerRepository;
 class ControleurEtudiant extends ControleurGenerique
 {
 
-    public static function supprimerEtu():void{
+    public static function supprimerEtu(): void
+    {
 
         $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_GET['login']);
-        echo '<div class="msgConfirmation"><p> L\'étudiant ' . $etudiant->getNom().' a été supprimé</p></div>';
-        self::afficherVue('vueGenerale.php', ["contenu" => "Generale/index.html","title"=>"Accueil"]);
+        echo '<div class="msgConfirmation"><p> L\'étudiant ' . $etudiant->getNom() . ' a été supprimé</p></div>';
+        self::afficherVue('vueGenerale.php', ["contenu" => "Generale/index.html", "title" => "Accueil"]);
         (new EtudiantRepository())->supprimer($_GET['login']);
     }
 
 
-    public static function afficherDeleteEtu(){
+    public static function afficherDeleteEtu()
+    {
         $etudiant = (new EntrepriseRepository())->recupererParClePrimaire($_GET["login"]);
-        self::afficherVue('vueGenerale.php',["contenu"=> "Etudiant/formulaireSuppressionEtu.php","title"=> "Supprimer Etudiant",["etudiant"=> $etudiant]]);
+        self::afficherVue('vueGenerale.php', ["contenu" => "Etudiant/formulaireSuppressionEtu.php", "title" => "Supprimer Etudiant", ["etudiant" => $etudiant]]);
     }
 
 
-    public static function verifierEtudiantExistant() {
+    public static function verifierEtudiantExistant()
+    {
         if (isset($_POST['login'])) {
             $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_POST['login']);
             // Retourner l'étudiant en format JSON
@@ -45,16 +48,15 @@ class ControleurEtudiant extends ControleurGenerique
 
     public static function afficherEtudiant()
     {
-        if(ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estSecretariat()){
+        if (ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estSecretariat()) {
             self::afficherVue("Etudiant/InscriptionEtudiant.html");
         }
     }
 
 
-
     public static function creerEtudiant(): void
     {
-        if(ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estSecretariat()){
+        if (ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estSecretariat()) {
             $etudiant = Etudiant::construireDepuisFormulaire($_POST);
             (new EtudiantRepository())->sauvegarder($etudiant);
             echo '<div class="msgConfirmation"><p> L\'étudiant a bien été enregistrée </p></div>';
@@ -115,7 +117,6 @@ class ControleurEtudiant extends ControleurGenerique
     }
 
 
-
     public static function afficherMAJEtudiant()
     {
         if (ConnexionUtilisateur::getLoginUtilisateurConnecte() == $_GET["login"] || ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
@@ -136,19 +137,19 @@ class ControleurEtudiant extends ControleurGenerique
         if (isset($_POST["login"])) {
             $etudiantAVerifier = (new EtudiantRepository())->recupererParClePrimaire($_POST["login"]);
             if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA() || $etudiantAVerifier->getPremiereConnexion() == 0) {
-                if($etudiantAVerifier->getPremiereConnexion() == 0){
+                if ($etudiantAVerifier->getPremiereConnexion() == 0) {
                     if ($_POST['mdp'] != $_POST['mdp2']) {
                         echo '<div class="msgConfirmation"><p> ⚠️ Vos 2 champs de mot de passe ne correspondent pas ⚠️  </p></div>';
                         self::afficherMAJEtudiant();
                     } else {
                         $mdpHache = MotDePasse::hacher($_POST['mdp']);
-                        $etudiant = new Etudiant($_POST["login"], $_POST["num_etudiant"],$_POST["nom"], $_POST["prenom"], $_POST["mail"],$_POST["promotion"],$_POST["groupe"], $_POST["parcours"], $_POST["telephone"], $mdpHache, $_POST["date_de_naissance"],$_POST["mailPerso"],$_POST["sexe"],1);
+                        $etudiant = new Etudiant($_POST["login"], $_POST["num_etudiant"], $_POST["nom"], $_POST["prenom"], $_POST["mail"], $_POST["promotion"], $_POST["groupe"], $_POST["parcours"], $_POST["telephone"], $mdpHache, $_POST["date_de_naissance"], $_POST["mailPerso"], $_POST["sexe"], 1);
                         (new EtudiantRepository())->mettreAJour($etudiant);
                         echo '<div class="msgConfirmation"><p> L\'étudiant a bien été mis à jour </p></div>';
                         self::afficherAccueil();
                     }
-                }else{
-                    $etudiant = new Etudiant($_POST["login"], $_POST["num_etudiant"],$_POST["nom"], $_POST["prenom"], $_POST["mail"],$_POST["promotion"],$_POST["groupe"], $_POST["parcours"], $_POST["telephone"], $etudiantAVerifier->getMdp(), $_POST["date_de_naissance"],$_POST["mailPerso"],$_POST["sexe"],1);
+                } else {
+                    $etudiant = new Etudiant($_POST["login"], $_POST["num_etudiant"], $_POST["nom"], $_POST["prenom"], $_POST["mail"], $_POST["promotion"], $_POST["groupe"], $_POST["parcours"], $_POST["telephone"], $etudiantAVerifier->getMdp(), $_POST["date_de_naissance"], $_POST["mailPerso"], $_POST["sexe"], 1);
                     (new EtudiantRepository())->mettreAJour($etudiant);
                     echo '<div class="msgConfirmation"><p> Les informations de l\'étudiant ' . $etudiant->getLogin() . ' ont bien été mis à jour </p></div>';
                     self::afficherAccueil();
@@ -160,7 +161,7 @@ class ControleurEtudiant extends ControleurGenerique
                     if (!$mdpCorrect) {
                         self::afficherErreur("Mot de passe Incorrect");
                     } else {
-                        $etudiant = new Etudiant($_POST["login"], $_POST["num_etudiant"],$_POST["nom"], $_POST["prenom"], $_POST["mail"],$_POST["promotion"],$_POST["groupe"], $_POST["parcours"], $_POST["telephone"], $etudiantAVerifier->getMdp(), $_POST["date_de_naissance"],$_POST["mailPerso"],$_POST["sexe"],1);
+                        $etudiant = new Etudiant($_POST["login"], $_POST["num_etudiant"], $_POST["nom"], $_POST["prenom"], $_POST["mail"], $_POST["promotion"], $_POST["groupe"], $_POST["parcours"], $_POST["telephone"], $etudiantAVerifier->getMdp(), $_POST["date_de_naissance"], $_POST["mailPerso"], $_POST["sexe"], 1);
                         (new EtudiantRepository())->mettreAJour($etudiant);
                         self::afficherErreur("Vos informations " . $etudiant->getLogin() . " ont bien été mis à jour");
                     }
@@ -222,7 +223,7 @@ class ControleurEtudiant extends ControleurGenerique
 
     public static function postulerBD()
     {
-        if(ConnexionUtilisateur::estEtudiant()) {
+        if (ConnexionUtilisateur::estEtudiant()) {
             $postulerExiste = (new PostulerRepository())->recupererParClePrimaire(ConnexionUtilisateur::getLoginUtilisateurConnecte(), $_GET['idOffre']);
             if ($postulerExiste != null) {
                 self::afficherErreur("Vous avez déjà postuler à cette offre", "offres");
@@ -263,8 +264,14 @@ class ControleurEtudiant extends ControleurGenerique
                     self::postulerBD();
                 }
             }
-        }else{
+        } else {
             self::afficherErreur("Vous n'avez pas la possibilité de postuler à une offre");
         }
     }
+
+    public static function validerOffreDeffinitif()
+    {
+
+    }
+
 }

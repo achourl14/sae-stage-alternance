@@ -2,7 +2,8 @@
     <div class="container">
 
         <div class="content">
-            <form method="post" class="formulaire" action="controleurFrontal.php?controleur=offre&action=creerOffre" enctype="multipart/form-data">
+            <form method="post" class="formulaire" action="controleurFrontal.php?controleur=offre&action=creerOffre"
+                  enctype="multipart/form-data">
                 <div class="title"> Création d'une offre par une entreprise</div>
 
                 <div class="user-details">
@@ -17,6 +18,22 @@
                     <div class="input-box">
                         <label class="details" for="idnom">Nom de l'offre *</label>
                         <input maxlength="50" type="text" placeholder="" name="nomOffre" id="idnom" required/>
+                    </div>
+
+                    <div class="input-box">
+                        <label class="details" for="Adresse">Adresse où se situe l'offre *</label>
+                        <input maxlength="500" type="text" placeholder="" name="adresseDeOffre" id="Adrese" required/>
+                    </div>
+
+                    <div class="input-box">
+                        <label class="details" for="codeP"> Code Postal *</label>
+                        <input maxlength="5" type="text" placeholder="34000" pattern="[0-9]{14}" name="codePostal" id="codeP" required/>
+                    </div>
+
+                    <div class="input-box">
+                        <label class="details" for="vil"> Ville *</label>
+                        <input maxlength="50" type="text" placeholder="Montpellier" name="ville" id="vil"
+                               required/>
                     </div>
 
                     <div class="input-box">
@@ -37,20 +54,20 @@
 
                     <div class="input-box">
                         <label class="details" for="annee"> Offre pour année de BUT </label>
-                    <select name="but_annee" id="annee" required>
-                        <option value="0">Toutes les années</option>
-                        <option value="2">BUT 2 (2ème année)</option>
-                        <option value="3">BUT 3 (3ème année)</option>
-                    </select>
+                        <select name="but_annee" id="annee" required>
+                            <option value="0">Toutes les années</option>
+                            <option value="2">BUT 2 (2ème année)</option>
+                            <option value="3">BUT 3 (3ème année)</option>
+                        </select>
                     </div>
 
                     <div class="input-box">
                         <label class="details" for="parcoursCible"> Parcours cible </label>
                         <select name="parcours" id="parcoursCible" required>
                             <option value="Tout">Tous les parcours</option>
-                            <option value="RACDV"> RACDV </option>
-                            <option value="IAMSI"> IAMSI </option>
-                            <option value="DACS"> DACS </option>
+                            <option value="RACDV"> RACDV</option>
+                            <option value="IAMSI"> IAMSI</option>
+                            <option value="DACS"> DACS</option>
                         </select>
                     </div>
 
@@ -58,8 +75,8 @@
                         <label class="details" for="choixSA"> Choix Stage / Alternance </label>
                         <select name="type" id="choixSA" required>
                             <option value="SA">Stage ou Alternance</option>
-                            <option value="S"> Seulement un Stage </option>
-                            <option value="A"> Seulement une Alternance </option>
+                            <option value="S"> Seulement un Stage</option>
+                            <option value="A"> Seulement une Alternance</option>
                         </select>
                     </div>
 
@@ -70,12 +87,12 @@
 
                     <div class="input-textarea">
                         <label class="details" for="fich"> Ajouter un fichier </label>
-                        <input type="file" placeholder="" name="fileToUpload" id="fich" />
+                        <input type="file" placeholder="" name="fileToUpload" id="fich"/>
                     </div>
                 </div>
-                    <div class="button">
-                        <input type="submit" value="Envoyer"/>
-                    </div>
+                <div class="button">
+                    <input type="submit" value="Envoyer"/>
+                </div>
 
             </form>
         </div>

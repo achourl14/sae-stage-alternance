@@ -8,6 +8,7 @@ abstract class AbstractRepository
 {
     public function recuperer()
     {
+        $tableau = null;
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query("SELECT * FROM ".$this->getNomTable());
         foreach ($pdoStatement as $objetFormatTableau) {
             $tableau[] = $this->construireDepuisTableau($objetFormatTableau);
@@ -116,4 +117,21 @@ abstract class AbstractRepository
     protected abstract function getNomsColones(): array;
     protected abstract function getNomClePrimaire(): string;
     protected abstract function construireDepuisTableau(array $objetFormatTableau) : AbstractDataObject;
+
+    public function sauvegarderC(AbstractDataObject $objet) : void {
+        $colonesql = ":".$this->getNomClePrimaire()."Tag, ";
+        $colones = $this->getNomsColones();
+        for($i=0;$i<count($colones);$i++){
+            $colonesql .= ":".$colones[$i] . "Tag";
+            if($i<count($colones)-1){
+                $colonesql .= ", ";
+            }
+        }
+        $sql = "INSERT INTO ".$this->getNomTable()." VALUES(". $colonesql.")";
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+
+        $values = $objet->formatTableau();
+
+        $pdoStatement->execute($values);
+    }
 }

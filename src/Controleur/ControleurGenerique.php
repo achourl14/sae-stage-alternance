@@ -8,6 +8,7 @@ use App\Lib\MotDePasse;
 use App\Modele\HTTP\Session;
 use App\Modele\Repository\EntrepriseRepository;
 use App\Modele\Repository\EtudiantRepository;
+use App\Modele\Repository\OffreRepository;
 use App\Modele\Repository\SecretariatRepository;
 
 class ControleurGenerique
@@ -125,9 +126,5 @@ class ControleurGenerique
 
     public static function afficherLDAP(){
         self::afficherVue("LDAP.php");
-    }
-
-    public static function afficherCreationConvention(){
-        self::afficherVue("Personnel/vueConventions.php");
     }
 }

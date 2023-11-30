@@ -87,7 +87,7 @@ echo "<div> <a class='' href='controleurFrontal.php?controleur=etudiant&action=a
 echo "</div>";
 
 echo '<div class="page">';
-echo "<div> <a class='' href='controleurFrontal.php?controleur=etudiant&action=afficherEtudiant'> Ajouter un étudiant </a> </div>";
+echo "<div> <a href='controleurFrontal.php?controleur=etudiant&action=afficherEtudiant'> Ajouter un étudiant </a> </div>";
 echo '</div>';
 
 echo '<div class = "groupCartes">';
