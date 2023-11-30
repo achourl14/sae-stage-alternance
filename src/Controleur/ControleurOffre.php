@@ -374,6 +374,12 @@ class ControleurOffre extends ControleurGenerique
         return 0;
     }
 
+public static function supprimerFiltreOffre()
+{
+    Session::getInstance()->supprimer("requeteFiltreOffre");
+    self::Offres();
+}
+
 
 
 }

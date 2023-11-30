@@ -59,7 +59,7 @@ foreach((new \App\Modele\Repository\EntrepriseRepository())->getNomsColones() as
         </div>
         <div class="button">
             <input type="submit" value="Rechercher">
-            <a href="controleurFrontal.php?action=supprimerFiltreEntreprise"> Rénitialiser </a>
+            <a href="controleurFrontal.php?controleur=entreprise&action=supprimerFiltreEntreprise"> Rénitialiser </a>
         </div>
     </form>
     </div>

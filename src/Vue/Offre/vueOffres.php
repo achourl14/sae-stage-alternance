@@ -153,7 +153,7 @@ if(!\App\Lib\ConnexionUtilisateur::estEntreprise()) {
 </div>
 <div class="button">
             <input type="submit" value="Rechercher">
-            <a href="controleurFrontal.php?action=supprimerFiltreEntreprise"> Rénitialiser </a>
+            <a href="controleurFrontal.php?controleur=offre&action=supprimerFiltreOffre"> Rénitialiser </a>
         </div>
         </form>
 </div>
