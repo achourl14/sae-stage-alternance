@@ -76,6 +76,7 @@ if(ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estSecretariat()
         echo '<a href="controleurFrontal.php?controleur=offre&action=offres">Gestion offre</a>';
         echo '<a href="controleurFrontal.php?controleur=entreprise&action=afficherGestionEntreprise">Gestion Entreprise</a>';
         echo '<a href="controleurFrontal.php?controleur=personnel&action=afficherGestionPersonnel">Gestion du personnel de l\'IUT</a>';
+        echo '<a href="controleurFrontal.php?controleur=personnel&action=afficherTableauDeBord">Tableau De Bord</a>';
     }
     echo '<a href="controleurFrontal.php?controleur=etudiant&action=afficherGestionEtudiant">Gestion Etudiant</a>';
     echo '<a href="controleurFrontal.php?controleur=convention&action=afficherGestionConvention">Gestion des Conventions</a>';

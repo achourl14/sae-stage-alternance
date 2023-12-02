@@ -129,23 +129,23 @@ if(!\App\Lib\ConnexionUtilisateur::estEntreprise()) {
             </div>
             <div class="input-box-search">
                 <span class="details">Rémunération </span>
-                <?php echo '<input type="text" placeholder="" name="remuneration" maxlength="50" value="'.$values["remuneration"].'">'; ?>
+                <?php echo '<input type="text" placeholder="" name="remuneration" maxlength="6" value="'.$values["remuneration"].'">'; ?>
             </div>
             <div class="input-box-search">
                 <span class="details">Année des élèves rechercher</span>
-                <?php echo '<input type="text" placeholder="" name="but_annee" maxlength="50" value="'.$values["but_annee"].'">'; ?>
+                <?php echo '<input type="text" placeholder="" name="but_annee" maxlength="1" value="'.$values["but_annee"].'">'; ?>
             </div>
             <div class="input-box-search">
                 <span class="details">Parcours </span>
-                <?php echo '<input type="email" placeholder="" name="parcours" maxlength="100" value="'.$values["parcours"].'">'; ?>
+                <?php echo '<input type="text" placeholder="" name="parcours" maxlength="50" value="'.$values["parcours"].'">'; ?>
             </div>
             <div class="input-box-search">
                 <span class="details">Ville de l'offre</span>
-                <?php echo '<input type="tel" placeholder="" name="ville" pattern="[0-9]{10}" maxlength="10" value="'.$values["ville"].'">' ?>
+                <?php echo '<input type="text" placeholder="" name="ville" maxlength="50" value="'.$values["ville"].'">' ?>
             </div>
             <div class="input-box-search">
                 <span class="details">Code postal de l'offre</span>
-                <?php echo '<input type="tel" placeholder="" name="codePostal" pattern="[0-9]{10}" maxlength="10" value="'.$values["codePostal"].'">' ?>
+                <?php echo '<input type="texte" placeholder="" name="codePostal" maxlength="5" value="'.$values["codePostal"].'">' ?>
             </div>
 
 <?php

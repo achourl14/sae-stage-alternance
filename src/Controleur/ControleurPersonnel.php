@@ -209,6 +209,15 @@ class ControleurPersonnel extends ControleurGenerique
         self::afficherGestionPersonnel();
     }
 
+    public static function afficherTableauDeBord()
+    {
+        if (ConnexionUtilisateur::estMaitreSA()) {
+            self::afficherVue("vueGenerale.php", ["contenu" => "Personnel/vueTableauDeBord.php", "title" => "Tableau De Bord"]);
+        } else {
+            self::afficherErreur("Vous n'avez pas les droits");
+        }
+    }
+
 
 
 }
