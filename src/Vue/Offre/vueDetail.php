@@ -15,8 +15,8 @@ if(isset($offreDetail)){
     }
     echo "<h1>".htmlspecialchars($offre->getNomOffre())."</h1>";
     echo "<h2> Entreprise : " . htmlspecialchars($entreprise->getNomEntreprise()) . "</h2>";
-    echo "<h2> Adresse du siège social : ". htmlspecialchars($entreprise->getAdresse()) ."</h2>";
-    echo "<h2> Adresse où vous effecturez votre Stage ou Alternance : ". htmlspecialchars($offre->getAdresseDeOffre())  ."</h2>";
+//    echo "<h2> Adresse du siège social : ". htmlspecialchars($entreprise->getAdresse()) ."</h2>";
+    echo "<h2> Adresse où vous effecturez votre Stage ou Alternance : ". htmlspecialchars($offre->getAdresseDeOffre()) . " " .htmlspecialchars($offre->getCodePostal()). " ". htmlspecialchars($offre->getVille()) ."</h2>";
 
     if(\App\Lib\ConnexionUtilisateur::estEtudiant()){
         echo '<div class="boutonsGeneral">';

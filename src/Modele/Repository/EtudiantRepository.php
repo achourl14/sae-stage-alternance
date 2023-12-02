@@ -54,6 +54,26 @@ class EtudiantRepository extends AbstractRepository
         }
     }
 
+    public function nombreEtudiant(){
+        $sql = "SELECT COUNT(login) FROM Etudiant";
+
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query($sql);
+        return $pdoStatement->fetchColumn();
+    }
+
+    public function nombreDePersonneTrouveStage() :int{
+        $sql = "SELECT COUNT(login) FROM Etudiant e JOIN Stage s ON e.login = s.loginEtuStage";
+
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query($sql);
+        return $pdoStatement->fetchColumn();
+    }
+    public function nombreDePersonneTrouveAlternance() :int{
+        $sql = "SELECT COUNT(login) FROM Etudiant e JOIN Alternance a ON e.login = a.loginEtuAlternance";
+
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query($sql);
+        return $pdoStatement->fetchColumn();
+    }
+
     /*public function stageEnCoursTrouve(Etudiant $etudiant, DateTime $dateDebutStage, DateTime $dateFinStage) : bool
     {
         $sqlStage = "SELECT COUNT(*) as count_stage

@@ -127,4 +127,8 @@ class ControleurGenerique
     public static function afficherLDAP(){
         self::afficherVue("LDAP.php");
     }
+
+    public static function afficherBord(){
+        self::afficherVue("vueGenerale.php", ["contenu" => "Personnel/vueBord.php", "title" => "TableauDeBord"]);
+    }
 }
