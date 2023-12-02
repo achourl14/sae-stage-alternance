@@ -7,94 +7,37 @@ use DateTime;
 
 class Alternance extends AbstractDataObject
 {
-    private string $idEtudiantAlternant;
-
-    private int $numOffreAltrenance;
-
-    private int $numMaitreAlternance;
-
-    private int $idTuteurAlternance;
-
-    private string $dateDebutAlternance;
-    private string $dateFinAlternance;
-
-    private float $remuneration;
-
-    private string $numSiretEntrepriseExterieur;
+    private string $loginEtuAlternance;
+    private int $idOffreAlternance;
 
     /**
-     * @param string $idEtudiantAlternant
-     * @param int $numOffreAltrenance
-     * @param int $numMaitreAlternance
-     * @param int $idTuteurAlternance
-     * @param string $dateDebutAlternance
-     * @param string $dateFinAlternance
-     * @param float $remuneration
-     * @param string $numSiretEntrepriseExterieur
+     * @param string $loginEtuAlternance
+     * @param int $idOffre
      */
-    public function __construct(string $idEtudiantAlternant, int $numOffreAltrenance, int $numMaitreAlternance, int $idTuteurAlternance, string $dateDebutAlternance, string $dateFinAlternance, float $remuneration, string $numSiretEntrepriseExterieur)
+    public function __construct(string $loginEtuAlternance, int $idOffreAlternance)
     {
-        $this->idEtudiantAlternant = $idEtudiantAlternant;
-        $this->numOffreAltrenance = $numOffreAltrenance;
-        $this->numMaitreAlternance = $numMaitreAlternance;
-        $this->idTuteurAlternance = $idTuteurAlternance;
-        $this->dateDebutAlternance = $dateDebutAlternance;
-        $this->dateFinAlternance = $dateFinAlternance;
-        $this->remuneration = $remuneration;
-        $this->numSiretEntrepriseExterieur = $numSiretEntrepriseExterieur;
+        $this->loginEtuAlternance = $loginEtuAlternance;
+        $this->idOffreAlternance = $idOffreAlternance;
     }
 
-    public function getIdEtudiantAlternant(): string
+    public function getLoginEtuAlternance(): string
     {
-        return $this->idEtudiantAlternant;
+        return $this->loginEtuAlternance;
     }
 
-    public function getNumOffreAltrenance(): int
+    public function getIdOffreAlternance(): int
     {
-        return $this->numOffreAltrenance;
+        return $this->idOffreAlternance;
     }
 
-    public function getNumMaitreAlternance(): int
-    {
-        return $this->numMaitreAlternance;
-    }
 
-    public function getIdTuteurAlternance(): int
-    {
-        return $this->idTuteurAlternance;
-    }
 
-    public function getDateDebutAlternance(): string
-    {
-        return $this->dateDebutAlternance;
-    }
-
-    public function getDateFinAlternance(): string
-    {
-        return $this->dateFinAlternance;
-    }
-
-    public function getRemuneration(): float
-    {
-        return $this->remuneration;
-    }
-
-    public function getNumSiretEntrepriseExterieur(): string
-    {
-        return $this->numSiretEntrepriseExterieur;
-    }
 
     public function formatTableau(): array
     {
         return array(
-            "idEtudiantAlternantTag" => $this->idEtudiantAlternant,
-            "numOffreAlternanceTag" => $this->numOffreAltrenance,
-            "numMaitreDeAlternanceTag" => $this->numMaitreAlternance,
-            "idTuteurAlternanceTag" => $this->idTuteurAlternance,
-            "dateDebutAlternanceTag" => $this->dateDebutAlternance,
-            "dateFinAlternanceTag" => $this->dateFinAlternance,
-            "remunerationTag" => $this->remuneration,
-            "numSiretEntrepriseAlternanceExterieurTag" => $this->numSiretEntrepriseExterieur
+            "loginEtuAlternanceTag" => $this->getLoginEtuAlternance(),
+            "idOffreAlternanceTag" => $this->getIdOffreAlternance()
         );
     }
 }

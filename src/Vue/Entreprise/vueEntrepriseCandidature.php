@@ -23,10 +23,10 @@ if($postulers == null){
             echo "<p> en attente </p>";
         }else if($postuler->getEtat() == 1){
             echo "<p> ✅ <p/>";
-            echo "<p>,  Validé, vous avez été retenu pour ce poste </p>";
+            echo "<p>,  Validé, L'étudiant a été retenu pour ce poste </p>";
         }else{
             echo "<p> ❌ <p/>";
-            echo "<p>, Refusé, vous n'avez pas été retenu pour ce poste </p>";
+            echo "<p>, Refusé, L'étudiant n'a pas été retenu pour ce poste </p>";
         }
         echo "</div>";
         echo "<a href='controleurFrontal.php?controleur=entreprise&action=accepterCandidature&idOffre=".$postuler->getIdOffre()."&login=".$postuler->getLogin()."'> Accepter </a>";
