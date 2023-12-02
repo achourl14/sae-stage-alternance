@@ -314,39 +314,47 @@ input[type=checkbox]:checked ~ div {
 }
 
 .acceuil {
+  display: inline-flex;
+  flex-direction: column;
   text-align: center;
   margin: 20px;
   padding: 20px;
+
   /*border: 2px solid #F44336;*/
   border-radius: 10px;
-  /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  align-items: center;
 }
 
-
-.acceuil h2 {
-  color: #333;
-  font-family: 'Noto Sans', sans-serif;
+.acceuil div {
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+.acceuil h1{
+  color: #29730e;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .acceuil p {
-  color: #666;
+  color: #29730e;
 }
 
 .acceuil a {
   text-decoration: none;
-  background-color: #3498db;
+  background-color: #29730e;
   color: #fff;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
-
-.acceuil ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.acceuil li {
-  margin-bottom: 10px;
+.acceuilText{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  font-family: 'Noto Sans', sans-serif;
 }
