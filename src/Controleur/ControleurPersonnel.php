@@ -7,7 +7,10 @@ use App\Lib\ConnexionUtilisateur;
 use App\Lib\MotDePasse;
 use App\Modele\DataObject\Secretariat;
 use App\Modele\HTTP\Session;
+use App\Modele\Repository\ConnexionBaseDeDonnee;
 use App\Modele\Repository\ConventionStageRepository;
+use App\Modele\Repository\EntrepriseRepository;
+use App\Modele\Repository\EtudiantRepository;
 use App\Modele\Repository\MaitreStageRepository;
 use App\Modele\Repository\SecretariatRepository;
 use App\Modele\Repository\TuteurStageRepository;
@@ -220,4 +223,169 @@ class ControleurPersonnel extends ControleurGenerique
 
 
 
+    public static function afficherEtudiantStage()
+    {
+        if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
+
+
+            $etudiants = (new EtudiantRepository())->recupererEtudiantStage();
+
+            $tableauParPage = null;
+            if ($etudiants == null) {
+                $nbrePages = 1;
+                $page = 1;
+            } else {
+
+                //Pagination
+                $nombresEtudiant = count($etudiants);
+                $nbrePages = ceil($nombresEtudiant / 9);
+
+                $page = 1;
+                if (isset($_GET['page'])) {
+                    $page = $_GET['page'];
+                    if ($page > $nbrePages) {
+                        $page = $nbrePages;
+                    } else if ($page <= 1) {
+                        $page = 1;
+                    }
+                }
+                $y = $page * 9;
+                if ($page * 9 > $nombresEtudiant) {
+                    $y = $nombresEtudiant;
+                }
+
+                for ($i = ($page - 1) * 9; $i < $y; $i++) {
+                    $tableauParPage[] = $etudiants[$i];
+                }
+
+            }
+            $titre = "Liste des étudiants en stage";
+            self::afficherVue("vueGenerale.php", ["contenu" => "Personnel/vueListeEtudiant.php","Liste des étudiants en stage" => $titre, "etudiants" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Liste des étudiants en stage"]);
+        } else {
+            self::afficherErreur("Vous n'avez pas les droits");
+        }
+    }
+
+    public static function afficherEtudiantAlternance()
+    {
+        if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
+
+
+            $etudiants = (new EtudiantRepository())->recupererEtudiantAlternance();
+
+            $tableauParPage = null;
+            if ($etudiants == null) {
+                $nbrePages = 1;
+                $page = 1;
+            } else {
+
+                //Pagination
+                $nombresEtudiant = count($etudiants);
+                $nbrePages = ceil($nombresEtudiant / 9);
+
+                $page = 1;
+                if (isset($_GET['page'])) {
+                    $page = $_GET['page'];
+                    if ($page > $nbrePages) {
+                        $page = $nbrePages;
+                    } else if ($page <= 1) {
+                        $page = 1;
+                    }
+                }
+                $y = $page * 9;
+                if ($page * 9 > $nombresEtudiant) {
+                    $y = $nombresEtudiant;
+                }
+
+                for ($i = ($page - 1) * 9; $i < $y; $i++) {
+                    $tableauParPage[] = $etudiants[$i];
+                }
+
+            }
+            $titre = "Liste des étudiants en stage";
+            self::afficherVue("vueGenerale.php", ["contenu" => "Personnel/vueListeEtudiant.php","Liste des étudiants en stage" => $titre, "etudiants" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Liste des étudiants en alternance"]);
+        } else {
+            self::afficherErreur("Vous n'avez pas les droits");
+        }
+    }
+
+    public static function afficherListeEntrepriseStage()
+    {
+        if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
+
+            $entreprises = (new EntrepriseRepository())->recupererEntrepriseStage();
+
+            $tableauParPage = null;
+            if ($entreprises == null) {
+                $nbrePages = 1;
+                $page = 1;
+            } else {
+                //Pagination
+                $nombreEntreprise = count($entreprises);
+                $nbrePages = ceil($nombreEntreprise / 9);
+
+                $page = 1;
+                if (isset($_GET['page'])) {
+                    $page = $_GET['page'];
+                    if ($page > $nbrePages) {
+                        $page = $nbrePages;
+                    } else if ($page <= 1) {
+                        $page = 1;
+                    }
+                }
+                $y = $page * 9;
+                if ($page * 9 > $nombreEntreprise) {
+                    $y = $nombreEntreprise;
+                }
+
+                for ($i = ($page - 1) * 9; $i < $y; $i++) {
+                    $tableauParPage[] = $entreprises[$i];
+                }
+            }
+            self::afficherVue("vueGenerale.php", ["contenu" => "Entreprise/vueGestionEntreprise.php", "entreprises" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Liste des entreprises avec un élèves en stage"]);
+        } else {
+            self::afficherErreur("Vous n'avez pas les droits");
+        }
+    }
+
+
+    public static function afficherListeEntrepriseAlternance()
+    {
+        if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
+
+            $entreprises = (new EntrepriseRepository())->recupererEntrepriseAlternance();
+
+            $tableauParPage = null;
+            if ($entreprises == null) {
+                $nbrePages = 1;
+                $page = 1;
+            } else {
+                //Pagination
+                $nombreEntreprise = count($entreprises);
+                $nbrePages = ceil($nombreEntreprise / 9);
+
+                $page = 1;
+                if (isset($_GET['page'])) {
+                    $page = $_GET['page'];
+                    if ($page > $nbrePages) {
+                        $page = $nbrePages;
+                    } else if ($page <= 1) {
+                        $page = 1;
+                    }
+                }
+                $y = $page * 9;
+                if ($page * 9 > $nombreEntreprise) {
+                    $y = $nombreEntreprise;
+                }
+
+                for ($i = ($page - 1) * 9; $i < $y; $i++) {
+                    $tableauParPage[] = $entreprises[$i];
+                }
+            }
+            self::afficherVue("vueGenerale.php", ["contenu" => "Entreprise/vueGestionEntreprise.php", "entreprises" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Liste des entreprises avec un élèves en alternance"]);
+        } else {
+            self::afficherErreur("Vous n'avez pas les droits");
+        }
+
+    }
 }

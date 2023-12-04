@@ -334,23 +334,24 @@ input[type=checkbox]:checked ~ div {
   align-items: center;
 }
 .acceuil h1{
-  color: #29730e;
+  color: #248abe;
   font-family: 'Open Sans', sans-serif;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.acceuil h1 :hover{
+  color: #50ad22;
 }
 
 .acceuil p {
-  color: #29730e;
+  color: #248abe;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+.acceuil p :hover {
+  color: #50ad22;
 }
 
-.acceuil a {
-  text-decoration: none;
-  background-color: #29730e;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
+
 .acceuilText{
   display: flex;
   flex-direction: column;
@@ -358,3 +359,38 @@ input[type=checkbox]:checked ~ div {
   align-items: center;
   font-family: 'Noto Sans', sans-serif;
 }
+
+.boutonBord{
+  text-decoration: none;
+  background-color: #248abe;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+.boutonBord:hover {
+  background-color: #50ad22;
+  color: white;
+  border-color: #50ad22;
+}
+
+.bord{
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.bord .bordListeBouton{
+  display: flex;
+  flex-direction: column;
+}
+
+.bord .bordListeBouton div{
+  margin: 20px;
+}
+
+

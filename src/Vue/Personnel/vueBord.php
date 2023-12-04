@@ -33,7 +33,28 @@ $nombreEnRecherche = (new EtudiantRepository())->nombreEtudiant() - $nombreStage
         chart.draw(data, options);
     }
 </script>
-<div id="piechart" style="width: 900px; height: 500px;"></div>
 
+<div class="bord">
+    <div
+        id="piechart" style="width: 900px; height: 500px;">
+    </div>
+
+    <div class="bordListeBouton">
+        <div>
+            <a class="boutonBord" href="controleurFrontal.php?controleur=Personnel&action=afficherEtudiantStage" >Liste des étudiants en stage</a>
+        </div>
+        <div>
+            <a class="boutonBord" href="controleurFrontal.php?controleur=Personnel&action=afficherEtudiantAlternance" >Liste des étudiants en Alternance</a>
+        </div>
+        <div>
+            <a class="boutonBord" href="controleurFrontal.php?controleur=Personnel&action=afficherListeEntrepriseStage" >Liste des entreprise avec un stagiaire</a>
+        </div>
+        <div>
+            <a class="boutonBord" href="controleurFrontal.php?controleur=Personnel&action=afficherListeEntrepriseAlternance" >Liste des entreprise avec un Alternant</a>
+        </div>
+    </div>
+</div>
 <?php
+
+
 

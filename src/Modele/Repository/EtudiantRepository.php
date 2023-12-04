@@ -188,6 +188,27 @@ class EtudiantRepository extends AbstractRepository
         }
     }
 
+
+    public function recupererEtudiantStage()
+    {
+        $tableau = null;
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query("SELECT * FROM Etudiant e JOIN Stage s ON e.login = s.loginEtuStage");
+        foreach ($pdoStatement as $objetFormatTableau) {
+            $tableau[] = $this->construireDepuisTableau($objetFormatTableau);
+        }
+        return $tableau;
+    }
+
+    public function recupererEtudiantAlternance()
+    {
+        $tableau = null;
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query("SELECT * FROM Etudiant e JOIN Alternance a ON e.login = a.loginEtuAlternance");
+        foreach ($pdoStatement as $objetFormatTableau) {
+            $tableau[] = $this->construireDepuisTableau($objetFormatTableau);
+        }
+        return $tableau;
+    }
+
     public function construireDepuisTableau(array $etudianttFormatTableau) : Etudiant {
         $etudiant= new Etudiant($etudianttFormatTableau['login'],$etudianttFormatTableau['codeEtudiant'],$etudianttFormatTableau['nomEtudiant'],$etudianttFormatTableau['prenomEtudiant'],$etudianttFormatTableau['mailEtudiant'],$etudianttFormatTableau['promotion'],$etudianttFormatTableau['groupe'],$etudianttFormatTableau['parcours'],$etudianttFormatTableau['telephoneEtudiant'],$etudianttFormatTableau['motDePasse'],$etudianttFormatTableau['dateNaissanceEtudiant'],$etudianttFormatTableau['mailPerso'],$etudianttFormatTableau['sexe'],$etudianttFormatTableau['premiereConnexion']);
         return $etudiant;

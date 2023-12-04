@@ -26,6 +26,26 @@ class EntrepriseRepository extends AbstractRepository
         $pdoStatement->execute($values);
     }
 
+    public function recupererEntrepriseAlternance()
+    {
+        $tableau = null;
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query("SELECT * FROM Entreprise e JOIN Offre o ON e.numSiret = o.idEntreprise JOIN Alternance a ON o.idOffre = a.idOffreAlternance");
+        foreach ($pdoStatement as $objetFormatTableau) {
+            $tableau[] = $this->construireDepuisTableau($objetFormatTableau);
+        }
+        return $tableau;
+    }
+
+    public function recupererEntrepriseStage()
+    {
+        $tableau = null;
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query("SELECT * FROM Entreprise e JOIN Offre o ON e.numSiret = o.idEntreprise JOIN Stage s ON o.idOffre = s.idOffreStage");
+        foreach ($pdoStatement as $objetFormatTableau) {
+            $tableau[] = $this->construireDepuisTableau($objetFormatTableau);
+        }
+        return $tableau;
+    }
+
 
 
     public function construireDepuisTableau(array $entrepriseFormatTableau) : Entreprise {
