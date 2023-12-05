@@ -62,7 +62,9 @@ echo '</div>';
 
 echo '<div id="navButton">';
 echo  '<div><a href="controleurFrontal.php" id='.$accueil.'>Accueil</a></div>';
-echo '<div><a href="controleurFrontal.php?controleur=personnel&action=afficherTableauDeBord">Tableau De Bord</a></div>';
+if(ConnexionUtilisateur::estMaitreSA()){
+    echo '<div><a href="controleurFrontal.php?controleur=personnel&action=afficherTableauDeBord">Tableau De Bord</a></div>';
+}
 if(ConnexionUtilisateur::estEntreprise()){
     echo  '<div><a href="controleurFrontal.php?controleur=offre&action=afficherFormulaire" id='.$form.'>Creer Offre</a></div>';
     echo '<div><a  id="'.$offres.'" href="controleurFrontal.php?controleur=offre&action=offres"> Mes offre</a></div>';
