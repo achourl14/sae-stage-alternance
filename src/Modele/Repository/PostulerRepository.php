@@ -88,6 +88,18 @@ class PostulerRepository
         }
     }
 
+    public function deleteAllPostulerFromEtudiant($login){
+        $sql = "DELETE FROM Postuler WHERE loginEtu = :loginEtuTag";
+
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+
+        $values = array(
+            "loginEtuTag" => $login
+        );
+
+        $pdoStatement->execute($values);
+    }
+
     public function mettreAJourEtat(Postuler $postuler){
         $sql = "UPDATE Postuler SET etat = :etatTag WHERE loginEtu = :loginEtuTag AND idOffre = :idOffreTag";
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);

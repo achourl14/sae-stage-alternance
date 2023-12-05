@@ -69,15 +69,45 @@ echo '</div>';
 
 echo '<div class = "groupCartes">';
 if ($conventions == null) {
-    echo '<div class="msgConfirmation"><p> Aucun convention trouvé </p></div>';
+    echo '<div class="msgConfirmation"><p> Aucune convention trouvé </p></div>';
 } else {
     foreach ($conventions as $convention) {
 
+        if(\App\Lib\ConnexionUtilisateur::estMaitreSA()){
+            if ($convention->getConventionValidePedagogique() == "Oui") {
+                $class = "valide";
+                $buttonValider = "Invalidez Pedagogiquement";
+                $classButton = "valideButton";
+            } else {
+                $class = "nonValide";
+                $buttonValider = "Validez Pedagogiquement";
+                $classButton = "nonValideButton";
+            }
+        }
+
+        if(\App\Lib\ConnexionUtilisateur::estSecretariat()){
+            if ($convention->getConventionValide() == "Oui") {
+                $class = "valide";
+                $buttonValider = "Invalidez";
+                $classButton = "valideButton";
+            } else {
+                $class = "nonValide";
+                $buttonValider = "Validez";
+                $classButton = "nonValideButton";
+            }
+        }
+
         //echo "<a href='controleurFrontal.php?controleur=convention&action=afficherDetailConvention&num=" . $convention->getNumConvention() . "'>";
-        echo '<div class ="carte">';
+        echo '<div class ="carte ' . $class . '">';
         echo("<h1> Numéro : " . htmlspecialchars($convention->getNumConvention()) . "</h1>");
         echo("<p> Prénom : " . htmlspecialchars($convention->getPrenomEtu()) . " </p>");
         echo("<p> Nom : " . htmlspecialchars($convention->getNomEtu()) . " </p>");
+        if(\App\Lib\ConnexionUtilisateur::estMaitreSA()){
+            echo("<a class='buttonDeBase " . $classButton . "' href='controleurFrontal.php?controleur=convention&action=validerPedagogiqueConvention&numConvention=" . $convention->getNumConvention() . "'>" . $buttonValider . "</a>");
+        }
+        if(\App\Lib\ConnexionUtilisateur::estSecretariat()){
+            echo("<a class='buttonDeBase " . $classButton . "' href='controleurFrontal.php?controleur=convention&action=validerConvention&numConvention=" . $convention->getNumConvention() . "'>" . $buttonValider . "</a>");
+        }
         echo "</div>";
         //echo "</a>";
     }

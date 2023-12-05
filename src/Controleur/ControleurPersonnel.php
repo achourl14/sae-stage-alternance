@@ -18,7 +18,8 @@ use App\Modele\Repository\TuteurStageRepository;
 class ControleurPersonnel extends ControleurGenerique
 {
 
-    public static function verifierTuteurExistant() {
+    public static function verifierTuteurExistant()
+    {
         if (isset($_POST['idTuteur'])) {
             $tuteur = (new TuteurStageRepository())->recupererParClePrimaire($_POST['idTuteur']);
 
@@ -33,7 +34,8 @@ class ControleurPersonnel extends ControleurGenerique
     }
 
 
-    public static function verifierMaitreStageExistant() {
+    public static function verifierMaitreStageExistant()
+    {
         if (isset($_POST['numMaitreStage'])) {
             $maitreStage = (new MaitreStageRepository())->recupererParClePrimaire($_POST['numMaitreStage']);
             // Retourner l'étudiant en format JSON
@@ -47,17 +49,16 @@ class ControleurPersonnel extends ControleurGenerique
     }
 
 
-
     public static function afficherSecretaire()
     {
-        if(ConnexionUtilisateur::estMaitreSA()){
+        if (ConnexionUtilisateur::estMaitreSA()) {
             self::afficherVue("Personnel/InscriptionSecretariat.html");
         }
     }
 
     public static function creerSecretaire(): void
     {
-        if(ConnexionUtilisateur::estMaitreSA()){
+        if (ConnexionUtilisateur::estMaitreSA()) {
             $secretaire = Secretariat::construireDepuisFormulaire($_POST);
             SecretariatRepository::sauvegarder($secretaire);
             echo '<div class="msgConfirmation"><p> Le Personnel de l\IUT a bien été enregistrée </p></div>';
@@ -138,19 +139,19 @@ class ControleurPersonnel extends ControleurGenerique
             if (isset($_POST["login"])) {
                 $secretaireAVerifier = (new SecretariatRepository())->recupererParClePrimaire($_POST["login"]);
                 if (ConnexionUtilisateur::estMaitreSA() || $secretaireAVerifier->getPremiereConnexion() == 0) {
-                    if($secretaireAVerifier->getPremiereConnexion() == 0){
+                    if ($secretaireAVerifier->getPremiereConnexion() == 0) {
                         if ($_POST['mdp'] != $_POST['mdp2']) {
                             echo '<div class="msgConfirmation"><p> ⚠️ Vos 2 champs de mot de passe ne correspondent pas ⚠️  </p></div>';
                             self::afficherMAJPersonnel();
                         } else {
                             $mdpHache = MotDePasse::hacher($_POST['mdp']);
-                            $secretaire = new Secretariat($_POST["login"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"],$_POST["role"],$mdpHache,1);
+                            $secretaire = new Secretariat($_POST["login"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"], $_POST["role"], $mdpHache, 1);
                             (new SecretariatRepository())->mettreAJour($secretaire);
                             echo '<div class="msgConfirmation"><p> Votre compte a bien été mis à jour </p></div>';
                             self::afficherAccueil();
                         }
-                    }else{
-                        $secretaire = new Secretariat($_POST["login"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"],$_POST["role"],$secretaireAVerifier->getMdp(),1);
+                    } else {
+                        $secretaire = new Secretariat($_POST["login"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"], $_POST["role"], $secretaireAVerifier->getMdp(), 1);
                         (new SecretariatRepository())->mettreAJour($secretaire);
                         self::afficherErreur("Les informations du personnel " . $secretaire->getLogin() . " ont bien été mis à jour");
                     }
@@ -160,7 +161,7 @@ class ControleurPersonnel extends ControleurGenerique
                         if (!$mdpCorrect) {
                             self::afficherErreur("Mot de passe Incorrect");
                         } else {
-                            $secretaire = new Secretariat($_POST["login"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"],$_POST["role"], $secretaireAVerifier->getMdp(),1);
+                            $secretaire = new Secretariat($_POST["login"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"], $_POST["role"], $secretaireAVerifier->getMdp(), 1);
                             (new SecretariatRepository())->mettreAJour($secretaire);
                             self::afficherErreur("Vos informations " . $secretaire->getLogin() . " ont bien été mis à jour");
                         }
@@ -172,7 +173,7 @@ class ControleurPersonnel extends ControleurGenerique
                     self::afficherErreur("Vous n'avez pas les droits");
                 }
             }
-        }else{
+        } else {
             self::afficherErreur("Vous n'avez pas les droits");
         }
     }
@@ -215,12 +216,50 @@ class ControleurPersonnel extends ControleurGenerique
     public static function afficherTableauDeBord()
     {
         if (ConnexionUtilisateur::estMaitreSA()) {
-            self::afficherVue("vueGenerale.php", ["contenu" => "Personnel/vueBord.php", "title" => "Tableau De Bord"]);
+            if (Session::getInstance()->contient("requeteFiltreTB")) {
+                $nombreStageTrouve = (new EtudiantRepository())->nombreDePersonneTrouveStage(Session::getInstance()->lire("requeteFiltreTB"));
+                $nombreAlternanceTrouve = (new EtudiantRepository())->nombreDePersonneTrouveAlternance(Session::getInstance()->lire("requeteFiltreTB"));
+                $nombreEnRecherche = (new EtudiantRepository())->nombreEtudiant(Session::getInstance()->lire("requeteFiltreTB")) - $nombreStageTrouve - $nombreAlternanceTrouve;
+            } else {
+                $nombreStageTrouve = (new EtudiantRepository())->nombreDePersonneTrouveStage([]);
+                $nombreAlternanceTrouve = (new EtudiantRepository())->nombreDePersonneTrouveAlternance([]);
+                $nombreEnRecherche = (new EtudiantRepository())->nombreEtudiant([]) - $nombreStageTrouve - $nombreAlternanceTrouve;
+            }
+
+            if (Session::getInstance()->contient("requeteFiltreTBConvention")) {
+                if(Session::getInstance()->lire("requeteFiltreTBConvention")["validation"] == "pedagogique"){
+                    $nbreConventionValidePedagogique = (new ConventionStageRepository())->nbreConventionValidePedagogique();
+                    $nbreConventionNonValidePedagogique = (new ConventionStageRepository())->nbreConventionNonValidePedagogique();
+                }else{
+                    $nbreConventionValidePedagogique = (new ConventionStageRepository())->nbreConventionValide();
+                    $nbreConventionNonValidePedagogique = (new ConventionStageRepository())->nbreConventionNonValide();
+                }
+            } else {
+                $nbreConventionValidePedagogique = (new ConventionStageRepository())->nbreConventionValidePedagogique();
+                $nbreConventionNonValidePedagogique = (new ConventionStageRepository())->nbreConventionNonValidePedagogique();
+            }
+            self::afficherVue("vueGenerale.php", ["contenu" => "Personnel/vueBord.php", "title" => "Tableau De Bord", "nombreStageTrouve" => $nombreStageTrouve, "nombreAlternanceTrouve" => $nombreAlternanceTrouve, "nombreEnRecherche" => $nombreEnRecherche, "nbreConventionValidePedagogique" => $nbreConventionValidePedagogique, "nbreConventionNonValidePedagogique" => $nbreConventionNonValidePedagogique]);
         } else {
             self::afficherErreur("Vous n'avez pas les droits");
         }
     }
 
+    public static function filtrerTB()
+    {
+        $values = null;
+        $convention = null;
+        if (isset($_POST["but_annee"]) && $_POST["but_annee"] != "") {
+            if ($_POST["but_annee"] != 0) {
+                $values['promotion'] = $_POST["but_annee"];
+            }
+            Session::getInstance()->enregistrer("requeteFiltreTB", $values);
+        }
+        if (isset($_POST["validation"]) && $_POST["validation"] != "") {
+            $convention['validation'] = $_POST["validation"];
+            Session::getInstance()->enregistrer("requeteFiltreTBConvention", $convention);
+        }
+        self::afficherTableauDeBord();
+    }
 
 
     public static function afficherEtudiantStage()
@@ -260,7 +299,7 @@ class ControleurPersonnel extends ControleurGenerique
 
             }
             $titre = "Liste des étudiants en stage";
-            self::afficherVue("vueGenerale.php", ["contenu" => "Personnel/vueListeEtudiant.php","Liste des étudiants en stage" => $titre, "etudiants" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Liste des étudiants en stage"]);
+            self::afficherVue("vueGenerale.php", ["contenu" => "Personnel/vueListeEtudiant.php", "Liste des étudiants en stage" => $titre, "etudiants" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Liste des étudiants en stage"]);
         } else {
             self::afficherErreur("Vous n'avez pas les droits");
         }
@@ -303,7 +342,7 @@ class ControleurPersonnel extends ControleurGenerique
 
             }
             $titre = "Liste des étudiants en stage";
-            self::afficherVue("vueGenerale.php", ["contenu" => "Personnel/vueListeEtudiant.php","Liste des étudiants en stage" => $titre, "etudiants" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Liste des étudiants en alternance"]);
+            self::afficherVue("vueGenerale.php", ["contenu" => "Personnel/vueListeEtudiant.php", "Liste des étudiants en stage" => $titre, "etudiants" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Liste des étudiants en alternance"]);
         } else {
             self::afficherErreur("Vous n'avez pas les droits");
         }
@@ -386,6 +425,5 @@ class ControleurPersonnel extends ControleurGenerique
         } else {
             self::afficherErreur("Vous n'avez pas les droits");
         }
-
     }
 }

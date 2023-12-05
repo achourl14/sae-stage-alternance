@@ -252,57 +252,7 @@ footer{
     display: inline-block;
   }
 }
-/*---------------------------*/
-/*
-article {
-  display: inline-flex;
-  width: 8%;
-  height: 5%;
-  margin: 5px;
-  float: left;
-  border: 2px solid #FF5660;
-  box-sizing: border-box;
-  border-radius: 10px 10px;
-  padding: 5px;
-}
 
-article div {
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  line-height: 25px;
-  transition: .5s ease;
-  border-radius: 10px 10px;
-}
-/*
-article input {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 140px;
-  height: 100px;
-  opacity: 0;
-  cursor: pointer;
-}
-
-input[type=checkbox]:checked ~ div {
-  background-color: #FF5660;
-}
-
-@keyframes slidein {
-  from {
-    margin-top: 100%;
-    width: 300%;
-  }
-
-  to {
-    margin: 0%;
-    width: 100%;
-  }
-}
-
- */
 
 .imageAcceuil {
   max-width: 100%;
@@ -358,39 +308,6 @@ input[type=checkbox]:checked ~ div {
   justify-content: flex-end;
   align-items: center;
   font-family: 'Noto Sans', sans-serif;
-}
-
-.boutonBord{
-  text-decoration: none;
-  background-color: #248abe;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-}
-.boutonBord:hover {
-  background-color: #50ad22;
-  color: white;
-  border-color: #50ad22;
-}
-
-.bord{
-  display: inline-flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.bord .bordListeBouton{
-  display: flex;
-  flex-direction: column;
-}
-
-.bord .bordListeBouton div{
-  margin: 20px;
 }
 
 

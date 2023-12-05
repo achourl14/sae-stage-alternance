@@ -44,6 +44,25 @@ class StageRepository extends AbstractRepository
         return $this->construireDepuisTableau($objetFormatTableau);
     }
 
+    public function recupererParEtudiant(string $loginEtuStage)
+    {
+        $sql = "SELECT * from " . $this->getNomTable() . " WHERE loginEtuStage = :loginEtuStageTag";
+        // Préparation de la requête
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+
+        $values = array(
+            "loginEtuStageTag" => $loginEtuStage
+        );
+        // On donne les valeurs et on exécute la requête
+        $pdoStatement->execute($values);
+
+        $tableau = null;
+        foreach ($pdoStatement as $objetFormatTableau) {
+            $tableau[] = $this->construireDepuisTableau($objetFormatTableau);
+        }
+        return $tableau;
+    }
+
     protected function getNomClePrimaire(): string
     {
         return "peutpas";

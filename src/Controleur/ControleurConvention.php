@@ -78,25 +78,25 @@ class ControleurConvention extends ControleurGenerique
                 }
 
             }
-            self::afficherVue("vueGenerale.php", ["contenu" => "Personnel/vueGestionConvention.php", "conventions" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Gestions des Conventions"]);
+            self::afficherVue("vueGenerale.php", ["contenu" => "Convention/vueGestionConvention.php", "conventions" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Gestions des Conventions"]);
         } else {
             self::afficherErreur("Vous n'avez pas les droits");
         }
     }
 
     public static function afficherCreationConvention(){
-        $offre = null;
-        $etudiant = null;
-        $entreprise = null;
-        if(isset($_GET["login"]) && isset($_GET["idOffre"])){
-            $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_GET["login"]);
-            $offre = (new OffreRepository())->recupererParClePrimaire($_GET["idOffre"]);
-            $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($offre->getIdOffre());
+        if(ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()){
+            $offre = null;
+            $etudiant = null;
+            $entreprise = null;
+            if(isset($_GET["login"]) && isset($_GET["idOffre"])){
+                $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_GET["login"]);
+                $offre = (new OffreRepository())->recupererParClePrimaire($_GET["idOffre"]);
+                $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($offre->getIdOffre());
+            }
+
+            self::afficherVue("vueGenerale.php",["contenu" => "Convention/vueConventions.php", "title" => "Créer Convention","etudiant"=> $etudiant, "offre" =>$offre, "entreprise" => $entreprise]);
         }
-
-        self::afficherVue("vueGenerale.php",["contenu" => "Personnel/vueConventions.php", "title" => "Créer Convention","etudiant"=> $etudiant, "offre" =>$offre, "entreprise" => $entreprise]);
-
-
     }
 
     public static function creerConvention(){
@@ -194,5 +194,39 @@ class ControleurConvention extends ControleurGenerique
         (new ConventionStageRepository())->sauvegarderC($convention);
         echo '<div class="msgConfirmation"><p> La Convention a bien été enregistrée </p></div>';
         self::afficherAccueil();
+    }
+
+    public static function validerPedagogiqueConvention(){
+        if (ConnexionUtilisateur::estMaitreSA()) {
+            $convention = (new ConventionStageRepository())->recupererParClePrimaire($_GET['numConvention']);
+            ConventionStageRepository::validerConventionPedagogique($convention);
+            $msg = "";
+            if ($convention->getConventionValidePedagogique() == "Oui") {
+                $msg = "invalider";
+            } else {
+                $msg = "valider";
+            }
+            echo '<div class="msgConfirmation"><p> Vous avez bien ' . $msg . ' pedagogiquement la convention numéro : ' . $convention->getNumConvention() . '</p></div>';
+            self::afficherGestionConvention();
+        } else {
+            echo '<div class="msgConfirmation"><p>Vous n\'avez pas les droits de valider ou dévalider pédagogiquement des conventions</p></div>';
+        }
+    }
+
+    public static function validerConvention(){
+        if (ConnexionUtilisateur::estSecretariat()) {
+            $convention = (new ConventionStageRepository())->recupererParClePrimaire($_GET['numConvention']);
+            ConventionStageRepository::validerConvention($convention);
+            $msg = "";
+            if ($convention->getConventionValide() == "Oui") {
+                $msg = "invalider";
+            } else {
+                $msg = "valider";
+            }
+            echo '<div class="msgConfirmation"><p> Vous avez bien ' . $msg . ' la convention numéro : ' . $convention->getNumConvention() . '</p></div>';
+            self::afficherGestionConvention();
+        } else {
+            echo '<div class="msgConfirmation"><p>Vous n\'avez pas les droits de valider ou dévalider des conventions</p></div>';
+        }
     }
 }

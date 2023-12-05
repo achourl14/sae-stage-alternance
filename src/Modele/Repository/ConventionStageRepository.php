@@ -182,6 +182,74 @@ class ConventionStageRepository extends AbstractRepository
         );
     }
 
+    public function nbreConventionValidePedagogique(){
+        $sql = "SELECT COUNT(numConvention) FROM ConventionStage WHERE conventionValidePedagogique = 'Oui'";
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query($sql);
+
+        return $pdoStatement->fetchColumn();
+    }
+
+    public function nbreConventionNonValidePedagogique(){
+        $sql = "SELECT COUNT(numConvention) FROM ConventionStage WHERE conventionValidePedagogique = 'Non'";
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query($sql);
+
+        return $pdoStatement->fetchColumn();
+    }
+
+    public static function validerConventionPedagogique(ConventionStage $conventionStage) : void {
+
+        $sql = "UPDATE ConventionStage SET conventionValidePedagogique = :conventionValidePedagogiqueTag WHERE numConvention = :numConventionTag";
+
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        if($conventionStage->getConventionValidePedagogique() == "Non"){
+            $values = array(
+                "conventionValidePedagogiqueTag" => "Oui",
+                "numConventionTag" => $conventionStage->getNumConvention()
+            );
+            $pdoStatement->execute($values);
+        }else{
+            $values = array(
+                "conventionValidePedagogiqueTag" => "Non",
+                "numConventionTag" => $conventionStage->getNumConvention()
+            );
+            $pdoStatement->execute($values);
+        }
+    }
+
+    public function nbreConventionValide(){
+        $sql = "SELECT COUNT(numConvention) FROM ConventionStage WHERE conventionValide = 'Oui'";
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query($sql);
+
+        return $pdoStatement->fetchColumn();
+    }
+
+    public function nbreConventionNonValide(){
+        $sql = "SELECT COUNT(numConvention) FROM ConventionStage WHERE conventionValide = 'Non'";
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query($sql);
+
+        return $pdoStatement->fetchColumn();
+    }
+
+    public static function validerConvention(ConventionStage $conventionStage) : void {
+
+        $sql = "UPDATE ConventionStage SET conventionValide = :conventionValideTag WHERE numConvention = :numConventionTag";
+
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        if($conventionStage->getConventionValide() == "Non"){
+            $values = array(
+                "conventionValideTag" => "Oui",
+                "numConventionTag" => $conventionStage->getNumConvention()
+            );
+            $pdoStatement->execute($values);
+        }else{
+            $values = array(
+                "conventionValideTag" => "Non",
+                "numConventionTag" => $conventionStage->getNumConvention()
+            );
+            $pdoStatement->execute($values);
+        }
+    }
+
 
     protected function getNomTable(): string
     {

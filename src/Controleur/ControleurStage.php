@@ -6,6 +6,7 @@ use App\Lib\ConnexionUtilisateur;
 use App\Modele\DataObject\Alternance;
 use App\Modele\DataObject\Stage;
 use App\Modele\Repository\AlternanceRepository;
+use App\Modele\Repository\EtudiantRepository;
 use App\Modele\Repository\PostulerRepository;
 use App\Modele\Repository\StageRepository;
 
@@ -35,7 +36,7 @@ class ControleurStage extends ControleurGenerique
                 if($postuler != null && $postuler->getEtat() == 1){
                     $stage = new Stage(ConnexionUtilisateur::getLoginUtilisateurConnecte(),$_GET["idOffre"]);
                     StageRepository::sauvegarder($stage);
-                    // a continuer
+                    (new PostulerRepository())->deleteAllPostulerFromEtudiant(ConnexionUtilisateur::getLoginUtilisateurConnecte());
                 }else{
                     echo '<div class="msgConfirmation"><p> Vous n\'avez jamais été accepté à cette offre </p></div>';
                     self::afficherAccueil();

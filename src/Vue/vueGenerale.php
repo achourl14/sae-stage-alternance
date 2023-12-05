@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="styles/css/form_externe.css">
     <link rel="stylesheet" type="text/css" href="styles/css/mesCandidatures.css">
     <link rel="stylesheet" type="text/css" href="styles/css/form_supp.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/tableauDeBord.css">
     <script src="styles/js/scriptFormulaireStageExterne.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -61,6 +62,7 @@ echo '</div>';
 
 echo '<div id="navButton">';
 echo  '<div><a href="controleurFrontal.php" id='.$accueil.'>Accueil</a></div>';
+echo '<div><a href="controleurFrontal.php?controleur=personnel&action=afficherTableauDeBord">Tableau De Bord</a></div>';
 if(ConnexionUtilisateur::estEntreprise()){
     echo  '<div><a href="controleurFrontal.php?controleur=offre&action=afficherFormulaire" id='.$form.'>Creer Offre</a></div>';
     echo '<div><a  id="'.$offres.'" href="controleurFrontal.php?controleur=offre&action=offres"> Mes offre</a></div>';
@@ -76,7 +78,6 @@ if(ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estSecretariat()
         echo '<a href="controleurFrontal.php?controleur=offre&action=offres">Gestion offre</a>';
         echo '<a href="controleurFrontal.php?controleur=entreprise&action=afficherGestionEntreprise">Gestion Entreprise</a>';
         echo '<a href="controleurFrontal.php?controleur=personnel&action=afficherGestionPersonnel">Gestion du personnel de l\'IUT</a>';
-        echo '<a href="controleurFrontal.php?controleur=personnel&action=afficherTableauDeBord">Tableau De Bord</a>';
     }
     echo '<a href="controleurFrontal.php?controleur=etudiant&action=afficherGestionEtudiant">Gestion Etudiant</a>';
     echo '<a href="controleurFrontal.php?controleur=convention&action=afficherGestionConvention">Gestion des Conventions</a>';

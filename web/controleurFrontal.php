@@ -15,7 +15,7 @@ if(isset($_GET['action'])){
     $action = $_GET['action'];
     Controleur::$action();
 }else{
-    Controleur::afficherAccueil();
+    \App\Controleur\ControleurGenerique::afficherAccueil();
 }
 $nomDeClasseControleur = "App\Controleur\Controleur";
 if(isset($_GET['controleur'])) {

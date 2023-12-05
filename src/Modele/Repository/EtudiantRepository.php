@@ -8,7 +8,8 @@ use DateTime;
 
 class EtudiantRepository extends AbstractRepository
 {
-    public function sauvegarder(Etudiant $etudiant) : void {
+    public function sauvegarder(Etudiant $etudiant) : void
+    {
         $sql = "INSERT INTO Etudiant VALUES(:loginTag, :codeEtudiantTag, :nomEtudiantTag, :prenomEtudiantTag, :mailEtudiantTag, :promotionTag, :groupeTag, :parcoursTag, :telephoneEtudiantTag, :dateNaissanceEtudiantTag, :mailPersoTag, :sexeTag, :premiereConnexionTag ,:motDePasseTag)";
 
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
@@ -54,22 +55,40 @@ class EtudiantRepository extends AbstractRepository
         }
     }
 
-    public function nombreEtudiant(){
+    public function nombreEtudiant(array $parameters){
         $sql = "SELECT COUNT(login) FROM Etudiant";
 
+        if($parameters != null){
+            $sql .= " WHERE ";
+            foreach ($parameters as $clef => $valeur) {
+                $sql.= $clef ." = ". $valeur;
+            }
+        }
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query($sql);
         return $pdoStatement->fetchColumn();
     }
 
-    public function nombreDePersonneTrouveStage() :int{
+    public function nombreDePersonneTrouveStage(array $parameters) :int{
         $sql = "SELECT COUNT(login) FROM Etudiant e JOIN Stage s ON e.login = s.loginEtuStage";
 
+        if($parameters != null){
+            $sql .= " WHERE ";
+            foreach ($parameters as $clef => $valeur) {
+                $sql.= $clef ." = ". $valeur;
+            }
+        }
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query($sql);
         return $pdoStatement->fetchColumn();
     }
-    public function nombreDePersonneTrouveAlternance() :int{
+    public function nombreDePersonneTrouveAlternance(array $parameters) :int{
         $sql = "SELECT COUNT(login) FROM Etudiant e JOIN Alternance a ON e.login = a.loginEtuAlternance";
 
+        if($parameters != null){
+            $sql .= " WHERE ";
+            foreach ($parameters as $clef => $valeur) {
+                $sql.= $clef ." = ". $valeur;
+            }
+        }
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query($sql);
         return $pdoStatement->fetchColumn();
     }

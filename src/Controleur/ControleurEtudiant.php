@@ -10,6 +10,7 @@ use App\Modele\HTTP\Session;
 use App\Modele\Repository\EntrepriseRepository;
 use App\Modele\Repository\EtudiantRepository;
 use App\Modele\Repository\PostulerRepository;
+use App\Modele\Repository\StageRepository;
 
 class ControleurEtudiant extends ControleurGenerique
 {
@@ -166,11 +167,13 @@ class ControleurEtudiant extends ControleurGenerique
                         self::afficherErreur("Vos informations " . $etudiant->getLogin() . " ont bien été mis à jour");
                     }
                 } else {
-                    self::afficherErreur("Veuillez rentrer votre mot de passe");
+                    echo '<div class="msgConfirmation"><p> Veuillez rentrer votre mot de passe </p></div>';
+                    self::afficherAccueil();
                 }
 
             } else {
-                self::afficherErreur("Vous n'avez pas les droits");
+                echo '<div class="msgConfirmation"><p> Vous n\'avez pas les droits </p></div>';
+                self::afficherAccueil();
             }
         }
     }
@@ -218,7 +221,27 @@ class ControleurEtudiant extends ControleurGenerique
 
     public static function afficherVuePostuler()
     {
-        self::afficherVue("vueGenerale.php", ["contenu" => "Etudiant/vuePostuler.php", "title" => "Ajouter CV", "offreId" => $_GET['idOffre']]);
+        $stage = (new StageRepository())->recupererParEtudiant(ConnexionUtilisateur::getLoginUtilisateurConnecte());
+        $postuler = (new PostulerRepository())->recupererParClePrimaire(ConnexionUtilisateur::getLoginUtilisateurConnecte(),$_GET['idOffre']);
+        if(ConnexionUtilisateur::estEtudiant()){
+            if($postuler == null){
+                if($stage == null){
+                    self::afficherVue("vueGenerale.php", ["contenu" => "Etudiant/vuePostuler.php", "title" => "Ajouter CV", "offreId" => $_GET['idOffre']]);
+                }else{
+                    echo '<div class="msgConfirmation"><p> Vous avez déjà choisis un stage définitivement </p></div>';
+                    ControleurOffre::offres();
+                }
+
+            }else{
+                echo '<div class="msgConfirmation"><p> Vous avez déjà postulé à cette offre </p></div>';
+                ControleurOffre::offres();
+            }
+
+        }else{
+            echo '<div class="msgConfirmation"><p> Vous ne pouvez pas postuler à une offre si vous n\'êtes pas étudiant </p></div>';
+            self::afficherAccueil();
+        }
+
     }
 
     public static function postulerBD()
@@ -226,11 +249,11 @@ class ControleurEtudiant extends ControleurGenerique
         if (ConnexionUtilisateur::estEtudiant()) {
             $postulerExiste = (new PostulerRepository())->recupererParClePrimaire(ConnexionUtilisateur::getLoginUtilisateurConnecte(), $_GET['idOffre']);
             if ($postulerExiste != null) {
-                self::afficherErreur("Vous avez déjà postuler à cette offre", "offres");
+                echo '<div class="msgConfirmation"><p> Vous avez déjà postulé à cette offre </p></div>';
+                ControleurOffre::offres();
             } else {
                 $postuler = new Postuler(ConnexionUtilisateur::getLoginUtilisateurConnecte(), $_GET['idOffre'], -9);
                 (new PostulerRepository())->sauvegarder($postuler);
-                self::afficherErreur("Vous avez bien postulé pour cette offre");
             }
         }
     }
@@ -265,13 +288,8 @@ class ControleurEtudiant extends ControleurGenerique
                 }
             }
         } else {
-            self::afficherErreur("Vous n'avez pas la possibilité de postuler à une offre");
+            echo '<div class="msgConfirmation"><p> Vous n\'avez pas la possibilité de postuler à une offre </p></div>';
+            self::afficherAccueil();
         }
     }
-
-    public static function validerOffreDeffinitif()
-    {
-
-    }
-
 }
