@@ -1,72 +1,14 @@
 <?php
-$numEtu ="";
-$nomEtu ="";
-$prenomEtu ="";
-$numTelEtu ="";
-$adresseMailPerso ="";
-$adresseMailUniv ="";
 $m="";
-$f="";
-if($etudiant != null){
-
-    $isNumEtu = $etudiant->getNumEtudiant();
-    $isNomEtu = $etudiant->getNom();
-    $isPrenomEtu= $etudiant->getPrenom();
-    $isNumTelEtu= $etudiant->getNumTel();
-    $isAdresseMailPerso= $etudiant->getMailPerso();
-    $isAdresseMailUniv = $etudiant->getEmail();
-
-
-    $sexeEtu = $etudiant->getSexe();
-    if($sexeEtu == "M"){
-        $m = "selected";
-    }else{
-        $f = "selected";
-    }
-    if(isset($isNumEtu)){
-        $numEtu = $isNumEtu;
-    }
-    if(isset($isNomEtu)){
-        $nomEtu = $isNomEtu;
-    }
-    if(isset($isPrenomEtu)){
-        $prenomEtu = $isPrenomEtu;
-    }
-    if(isset($isNumTelEtu)){
-        $numTelEtu = $isNumTelEtu;
-    }
-    if(isset($isAdresseMailPerso)){
-        $adresseMailPerso=$isAdresseMailPerso;
-    }
-    if(isset($isAdresseMailUniv)){
-        $adresseMailUniv=$isAdresseMailUniv;
-    }
-}
-$dateDeDebut = "";
-$dateDeFin = "";
-
-if($offre != null){
-    $isDateDeDebut = $offre->getDateDebut();
-    $isDateDeFin = $offre->getDateFin();
-
-    if(isset($isDateDeDebut)){
-        $dateDeDebut = $isDateDeDebut;
-    }
-    if(isset($isDateDeFin)){
-        $dateDeFin = $isDateDeFin;
-    }
+$f = "";
+if($convention->getCodeSexeEtu() == "M"){
+    $m = "selected";
+}else{
+    $f= "selected";
 }
 
-$numSiret = "";
-if($entreprise !=null){
-    $isNumSiret = $entreprise->getNumSiret();
-    if(isset($numSiret)){
-        $numSiret = $isNumSiret;
-    }
-}
 
 ?>
-
 
 <div class="contient">
     <div class="container">
@@ -76,31 +18,31 @@ if($entreprise !=null){
                 <div class="user-details">
                     <div class="input-box">
                         <span class="details">Numero etudiant</span>
-                        <input type="text" name="numEtudiant" pattern="[0-9]{8}" maxlength="8" required value=<?php echo $numEtu ?>>
+                        <input type="text" name="numEtudiant" pattern="[0-9]{8}" maxlength="8" required readonly value=<?php echo $convention->getNumConvention()  ?>>
                     </div>
                     <div class="input-box">
                         <span class="details">Nom etudiant</span>
-                        <input type="text" name="nomEtu" required maxlength="50"  value=<?php echo $nomEtu ?>>
+                        <input type="text" name="nomEtu" required maxlength="50"  value=<?php echo $convention->getNomEtu() ?>>
                     </div>
                     <div class="input-box">
                         <span class="details">Prénom etudiant</span>
-                        <input type="text" name="prenomEtu" required maxlength="50"  value=<?php echo $prenomEtu ?>>
+                        <input type="text" name="prenomEtu" required maxlength="50"  value=<?php echo $convention->getPrenomEtu() ?>>
                     </div>
                     <div class="input-box">
                         <span class="details">Numéro personel de téléphone de l'etudiant</span>
-                        <input type="tel" name="numTelPersoEtu" pattern="[0-9]{10}" maxlength="10" required value=<?php echo $numTelEtu ?>>
+                        <input type="tel" name="numTelPersoEtu" pattern="[0-9]{10}" maxlength="10" required value=<?php echo $convention->getNumTelPersoEtu() ?>>
                     </div>
                     <div class="input-box">
                         <span class="details">Numero de téléphone de l'étudiant</span>
-                        <input type="tel" name="numTelEtu" required pattern="[0-9]{10}" maxlength="10" value=<?php echo $numTelEtu ?>>
+                        <input type="tel" name="numTelEtu" required pattern="[0-9]{10}" maxlength="10" value=<?php echo $convention->getNumTelEtu() ?>>
                     </div>
                     <div class="input-box">
                         <span class="details">Adresse mail personel de l'étudiant</span>
-                        <input type="email" name="mailPersoEtu" required value=<?php echo $adresseMailPerso ?>>
+                        <input type="email" name="mailPersoEtu" required value=<?php echo $convention->getMailPersoEtu() ?>>
                     </div>
                     <div class="input-box">
                         <span class="details">Adresse mail universitaire de l'étudiant</span>
-                        <input type="email" name="mailUniversitaireEtu" required value=<?php echo $adresseMailUniv ?>>
+                        <input type="email" name="mailUniversitaireEtu" required value=<?php echo $convention->getMailUniversitaireEtu() ?>>
                     </div>
                     <div class="input-box">
                         <span class="details">Code UFR</span>
@@ -124,11 +66,11 @@ if($entreprise !=null){
                     </div>
                     <div class="input-box">
                         <span class="details">Date de début</span>
-                        <input type="date" placeholder="" name="dateDeDebut" required value=<?php echo $dateDeDebut ?>>
+                        <input type="date" placeholder="" name="dateDeDebut" required value=<?php echo $convention->getDateDebut()?>>
                     </div>
                     <div class="input-box">
                         <span class="details">Date de fin</span>
-                        <input type="date" placeholder="" name="dateDeFin" required value=<?php echo $dateDeFin ?>>
+                        <input type="date" placeholder="" name="dateDeFin" required value=<?php echo $convention->getDateFin() ?>>
                     </div>
                     <div class="input-box">
                         <label class="details" for="interr"> Interruption </label>
@@ -265,13 +207,13 @@ if($entreprise !=null){
                         <span class="details">Ville de l'étudiant</span>
                         <input type="text" placeholder="" name="villeEtu" maxlength="50" required>
                     </div>
-<!--                    <div class="input-box">-->
-<!--                        <label class="details" for="convVal"> Convention validé pédagogiquement </label>-->
-<!--                        <select name="conventionValidePedagogique" id="convVal" required>-->
-<!--                            <option value="oui">Oui</option>-->
-<!--                            <option value="non">Non</option>-->
-<!--                        </select>-->
-<!--                    </div>-->
+                    <!--                    <div class="input-box">-->
+                    <!--                        <label class="details" for="convVal"> Convention validé pédagogiquement </label>-->
+                    <!--                        <select name="conventionValidePedagogique" id="convVal" required>-->
+                    <!--                            <option value="oui">Oui</option>-->
+                    <!--                            <option value="non">Non</option>-->
+                    <!--                        </select>-->
+                    <!--                    </div>-->
                     <div class="input-box">
                         <label class="details" for="avenant"> Avenant </label>
                         <select name="avenant" id="avenant" required>
@@ -301,7 +243,7 @@ if($entreprise !=null){
                     </div>
                     <div class="input-box">
                         <span class="details">Numéro de Siret </span>
-                        <input type="text" placeholder="" name="siret" maxlength="14" required value=<?php echo $numSiret ?>>
+                        <input type="text" placeholder="" name="siret" maxlength="14" required value=<?php echo $convention->getSiret() ?>>
                     </div>
                     <div class="input-box">
                         <span class="details">Adresse de résidence</span>

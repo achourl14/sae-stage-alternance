@@ -18,24 +18,30 @@ if($offresCandidate == null){
         echo '</div>';
 
         $postuler = (new \App\Modele\Repository\PostulerRepository())->recupererParClePrimaire(\App\Lib\ConnexionUtilisateur::getLoginUtilisateurConnecte(),$offre->getIdOffre());
-        echo "<div class='etat'>";
-        if($postuler->getEtat() == 0){
-            echo "<img class='icon_etat' src='../web/img/lhorloge.png'/>";
-            echo "<p> en attente </p>";
-        }else if($postuler->getEtat() == 1){
-            echo "<p> ✅ <p/>";
-            echo "<p> Validé, vous avez été retenu pour ce poste </p>";
+        if($postuler != null) {
+            echo "<div class='etat'>";
+            if ($postuler->getEtat() == 0) {
+                echo "<img class='icon_etat' src='../web/img/lhorloge.png'/>";
+                echo "<p> en attente </p>";
+            } else if ($postuler->getEtat() == 1) {
+                echo "<p> ✅ <p/>";
+                echo "<p> Validé, vous avez été retenu pour ce poste </p>";
+            } else {
+                echo "<p> ❌ <p/>";
+                echo "<p> Refusé, vous n'avez pas été retenu pour ce poste </p>";
+            }
+            echo "</div>";
         }else{
-            echo "<p> ❌ <p/>";
-            echo "<p> Refusé, vous n'avez pas été retenu pour ce poste </p>";
+            echo "<p> Ceci est votre choix définitif </p>";
         }
-        echo "</div>";
         echo "</div>";
         echo "</a>";
 
-        echo '<div class="page">';
-        echo "<a href=''> Choisir cet offre définitivement </a>";
-        echo '</div>';
+        if($postuler != null) {
+            echo '<div class="page">';
+            echo "<a href='controleurFrontal.php?controleur=stage&action=choixDefinitif&idOffre=" . $postuler->getIdOffre() . "'> Choisir cet offre définitivement </a>";
+            echo '</div>';
+        }
     }
     echo "</div>";
 }

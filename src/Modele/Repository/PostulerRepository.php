@@ -81,11 +81,8 @@ class PostulerRepository
         $tableau = null;
         foreach ($pdoStatement as $objetFormatTableau) {
             $tableau[] = $this->construireDepuisTableau($objetFormatTableau);
-            if ($tableau == null) {
-                return null;
-            }
-            return $tableau;
         }
+        return $tableau;
     }
 
     public function deleteAllPostulerFromEtudiant($login){

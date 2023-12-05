@@ -229,4 +229,13 @@ class ControleurConvention extends ControleurGenerique
             echo '<div class="msgConfirmation"><p>Vous n\'avez pas les droits de valider ou dévalider des conventions</p></div>';
         }
     }
+
+    public static function afficherMAJConvention()
+    {
+        if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
+            $convention = (new ConventionStageRepository())->recupererParClePrimaire($_GET['numConvention']);
+            self::afficherVue("vueGenerale.php", ["contenu" => "Convention/vueMiseAJourConvention.php", "title" => "Mise à jour Convention", "convention" => $convention]);
+        }
+    }
+
 }

@@ -54,28 +54,39 @@ class ControleurGenerique
         if ($utilisateurAVerifier == null) {
             echo '<div class="msgConfirmation"><p>Aucun compte de ce login existe</p></div>';
         } else {
+            if($_POST['type_connexion'] == 'etudiant' || $_POST['type_connexion'] == 'secretariat'){
+                if ($utilisateurAVerifier->getPremiereConnexion() == 0) {
+                    echo '<div class="msgConfirmation"><p>Vous devez changer votre mot de passe</p></div>';
+                } else {
+                    $mdpCorrect = MotDePasse::verifier($_POST['mdp'], $utilisateurAVerifier->getMdp());
+                    if (!$mdpCorrect) {
+                        echo '<div class="msgConfirmation"><p>Mot de passe incorrect</p></div>';
+                        self::afficherConnexion();
+                        die();
+                    }
+                }
+            }
             $mdpCorrect = MotDePasse::verifier($_POST['mdp'], $utilisateurAVerifier->getMdp());
             if (!$mdpCorrect) {
                 echo '<div class="msgConfirmation"><p>Mot de passe incorrect</p></div>';
-            } else {
-                ConnexionUtilisateur::connecter($utilisateurAVerifier->getLogin());
-                $session = Session::getInstance();
-                $session->enregistrer($cle, 1);
-                if($_POST['type_connexion'] == 'secretariat' || $_POST['type_connexion'] == 'etudiant'){
-                    if($utilisateurAVerifier->getPremiereConnexion() == 0){
-                        if($_POST['type_connexion'] == 'secretariat'){
-                            header("Location: controleurFrontal.php?controleur=personnel&action=afficherMAJPersonnel&login=".ConnexionUtilisateur::getLoginUtilisateurConnecte());
-                            die();
-                        }else{
-                            header("Location: controleurFrontal.php?controleur=etudiant&action=afficherMAJEtudiant&login=".ConnexionUtilisateur::getLoginUtilisateurConnecte());
-                            die();
-                        }
+                self::afficherConnexion();
+                die();
+            }
+            ConnexionUtilisateur::connecter($utilisateurAVerifier->getLogin());
+            $session = Session::getInstance();
+            $session->enregistrer($cle, 1);
+            if ($_POST['type_connexion'] == 'secretariat' || $_POST['type_connexion'] == 'etudiant') {
+                if ($utilisateurAVerifier->getPremiereConnexion() == 0) {
+                    if ($_POST['type_connexion'] == 'secretariat') {
+                        header("Location: controleurFrontal.php?controleur=personnel&action=afficherMAJPersonnel&login=" . ConnexionUtilisateur::getLoginUtilisateurConnecte());
+                        die();
+                    } else {
+                        header("Location: controleurFrontal.php?controleur=etudiant&action=afficherMAJEtudiant&login=" . ConnexionUtilisateur::getLoginUtilisateurConnecte());
+                        die();
                     }
                 }
             }
         }
-
-
 
 
         self::afficherAccueil();
@@ -90,6 +101,7 @@ class ControleurGenerique
     {
         self::afficherVue("Entreprise/inscription.html");
     }
+
     public static function afficherConnexion()
     {
         self::afficherVue("Generale/connexion.html");
@@ -124,11 +136,13 @@ class ControleurGenerique
         }
     }
 
-    public static function afficherLDAP(){
+    public static function afficherLDAP()
+    {
         self::afficherVue("LDAP.php");
     }
 
-    public static function afficherBord(){
+    public static function afficherBord()
+    {
         self::afficherVue("vueGenerale.php", ["contenu" => "Personnel/vueBord.php", "title" => "TableauDeBord"]);
     }
 }

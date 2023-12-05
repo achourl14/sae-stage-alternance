@@ -71,6 +71,9 @@ echo '<div class = "groupCartes">';
 if ($conventions == null) {
     echo '<div class="msgConfirmation"><p> Aucune convention trouvé </p></div>';
 } else {
+    echo "<div class='page'>
+            <div> <a href='controleurFrontal.php?controleur=convention&action=afficherMAJConvention&numConvention=1'> MAJ </a> </div>
+           </div>";
     foreach ($conventions as $convention) {
 
         if(\App\Lib\ConnexionUtilisateur::estMaitreSA()){

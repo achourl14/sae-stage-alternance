@@ -5,87 +5,87 @@ namespace App\Modele\DataObject;
 class ConventionStage extends AbstractDataObject
 {
     private int|null $numConvention;
-    private int $numEtudiant;
-    private string $nomEtu;
-    private string $prenomEtu;
-    private string $numTelPersoEtu;
-    private string $numTelEtu;
-    private string $mailPersoEtu;
-    private string $mailUniversitaireEtu;
-    private string $codeUfr;
-    private string $libUfr;
-    private string $codeDepartement;
-    private string $codeEtape;
-    private string $libEtape;
-    private string $dateDebut;
-    private string $dateFin;
-    private string $interruption;
+    private int|null $numEtudiant;
+    private string|null $nomEtu;
+    private string|null $prenomEtu;
+    private string|null $numTelPersoEtu;
+    private string|null $numTelEtu;
+    private string|null $mailPersoEtu;
+    private string|null $mailUniversitaireEtu;
+    private string|null $codeUfr;
+    private string|null $libUfr;
+    private string|null $codeDepartement;
+    private string|null $codeEtape;
+    private string|null $libEtape;
+    private string|null $dateDebut;
+    private string|null $dateFin;
+    private string|null $interruption;
     private string|null $dateDebutInterruption;
     private string|null $dateFinInterruption;
-    private string $thematique;
-    private string $sujet;
-    private string $fonctionTache;
-    private string $detailProjet;
-    private string $duree;
-    private int $nbJourTravail;
-    private int $nbHeureHebdomadairer;
-    private float $gratification;
-    private string $uniteGratification;
-    private string $uniteDureGratification;
-    private string $conventionValide;
-    private string $nomEnseignantReferent;
-    private string $prenomEnseignentReferent;
-    private string $mailEnseignentReferent;
-    private string $nomSignataire;
-    private string $prenomSignataire;
-    private string $mailSignataire;
-    private string $fonctionSignataire;
-    private string $anneeUniversitaire;
-    private string $typeDeConvention;
-    private string $commentaireStage;
-    private string $commentaireDureeTravail;
-    private int $codeELP;
-    private string $elementPedagogique;
-    private string $codeSexeEtu;
-    private string $avantageNature;
-    private string $adresseEtu;
-    private int $codePostalEtu;
-    private string $paysEtu;
-    private string $villeEtu;
-    private string $conventionValidePedagogique;
-    private string $avenant;
-    private string $detailAvenant;
-    private string $dateCreationConvention;
-    private string $dateModificationConvention;
-    private string $origineStage;
-    private string $nomEtablissement;
-    private int $siret;
-    private string $adresseResidence;
-    private string $adresseVoie;
-    private string $adresseLibCedex;
-    private int $codePostal;
-    private string $communeEtabAcceuil;
-    private string $paysEtablissement;
-    private string $statutJuridique;
-    private string $typeStructure;
-    private string $effectif;
-    private string $codeNAF;
-    private string $telEtablissement;
-    private string $fax;
-    private string $mailEtablissement;
-    private string $siteWeb;
-    private string $nomServiceAcceuil;
-    private string $residenceServiceAcceuil;
-    private string $voieServiceAcceuil;
-    private string $cedexServiceAcceuil;
-    private int $codePostalServiceAcceuil;
-    private string $communeServiceAcceuil;
-    private string $paysServiceAcceuil;
-    private string $nomTuteurProfessionnel;
-    private string $prenomTuteurProfessionnel;
-    private string $mailTuteurProfessionnel;
-    private string $telTuteurProfessionnel;
-    private string $fonctionTuteurProfessionnel;
+    private string|null $thematique;
+    private string|null $sujet;
+    private string|null $fonctionTache;
+    private string|null $detailProjet;
+    private string|null $duree;
+    private int|null $nbJourTravail;
+    private int|null $nbHeureHebdomadairer;
+    private float|null $gratification;
+    private string|null $uniteGratification;
+    private string|null $uniteDureGratification;
+    private string|null $conventionValide;
+    private string|null $nomEnseignantReferent;
+    private string|null $prenomEnseignentReferent;
+    private string|null $mailEnseignentReferent;
+    private string|null $nomSignataire;
+    private string|null $prenomSignataire;
+    private string|null $mailSignataire;
+    private string|null $fonctionSignataire;
+    private string|null $anneeUniversitaire;
+    private string|null $typeDeConvention;
+    private string|null $commentaireStage;
+    private string|null $commentaireDureeTravail;
+    private int|null $codeELP;
+    private string|null $elementPedagogique;
+    private string|null $codeSexeEtu;
+    private string|null $avantageNature;
+    private string|null $adresseEtu;
+    private int|null $codePostalEtu;
+    private string|null $paysEtu;
+    private string|null $villeEtu;
+    private string|null $conventionValidePedagogique;
+    private string|null $avenant;
+    private string|null $detailAvenant;
+    private string|null $dateCreationConvention;
+    private string|null $dateModificationConvention;
+    private string|null $origineStage;
+    private string|null $nomEtablissement;
+    private int|null $siret;
+    private string|null $adresseResidence;
+    private string|null $adresseVoie;
+    private string|null $adresseLibCedex;
+    private int|null $codePostal;
+    private string|null $communeEtabAcceuil;
+    private string|null $paysEtablissement;
+    private string|null $statutJuridique;
+    private string|null $typeStructure;
+    private string|null $effectif;
+    private string|null $codeNAF;
+    private string|null $telEtablissement;
+    private string|null $fax;
+    private string|null $mailEtablissement;
+    private string|null $siteWeb;
+    private string|null $nomServiceAcceuil;
+    private string|null $residenceServiceAcceuil;
+    private string|null $voieServiceAcceuil;
+    private string|null $cedexServiceAcceuil;
+    private int|null $codePostalServiceAcceuil;
+    private string|null $communeServiceAcceuil;
+    private string|null $paysServiceAcceuil;
+    private string|null $nomTuteurProfessionnel;
+    private string|null $prenomTuteurProfessionnel;
+    private string|null $mailTuteurProfessionnel;
+    private string|null $telTuteurProfessionnel;
+    private string|null $fonctionTuteurProfessionnel;
 
     /**
      * @param int $numConvention
@@ -171,7 +171,90 @@ class ConventionStage extends AbstractDataObject
      * @param string $telTuteurProfessionnel
      * @param string $fonctionTuteurProfessionnel
      */
-    public function __construct(int|null $numConvention, int $numEtudiant, string $nomEtu, string $prenomEtu, string $numTelPersoEtu, string $numTelEtu, string $mailPersoEtu, string $mailUniversitaireEtu, string $codeUfr, string $libUfr, string $codeDepartement, string $codeEtape, string $libEtape, string $dateDebut, string $dateFin, string $interruption, string|null $dateDebutInterruption, string|null $dateFinInterruption, string $thematique, string $sujet, string $fonctionTache, string $detailProjet, string $duree, int $nbJourTravail, int $nbHeureHebdomadairer, float $gratification, string $uniteGratification, string $uniteDureGratification, string $conventionValide, string $nomEnseignantReferent, string $prenomEnseignentReferent, string $mailEnseignentReferent, string $nomSignataire, string $prenomSignataire, string $mailSignataire, string $fonctionSignataire, string $anneeUniversitaire, string $typeDeConvention, string $commentaireStage, string $commentaireDureeTravail, int $codeELP, string $elementPedagogique, string $codeSexeEtu, string $avantageNature, string $adresseEtu, int $codePostalEtu, string $paysEtu, string $villeEtu, string $conventionValidePedagogique, string $avenant, string $detailAvenant, string $dateCreationConvention, string $dateModificationConvention, string $origineStage, string $nomEtablissement, int $siret, string $adresseResidence, string $adresseVoie, string $adresseLibCedex, int $codePostal, string $communeEtabAcceuil, string $paysEtablissement, string $statutJuridique, string $typeStructure, string $effectif, string $codeNAF, string $telEtablissement, string $fax, string $mailEtablissement, string $siteWeb, string $nomServiceAcceuil, string $residenceServiceAcceuil, string $voieServiceAcceuil, string $cedexServiceAcceuil, int $codePostalServiceAcceuil, string $communeServiceAcceuil, string $paysServiceAcceuil, string $nomTuteurProfessionnel, string $prenomTuteurProfessionnel, string $mailTuteurProfessionnel, string $telTuteurProfessionnel, string $fonctionTuteurProfessionnel)
+    public function __construct(
+        ?int $numConvention,
+        int $numEtudiant,
+        ?string $nomEtu,
+        ?string $prenomEtu,
+        ?string $numTelPersoEtu,
+        ?string $numTelEtu,
+        ?string $mailPersoEtu,
+        ?string $mailUniversitaireEtu,
+        ?string $codeUfr,
+        ?string $libUfr,
+        ?string $codeDepartement,
+        ?string $codeEtape,
+        ?string $libEtape,
+        ?string $dateDebut,
+        ?string $dateFin,
+        ?string $interruption,
+        ?string $dateDebutInterruption,
+        ?string $dateFinInterruption,
+        ?string $thematique,
+        ?string $sujet,
+        ?string $fonctionTache,
+        ?string $detailProjet,
+        ?string $duree,
+        ?int $nbJourTravail,
+        ?int $nbHeureHebdomadairer,
+        ?float $gratification,
+        ?string $uniteGratification,
+        ?string $uniteDureGratification,
+        ?string $conventionValide,
+        ?string $nomEnseignantReferent,
+        ?string $prenomEnseignentReferent,
+        ?string $mailEnseignentReferent,
+        ?string $nomSignataire,
+        ?string $prenomSignataire,
+        ?string $mailSignataire,
+        ?string $fonctionSignataire,
+        ?string $anneeUniversitaire,
+        ?string $typeDeConvention,
+        ?string $commentaireStage,
+        ?string $commentaireDureeTravail,
+        ?int $codeELP,
+        ?string $elementPedagogique,
+        ?string $codeSexeEtu,
+        ?string $avantageNature,
+        ?string $adresseEtu,
+        ?int $codePostalEtu,
+        ?string $paysEtu,
+        ?string $villeEtu,
+        ?string $conventionValidePedagogique,
+        ?string $avenant,
+        ?string $detailAvenant,
+        ?string $dateCreationConvention,
+        ?string $dateModificationConvention,
+        ?string $origineStage,
+        ?string $nomEtablissement,
+        int $siret,
+        ?string $adresseResidence,
+        ?string $adresseVoie,
+        ?string $adresseLibCedex,
+        ?int $codePostal,
+        ?string $communeEtabAcceuil,
+        ?string $paysEtablissement,
+        ?string $statutJuridique,
+        ?string $typeStructure,
+        ?string $effectif,
+        ?string $codeNAF,
+        ?string $telEtablissement,
+        ?string $fax,
+        ?string $mailEtablissement,
+        ?string $siteWeb,
+        ?string $nomServiceAcceuil,
+        ?string $residenceServiceAcceuil,
+        ?string $voieServiceAcceuil,
+        ?string $cedexServiceAcceuil,
+        ?int $codePostalServiceAcceuil,
+        ?string $communeServiceAcceuil,
+        ?string $paysServiceAcceuil,
+        ?string $nomTuteurProfessionnel,
+        ?string $prenomTuteurProfessionnel,
+        ?string $mailTuteurProfessionnel,
+        ?string $telTuteurProfessionnel,
+        ?string $fonctionTuteurProfessionnel
+    )
     {
         $this->numConvention = $numConvention;
         $this->numEtudiant = $numEtudiant;
@@ -257,7 +340,7 @@ class ConventionStage extends AbstractDataObject
         $this->fonctionTuteurProfessionnel = $fonctionTuteurProfessionnel;
     }
 
-    public function getNumConvention()
+    public function getNumConvention(): ?int
     {
         return $this->numConvention;
     }
@@ -267,402 +350,402 @@ class ConventionStage extends AbstractDataObject
         return $this->numEtudiant;
     }
 
-    public function getNomEtu(): string
+    public function getNomEtu(): ?string
     {
         return $this->nomEtu;
     }
 
-    public function getPrenomEtu(): string
+    public function getPrenomEtu(): ?string
     {
         return $this->prenomEtu;
     }
 
-    public function getNumTelPersoEtu(): string
+    public function getNumTelPersoEtu(): ?string
     {
         return $this->numTelPersoEtu;
     }
 
-    public function getNumTelEtu(): string
+    public function getNumTelEtu(): ?string
     {
         return $this->numTelEtu;
     }
 
-    public function getMailPersoEtu(): string
+    public function getMailPersoEtu(): ?string
     {
         return $this->mailPersoEtu;
     }
 
-    public function getMailUniversitaireEtu(): string
+    public function getMailUniversitaireEtu(): ?string
     {
         return $this->mailUniversitaireEtu;
     }
 
-    public function getCodeUfr(): string
+    public function getCodeUfr(): ?string
     {
         return $this->codeUfr;
     }
 
-    public function getLibUfr(): string
+    public function getLibUfr(): ?string
     {
         return $this->libUfr;
     }
 
-    public function getCodeDepartement(): string
+    public function getCodeDepartement(): ?string
     {
         return $this->codeDepartement;
     }
 
-    public function getCodeEtape(): string
+    public function getCodeEtape(): ?string
     {
         return $this->codeEtape;
     }
 
-    public function getLibEtape(): string
+    public function getLibEtape(): ?string
     {
         return $this->libEtape;
     }
 
-    public function getDateDebut(): string
+    public function getDateDebut(): ?string
     {
         return $this->dateDebut;
     }
 
-    public function getDateFin(): string
+    public function getDateFin(): ?string
     {
         return $this->dateFin;
     }
 
-    public function getInterruption(): string
+    public function getInterruption(): ?string
     {
         return $this->interruption;
     }
 
-    public function getDateDebutInterruption()
+    public function getDateDebutInterruption(): ?string
     {
         return $this->dateDebutInterruption;
     }
 
-    public function getDateFinInterruption()
+    public function getDateFinInterruption(): ?string
     {
         return $this->dateFinInterruption;
     }
 
-    public function getThematique(): string
+    public function getThematique(): ?string
     {
         return $this->thematique;
     }
 
-    public function getSujet(): string
+    public function getSujet(): ?string
     {
         return $this->sujet;
     }
 
-    public function getFonctionTache(): string
+    public function getFonctionTache(): ?string
     {
         return $this->fonctionTache;
     }
 
-    public function getDetailProjet(): string
+    public function getDetailProjet(): ?string
     {
         return $this->detailProjet;
     }
 
-    public function getDuree(): string
+    public function getDuree(): ?string
     {
         return $this->duree;
     }
 
-    public function getNbJourTravail(): int
+    public function getNbJourTravail(): ?int
     {
         return $this->nbJourTravail;
     }
 
-    public function getNbHeureHebdomadairer(): int
+    public function getNbHeureHebdomadairer(): ?int
     {
         return $this->nbHeureHebdomadairer;
     }
 
-    public function getGratification(): float
+    public function getGratification(): ?float
     {
         return $this->gratification;
     }
 
-    public function getUniteGratification(): string
+    public function getUniteGratification(): ?string
     {
         return $this->uniteGratification;
     }
 
-    public function getUniteDureGratification(): string
+    public function getUniteDureGratification(): ?string
     {
         return $this->uniteDureGratification;
     }
 
-    public function getConventionValide(): string
+    public function getConventionValide(): ?string
     {
         return $this->conventionValide;
     }
 
-    public function getNomEnseignantReferent(): string
+    public function getNomEnseignantReferent(): ?string
     {
         return $this->nomEnseignantReferent;
     }
 
-    public function getPrenomEnseignentReferent(): string
+    public function getPrenomEnseignentReferent(): ?string
     {
         return $this->prenomEnseignentReferent;
     }
 
-    public function getMailEnseignentReferent(): string
+    public function getMailEnseignentReferent(): ?string
     {
         return $this->mailEnseignentReferent;
     }
 
-    public function getNomSignataire(): string
+    public function getNomSignataire(): ?string
     {
         return $this->nomSignataire;
     }
 
-    public function getPrenomSignataire(): string
+    public function getPrenomSignataire(): ?string
     {
         return $this->prenomSignataire;
     }
 
-    public function getMailSignataire(): string
+    public function getMailSignataire(): ?string
     {
         return $this->mailSignataire;
     }
 
-    public function getFonctionSignataire(): string
+    public function getFonctionSignataire(): ?string
     {
         return $this->fonctionSignataire;
     }
 
-    public function getAnneeUniversitaire(): string
+    public function getAnneeUniversitaire(): ?string
     {
         return $this->anneeUniversitaire;
     }
 
-    public function getTypeDeConvention(): string
+    public function getTypeDeConvention(): ?string
     {
         return $this->typeDeConvention;
     }
 
-    public function getCommentaireStage(): string
+    public function getCommentaireStage(): ?string
     {
         return $this->commentaireStage;
     }
 
-    public function getCommentaireDureeTravail(): string
+    public function getCommentaireDureeTravail(): ?string
     {
         return $this->commentaireDureeTravail;
     }
 
-    public function getCodeELP(): int
+    public function getCodeELP(): ?int
     {
         return $this->codeELP;
     }
 
-    public function getElementPedagogique(): string
+    public function getElementPedagogique(): ?string
     {
         return $this->elementPedagogique;
     }
 
-    public function getCodeSexeEtu(): string
+    public function getCodeSexeEtu(): ?string
     {
         return $this->codeSexeEtu;
     }
 
-    public function getAvantageNature(): string
+    public function getAvantageNature(): ?string
     {
         return $this->avantageNature;
     }
 
-    public function getAdresseEtu(): string
+    public function getAdresseEtu(): ?string
     {
         return $this->adresseEtu;
     }
 
-    public function getCodePostalEtu(): int
+    public function getCodePostalEtu(): ?int
     {
         return $this->codePostalEtu;
     }
 
-    public function getPaysEtu(): string
+    public function getPaysEtu(): ?string
     {
         return $this->paysEtu;
     }
 
-    public function getVilleEtu(): string
+    public function getVilleEtu(): ?string
     {
         return $this->villeEtu;
     }
 
-    public function getConventionValidePedagogique(): string
+    public function getConventionValidePedagogique(): ?string
     {
         return $this->conventionValidePedagogique;
     }
 
-    public function getAvenant(): string
+    public function getAvenant(): ?string
     {
         return $this->avenant;
     }
 
-    public function getDetailAvenant(): string
+    public function getDetailAvenant(): ?string
     {
         return $this->detailAvenant;
     }
 
-    public function getDateCreationConvention(): string
+    public function getDateCreationConvention(): ?string
     {
         return $this->dateCreationConvention;
     }
 
-    public function getDateModificationConvention(): string
+    public function getDateModificationConvention(): ?string
     {
         return $this->dateModificationConvention;
     }
 
-    public function getOrigineStage(): string
+    public function getOrigineStage(): ?string
     {
         return $this->origineStage;
     }
 
-    public function getNomEtablissement(): string
+    public function getNomEtablissement(): ?string
     {
         return $this->nomEtablissement;
     }
 
-    public function getSiret(): int
+    public function getSiret(): ?int
     {
         return $this->siret;
     }
 
-    public function getAdresseResidence(): string
+    public function getAdresseResidence(): ?string
     {
         return $this->adresseResidence;
     }
 
-    public function getAdresseVoie(): string
+    public function getAdresseVoie(): ?string
     {
         return $this->adresseVoie;
     }
 
-    public function getAdresseLibCedex(): string
+    public function getAdresseLibCedex(): ?string
     {
         return $this->adresseLibCedex;
     }
 
-    public function getCodePostal(): int
+    public function getCodePostal(): ?int
     {
         return $this->codePostal;
     }
 
-    public function getCommuneEtabAcceuil(): string
+    public function getCommuneEtabAcceuil(): ?string
     {
         return $this->communeEtabAcceuil;
     }
 
-    public function getPaysEtablissement(): string
+    public function getPaysEtablissement(): ?string
     {
         return $this->paysEtablissement;
     }
 
-    public function getStatutJuridique(): string
+    public function getStatutJuridique(): ?string
     {
         return $this->statutJuridique;
     }
 
-    public function getTypeStructure(): string
+    public function getTypeStructure(): ?string
     {
         return $this->typeStructure;
     }
 
-    public function getEffectif(): string
+    public function getEffectif(): ?string
     {
         return $this->effectif;
     }
 
-    public function getCodeNAF(): string
+    public function getCodeNAF(): ?string
     {
         return $this->codeNAF;
     }
 
-    public function getTelEtablissement(): string
+    public function getTelEtablissement(): ?string
     {
         return $this->telEtablissement;
     }
 
-    public function getFax(): string
+    public function getFax(): ?string
     {
         return $this->fax;
     }
 
-    public function getMailEtablissement(): string
+    public function getMailEtablissement(): ?string
     {
         return $this->mailEtablissement;
     }
 
-    public function getSiteWeb(): string
+    public function getSiteWeb(): ?string
     {
         return $this->siteWeb;
     }
 
-    public function getNomServiceAcceuil(): string
+    public function getNomServiceAcceuil(): ?string
     {
         return $this->nomServiceAcceuil;
     }
 
-    public function getResidenceServiceAcceuil(): string
+    public function getResidenceServiceAcceuil(): ?string
     {
         return $this->residenceServiceAcceuil;
     }
 
-    public function getVoieServiceAcceuil(): string
+    public function getVoieServiceAcceuil(): ?string
     {
         return $this->voieServiceAcceuil;
     }
 
-    public function getCedexServiceAcceuil(): string
+    public function getCedexServiceAcceuil(): ?string
     {
         return $this->cedexServiceAcceuil;
     }
 
-    public function getCodePostalServiceAcceuil(): int
+    public function getCodePostalServiceAcceuil(): ?int
     {
         return $this->codePostalServiceAcceuil;
     }
 
-    public function getCommuneServiceAcceuil(): string
+    public function getCommuneServiceAcceuil(): ?string
     {
         return $this->communeServiceAcceuil;
     }
 
-    public function getPaysServiceAcceuil(): string
+    public function getPaysServiceAcceuil(): ?string
     {
         return $this->paysServiceAcceuil;
     }
 
-    public function getNomTuteurProfessionnel(): string
+    public function getNomTuteurProfessionnel(): ?string
     {
         return $this->nomTuteurProfessionnel;
     }
 
-    public function getPrenomTuteurProfessionnel(): string
+    public function getPrenomTuteurProfessionnel(): ?string
     {
         return $this->prenomTuteurProfessionnel;
     }
 
-    public function getMailTuteurProfessionnel(): string
+    public function getMailTuteurProfessionnel(): ?string
     {
         return $this->mailTuteurProfessionnel;
     }
 
-    public function getTelTuteurProfessionnel(): string
+    public function getTelTuteurProfessionnel(): ?string
     {
         return $this->telTuteurProfessionnel;
     }
 
-    public function getFonctionTuteurProfessionnel(): string
+    public function getFonctionTuteurProfessionnel(): ?string
     {
         return $this->fonctionTuteurProfessionnel;
     }

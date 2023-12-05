@@ -8,6 +8,7 @@ use App\Modele\HTTP\Session;
 use App\Modele\Repository\EtudiantRepository;
 use App\Modele\Repository\OffreRepository;
 use App\Modele\Repository\PostulerRepository;
+use App\Modele\Repository\StageRepository;
 use DateTime;
 
 class ControleurOffre extends ControleurGenerique
@@ -216,16 +217,24 @@ class ControleurOffre extends ControleurGenerique
 
     public static function afficherMenuPostulerOffre()
     {
+        $offresCandidate = null;
         if (ConnexionUtilisateur::estEtudiant()) {
-            $postulers = (new PostulerRepository())->recupererParEtudiant(ConnexionUtilisateur::getLoginUtilisateurConnecte());
-            $offresCandidate = null;
-            if ($postulers != null) {
-                foreach ($postulers as $postuler) {
-                    $offresCandidate[] = (new OffreRepository())->recupererParClePrimaire($postuler->getIdOffre());
+            $stage = (new StageRepository())->recupererParEtudiant(ConnexionUtilisateur::getLoginUtilisateurConnecte());
+            if($stage == null){
+                $postulers = (new PostulerRepository())->recupererParEtudiant(ConnexionUtilisateur::getLoginUtilisateurConnecte());
+                if ($postulers != null) {
+                    foreach ($postulers as $postuler) {
+                        $offresCandidate[] = (new OffreRepository())->recupererParClePrimaire($postuler->getIdOffre());
+                    }
                 }
+            }else{
+                $offresCandidate[] =  (new OffreRepository())->recupererParClePrimaire($stage->getIdOffreStage());
             }
             self::afficherVue("vueGenerale.php", ["contenu" => "Etudiant/vueMenuPostulerOffre.php", "title" => "Vos candidatures", "offresCandidate" => $offresCandidate]);
+        }else {
+            self::afficherErreur("Vous n'avez pas les droits pour accéder a cette fontionnalité");
         }
+
     }
 
 

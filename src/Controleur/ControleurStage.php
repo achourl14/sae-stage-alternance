@@ -7,6 +7,7 @@ use App\Modele\DataObject\Alternance;
 use App\Modele\DataObject\Stage;
 use App\Modele\Repository\AlternanceRepository;
 use App\Modele\Repository\EtudiantRepository;
+use App\Modele\Repository\OffreRepository;
 use App\Modele\Repository\PostulerRepository;
 use App\Modele\Repository\StageRepository;
 
@@ -34,9 +35,17 @@ class ControleurStage extends ControleurGenerique
             if(isset($_GET["idOffre"])){
                 $postuler = (new PostulerRepository())->recupererParClePrimaire(ConnexionUtilisateur::getLoginUtilisateurConnecte(),$_GET['idOffre']);
                 if($postuler != null && $postuler->getEtat() == 1){
-                    $stage = new Stage(ConnexionUtilisateur::getLoginUtilisateurConnecte(),$_GET["idOffre"]);
-                    StageRepository::sauvegarder($stage);
+                    $offre = (new OffreRepository())->recupererParClePrimaire($_GET["idOffre"]);
+                    if($offre->getType() == "Alternance"){
+                        $alternance = new Alternance(ConnexionUtilisateur::getLoginUtilisateurConnecte(),$_GET["idOffre"]);
+                        AlternanceRepository::sauvegarder($alternance);
+                    }else{
+                        $stage = new Stage(ConnexionUtilisateur::getLoginUtilisateurConnecte(),$_GET["idOffre"]);
+                        StageRepository::sauvegarder($stage);
+                    }
                     (new PostulerRepository())->deleteAllPostulerFromEtudiant(ConnexionUtilisateur::getLoginUtilisateurConnecte());
+                    echo '<div class="msgConfirmation"><p> Vous avez choisi cette offre définitivement </p></div>';
+                    ControleurOffre::afficherMenuPostulerOffre();
                 }else{
                     echo '<div class="msgConfirmation"><p> Vous n\'avez jamais été accepté à cette offre </p></div>';
                     self::afficherAccueil();

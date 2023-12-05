@@ -46,7 +46,7 @@
 
 .bord .bordListeBouton{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .bord .bordListeBouton div{

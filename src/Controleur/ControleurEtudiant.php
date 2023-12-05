@@ -7,6 +7,7 @@ use App\Lib\MotDePasse;
 use App\Modele\DataObject\Etudiant;
 use App\Modele\DataObject\Postuler;
 use App\Modele\HTTP\Session;
+use App\Modele\Repository\AlternanceRepository;
 use App\Modele\Repository\EntrepriseRepository;
 use App\Modele\Repository\EtudiantRepository;
 use App\Modele\Repository\PostulerRepository;
@@ -222,13 +223,14 @@ class ControleurEtudiant extends ControleurGenerique
     public static function afficherVuePostuler()
     {
         $stage = (new StageRepository())->recupererParEtudiant(ConnexionUtilisateur::getLoginUtilisateurConnecte());
+        $alternance = (new AlternanceRepository())->recupererParEtudiant(ConnexionUtilisateur::getLoginUtilisateurConnecte());
         $postuler = (new PostulerRepository())->recupererParClePrimaire(ConnexionUtilisateur::getLoginUtilisateurConnecte(),$_GET['idOffre']);
         if(ConnexionUtilisateur::estEtudiant()){
             if($postuler == null){
-                if($stage == null){
+                if($stage == null && $alternance == null){
                     self::afficherVue("vueGenerale.php", ["contenu" => "Etudiant/vuePostuler.php", "title" => "Ajouter CV", "offreId" => $_GET['idOffre']]);
                 }else{
-                    echo '<div class="msgConfirmation"><p> Vous avez déjà choisis un stage définitivement </p></div>';
+                    echo '<div class="msgConfirmation"><p> Vous avez déjà choisis un stage ou une alternance définitivement </p></div>';
                     ControleurOffre::offres();
                 }
 
@@ -254,6 +256,8 @@ class ControleurEtudiant extends ControleurGenerique
             } else {
                 $postuler = new Postuler(ConnexionUtilisateur::getLoginUtilisateurConnecte(), $_GET['idOffre'], -9);
                 (new PostulerRepository())->sauvegarder($postuler);
+                echo '<div class="msgConfirmation"><p> Vous avez bien postuler à l\'offre </p></div>';
+                ControleurOffre::offres();
             }
         }
     }

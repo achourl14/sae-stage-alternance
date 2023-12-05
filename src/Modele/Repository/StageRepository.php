@@ -11,7 +11,7 @@ use DateTime;
 class StageRepository extends AbstractRepository
 {
     public static function sauvegarder(Stage $stage) : void {
-        $sql = "INSERT INTO Stage VALUES(:loginEtuStage, :idOffreStageTag)";
+        $sql = "INSERT INTO Stage VALUES(:loginEtuStageTag, :idOffreStageTag)";
 
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
@@ -56,11 +56,7 @@ class StageRepository extends AbstractRepository
         // On donne les valeurs et on exécute la requête
         $pdoStatement->execute($values);
 
-        $tableau = null;
-        foreach ($pdoStatement as $objetFormatTableau) {
-            $tableau[] = $this->construireDepuisTableau($objetFormatTableau);
-        }
-        return $tableau;
+        return $this->construireDepuisTableau($pdoStatement->fetch());
     }
 
     protected function getNomClePrimaire(): string

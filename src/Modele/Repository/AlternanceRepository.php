@@ -40,6 +40,25 @@ class AlternanceRepository extends AbstractRepository
         return $this->construireDepuisTableau($objetFormatTableau);
     }
 
+    public function recupererParEtudiant(string $loginEtuAlternance)
+    {
+        $sql = "SELECT * from " . $this->getNomTable() . " WHERE loginEtuAlternance = :loginEtuAlternanceTag";
+        // Préparation de la requête
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+
+        $values = array(
+            "loginEtuAlternanceTag" => $loginEtuAlternance
+        );
+        // On donne les valeurs et on exécute la requête
+        $pdoStatement->execute($values);
+
+        $tableau = null;
+        foreach ($pdoStatement as $objetFormatTableau) {
+            $tableau[] = $this->construireDepuisTableau($objetFormatTableau);
+        }
+        return $tableau;
+    }
+
     protected function getNomClePrimaire(): string
     {
         return "peutpas";

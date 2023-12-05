@@ -31,7 +31,7 @@ class Stage extends AbstractDataObject
     /**
      * @return mixed
      */
-    public function getIdOffreStage()
+    public function getIdOffreStage() : int
     {
         return $this->idOffreStage;
     }
