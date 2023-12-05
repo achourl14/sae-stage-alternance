@@ -1,10 +1,27 @@
 <?php
 $m="";
 $f = "";
+$interruptionOui ="";
+$interruptionNon ="";
+$avenantNon ="";
+$avenantOui ="";
+
 if($convention->getCodeSexeEtu() == "M"){
     $m = "selected";
 }else{
     $f= "selected";
+}
+
+if($convention->getInterruption() == "non"){
+    $interruptionNon = "selected";
+}else{
+    $interruptionOui = "selected";
+}
+
+if($convention->getAvenant() == "non"){
+    $avenantNon = "selected";
+}else{
+    $avenantOui = "selected";
 }
 
 
@@ -75,8 +92,8 @@ if($convention->getCodeSexeEtu() == "M"){
                     <div class="input-box">
                         <label class="details" for="interr"> Interruption </label>
                         <select name="interruption" id="interr" >
-                            <option value="non">Non</option>
-                            <option value="oui">Oui</option>
+                            <option value="non" <?php echo $interruptionNon ?>>Non</option>
+                            <option value="oui" <?php echo $interruptionOui ?>>Oui</option>
                         </select>
                     </div>
                     <div class="input-box">
@@ -217,8 +234,8 @@ if($convention->getCodeSexeEtu() == "M"){
                     <div class="input-box">
                         <label class="details" for="avenant"> Avenant </label>
                         <select name="avenant" id="avenant" >
-                            <option value="oui">Oui</option>
-                            <option value="non">Non</option>
+                            <option value="oui"<?php echo $avenantOui ?>>Oui</option>
+                            <option value="non"<?php echo $avenantNon ?>>Non</option>
                         </select>
                     </div>
                     <div class="input-box">
