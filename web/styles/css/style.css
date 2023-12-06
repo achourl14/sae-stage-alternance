@@ -310,4 +310,8 @@ footer{
   font-family: 'Noto Sans', sans-serif;
 }
 
+audio#audio{
+  display: none;
+}
+
 
