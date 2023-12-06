@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="styles/css/form_supp.css">
     <link rel="stylesheet" type="text/css" href="styles/css/tableauDeBord.css">
     <script src="styles/js/scriptFormulaireStageExterne.js"></script>
+    <script src="styles/js/onglet.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
@@ -71,6 +72,9 @@ if(ConnexionUtilisateur::estEntreprise()){
 }
 if(ConnexionUtilisateur::estEtudiant() || ConnexionUtilisateur::estSecretariat()){
     echo '<div><a  id="'.$offres.'" href="controleurFrontal.php?controleur=offre&action=offres">offres</a></div>';
+}
+if(ConnexionUtilisateur::estEtudiant()){
+    echo "<div><a href='controleurFrontal.php?controleur=convention&action=afficherMAJConvention'>Convention</a></div>";
 }
 
 if(ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estSecretariat()){

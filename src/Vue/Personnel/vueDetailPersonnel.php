@@ -57,12 +57,28 @@ if(isset($_GET['login'])){
 
     echo '<hr/>';
 
+    echo "<div class='detailLigne'>";
+    echo "<div class='case'>";
     echo "<h3> &#9993; Adresse mail </h3>";
-    echo '<p>'. $mail .'</p>';
+    echo "<div class='supcase'>";
+    echo '<p class="case">'. $mail .'</p>';
+    echo "</div>";
+    echo "</div>";
+
+    echo "<div class='case'>";
     echo "<h3> &#9742; Téléphone </h3>";
-    echo '<p>'. $telephone .'</p>';
+    echo "<div class='supcase'>";
+    echo '<p class="case">'. $telephone .'</p>';
+    echo "</div>";
+    echo "</div>";
+
+    echo "<div class='case'>";
     echo "<h3> Date de naissance : </h3>";
-    echo '<p>'. $dateDeNaissance .'</p>';
+    echo "<div class='supcase'>";
+    echo '<p class="case">'. $dateDeNaissance .'</p>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
     echo '</div>';
 }else{
     echo '<div class="msgConfirmation"><p> ⚠️ Ce Personnel de l\'IUT est introuvable ⚠️ </p></div>';

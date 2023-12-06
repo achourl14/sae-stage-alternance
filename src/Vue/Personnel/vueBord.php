@@ -21,7 +21,7 @@ if (isset($recherche["promotion"])) {
     }
 }
 
-$pedag = "";
+$pedag = "checked";
 $finale = "";
 if (Session::getInstance()->contient("requeteFiltreTBConvention")) {
     $rechercheConvention = Session::getInstance()->lire("requeteFiltreTBConvention");
@@ -31,6 +31,7 @@ if(isset($rechercheConvention["validation"])){
         $pedag = "checked";
     } else {
         $finale = "checked";
+        $pedag = "";
     }
 }
 

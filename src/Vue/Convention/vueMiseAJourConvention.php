@@ -17,6 +17,10 @@ if($convention->getCodeSexeEtu() == "M"){
                 <div class="title">Convention</div>
                 <div class="user-details">
                     <div class="input-box">
+                        <span class="details">Numero Convention</span>
+                        <input type="text" name="numConvention" required readonly value=<?php echo $convention->getNumConvention()  ?>>
+                    </div>
+                    <div class="input-box">
                         <span class="details">Numero etudiant</span>
                         <input type="text" name="numEtudiant" pattern="[0-9]{8}" maxlength="8" required readonly value=<?php echo $convention->getNumConvention()  ?>>
                     </div>

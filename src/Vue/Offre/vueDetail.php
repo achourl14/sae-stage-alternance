@@ -13,6 +13,8 @@ if(isset($offreDetail)){
     }else if($offre->getType() == "A"){
         $type = "Alternance";
     }
+
+
     echo "<h1>".htmlspecialchars($offre->getNomOffre())."</h1>";
     echo "<h2> Entreprise : " . htmlspecialchars($entreprise->getNomEntreprise()) . "</h2>";
 //    echo "<h2> Adresse du siège social : ". htmlspecialchars($entreprise->getAdresse()) ."</h2>";
@@ -34,28 +36,40 @@ if(isset($offreDetail)){
     echo "<hr/>";
     echo "<h1> Detail du poste : </h1>";
 
+    echo "<div class='detailLigne'>";
+    echo "<div class='case'>";
     echo "<h3> &#128182; Rémunération </h3>";
     echo "<div class='supcase'>";
     echo "<p class='case'> Environ ".$offre->getRemuneration() ." € par mois</p>";
     echo "</div>";
+    echo "</div>";
 
+    echo "<div class='case'>";
     echo "<h3> &#128188; Type de poste </h3>";
     echo "<div class='supcase'>";
     echo "<p class='case'>".$type ."</p>";
     echo "</div>";
+    echo "</div>";
 
+    echo "<div class='case'>";
     echo "<h3> &#128198; Dates </h3>";
     echo "<div class='supcase'>";
-    echo "<p class='case'> Date de début : ".$offre->getDateDebut() ."</p>";
+    echo "<p class='case'> Date de début : ".$offre->getDateDebut() ." </p>";
     echo "<p class='case'> Date de fin : ".$offre->getDateFin() ."</p>";
+    echo "</div>";
+    echo "</div>";
     echo "</div>";
     $annee ="";
     if($offre->getButAnnee() == 0){ $annee = "BUT 2 ou BUT 3"; }else {$annee = "BUT ". $offre->getButAnnee();}
+    echo "<div class='detailLigne'>";
+    echo "<div class='case'>";
      echo "<h3> 🎯 Cible d'étudiant </h3>";
     echo "<div class='supcase'>";
     echo "<p class='case'>". $annee  ."</p>";
     echo "<p class='case'> Parcours : ".$offre->getParcours() ."</p>";
     echo "</div>";
+    echo "</div>";
+    echo '</div>';
 
     $emplacementFichier = null;
     if(file_exists("../upload_offres/offre_".$offre->getIdOffre()."." ."pdf")){

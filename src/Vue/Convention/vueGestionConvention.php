@@ -71,9 +71,6 @@ echo '<div class = "groupCartes">';
 if ($conventions == null) {
     echo '<div class="msgConfirmation"><p> Aucune convention trouvé </p></div>';
 } else {
-    echo "<div class='page'>
-            <div> <a href='controleurFrontal.php?controleur=convention&action=afficherMAJConvention&numConvention=1'> MAJ </a> </div>
-           </div>";
     foreach ($conventions as $convention) {
 
         if(\App\Lib\ConnexionUtilisateur::estMaitreSA()){
@@ -100,7 +97,7 @@ if ($conventions == null) {
             }
         }
 
-        //echo "<a href='controleurFrontal.php?controleur=convention&action=afficherDetailConvention&num=" . $convention->getNumConvention() . "'>";
+        echo "<a href='controleurFrontal.php?controleur=convention&action=afficherDetailConvention&numConvention=" . $convention->getNumConvention() . "'>";
         echo '<div class ="carte ' . $class . '">';
         echo("<h1> Numéro : " . htmlspecialchars($convention->getNumConvention()) . "</h1>");
         echo("<p> Prénom : " . htmlspecialchars($convention->getPrenomEtu()) . " </p>");
@@ -112,7 +109,7 @@ if ($conventions == null) {
             echo("<a class='buttonDeBase " . $classButton . "' href='controleurFrontal.php?controleur=convention&action=validerConvention&numConvention=" . $convention->getNumConvention() . "'>" . $buttonValider . "</a>");
         }
         echo "</div>";
-        //echo "</a>";
+        echo "</a>";
     }
 }
 echo '</div>';

@@ -24,18 +24,51 @@ if(isset($_GET['numSiret'])){
 
     echo '<hr/>';
 
+    echo "<h3> Informations Générale sur l\'entreprise </h3>";
+    echo "<div class='detailLigne'>";
+    echo "<div class='case'>";
     echo "<h3> Adresse de l'entreprise : </h3>";
-    echo '<p>'. htmlspecialchars($entreprise->getAdresse()) .'</p>';
+    echo "<div class='supcase'>";
+    echo '<p class="case">'. htmlspecialchars($entreprise->getAdresse()) .'</p>';
+    echo "</div>";
+    echo '</div>';
+
+    echo "<div class='case'>";
     echo "<h3> &#9993; Adresse mail </h3>";
-    echo '<p>'. htmlspecialchars($entreprise->getMail()) .'</p>';
+    echo "<div class='supcase'>";
+    echo '<p class="case">'. htmlspecialchars($entreprise->getMail()) .'</p>';
+    echo "</div>";
+    echo '</div>';
+
+    echo "<div class='case'>";
     echo "<h3> &#9742; Téléphone </h3>";
-    echo '<p>'. htmlspecialchars($entreprise->getTelephone() ).'</p>';
+    echo "<div class='supcase'>";
+    echo '<p class="case">'. htmlspecialchars($entreprise->getTelephone() ).'</p>';
+    echo "</div>";
+    echo '</div>';
+    echo '</div>';
+
+    echo "<h3> Informations complémentaire </h3>";
+    echo "<div class='detailLigne'>";
+    echo "<div class='case'>";
     echo "<h3> Code APE </h3>";
-    echo '<p>'.htmlspecialchars($entreprise->getCodeApe()) .'</p>';
+    echo "<div class='supcase'>";
+    echo '<p class="case">'.htmlspecialchars($entreprise->getCodeApe()) .'</p>';
+    echo "</div>";
+    echo '</div>';
+
+    echo "<div class='case'>";
     echo "<h3> Activité </h3>";
-    echo '<p>'.htmlspecialchars($entreprise->getActivite()) .'</p>';
+    echo "<div class='supcase'>";
+    echo '<p class="case">'.htmlspecialchars($entreprise->getActivite()) .'</p>';
+    echo "</div>";
+    echo '</div>';
+
+    echo "<div class='case'>";
     echo "<h3> Interlocuteur Principal </h3>";
-    echo '<p>'.htmlspecialchars($entreprise->getInterlocuteur()) .'</p>';
+    echo "<div class='supcase'>";
+    echo '<p class="case">'.htmlspecialchars($entreprise->getInterlocuteur()) .'</p>';
+    echo '</div>';
     echo '</div>';
     echo '</div>';
 }else{

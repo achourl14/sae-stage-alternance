@@ -1,7 +1,7 @@
 <?php
 use App\Modele\HTTP\Session;
 echo '<div class="toutesLesCartes">';
-echo "<div class='title'> $titre </div>";
+echo "<div class='title'> Liste des étudiants </div>";
 
 echo '<div class="contient">';
 echo '<div class="content">';

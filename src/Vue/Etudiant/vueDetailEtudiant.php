@@ -71,15 +71,55 @@ if(isset($_GET['login'])){
 
     echo '<hr/>';
 
+    echo "<h3> Informations Personnelles de l'étudiant : </h3>";
+    echo "<div class='detailLigne'>";
+    echo "<div class='case'>";
     echo "<h3> &#9993; Adresse mail </h3>";
-    echo '<p>'. $mail .'</p>';
-    echo "<h3> &#9742; Téléphone </h3>";
-    echo '<p>'. $telephone.'</p>';
-    echo "<h3> Date de naissance : </h3>";
-    echo '<p>'. $dateDeNaissance .'</p>';
-    echo "<h3> Année de sa promotion / Groupe / Parcours </h3>";
-    echo '<p> Année '. htmlspecialchars($etudiant->getPromotion()) .', Groupe '. $groupe .', Parcours '. $parcours .'</p>';
+    echo "<div class='supcase'>";
+    echo '<p class="case">'. $mail .'</p>';
+    echo "</div>";
     echo '</div>';
+
+    echo "<div class='case'>";
+    echo "<h3> &#9742; Téléphone </h3>";
+    echo "<div class='supcase'>";
+    echo '<p class="case">'. $telephone.'</p>';
+    echo "</div>";
+    echo '</div>';
+
+    echo "<div class='case'>";
+    echo "<h3> Date de naissance : </h3>";
+    echo "<div class='supcase'>";
+    echo '<p class="case">'. $dateDeNaissance .'</p>';
+    echo '</div>';
+    echo "</div>";
+    echo '</div>';
+
+    echo '<h3> Informations sur le BUT de l\'étudiant </h3>';
+    echo '<div class="detailLigne">';
+    echo '<div class="case">';
+    echo "<h3> Année de sa promotion </h3>";
+    echo "<div class='supcase'>";
+    echo '<p class="case"> Année '. htmlspecialchars($etudiant->getPromotion()) .'</p>';
+    echo '</div>';
+    echo '</div>';
+
+    echo '<div class="case">';
+    echo "<h3> Groupe </h3>";
+    echo "<div class='supcase'>";
+    echo '<p class="case">'. $groupe .'</p>';
+    echo '</div>';
+    echo '</div>';
+
+    echo '<div class="case">';
+    echo "<h3> Parcours </h3>";
+    echo "<div class='supcase'>";
+    echo '<p class="case">'. $parcours .'</p>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
+
+
     echo '</div>';
 }else{
     echo '<div class="msgConfirmation"><p> ⚠️ Cet étudiant est introuvable ⚠️ </p></div>';
