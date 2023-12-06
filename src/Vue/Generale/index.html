@@ -40,7 +40,18 @@
 
 <div class="acceuil">
     <div >
-        <div><img class="imageAcceuil" src="img/logoApp.png"></div>
+        <div><img class="imageAcceuil" id="logo" src="img/logoApp.png"></div>
+        <div class="audio"><audio  controls id="audio" src=""></audio></div>
+
+        <script>
+            var moisActuel = new Date().getMonth();
+            if (moisActuel === 11) {
+                document.getElementById('logo').src = 'img/logoNoel.png';
+                document.getElementById('audio').src = 'audio/audioNoel.mp3';
+            }
+        </script>
+        <script src="styles/js/snowfall.js"></script>
+
         <div> <h1> Explorez, apprenez, grandissez - Bienvenue sur notre plateforme de stages et d'alternance! </h1></div>
 
     </div>
