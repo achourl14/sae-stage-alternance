@@ -118,4 +118,16 @@ class PostulerRepository
     public function getNomTable(){
         return "Postuler";
     }
+
+    public function supprimer(string $loginEtu, string $idOffre){
+        $sql = "DELETE FROM ". $this->getNomTable() ." WHERE idOffre = :idOffreTag AND loginEtu = :loginEtuTag";
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+
+        $values = array(
+            "idOffreTag" => $idOffre,
+            "loginEtuTag" => $loginEtu
+        );
+
+        $pdoStatement->execute($values);
+    }
 }

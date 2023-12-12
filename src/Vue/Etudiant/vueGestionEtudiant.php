@@ -22,7 +22,7 @@ foreach((new \App\Modele\Repository\EtudiantRepository())->getNomsColones() as $
         <div class="user-details">
             <div class="input-box-search">
                 <span class="details">Login</span>
-               <?php echo '<input type="text" name="login" pattern="[0-9]{14}" minlength="14" maxlength="14" value="'.$recherche["login"].'" />'; ?>
+                   <?php echo '<input type="text" name="login" maxlength="50" value="'.$recherche["login"].'" />'; ?>
             </div>
             <div class="input-box-search">
                 <span class="details">Numéro Etudiant</span>

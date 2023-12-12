@@ -245,6 +245,20 @@ class ControleurConvention extends ControleurGenerique
         }
     }
 
+    public static function afficherMAJConventionDepuisEtudiant()
+    {
+        if (ConnexionUtilisateur::estEtudiant()) {
+            $etudiant = (new EtudiantRepository())->recupererParClePrimaire(ConnexionUtilisateur::getLoginUtilisateurConnecte());
+            $convention = (new ConventionStageRepository())->recupererDepuisNumEtudiant($etudiant->getNumEtudiant());
+            if($convention == null){
+                self::afficherErreur("Vous n'avez pas de convention");
+            }else{
+                self::afficherVue("vueGenerale.php", ["contenu" => "Convention/vueMiseAJourConvention.php", "title" => "Mise à jour Convention", "convention" => $convention]);
+            }
+
+        }
+    }
+
     public static function afficherDetailConvention()
     {
         if (!isset($_GET["numConvention"])) {

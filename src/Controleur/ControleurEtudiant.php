@@ -296,4 +296,27 @@ class ControleurEtudiant extends ControleurGenerique
             self::afficherAccueil();
         }
     }
+
+    public static function annulerCandidature(){
+        if(ConnexionUtilisateur::estEtudiant()){
+            $postuler = (new PostulerRepository())->recupererParClePrimaire(ConnexionUtilisateur::getLoginUtilisateurConnecte(),$_GET['idOffre']);
+            if($postuler != null){
+                (new PostulerRepository())->supprimer(ConnexionUtilisateur::getLoginUtilisateurConnecte(),$postuler->getIdOffre());
+                $supprimeSuccess = unlink("../upload_postuler/cv_postuler_".$postuler->getIdOffre()."_".ConnexionUtilisateur::getLoginUtilisateurConnecte().".pdf");
+                $supprimeSuccess = unlink("../upload_postuler/cv_postuler_".$postuler->getIdOffre()."_".ConnexionUtilisateur::getLoginUtilisateurConnecte().".docx");
+                $supprimeSuccess = unlink("../upload_postuler/cv_postuler_".$postuler->getIdOffre()."_".ConnexionUtilisateur::getLoginUtilisateurConnecte().".txt");
+                $supprimeSuccess = unlink("../upload_postuler/lettre_postuler_".$postuler->getIdOffre()."_".ConnexionUtilisateur::getLoginUtilisateurConnecte().".pdf");
+                $supprimeSuccess = unlink("../upload_postuler/lettre_postuler_".$postuler->getIdOffre()."_".ConnexionUtilisateur::getLoginUtilisateurConnecte().".docx");
+                $supprimeSuccess = unlink("../upload_postuler/lettre_postuler_".$postuler->getIdOffre()."_".ConnexionUtilisateur::getLoginUtilisateurConnecte().".txt");
+                echo '<div class="msgConfirmation"><p> Vous avez bien annulé votre candidature </p></div>';
+                ControleurOffre::offres();
+            }else{
+                echo '<div class="msgConfirmation"><p> Vous n\'avez pas postulé à cette offre </p></div>';
+                ControleurOffre::offres();
+            }
+        }else{
+            echo '<div class="msgConfirmation"><p> Vous n\'avez pas la possibilité d\'annuler votre candidature </p></div>';
+            self::afficherAccueil();
+        }
+    }
 }

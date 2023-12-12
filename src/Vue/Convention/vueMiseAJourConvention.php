@@ -39,7 +39,7 @@ if($convention->getAvenant() == "non"){
                     </div>
                     <div class="input-box">
                         <span class="details">Numero etudiant</span>
-                        <input type="text" name="numEtudiant" pattern="[0-9]{8}" maxlength="8" required readonly value=<?php echo $convention->getNumConvention()  ?>>
+                        <input type="text" name="numEtudiant" pattern="[0-9]{8}" maxlength="8" required readonly value=<?php echo $convention->getNumEtudiant()  ?>>
                     </div>
                     <div class="input-box">
                         <span class="details">Nom etudiant</span>
@@ -150,7 +150,7 @@ if($convention->getAvenant() == "non"){
                     </div>
                     <div class="input-box">
                         <span class="details">Nom de l'enseignent référent</span>
-                        <input type="text" placeholder="" name="nomEnseignantReferent" maxlength="50" value=<?php echo $convention->getNomEnseignentReferent() ?>>
+                        <input type="text" placeholder="" name="nomEnseignantReferent" maxlength="50" value=<?php echo $convention->getNomEnseignantReferent() ?>>
                     </div>
                     <div class="input-box">
                         <span class="details">Prenom de l'enseignent référent</span>

@@ -20,10 +20,18 @@ if(isset($offreDetail)){
 //    echo "<h2> Adresse du siège social : ". htmlspecialchars($entreprise->getAdresse()) ."</h2>";
     echo "<h2> Adresse où vous effecturez votre Stage ou Alternance : ". htmlspecialchars($offre->getAdresseDeOffre()) . " " .htmlspecialchars($offre->getCodePostal()). " ". htmlspecialchars($offre->getVille()) ."</h2>";
 
-    if(\App\Lib\ConnexionUtilisateur::estEtudiant()){
+    $postuler = (new \App\Modele\Repository\PostulerRepository())->recupererParClePrimaire(\App\Lib\ConnexionUtilisateur::getLoginUtilisateurConnecte(),$offre->getIdOffre());
+    $stage = (new \App\Modele\Repository\StageRepository())->recupererDepuisClePrimaire(\App\Lib\ConnexionUtilisateur::getLoginUtilisateurConnecte(),$offre->getIdOffre());
+    if(\App\Lib\ConnexionUtilisateur::estEtudiant() && $postuler == null && $stage == null){
         echo '<div class="boutonsGeneral">';
         echo '<a  href="controleurFrontal.php?controleur=etudiant&action=afficherVuePostuler&idOffre='.$offre->getIdOffre().'"> Postuler sur cette offre </a>';
         echo '</div>';
+    }else if(\App\Lib\ConnexionUtilisateur::estEtudiant() && $postuler != null && $stage == null){
+        echo '<div class="boutonsGeneral">';
+        echo '<a  href="controleurFrontal.php?controleur=etudiant&action=annulerCandidature&idOffre='.$offre->getIdOffre().'"> Annuler ma candidature </a>';
+        echo '</div>';
+    }else if(\App\Lib\ConnexionUtilisateur::estEtudiant()){
+        echo "<h2> Vous avez déjà un stage </h2>";
     }
 
     if(\App\Lib\ConnexionUtilisateur::estEntreprise()){

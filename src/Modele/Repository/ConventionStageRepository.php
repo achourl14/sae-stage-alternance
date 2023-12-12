@@ -250,6 +250,18 @@ class ConventionStageRepository extends AbstractRepository
         }
     }
 
+    public function recupererDepuisNumEtudiant($numEtudiant) : ConventionStage {
+        $sql = "SELECT * FROM ConventionStage WHERE numEtudiant = :numEtudiantTag";
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdoStatement->execute(array(
+            "numEtudiantTag" => $numEtudiant
+        ));
+
+        $conventionFormatTableau = $pdoStatement->fetch();
+
+        return $this->construireDepuisTableau($conventionFormatTableau);
+    }
+
 
     protected function getNomTable(): string
     {
