@@ -250,7 +250,7 @@ class ConventionStageRepository extends AbstractRepository
         }
     }
 
-    public function recupererDepuisNumEtudiant($numEtudiant) : ConventionStage {
+    public function recupererDepuisNumEtudiant($numEtudiant) : ?ConventionStage {
         $sql = "SELECT * FROM ConventionStage WHERE numEtudiant = :numEtudiantTag";
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
         $pdoStatement->execute(array(
@@ -258,6 +258,9 @@ class ConventionStageRepository extends AbstractRepository
         ));
 
         $conventionFormatTableau = $pdoStatement->fetch();
+        if($conventionFormatTableau == null){
+            return null;
+        }
 
         return $this->construireDepuisTableau($conventionFormatTableau);
     }

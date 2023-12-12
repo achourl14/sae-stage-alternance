@@ -74,7 +74,12 @@ if(ConnexionUtilisateur::estEtudiant() || ConnexionUtilisateur::estSecretariat()
     echo '<div><a  id="'.$offres.'" href="controleurFrontal.php?controleur=offre&action=offres">offres</a></div>';
 }
 if(ConnexionUtilisateur::estEtudiant()){
-    echo "<div><a href='controleurFrontal.php?controleur=convention&action=afficherMAJConventionDepuisEtudiant'>Convention</a></div>";
+    $etudiant = (new \App\Modele\Repository\EtudiantRepository())->recupererParClePrimaire(ConnexionUtilisateur::getLoginUtilisateurConnecte());
+    if($etudiant != null) {
+        if ((new \App\Modele\Repository\ConventionStageRepository())->recupererDepuisNumEtudiant($etudiant->getNumEtudiant()) != null) {
+            echo "<div><a href='controleurFrontal.php?controleur=convention&action=afficherMAJConventionDepuisEtudiant'>Convention</a></div>";
+        }
+    }
 }
 
 if(ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estSecretariat()){

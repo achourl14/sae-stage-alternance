@@ -89,7 +89,7 @@ class ControleurConvention extends ControleurGenerique
 
     public static function afficherCreationConvention()
     {
-        if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
+        if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estEtudiant()) {
             $offre = null;
             $etudiant = null;
             $entreprise = null;

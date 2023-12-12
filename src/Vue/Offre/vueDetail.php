@@ -21,7 +21,7 @@ if(isset($offreDetail)){
     echo "<h2> Adresse où vous effecturez votre Stage ou Alternance : ". htmlspecialchars($offre->getAdresseDeOffre()) . " " .htmlspecialchars($offre->getCodePostal()). " ". htmlspecialchars($offre->getVille()) ."</h2>";
 
     $postuler = (new \App\Modele\Repository\PostulerRepository())->recupererParClePrimaire(\App\Lib\ConnexionUtilisateur::getLoginUtilisateurConnecte(),$offre->getIdOffre());
-    $stage = (new \App\Modele\Repository\StageRepository())->recupererDepuisClePrimaire(\App\Lib\ConnexionUtilisateur::getLoginUtilisateurConnecte(),$offre->getIdOffre());
+    $stage = (new \App\Modele\Repository\StageRepository())->recupererParEtudiant(\App\Lib\ConnexionUtilisateur::getLoginUtilisateurConnecte());
     if(\App\Lib\ConnexionUtilisateur::estEtudiant() && $postuler == null && $stage == null){
         echo '<div class="boutonsGeneral">';
         echo '<a  href="controleurFrontal.php?controleur=etudiant&action=afficherVuePostuler&idOffre='.$offre->getIdOffre().'"> Postuler sur cette offre </a>';

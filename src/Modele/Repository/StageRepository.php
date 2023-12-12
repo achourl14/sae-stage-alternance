@@ -44,7 +44,7 @@ class StageRepository extends AbstractRepository
         return $this->construireDepuisTableau($objetFormatTableau);
     }
 
-    public function recupererParEtudiant(string $loginEtuStage)
+    public function recupererParEtudiant(string $loginEtuStage) : ?Stage
     {
         $sql = "SELECT * from " . $this->getNomTable() . " WHERE loginEtuStage = :loginEtuStageTag";
         // Préparation de la requête
@@ -55,8 +55,12 @@ class StageRepository extends AbstractRepository
         );
         // On donne les valeurs et on exécute la requête
         $pdoStatement->execute($values);
+        $stageFormatTableau = $pdoStatement->fetch();
+        if($stageFormatTableau == null){
+            return null;
+        }
 
-        return $this->construireDepuisTableau($pdoStatement->fetch());
+        return $this->construireDepuisTableau($stageFormatTableau);
     }
 
     protected function getNomClePrimaire(): string

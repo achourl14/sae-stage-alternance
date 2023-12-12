@@ -373,7 +373,7 @@ if($convention->getAvenant() == "non"){
 
                 </div>
                 <div class="button">
-                    <input type="submit" value="S'inscrire">
+                    <input type="submit" value="Mettre à jour">
                 </div>
 
             </form>
