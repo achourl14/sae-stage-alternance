@@ -140,6 +140,8 @@ class ControleurGenerique
     public static function afficherLDAP()
     {
         self::afficherVue("LDAP.php");
+        echo '<div class="msgConfirmation"><p>L\'annuaire LDAP a bien été mis à jour</p></div>';
+        ControleurEtudiant::afficherGestionEtudiant();
     }
 
     public static function afficherBord()

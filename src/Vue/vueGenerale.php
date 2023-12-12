@@ -118,6 +118,9 @@ if(!ConnexionUtilisateur::estConnecte()){
     if(ConnexionUtilisateur::estPersonnel()){
         echo '<a href="controleurFrontal.php?controleur=personnel&action=afficherMAJPersonnel&login='.ConnexionUtilisateur::getLoginUtilisateurConnecte().'">Configuration</a>';
     }
+    if(ConnexionUtilisateur::estMaitreSA()){
+        echo '<a href="controleurFrontal.php?controleur=generique&action=afficherLDAP"> Mettra à jour LDAP </a>';
+    }
     if(ConnexionUtilisateur::estEntreprise()){
         echo '<a href="controleurFrontal.php?controleur=entreprise&action=afficherMAJEntreprise&numSiret='.ConnexionUtilisateur::getLoginUtilisateurConnecte().'">Configuration</a>';
     }else if(ConnexionUtilisateur::estEtudiant()){

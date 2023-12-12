@@ -33,6 +33,13 @@ if($offresCandidate == null){
             echo "</div>";
         }else{
             echo "<p> Ceci est votre choix définitif </p>";
+            $etudiant = (new \App\Modele\Repository\EtudiantRepository())->recupererParClePrimaire(\App\Lib\ConnexionUtilisateur::getLoginUtilisateurConnecte());
+            $convention= (new \App\Modele\Repository\ConventionStageRepository())->recupererDepuisNumEtudiant($etudiant->getNumEtudiant());
+            if($convention == null) {
+                echo '<a href="controleurFrontal.php?controleur=convention&action=afficherCreationConvention&idOffre=' . $offre->getIdOffre() . '&login=' . \App\Lib\ConnexionUtilisateur::getLoginUtilisateurConnecte() . '"> Créer votre convention </a>';
+            }else{
+                echo '<a href="controleurFrontal.php?controleur=convention&action=afficherDetailConvention&numConvention='.$convention->getNumConvention().'"> Voir ma convention </a>';
+            }
         }
         echo "</div>";
         echo "</a>";

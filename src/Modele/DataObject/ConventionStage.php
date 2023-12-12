@@ -27,8 +27,8 @@ class ConventionStage extends AbstractDataObject
     private string|null $fonctionTache;
     private string|null $detailProjet;
     private string|null $duree;
-    private int|null $nbJourTravail;
-    private int|null $nbHeureHebdomadairer;
+    private string|null $nbJourTravail;
+    private string|null $nbHeureHebdomadairer;
     private float|null $gratification;
     private string|null $uniteGratification;
     private string|null $uniteDureGratification;
@@ -44,12 +44,12 @@ class ConventionStage extends AbstractDataObject
     private string|null $typeDeConvention;
     private string|null $commentaireStage;
     private string|null $commentaireDureeTravail;
-    private int|null $codeELP;
+    private string|null $codeELP;
     private string|null $elementPedagogique;
     private string|null $codeSexeEtu;
     private string|null $avantageNature;
     private string|null $adresseEtu;
-    private int|null $codePostalEtu;
+    private string|null $codePostalEtu;
     private string|null $paysEtu;
     private string|null $villeEtu;
     private string|null $conventionValidePedagogique;
@@ -59,11 +59,11 @@ class ConventionStage extends AbstractDataObject
     private string|null $dateModificationConvention;
     private string|null $origineStage;
     private string|null $nomEtablissement;
-    private int|null $siret;
+    private string|null $siret;
     private string|null $adresseResidence;
     private string|null $adresseVoie;
     private string|null $adresseLibCedex;
-    private int|null $codePostal;
+    private string|null $codePostal;
     private string|null $communeEtabAcceuil;
     private string|null $paysEtablissement;
     private string|null $statutJuridique;
@@ -78,7 +78,7 @@ class ConventionStage extends AbstractDataObject
     private string|null $residenceServiceAcceuil;
     private string|null $voieServiceAcceuil;
     private string|null $cedexServiceAcceuil;
-    private int|null $codePostalServiceAcceuil;
+    private string|null $codePostalServiceAcceuil;
     private string|null $communeServiceAcceuil;
     private string|null $paysServiceAcceuil;
     private string|null $nomTuteurProfessionnel;
@@ -195,8 +195,8 @@ class ConventionStage extends AbstractDataObject
         ?string $fonctionTache,
         ?string $detailProjet,
         ?string $duree,
-        ?int $nbJourTravail,
-        ?int $nbHeureHebdomadairer,
+        ?string $nbJourTravail,
+        ?string $nbHeureHebdomadairer,
         ?float $gratification,
         ?string $uniteGratification,
         ?string $uniteDureGratification,
@@ -212,12 +212,12 @@ class ConventionStage extends AbstractDataObject
         ?string $typeDeConvention,
         ?string $commentaireStage,
         ?string $commentaireDureeTravail,
-        ?int $codeELP,
+        ?string $codeELP,
         ?string $elementPedagogique,
         ?string $codeSexeEtu,
         ?string $avantageNature,
         ?string $adresseEtu,
-        ?int $codePostalEtu,
+        ?string $codePostalEtu,
         ?string $paysEtu,
         ?string $villeEtu,
         ?string $conventionValidePedagogique,
@@ -227,11 +227,11 @@ class ConventionStage extends AbstractDataObject
         ?string $dateModificationConvention,
         ?string $origineStage,
         ?string $nomEtablissement,
-        int $siret,
+        string $siret,
         ?string $adresseResidence,
         ?string $adresseVoie,
         ?string $adresseLibCedex,
-        ?int $codePostal,
+        ?string $codePostal,
         ?string $communeEtabAcceuil,
         ?string $paysEtablissement,
         ?string $statutJuridique,
@@ -246,7 +246,7 @@ class ConventionStage extends AbstractDataObject
         ?string $residenceServiceAcceuil,
         ?string $voieServiceAcceuil,
         ?string $cedexServiceAcceuil,
-        ?int $codePostalServiceAcceuil,
+        ?string $codePostalServiceAcceuil,
         ?string $communeServiceAcceuil,
         ?string $paysServiceAcceuil,
         ?string $nomTuteurProfessionnel,
@@ -455,12 +455,12 @@ class ConventionStage extends AbstractDataObject
         return $this->duree;
     }
 
-    public function getNbJourTravail(): ?int
+    public function getNbJourTravail(): ?string
     {
         return $this->nbJourTravail;
     }
 
-    public function getNbHeureHebdomadairer(): ?int
+    public function getNbHeureHebdomadairer(): ?string
     {
         return $this->nbHeureHebdomadairer;
     }
@@ -540,7 +540,7 @@ class ConventionStage extends AbstractDataObject
         return $this->commentaireDureeTravail;
     }
 
-    public function getCodeELP(): ?int
+    public function getCodeELP(): ?string
     {
         return $this->codeELP;
     }
@@ -565,7 +565,7 @@ class ConventionStage extends AbstractDataObject
         return $this->adresseEtu;
     }
 
-    public function getCodePostalEtu(): ?int
+    public function getCodePostalEtu(): ?string
     {
         return $this->codePostalEtu;
     }
@@ -615,7 +615,7 @@ class ConventionStage extends AbstractDataObject
         return $this->nomEtablissement;
     }
 
-    public function getSiret(): ?int
+    public function getSiret(): ?string
     {
         return $this->siret;
     }
@@ -635,7 +635,7 @@ class ConventionStage extends AbstractDataObject
         return $this->adresseLibCedex;
     }
 
-    public function getCodePostal(): ?int
+    public function getCodePostal(): ?string
     {
         return $this->codePostal;
     }
@@ -710,7 +710,7 @@ class ConventionStage extends AbstractDataObject
         return $this->cedexServiceAcceuil;
     }
 
-    public function getCodePostalServiceAcceuil(): ?int
+    public function getCodePostalServiceAcceuil(): ?string
     {
         return $this->codePostalServiceAcceuil;
     }

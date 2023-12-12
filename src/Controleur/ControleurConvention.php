@@ -96,7 +96,7 @@ class ControleurConvention extends ControleurGenerique
             if (isset($_GET["login"]) && isset($_GET["idOffre"])) {
                 $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_GET["login"]);
                 $offre = (new OffreRepository())->recupererParClePrimaire($_GET["idOffre"]);
-                $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($offre->getIdOffre());
+                $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($offre->getIdEntreprise());
             }
 
             self::afficherVue("vueGenerale.php", ["contenu" => "Convention/vueConventions.php", "title" => "Créer Convention", "etudiant" => $etudiant, "offre" => $offre, "entreprise" => $entreprise]);
@@ -105,6 +105,7 @@ class ControleurConvention extends ControleurGenerique
 
     public static function creerConvention()
     {
+
         $dateDebutInterup = "0000-00-00";
         $dateFinInterup = "0000-00-00";
         if ($_POST['dateDebutInterruption'] != "") {
@@ -112,6 +113,15 @@ class ControleurConvention extends ControleurGenerique
         }
         if ($_POST['dateFinInterruption'] != "") {
             $dateFinInterup = $_POST['dateFinInterruption'];
+        }
+
+        $dateCreationConvention = date("Y-m-d", time());
+        $dateModificationConvention = date("Y-m-d", time());
+        if($_POST['dateCreationConvention'] != ""){
+            $dateCreationConvention = $_POST['dateCreationConvention'];
+        }
+        if($_POST['dateModificationConvention'] != ""){
+            $dateModificationConvention = $_POST['dateModificationConvention'];
         }
         $convention = new ConventionStage(
             null,
@@ -165,8 +175,8 @@ class ControleurConvention extends ControleurGenerique
             $_POST['conventionValidePedagogique'],
             $_POST['avenant'],
             $_POST['detailAvenant'],
-            $_POST['dateCreationConvention'],
-            $_POST['dateModificationConvention'],
+            $dateCreationConvention,
+            $dateModificationConvention,
             $_POST['origineStage'],
             $_POST['nomEtablissement'],
             $_POST['siret'],
