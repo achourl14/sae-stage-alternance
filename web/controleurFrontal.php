@@ -1,6 +1,7 @@
 <?php
 require_once( __DIR__ .'/../src/Lib/Psr4AutoloaderClass.php');
 use App\Controleur\Controleur;
+use App\Controleur\ControleurGenerique;
 use App\Lib\MotDePasse;
 
 // initialisation
@@ -15,7 +16,7 @@ if(isset($_GET['action'])){
     $action = $_GET['action'];
     Controleur::$action();
 }else{
-    Controleur::afficherAccueil();
+    \App\Controleur\ControleurGenerique::afficherAccueil();
 }
 $nomDeClasseControleur = "App\Controleur\Controleur";
 if(isset($_GET['controleur'])) {
@@ -31,7 +32,7 @@ if(isset($_GET['controleur'])) {
                 $nomDeClasseControleur::afficherErreur("Méthod not founded (Méthode non trouvé)");
             }
         } else {
-            $nomDeClasseControleur::afficherListe();
+            ControleurGenerique::afficherAccueil();
         }
     } else {
         \App\Controleur\ControleurGenerique::afficherErreur("Aucun Controleur de ce nom ci trouvé");

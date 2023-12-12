@@ -10,7 +10,9 @@
     <link rel="stylesheet" type="text/css" href="styles/css/form_externe.css">
     <link rel="stylesheet" type="text/css" href="styles/css/mesCandidatures.css">
     <link rel="stylesheet" type="text/css" href="styles/css/form_supp.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/tableauDeBord.css">
     <script src="styles/js/scriptFormulaireStageExterne.js"></script>
+    <script src="styles/js/onglet.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
@@ -61,12 +63,18 @@ echo '</div>';
 
 echo '<div id="navButton">';
 echo  '<div><a href="controleurFrontal.php" id='.$accueil.'>Accueil</a></div>';
+if(ConnexionUtilisateur::estMaitreSA()){
+    echo '<div><a href="controleurFrontal.php?controleur=personnel&action=afficherTableauDeBord">Tableau De Bord</a></div>';
+}
 if(ConnexionUtilisateur::estEntreprise()){
     echo  '<div><a href="controleurFrontal.php?controleur=offre&action=afficherFormulaire" id='.$form.'>Creer Offre</a></div>';
     echo '<div><a  id="'.$offres.'" href="controleurFrontal.php?controleur=offre&action=offres"> Mes offre</a></div>';
 }
 if(ConnexionUtilisateur::estEtudiant() || ConnexionUtilisateur::estSecretariat()){
     echo '<div><a  id="'.$offres.'" href="controleurFrontal.php?controleur=offre&action=offres">offres</a></div>';
+}
+if(ConnexionUtilisateur::estEtudiant()){
+    echo "<div><a href='controleurFrontal.php?controleur=convention&action=afficherMAJConventionDepuisEtudiant'>Convention</a></div>";
 }
 
 if(ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estSecretariat()){

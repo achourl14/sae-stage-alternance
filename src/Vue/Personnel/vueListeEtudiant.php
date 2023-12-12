@@ -1,7 +1,7 @@
 <?php
 use App\Modele\HTTP\Session;
 echo '<div class="toutesLesCartes">';
-echo "<div class='title'> Gestion des Etudiants </div>";
+echo "<div class='title'> Liste des étudiants </div>";
 
 echo '<div class="contient">';
 echo '<div class="content">';
@@ -22,7 +22,7 @@ foreach((new \App\Modele\Repository\EtudiantRepository())->getNomsColones() as $
         <div class="user-details">
             <div class="input-box-search">
                 <span class="details">Login</span>
-                   <?php echo '<input type="text" name="login" maxlength="50" value="'.$recherche["login"].'" />'; ?>
+               <?php echo '<input type="text" name="login" pattern="[0-9]{14}" minlength="14" maxlength="14" value="'.$recherche["login"].'" />'; ?>
             </div>
             <div class="input-box-search">
                 <span class="details">Numéro Etudiant</span>
@@ -85,10 +85,6 @@ if ($pageActuelle != $nbrePages) {
 }
 echo "<div> <a class='' href='controleurFrontal.php?controleur=etudiant&action=afficherGestionEtudiant&page=" . $pageActuelle + 1 . "'> page suivante </a> </div>";
 echo "</div>";
-
-echo '<div class="page">';
-echo "<div> <a href='controleurFrontal.php?controleur=etudiant&action=afficherEtudiant'> Ajouter un étudiant </a> </div>";
-echo '</div>';
 
 echo '<div class = "groupCartes">';
 if ($etudiants == null) {

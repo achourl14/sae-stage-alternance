@@ -1,0 +1,54 @@
+.tableauDeBord{
+    display: flex;
+    flex-direction: row;
+}
+
+.tableauDeBord .div{
+    display: flex;
+    flex-direction: column;
+}
+
+.button{
+    width: calc(100%);
+}
+
+.input-box-TB{
+    width: calc(100%);
+}
+
+.formTB{
+    margin-bottom: -40px;
+}
+
+.boutonBord{
+    text-decoration: none;
+    background-color: #248abe;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+.boutonBord:hover {
+    background-color: #50ad22;
+    color: white;
+    border-color: #50ad22;
+}
+
+.bord{
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.bord .bordListeBouton{
+    display: flex;
+    flex-direction: row;
+}
+
+.bord .bordListeBouton div{
+    margin: 20px;
+}

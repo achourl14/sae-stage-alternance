@@ -5,8 +5,16 @@ $prenomEtu ="";
 $numTelEtu ="";
 $adresseMailPerso ="";
 $adresseMailUniv ="";
-$m="";
-$f="";
+$m ="";
+$f ="";
+$sujet="";
+$gratification ="";
+$nomEntreprise ="";
+$adresseEntreprise ="";
+$telephoneEntreprise ="";
+$adresseMailEntreprise ="";
+
+
 if($etudiant != null){
 
     $isNumEtu = $etudiant->getNumEtudiant();
@@ -15,6 +23,7 @@ if($etudiant != null){
     $isNumTelEtu= $etudiant->getNumTel();
     $isAdresseMailPerso= $etudiant->getMailPerso();
     $isAdresseMailUniv = $etudiant->getEmail();
+
 
 
     $sexeEtu = $etudiant->getSexe();
@@ -48,6 +57,8 @@ $dateDeFin = "";
 if($offre != null){
     $isDateDeDebut = $offre->getDateDebut();
     $isDateDeFin = $offre->getDateFin();
+    $isSujet = $offre->getMission();
+    $isGratification = $offre->getRemuneration();
 
     if(isset($isDateDeDebut)){
         $dateDeDebut = $isDateDeDebut;
@@ -55,13 +66,35 @@ if($offre != null){
     if(isset($isDateDeFin)){
         $dateDeFin = $isDateDeFin;
     }
+    if (isset($isSujet)){
+        $sujet = $isSujet;
+    }
+    if (isset($isGratification)){
+        $gratification = $isGratification;
+    }
 }
 
 $numSiret = "";
 if($entreprise !=null){
     $isNumSiret = $entreprise->getNumSiret();
+    $isNomEntreprise = $entreprise->getNomEntreprise();
+    $isAdresseEntreprise = $entreprise->getAdresseEntreprise();
+    $isTelephoneEntreprise = $entreprise->getTelephoneEntreprise();
+    $isAdresseMailEntreprise = $entreprise->getAdressemail();
     if(isset($numSiret)){
         $numSiret = $isNumSiret;
+    }
+    if(isset($nomEntreprise)){
+        $nomEntreprise = $isNomEntreprise;
+    }
+    if(isset($adresseEntreprise)){
+        $adresseEntreprise = $isAdresseEntreprise;
+    }
+    if(isset($telephoneEntreprise)){
+        $telephoneEntreprise = $isTelephoneEntreprise;
+    }
+    if(isset($adresseMailEntreprise)){
+        $adresseMailEntreprise = $isAdresseMailEntreprise;
     }
 }
 
@@ -151,7 +184,7 @@ if($entreprise !=null){
                     </div>
                     <div class="input-box">
                         <span class="details">Sujet</span>
-                        <input type="text" placeholder="" name="sujet" maxlength="10000" required>
+                        <input type="text" placeholder="" name="sujet" maxlength="10000" required value=<?php echo $sujet ?>>
                     </div>
                     <div class="input-box">
                         <span class="details">Fonction Tache</span>
@@ -175,7 +208,7 @@ if($entreprise !=null){
                     </div>
                     <div class="input-box">
                         <span class="details">Gratification</span>
-                        <input type="number" placeholder="" name="gratification" required>
+                        <input type="number" placeholder="" name="gratification" required value=<?php echo $gratification ?>>
                     </div>
                     <div class="input-box">
                         <span class="details">Unité de la gratification</span>
@@ -301,7 +334,7 @@ if($entreprise !=null){
                     </div>
                     <div class="input-box">
                         <span class="details">Nom de l'établissement</span>
-                        <input type="text" placeholder="" name="nomEtablissement" maxlength="50" required>
+                        <input type="text" placeholder="" name="nomEtablissement" maxlength="50" required value=<?php echo $nomEntreprise ?>>
                     </div>
                     <div class="input-box">
                         <span class="details">Numéro de Siret </span>
@@ -309,7 +342,7 @@ if($entreprise !=null){
                     </div>
                     <div class="input-box">
                         <span class="details">Adresse de résidence</span>
-                        <input type="text" placeholder="" name="adresseResidence" maxlength="50" required>
+                        <input type="text" placeholder="" name="adresseResidence" maxlength="50" required value=<?php echo $adresseEntreprise ?>>
                     </div>
                     <div class="input-box">
                         <span class="details">Adresse voie</span>
@@ -349,7 +382,7 @@ if($entreprise !=null){
                     </div>
                     <div class="input-box">
                         <span class="details">Numéro de téléphone de l'établissement</span>
-                        <input type="text" placeholder="" name="telEtablissement" maxlength="10" required>
+                        <input type="text" placeholder="" name="telEtablissement" maxlength="10" required value=<?php echo $telephoneEntreprise?>>
                     </div>
                     <div class="input-box">
                         <span class="details">Fax</span>
@@ -357,7 +390,7 @@ if($entreprise !=null){
                     </div>
                     <div class="input-box">
                         <span class="details">Adresse mail de l'établissement</span>
-                        <input type="text" placeholder="" name="mailEtablissement" maxlength="50" required>
+                        <input type="text" placeholder="" name="mailEtablissement" maxlength="50" required value=<?php echo $adresseMailEntreprise?>>
                     </div>
                     <div class="input-box">
                         <span class="details">Site web</span>

@@ -7,9 +7,11 @@ use App\Lib\MotDePasse;
 use App\Modele\DataObject\Etudiant;
 use App\Modele\DataObject\Postuler;
 use App\Modele\HTTP\Session;
+use App\Modele\Repository\AlternanceRepository;
 use App\Modele\Repository\EntrepriseRepository;
 use App\Modele\Repository\EtudiantRepository;
 use App\Modele\Repository\PostulerRepository;
+use App\Modele\Repository\StageRepository;
 
 class ControleurEtudiant extends ControleurGenerique
 {
@@ -166,11 +168,13 @@ class ControleurEtudiant extends ControleurGenerique
                         self::afficherErreur("Vos informations " . $etudiant->getLogin() . " ont bien été mis à jour");
                     }
                 } else {
-                    self::afficherErreur("Veuillez rentrer votre mot de passe");
+                    echo '<div class="msgConfirmation"><p> Veuillez rentrer votre mot de passe </p></div>';
+                    self::afficherAccueil();
                 }
 
             } else {
-                self::afficherErreur("Vous n'avez pas les droits");
+                echo '<div class="msgConfirmation"><p> Vous n\'avez pas les droits </p></div>';
+                self::afficherAccueil();
             }
         }
     }
@@ -218,7 +222,28 @@ class ControleurEtudiant extends ControleurGenerique
 
     public static function afficherVuePostuler()
     {
-        self::afficherVue("vueGenerale.php", ["contenu" => "Etudiant/vuePostuler.php", "title" => "Ajouter CV", "offreId" => $_GET['idOffre']]);
+        $stage = (new StageRepository())->recupererParEtudiant(ConnexionUtilisateur::getLoginUtilisateurConnecte());
+        $alternance = (new AlternanceRepository())->recupererParEtudiant(ConnexionUtilisateur::getLoginUtilisateurConnecte());
+        $postuler = (new PostulerRepository())->recupererParClePrimaire(ConnexionUtilisateur::getLoginUtilisateurConnecte(),$_GET['idOffre']);
+        if(ConnexionUtilisateur::estEtudiant()){
+            if($postuler == null){
+                if($stage == null && $alternance == null){
+                    self::afficherVue("vueGenerale.php", ["contenu" => "Etudiant/vuePostuler.php", "title" => "Ajouter CV", "offreId" => $_GET['idOffre']]);
+                }else{
+                    echo '<div class="msgConfirmation"><p> Vous avez déjà choisis un stage ou une alternance définitivement </p></div>';
+                    ControleurOffre::offres();
+                }
+
+            }else{
+                echo '<div class="msgConfirmation"><p> Vous avez déjà postulé à cette offre </p></div>';
+                ControleurOffre::offres();
+            }
+
+        }else{
+            echo '<div class="msgConfirmation"><p> Vous ne pouvez pas postuler à une offre si vous n\'êtes pas étudiant </p></div>';
+            self::afficherAccueil();
+        }
+
     }
 
     public static function postulerBD()
@@ -226,11 +251,13 @@ class ControleurEtudiant extends ControleurGenerique
         if (ConnexionUtilisateur::estEtudiant()) {
             $postulerExiste = (new PostulerRepository())->recupererParClePrimaire(ConnexionUtilisateur::getLoginUtilisateurConnecte(), $_GET['idOffre']);
             if ($postulerExiste != null) {
-                self::afficherErreur("Vous avez déjà postuler à cette offre", "offres");
+                echo '<div class="msgConfirmation"><p> Vous avez déjà postulé à cette offre </p></div>';
+                ControleurOffre::offres();
             } else {
                 $postuler = new Postuler(ConnexionUtilisateur::getLoginUtilisateurConnecte(), $_GET['idOffre'], -9);
                 (new PostulerRepository())->sauvegarder($postuler);
-                self::afficherErreur("Vous avez bien postulé pour cette offre");
+                echo '<div class="msgConfirmation"><p> Vous avez bien postuler à l\'offre </p></div>';
+                ControleurOffre::offres();
             }
         }
     }
@@ -265,13 +292,31 @@ class ControleurEtudiant extends ControleurGenerique
                 }
             }
         } else {
-            self::afficherErreur("Vous n'avez pas la possibilité de postuler à une offre");
+            echo '<div class="msgConfirmation"><p> Vous n\'avez pas la possibilité de postuler à une offre </p></div>';
+            self::afficherAccueil();
         }
     }
 
-    public static function validerOffreDeffinitif()
-    {
-
+    public static function annulerCandidature(){
+        if(ConnexionUtilisateur::estEtudiant()){
+            $postuler = (new PostulerRepository())->recupererParClePrimaire(ConnexionUtilisateur::getLoginUtilisateurConnecte(),$_GET['idOffre']);
+            if($postuler != null){
+                (new PostulerRepository())->supprimer(ConnexionUtilisateur::getLoginUtilisateurConnecte(),$postuler->getIdOffre());
+                $supprimeSuccess = unlink("../upload_postuler/cv_postuler_".$postuler->getIdOffre()."_".ConnexionUtilisateur::getLoginUtilisateurConnecte().".pdf");
+                $supprimeSuccess = unlink("../upload_postuler/cv_postuler_".$postuler->getIdOffre()."_".ConnexionUtilisateur::getLoginUtilisateurConnecte().".docx");
+                $supprimeSuccess = unlink("../upload_postuler/cv_postuler_".$postuler->getIdOffre()."_".ConnexionUtilisateur::getLoginUtilisateurConnecte().".txt");
+                $supprimeSuccess = unlink("../upload_postuler/lettre_postuler_".$postuler->getIdOffre()."_".ConnexionUtilisateur::getLoginUtilisateurConnecte().".pdf");
+                $supprimeSuccess = unlink("../upload_postuler/lettre_postuler_".$postuler->getIdOffre()."_".ConnexionUtilisateur::getLoginUtilisateurConnecte().".docx");
+                $supprimeSuccess = unlink("../upload_postuler/lettre_postuler_".$postuler->getIdOffre()."_".ConnexionUtilisateur::getLoginUtilisateurConnecte().".txt");
+                echo '<div class="msgConfirmation"><p> Vous avez bien annulé votre candidature </p></div>';
+                ControleurOffre::offres();
+            }else{
+                echo '<div class="msgConfirmation"><p> Vous n\'avez pas postulé à cette offre </p></div>';
+                ControleurOffre::offres();
+            }
+        }else{
+            echo '<div class="msgConfirmation"><p> Vous n\'avez pas la possibilité d\'annuler votre candidature </p></div>';
+            self::afficherAccueil();
+        }
     }
-
 }

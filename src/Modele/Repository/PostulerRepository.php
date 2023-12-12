@@ -81,11 +81,20 @@ class PostulerRepository
         $tableau = null;
         foreach ($pdoStatement as $objetFormatTableau) {
             $tableau[] = $this->construireDepuisTableau($objetFormatTableau);
-            if ($tableau == null) {
-                return null;
-            }
-            return $tableau;
         }
+        return $tableau;
+    }
+
+    public function deleteAllPostulerFromEtudiant($login){
+        $sql = "DELETE FROM Postuler WHERE loginEtu = :loginEtuTag";
+
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+
+        $values = array(
+            "loginEtuTag" => $login
+        );
+
+        $pdoStatement->execute($values);
     }
 
     public function mettreAJourEtat(Postuler $postuler){
@@ -108,5 +117,17 @@ class PostulerRepository
 
     public function getNomTable(){
         return "Postuler";
+    }
+
+    public function supprimer(string $loginEtu, string $idOffre){
+        $sql = "DELETE FROM ". $this->getNomTable() ." WHERE idOffre = :idOffreTag AND loginEtu = :loginEtuTag";
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+
+        $values = array(
+            "idOffreTag" => $idOffre,
+            "loginEtuTag" => $loginEtu
+        );
+
+        $pdoStatement->execute($values);
     }
 }

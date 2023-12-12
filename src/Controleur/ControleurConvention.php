@@ -3,7 +3,9 @@
 namespace App\Controleur;
 
 use App\Lib\ConnexionUtilisateur;
+use App\Lib\MotDePasse;
 use App\Modele\DataObject\ConventionStage;
+use App\Modele\DataObject\Entreprise;
 use App\Modele\HTTP\Session;
 use App\Modele\Repository\ConventionStageRepository;
 use App\Modele\Repository\EntrepriseRepository;
@@ -42,7 +44,8 @@ class ControleurConvention extends ControleurGenerique
         self::afficherGestionConvention();
     }
 
-    public static function afficherGestionConvention(){
+    public static function afficherGestionConvention()
+    {
         if (ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estSecretariat()) {
             if (!Session::getInstance()->contient("requeteFiltreConvention")) {
                 $conventions = (new ConventionStageRepository())->recuperer();
@@ -78,34 +81,36 @@ class ControleurConvention extends ControleurGenerique
                 }
 
             }
-            self::afficherVue("vueGenerale.php", ["contenu" => "Personnel/vueGestionConvention.php", "conventions" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Gestions des Conventions"]);
+            self::afficherVue("vueGenerale.php", ["contenu" => "Convention/vueGestionConvention.php", "conventions" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Gestions des Conventions"]);
         } else {
             self::afficherErreur("Vous n'avez pas les droits");
         }
     }
 
-    public static function afficherCreationConvention(){
-        $offre = null;
-        $etudiant = null;
-        $entreprise = null;
-        if(isset($_GET["login"]) && isset($_GET["idOffre"])){
-            $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_GET["login"]);
-            $offre = (new OffreRepository())->recupererParClePrimaire($_GET["idOffre"]);
-            $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($offre->getIdOffre());
+    public static function afficherCreationConvention()
+    {
+        if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
+            $offre = null;
+            $etudiant = null;
+            $entreprise = null;
+            if (isset($_GET["login"]) && isset($_GET["idOffre"])) {
+                $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_GET["login"]);
+                $offre = (new OffreRepository())->recupererParClePrimaire($_GET["idOffre"]);
+                $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($offre->getIdOffre());
+            }
+
+            self::afficherVue("vueGenerale.php", ["contenu" => "Convention/vueConventions.php", "title" => "Créer Convention", "etudiant" => $etudiant, "offre" => $offre, "entreprise" => $entreprise]);
         }
-
-        self::afficherVue("vueGenerale.php",["contenu" => "Personnel/vueConventions.php", "title" => "Créer Convention","etudiant"=> $etudiant, "offre" =>$offre, "entreprise" => $entreprise]);
-
-
     }
 
-    public static function creerConvention(){
+    public static function creerConvention()
+    {
         $dateDebutInterup = "0000-00-00";
         $dateFinInterup = "0000-00-00";
-        if($_POST['dateDebutInterruption'] != ""){
+        if ($_POST['dateDebutInterruption'] != "") {
             $dateDebutInterup = $_POST['dateDebutInterruption'];
         }
-        if($_POST['dateFinInterruption'] != ""){
+        if ($_POST['dateFinInterruption'] != "") {
             $dateFinInterup = $_POST['dateFinInterruption'];
         }
         $convention = new ConventionStage(
@@ -194,5 +199,170 @@ class ControleurConvention extends ControleurGenerique
         (new ConventionStageRepository())->sauvegarderC($convention);
         echo '<div class="msgConfirmation"><p> La Convention a bien été enregistrée </p></div>';
         self::afficherAccueil();
+    }
+
+    public static function validerPedagogiqueConvention()
+    {
+        if (ConnexionUtilisateur::estMaitreSA()) {
+            $convention = (new ConventionStageRepository())->recupererParClePrimaire($_GET['numConvention']);
+            ConventionStageRepository::validerConventionPedagogique($convention);
+            $msg = "";
+            if ($convention->getConventionValidePedagogique() == "Oui") {
+                $msg = "invalider";
+            } else {
+                $msg = "valider";
+            }
+            echo '<div class="msgConfirmation"><p> Vous avez bien ' . $msg . ' pedagogiquement la convention numéro : ' . $convention->getNumConvention() . '</p></div>';
+            self::afficherGestionConvention();
+        } else {
+            echo '<div class="msgConfirmation"><p>Vous n\'avez pas les droits de valider ou dévalider pédagogiquement des conventions</p></div>';
+        }
+    }
+
+    public static function validerConvention()
+    {
+        if (ConnexionUtilisateur::estSecretariat()) {
+            $convention = (new ConventionStageRepository())->recupererParClePrimaire($_GET['numConvention']);
+            ConventionStageRepository::validerConvention($convention);
+            $msg = "";
+            if ($convention->getConventionValide() == "Oui") {
+                $msg = "invalider";
+            } else {
+                $msg = "valider";
+            }
+            echo '<div class="msgConfirmation"><p> Vous avez bien ' . $msg . ' la convention numéro : ' . $convention->getNumConvention() . '</p></div>';
+            self::afficherGestionConvention();
+        } else {
+            echo '<div class="msgConfirmation"><p>Vous n\'avez pas les droits de valider ou dévalider des conventions</p></div>';
+        }
+    }
+
+    public static function afficherMAJConvention()
+    {
+        if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
+            $convention = (new ConventionStageRepository())->recupererParClePrimaire($_GET['numConvention']);
+            self::afficherVue("vueGenerale.php", ["contenu" => "Convention/vueMiseAJourConvention.php", "title" => "Mise à jour Convention", "convention" => $convention]);
+        }
+    }
+
+    public static function afficherMAJConventionDepuisEtudiant()
+    {
+        if (ConnexionUtilisateur::estEtudiant()) {
+            $etudiant = (new EtudiantRepository())->recupererParClePrimaire(ConnexionUtilisateur::getLoginUtilisateurConnecte());
+            $convention = (new ConventionStageRepository())->recupererDepuisNumEtudiant($etudiant->getNumEtudiant());
+            if($convention == null){
+                self::afficherErreur("Vous n'avez pas de convention");
+            }else{
+                self::afficherVue("vueGenerale.php", ["contenu" => "Convention/vueMiseAJourConvention.php", "title" => "Mise à jour Convention", "convention" => $convention]);
+            }
+
+        }
+    }
+
+    public static function afficherDetailConvention()
+    {
+        if (!isset($_GET["numConvention"])) {
+            self::afficherErreur("L'id de la convention n'est pas renseigné");
+        } else {
+            self::afficherVue("vueGenerale.php", ["title" => "Detail Convention ", "contenu" => "Convention/vueDetailConvention.php", "numConvention" => $_GET["numConvention"]]);
+        }
+    }
+
+    public static function MAJConvention()
+    {
+        $dateDebutInterup = "0000-00-00";
+        $dateFinInterup = "0000-00-00";
+        if ($_POST['dateDebutInterruption'] != "") {
+            $dateDebutInterup = $_POST['dateDebutInterruption'];
+        }
+        if ($_POST['dateFinInterruption'] != "") {
+            $dateFinInterup = $_POST['dateFinInterruption'];
+        }
+        $convention = new ConventionStage(
+            $_POST['numConvention'],
+            $_POST['numEtudiant'],
+            $_POST['nomEtu'],
+            $_POST['prenomEtu'],
+            $_POST['numTelPersoEtu'],
+            $_POST['numTelEtu'],
+            $_POST['mailPersoEtu'],
+            $_POST['mailUniversitaireEtu'],
+            $_POST['codeUfr'],
+            $_POST['libUfr'],
+            $_POST['codeDepartement'],
+            $_POST['codeEtape'],
+            $_POST['libEtape'],
+            $_POST['dateDeDebut'],
+            $_POST['dateDeFin'],
+            $_POST['interruption'],
+            $dateDebutInterup,
+            $dateFinInterup,
+            $_POST['thematique'],
+            $_POST['sujet'],
+            $_POST['fonctionTache'],
+            $_POST['detailProjet'],
+            $_POST['duree'],
+            $_POST['nbJourTravail'],
+            $_POST['nbHeureHebdomadaire'],
+            $_POST['gratification'],
+            $_POST['uniteGratification'],
+            $_POST['uniteDureeGratification'],
+            $_POST['conventionValide'],
+            $_POST['nomEnseignantReferent'],
+            $_POST['prenomEnseignantReferent'],
+            $_POST['mailEnseignantReferent'],
+            $_POST['nomSignataire'],
+            $_POST['prenomSignataire'],
+            $_POST['mailSignataire'],
+            $_POST['fonctionSignataire'],
+            $_POST['anneeUniversitaire'],
+            $_POST['typeDeConvention'],
+            $_POST['commentaireStage'],
+            $_POST['commentaireDureeTravail'],
+            $_POST['codeELP'],
+            $_POST['elementPedagogique'],
+            $_POST['codeSexeEtu'],
+            $_POST['avantageNature'],
+            $_POST['adresseEtu'],
+            $_POST['codePostalEtu'],
+            $_POST['paysEtu'],
+            $_POST['villeEtu'],
+            $_POST['conventionValidePedagogique'],
+            $_POST['avenant'],
+            $_POST['detailAvenant'],
+            $_POST['dateCreationConvention'],
+            $_POST['dateModificationConvention'],
+            $_POST['origineStage'],
+            $_POST['nomEtablissement'],
+            $_POST['siret'],
+            $_POST['adresseResidence'],
+            $_POST['adresseVoie'],
+            $_POST['adresseLibCedex'],
+            $_POST['codePostal'],
+            $_POST['communeEtabAcceuil'],
+            $_POST['paysEtablissement'],
+            $_POST['statutJuridique'],
+            $_POST['typeStructure'],
+            $_POST['effectif'],
+            $_POST['codeNAF'],
+            $_POST['telEtablissement'],
+            $_POST['fax'],
+            $_POST['mailEtablissement'],
+            $_POST['siteWeb'],
+            $_POST['nomServiceAcceuil'],
+            $_POST['residenceServiceAcceuil'],
+            $_POST['voieServiceAcceuil'],
+            $_POST['cedexServiceAcceuil'],
+            $_POST['codePostalServiceAcceuil'],
+            $_POST['communeServiceAcceuil'],
+            $_POST['paysServiceAcceuil'],
+            $_POST['nomTuteurProfessionnel'],
+            $_POST['prenomTuteurProfessionnel'],
+            $_POST['mailTuteurProfessionnel'],
+            $_POST['telTuteurProfessionnel'],
+            $_POST['fonctionTuteurProfessionnel']);
+        (new ConventionStageRepository())->mettreAJour($convention);
+        self::afficherErreur("Les informations de votre entreprise " . $convention->getNumConvention() . " ont bien été mis à jour");
+
     }
 }
