@@ -34,6 +34,25 @@ class EtudiantRepository extends AbstractRepository
         $pdoStatement->execute($values);
     }
 
+    public function recupererDepuisNumEtudiant(string $numEtudiant) : ?Etudiant
+    {
+        $sql = "SELECT * FROM Etudiant WHERE codeEtudiant = :codeEtudiantTag";
+
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+
+        $values = array(
+            "codeEtudiantTag" => $numEtudiant
+        );
+
+        $pdoStatement->execute($values);
+        $objetFormatTableau = $pdoStatement->fetch();
+        if ($objetFormatTableau != null) {
+            return $this->construireDepuisTableau($objetFormatTableau);
+        } else {
+            return null;
+        }
+    }
+
     // Tu dois faire une fontion trouve stage en fontion d'une année de manière a ce que je puisse vérifier si l'etudiant possède un stage dans l'année en cours
 
 

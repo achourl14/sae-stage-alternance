@@ -111,7 +111,7 @@ class ControleurEtudiant extends ControleurGenerique
 
     public static function afficherDetailEtudiant()
     {
-        if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
+        if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estEtudiant() || ConnexionUtilisateur::estEntreprise()) {
             self::afficherVue("vueGenerale.php", ["contenu" => "Etudiant/vueDetailEtudiant.php", "title" => "Detail Etudiant"]);
         } else {
             self::afficherErreur("Vous n'avez pas les droits");

@@ -196,6 +196,21 @@ hr{
     margin-top: 30px;
 }
 
+.carteCliquable{
+    text-decoration: none;
+    color: black;
+}
+
+.carteCliquable > div{
+    border: dodgerblue 2px solid;
+}
+
+
+.carteCliquable:hover > div{
+    transform : scale(1.1);
+    transition: transform 0.5s ease;
+}
+
 /* --------------------------------------------------*/
 
 .filtre_offre{
@@ -217,9 +232,9 @@ article input[type=submit]{
     cursor: pointer;
 }
 
-article input[type=submit]:hover{
+article input[type=submit]:hover {
     transform: scale(0.95);
     background-color: #ff6e68;
     transition: transform 1s,
-                background-color 1s;
+    background-color 1s;
 }

@@ -4,6 +4,14 @@ use App\Modele\Repository\EtudiantRepository;
 
 if(isset($_GET['login'])){
     $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_GET["login"]);
+    if($etudiant == null){
+        $etudiant = (new EtudiantRepository())->recupererDepuisNumEtudiant($_GET["login"]);
+        if($etudiant == null){
+            echo '<div class="msgConfirmation"><p> ⚠️ Cet étudiant est introuvable ⚠️ </p></div>';
+            \App\Controleur\ControleurGenerique::afficherAccueil();
+            die();
+        }
+    }
 
     $isCodeEtudiant = $etudiant->getNumEtudiant();
     $codeEtudiant = "Non Renseigné";
@@ -123,4 +131,5 @@ if(isset($_GET['login'])){
     echo '</div>';
 }else{
     echo '<div class="msgConfirmation"><p> ⚠️ Cet étudiant est introuvable ⚠️ </p></div>';
+    \App\Controleur\ControleurGenerique::afficherAccueil();
 }

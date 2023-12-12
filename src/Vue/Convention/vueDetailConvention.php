@@ -24,17 +24,20 @@ if (isset($numConvention)) {
     echo "</div>";
     echo "</div>";
 
+    echo "<a class='carteCliquable' href='controleurFrontal.php?controleur=entreprise&action=afficherDetailEntreprise&numSiret=" . $entreprise->getNumSiret() . "'>";
     echo "<div class='case'>";
     echo "<h3> Nom Entreprise </h3>";
     echo "<div class='supcase'>";
     echo "<p class='case'>" . $entreprise->getNomEntreprise() . "</p>";
     echo "</div>";
     echo "</div>";
+    echo "</a>";
 
+    echo "<a class='carteCliquable' href='controleurFrontal.php?controleur=etudiant&action=afficherDetailEtudiant&login=" . $convention->getNumEtudiant() . "'>";
     echo "<div class='case'>";
-    echo "<h3> Numéro d'Étudiant </h3>";
+    echo "<h3> Étudiant </h3>";
     echo "<div class='supcase'>";
-    echo "<p class='case'>" . $convention->getNumEtudiant() . "</p>";
+    echo "<p class='case'>" . $convention->getNomEtu()  . " " . $convention->getPrenomEtu()." (" . $convention->getNumEtudiant() . ") </p>";
     echo "</div>";
     echo "</div>";
     echo "</div>";
@@ -63,6 +66,31 @@ if (isset($numConvention)) {
     echo "</div>";
     echo "</div>";
 
+echo "<h2> Informations Generale : </h2>";
+    echo "<div class='detailLigne'>";
+    echo "<div class='case'>";
+    echo "<h3> Ville </h3>";
+    echo "<div class='supcase'>";
+    echo "<p class='case'>" . $convention->getCommuneEtabAcceuil() . "</p>";
+    echo "</div>";
+    echo "</div>";
+
+
+    echo "<div class='case'>";
+    echo "<h3> Thématique </h3>";
+    echo "<div class='supcase'>";
+    echo "<p class='case'>" . $convention->getThematique() . "</p>";
+    echo "</div>";
+    echo "</div>";
+
+    echo "<div class='case'>";
+    echo "<h3> Année </h3>";
+    echo "<div class='supcase'>";
+    echo "<p class='case'>" . $convention->getAnneeUniversitaire() . "</p>";
+    echo "</div>";
+    echo "</div>";
+echo "</div>";
+
     echo "<h2> Dates : </h2>";
     echo "<div class='detailLigne'>";
     echo "<div class='case'>";
@@ -86,6 +114,38 @@ if (isset($numConvention)) {
     echo "</div>";
     echo "</div>";
     echo '</div>';
+
+    echo "<div class='detailLigne'>";
+    echo "<div class='case'>";
+    echo "<h3> Date de Création Convention </h3>";
+    echo "<div class='supcase'>";
+    echo "<p class='case'>" . $convention->getDateCreationConvention() . "</p>";
+    echo "</div>";
+    echo "</div>";
+
+    echo "<div class='case'>";
+    echo "<h3> Date de Modification de la Convention </h3>";
+    echo "<div class='supcase'>";
+    echo "<p class='case'>" . $convention->getDateModificationConvention() . "</p>";
+    echo "</div>";
+    echo "</div>";
+
+    echo "<div class='case'>";
+    echo "<h3> Durée du Stage </h3>";
+    echo "<div class='supcase'>";
+    echo "<p class='case'>" . $convention->getDuree() . "</p>";
+    echo "</div>";
+    echo "</div>";
+    echo '</div>';
+
+    echo "<div class='detailLigne'>";
+    echo "<div class='case'>";
+    echo "<h3> Detail Projet </h3>";
+    echo "<div class='supcase'>";
+    echo "<p class='case'>" . $convention->getDetailProjet() . "</p>";
+    echo "</div>";
+    echo "</div>";
+    echo "</div>";
 } else {
     echo '<div class="msgConfirmation"><p> ⚠️ Cette convention est introuvable ⚠️ </p></div>';
 }
