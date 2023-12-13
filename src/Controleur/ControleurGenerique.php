@@ -88,6 +88,11 @@ class ControleurGenerique
                     echo '<div class="msgConfirmation"><p>Mot de passe incorrect</p></div>';
                     self::afficherConnexion();
                     die();
+                } else {
+                    ConnexionUtilisateur::connecter($utilisateurAVerifier->getLogin());
+                    $session = Session::getInstance();
+                    $session->enregistrer($cle, 1);
+                    self::afficherAccueil();
                 }
             }
         }

@@ -16,7 +16,7 @@ class OffreRepository extends AbstractRepository
 
     public static function sauvegarder(Offre $offre) : void {
 
-        $sql = "INSERT INTO Offre (idEntreprise, nomOffre, mission, dateDebut, dateFin, remuneration,but_annee,parcours,type,adresseDeOffre) VALUES (:idEntrepriseTag, :nomOffreTag,:missionTag, :dateDebutTag, :dateFinTag, :remunerationTag, :but_anneeTag,:parcoursTag,:typeTag, :adresseDeOffreTag, :villeTag, :codePostalTag)";
+        $sql = "INSERT INTO Offre (idEntreprise, nomOffre, mission, dateDebut, dateFin, remuneration,but_annee,parcours,type,adresseDeOffre,ville,codePostal) VALUES (:idEntrepriseTag, :nomOffreTag,:missionTag, :dateDebutTag, :dateFinTag, :remunerationTag, :but_anneeTag,:parcoursTag,:typeTag, :adresseDeOffreTag, :villeTag, :codePostalTag)";
 
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 

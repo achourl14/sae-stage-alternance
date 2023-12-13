@@ -27,7 +27,7 @@
 
                     <div class="input-box">
                         <label class="details" for="codeP"> Code Postal *</label>
-                        <input maxlength="5" type="text" placeholder="34000" pattern="[0-9]{14}" name="codePostal" id="codeP" required/>
+                        <input maxlength="5" type="text" placeholder="34000" pattern="[0-9]{5}" name="codePostal" id="codeP" required/>
                     </div>
 
                     <div class="input-box">

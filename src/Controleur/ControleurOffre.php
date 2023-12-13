@@ -119,7 +119,7 @@ class ControleurOffre extends ControleurGenerique
             }
         }else{
             $offre = null;
-            $offre = new Offre(-9, $_POST["idEntreprise"], $_POST["adresseDeOffre"], $_POST["nomOffre"], $_POST["mission"], -9, -9, $_POST["dateDebut"], $_POST["dateFin"], $_POST["remuneration"], $_POST["but_annee"], $_POST["parcours"], $_POST["type"], 0);
+            $offre = new Offre(-9, $_POST["idEntreprise"], $_POST["adresseDeOffre"],$_POST["ville"],$_POST["codePostal"], $_POST["nomOffre"], $_POST["mission"], -9, -9, $_POST["dateDebut"], $_POST["dateFin"], $_POST["remuneration"], $_POST["but_annee"], $_POST["parcours"], $_POST["type"], 0);
             OffreRepository::sauvegarder($offre);
             echo '<div class="msgConfirmation"><p> Vous avez bien créer votre offre : ' . $offre->getNomOffre() . '</p></div>';
         }
