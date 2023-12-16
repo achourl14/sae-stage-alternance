@@ -2,7 +2,7 @@
 use App\Modele\HTTP\Session;
 use App\Modele\Repository\ConventionStageRepository;
 echo '<div class="toutesLesCartes">';
-echo "<div class='title'> Gestion des Conventions </div>";
+echo "<div class='title'> Gestion des Brouillons des Conventions </div>";
 
 echo '<div class="contient">';
 echo '<div class="content">';
@@ -102,6 +102,7 @@ if ($conventions == null) {
         echo("<h1> Numéro : " . htmlspecialchars($convention->getNumConvention()) . "</h1>");
         echo("<p> Prénom : " . htmlspecialchars($convention->getPrenomEtu()) . " </p>");
         echo("<p> Nom : " . htmlspecialchars($convention->getNomEtu()) . " </p>");
+        echo("<p> Numéro Etudiant : " . htmlspecialchars($convention->getNumEtudiant()) . " </p>");
         if(\App\Lib\ConnexionUtilisateur::estMaitreSA()){
             echo("<a class='buttonDeBase " . $classButton . "' href='controleurFrontal.php?controleur=convention&action=validerPedagogiqueConvention&numConvention=" . $convention->getNumConvention() . "'>" . $buttonValider . "</a>");
         }

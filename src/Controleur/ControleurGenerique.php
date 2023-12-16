@@ -53,6 +53,7 @@ class ControleurGenerique
 
         if ($utilisateurAVerifier == null) {
             echo '<div class="msgConfirmation"><p>Aucun compte de ce login existe</p></div>';
+            self::afficherConnexion();
         } else {
             if ($_POST['type_connexion'] == 'etudiant' || $_POST['type_connexion'] == 'secretariat') {
                 if ($utilisateurAVerifier->getPremiereConnexion() == 0) {

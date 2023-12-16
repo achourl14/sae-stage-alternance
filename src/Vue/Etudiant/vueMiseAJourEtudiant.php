@@ -43,7 +43,7 @@ if ($etudiant->getParcours() == "RACDV") {
                     <div class="input-box">
                         <span class="details">Numéro Etudiant</span>
                         <input type="text" value=<?php echo $etudiant->getNumEtudiant() ?> "" name="num_etudiant"
-                               maxlength="11" required>
+                               maxlength="8" required>
                     </div>
                     <div class="input-box">
                         <span class="details">Promotion</span>

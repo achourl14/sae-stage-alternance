@@ -7,11 +7,6 @@ body{
   margin: 0px;
 }
 
-/* image temporaire css tempo*/
-img{
-  height: 99%;
-  width: 99%;
-}
 
 nav {
   display: flex;
@@ -27,7 +22,6 @@ nav {
 
 nav > div{
   display: flex;
-  position : relative;
   align-items: center;
 }
 

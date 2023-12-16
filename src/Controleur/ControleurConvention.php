@@ -7,6 +7,7 @@ use App\Lib\MotDePasse;
 use App\Modele\DataObject\ConventionStage;
 use App\Modele\DataObject\Entreprise;
 use App\Modele\HTTP\Session;
+use App\Modele\Repository\ConventionStageFinaleRepository;
 use App\Modele\Repository\ConventionStageRepository;
 use App\Modele\Repository\EntrepriseRepository;
 use App\Modele\Repository\EtudiantRepository;
@@ -14,6 +15,8 @@ use App\Modele\Repository\OffreRepository;
 
 class ControleurConvention extends ControleurGenerique
 {
+
+    //Brouillon Convention
 
     public static function rechercherConvention()
     {
@@ -117,10 +120,10 @@ class ControleurConvention extends ControleurGenerique
 
         $dateCreationConvention = date("Y-m-d", time());
         $dateModificationConvention = date("Y-m-d", time());
-        if($_POST['dateCreationConvention'] != ""){
+        if ($_POST['dateCreationConvention'] != "") {
             $dateCreationConvention = $_POST['dateCreationConvention'];
         }
-        if($_POST['dateModificationConvention'] != ""){
+        if ($_POST['dateModificationConvention'] != "") {
             $dateModificationConvention = $_POST['dateModificationConvention'];
         }
         $convention = new ConventionStage(
@@ -260,9 +263,9 @@ class ControleurConvention extends ControleurGenerique
         if (ConnexionUtilisateur::estEtudiant()) {
             $etudiant = (new EtudiantRepository())->recupererParClePrimaire(ConnexionUtilisateur::getLoginUtilisateurConnecte());
             $convention = (new ConventionStageRepository())->recupererDepuisNumEtudiant($etudiant->getNumEtudiant());
-            if($convention == null){
+            if ($convention == null) {
                 self::afficherErreur("Vous n'avez pas de convention");
-            }else{
+            } else {
                 self::afficherVue("vueGenerale.php", ["contenu" => "Convention/vueMiseAJourConvention.php", "title" => "Mise à jour Convention", "convention" => $convention]);
             }
 
@@ -274,7 +277,10 @@ class ControleurConvention extends ControleurGenerique
         if (!isset($_GET["numConvention"])) {
             self::afficherErreur("L'id de la convention n'est pas renseigné");
         } else {
-            self::afficherVue("vueGenerale.php", ["title" => "Detail Convention ", "contenu" => "Convention/vueDetailConvention.php", "numConvention" => $_GET["numConvention"]]);
+            $convention = (new ConventionStageRepository())->recupererParClePrimaire($_GET["numConvention"]);
+            $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($convention->getSiret());
+            $etudiant = (new EtudiantRepository())->recupererDepuisNumEtudiant($convention->getNumEtudiant());
+            self::afficherVue("vueGenerale.php", ["title" => "Detail Convention ", "contenu" => "Convention/vueDetailConvention.php", "convention" => $convention, "entreprise" => $entreprise, "etudiant" => $etudiant]);
         }
     }
 
@@ -375,4 +381,222 @@ class ControleurConvention extends ControleurGenerique
         self::afficherErreur("Les informations de votre entreprise " . $convention->getNumConvention() . " ont bien été mis à jour");
 
     }
+
+    //Convention Finale
+
+    public static function afficherGestionConventionFinale()
+    {
+        if (ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estSecretariat()) {
+            if (!Session::getInstance()->contient("requeteFiltreConventionFinale")) {
+                $conventions = (new ConventionStageFinaleRepository())->recuperer();
+            } else {
+                $conventions = (new ConventionStageFinaleRepository())->recupererAvecFiltre(Session::getInstance()->lire("requeteFiltreConventionFinale"));
+            }
+            $tableauParPage = null;
+            if ($conventions == null) {
+                $nbrePages = 1;
+                $page = 1;
+            } else {
+
+                //Pagination
+                $nombresConventions = count($conventions);
+                $nbrePages = ceil($nombresConventions / 9);
+
+                $page = 1;
+                if (isset($_GET['page'])) {
+                    $page = $_GET['page'];
+                    if ($page > $nbrePages) {
+                        $page = $nbrePages;
+                    } else if ($page <= 1) {
+                        $page = 1;
+                    }
+                }
+                $y = $page * 9;
+                if ($page * 9 > $nombresConventions) {
+                    $y = $nombresConventions;
+                }
+
+                for ($i = ($page - 1) * 9; $i < $y; $i++) {
+                    $tableauParPage[] = $conventions[$i];
+                }
+
+            }
+            self::afficherVue("vueGenerale.php", ["contenu" => "ConventionFinale/vueGestionConvention.php", "conventions" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Conventions Finale"]);
+        } else {
+            self::afficherErreur("Vous n'avez pas les droits");
+        }
+    }
+
+    public static function afficherDetailConventionFinale()
+    {
+        if (!isset($_GET["numConvention"])) {
+            self::afficherErreur("L'id de la convention n'est pas renseigné");
+        } else {
+            $convention = (new ConventionStageFinaleRepository())->recupererParClePrimaire($_GET["numConvention"]);
+            $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($convention->getSiret());
+            $etudiant = (new EtudiantRepository())->recupererDepuisNumEtudiant($convention->getNumEtudiant());
+            self::afficherVue("vueGenerale.php", ["title" => "Detail Convention ", "contenu" => "Convention/vueDetailConvention.php", "convention" => $convention, "entreprise" => $entreprise, "etudiant" => $etudiant]);
+        }
+    }
+
+    public static function rechercherConventionFinale()
+    {
+        $values = null;
+        if (isset($_POST["numConvention"]) && $_POST["numConvention"] != "") {
+            $values['numConvention'] = $_POST["numConvention"];
+        }
+        if (isset($_POST["numEtudiant"]) && $_POST["numEtudiant"] != "") {
+            $values['numEtudiant'] = $_POST["numEtudiant"];
+        }
+        if (isset($_POST["prenomEtu"]) && $_POST["prenomEtu"] != "") {
+            $values['prenomEtu'] = $_POST["prenomEtu"];
+        }
+        if (isset($_POST['nomEtu']) && $_POST["nomEtu"] != "") {
+            $values['nomEtu'] = $_POST['nomEtu'];
+        }
+        if (isset($_POST['siret']) && $_POST["siret"] != "") {
+            $values['siret'] = $_POST['siret'];
+        }
+
+        Session::getInstance()->enregistrer("requeteFiltreConventionFinale", $values);
+        self::afficherGestionConvention();
+    }
+
+    public static function supprimerFiltreConventionFinale()
+    {
+        Session::getInstance()->supprimer("requeteFiltreConventionFinale");
+        self::afficherGestionConvention();
+    }
+
+    public static function afficherVueImportationConventionFinale()
+    {
+        if (ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estSecretariat()) {
+            self::afficherVue("vueGenerale.php", ["contenu" => "ConventionFinale/vueImportationConventionFinale.php", "title" => "Importation Convention Finale"]);
+        }
+    }
+
+    public static function importerConvention()
+    {
+        if (ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estSecretariat()) {
+            if ($_FILES["fileToUpload"]["name"]) {
+                $nomFichier = $_FILES["fileToUpload"]["name"];
+                $dossier = $_FILES["fileToUpload"]["tmp_name"];
+                move_uploaded_file("$dossier", "../fichier_csv/$nomFichier");
+                $file_parts = pathinfo("../fichier_csv/$nomFichier");
+                if ($file_parts['extension'] != "csv") {
+                    echo '<div class="msgErreur"><p>Le fichier n\'est pas un fichier CSV</p></div>';
+                    self::afficherGestionConvention();
+                } else {
+                    $file = fopen("../fichier_csv/$nomFichier", "r");
+                    fgetcsv($file);
+                    while (($data = fgetcsv($file, 1000, ",")) !== false) {
+
+                        if((new ConventionStageFinaleRepository())->recupererParClePrimaire($data[0]) != null){
+                            echo '<div class="msgConfirmation"><p>La convention numéro : '.$data[0].' existe déjà</p></div>';
+                            self::afficherGestionConventionFinale();
+                        }else{
+                            $dateDebut = date("Y-m-d", strtotime($data[13]));
+                            $dateFin = date("Y-m-d", strtotime($data[14]));
+
+                            $dateDebutI = date("Y-m-d", strtotime($data[16]));
+                            $dateFinI = date("Y-m-d", strtotime($data[17]));
+
+                            $dateCreation = date("Y-m-d", strtotime($data[51]));
+                            $dateModification = date("Y-m-d", strtotime($data[52]));
+                            $convention = new ConventionStage(
+                                $data[0],
+                                $data[1],
+                                $data[2],
+                                $data[3],
+                                $data[4],
+                                $data[5],
+                                $data[6],
+                                $data[7],
+                                $data[8],
+                                $data[9],
+                                $data[10],
+                                $data[11],
+                                $data[12],
+                                $dateDebut,
+                                $dateFin,
+                                $data[15],
+                                $dateDebutI,
+                                $dateFinI,
+                                $data[18],
+                                $data[19],
+                                $data[20],
+                                $data[21],
+                                $data[22],
+                                $data[23],
+                                $data[24],
+                                $data[25],
+                                $data[26],
+                                $data[27],
+                                $data[28],
+                                $data[29],
+                                $data[30],
+                                $data[31],
+                                $data[32],
+                                $data[33],
+                                $data[34],
+                                $data[35],
+                                $data[36],
+                                $data[37],
+                                $data[38],
+                                $data[39],
+                                $data[40],
+                                $data[41],
+                                $data[42],
+                                $data[43],
+                                $data[44],
+                                $data[45],
+                                $data[46],
+                                $data[47],
+                                $data[48],
+                                $data[49],
+                                $data[50],
+                                $dateCreation,
+                                $dateModification,
+                                $data[53],
+                                $data[54],
+                                $data[55],
+                                $data[56],
+                                $data[57],
+                                $data[58],
+                                $data[59],
+                                $data[60],
+                                $data[61],
+                                $data[62],
+                                $data[63],
+                                $data[64],
+                                $data[65],
+                                $data[66],
+                                $data[67],
+                                $data[68],
+                                $data[69],
+                                $data[70],
+                                $data[71],
+                                $data[72],
+                                $data[73],
+                                $data[74],
+                                $data[75],
+                                $data[76],
+                                $data[77],
+                                $data[78],
+                                $data[79],
+                                $data[80],
+                                $data[81]
+                            );
+                            fclose($file);
+                            (new ConventionStageFinaleRepository())->sauvegarderC($convention);
+                            unlink("../fichier_csv/$nomFichier");
+                            self::afficherGestionConventionFinale();
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
 }
