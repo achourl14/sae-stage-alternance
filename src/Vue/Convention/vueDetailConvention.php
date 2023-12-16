@@ -3,14 +3,12 @@
 use App\Modele\Repository\ConventionStageRepository;
 use App\Modele\Repository\EntrepriseRepository;
 
-if (isset($numConvention)) {
+if (isset($convention)) {
     echo '<a  class="boutonRetour" href="controleurFrontal.php"> < Retour à l\'Accueil </a>';
     echo '<div class="offre_detail">';
-    $convention = (new ConventionStageRepository())->recupererParClePrimaire($numConvention);
-    $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($convention->getSiret());
     echo "<h1> Convention de " . htmlspecialchars($convention->getPrenomEtu()) . " " . htmlspecialchars($convention->getNomEtu()) . "</h1>";
     echo "<div class='boutonsGeneral'>
-            <div> <a href='controleurFrontal.php?controleur=convention&action=afficherMAJConvention&numConvention=".$numConvention."'> Modifier Convention </a> </div>
+            <div> <a href='controleurFrontal.php?controleur=convention&action=afficherMAJConvention&numConvention=".$convention->getNumConvention()."'> Modifier Convention </a> </div>
            </div>";
     echo "<hr/>";
 
@@ -24,49 +22,64 @@ if (isset($numConvention)) {
     echo "</div>";
     echo "</div>";
 
-    echo "<a class='carteCliquable' href='controleurFrontal.php?controleur=entreprise&action=afficherDetailEntreprise&numSiret=" . $entreprise->getNumSiret() . "'>";
-    echo "<div class='case'>";
-    echo "<h3> Nom Entreprise </h3>";
-    echo "<div class='supcase'>";
-    echo "<p class='case'>" . $entreprise->getNomEntreprise() . "</p>";
-    echo "</div>";
-    echo "</div>";
-    echo "</a>";
+    if($entreprise != null){
+        echo "<a class='carteCliquable' href='controleurFrontal.php?controleur=entreprise&action=afficherDetailEntreprise&numSiret=" . $entreprise->getNumSiret() . "'>";
+        echo "<div class='case'>";
+        echo "<h3> Nom Entreprise </h3>";
+        echo "<div class='supcase'>";
+        echo "<p class='case'>" . $entreprise->getNomEntreprise() . "</p>";
+        echo "</div>";
+        echo "</div>";
+        echo "</a>";
+    }else{
+        echo "<div class='case'>";
+        echo "<h3> Numéro siret Entreprise </h3>";
+        echo "<div class='supcase'>";
+        echo "<p class='case'>" . $convention->getSiret() . "</p>";
+        echo "</div>";
+        echo "</div>";
+    }
 
-    echo "<a class='carteCliquable' href='controleurFrontal.php?controleur=etudiant&action=afficherDetailEtudiant&login=" . $convention->getNumEtudiant() . "'>";
-    echo "<div class='case'>";
-    echo "<h3> Étudiant </h3>";
-    echo "<div class='supcase'>";
-    echo "<p class='case'>" . $convention->getNomEtu()  . " " . $convention->getPrenomEtu()." (" . $convention->getNumEtudiant() . ") </p>";
-    echo "</div>";
-    echo "</div>";
-    echo "</div>";
+    if($etudiant != null){
+        echo "<a class='carteCliquable' href='controleurFrontal.php?controleur=etudiant&action=afficherDetailEtudiant&login=" . $convention->getNumEtudiant() . "'>";
+        echo "<div class='case'>";
+        echo "<h3> Étudiant </h3>";
+        echo "<div class='supcase'>";
+        echo "<p class='case'>" . $convention->getNomEtu()  . " " . $convention->getPrenomEtu()." (" . $convention->getNumEtudiant() . ") </p>";
+        echo "</div>";
+        echo "</div>";
+        echo "</div>";
+    }else{
+        echo "</div>";
+        echo "<h2> Informations étudiant : </h2>";
+        echo "<div class='detailLigne'>";
+        echo "<div class='case'>";
+        echo "<h3> Nom de l'Étudiant </h3>";
+        echo "<div class='supcase'>";
+        echo "<p class='case'>" . $convention->getNomEtu() . "</p>";
+        echo "</div>";
+        echo "</div>";
 
-    echo "<h2> Informations étudiant : </h2>";
-    echo "<div class='detailLigne'>";
-    echo "<div class='case'>";
-    echo "<h3> Nom de l'Étudiant </h3>";
-    echo "<div class='supcase'>";
-    echo "<p class='case'>" . $convention->getNomEtu() . "</p>";
-    echo "</div>";
-    echo "</div>";
+        echo "<div class='case'>";
+        echo "<h3> Prénom de l'Étudiant </h3>";
+        echo "<div class='supcase'>";
+        echo "<p class='case'>" . $convention->getPrenomEtu() . "</p>";
+        echo "</div>";
+        echo "</div>";
 
-    echo "<div class='case'>";
-    echo "<h3> Prénom de l'Étudiant </h3>";
-    echo "<div class='supcase'>";
-    echo "<p class='case'>" . $convention->getPrenomEtu() . "</p>";
-    echo "</div>";
-    echo "</div>";
+        echo "<div class='case'>";
+        echo "<h3> Mail Universitaire de l'Étudiant </h3>";
+        echo "<div class='supcase'>";
+        echo "<p class='case'>" . $convention->getMailUniversitaireEtu() . "</p>";
+        echo "</div>";
+        echo "</div>";
+        echo "</div>";
+    }
 
-    echo "<div class='case'>";
-    echo "<h3> Mail Universitaire de l'Étudiant </h3>";
-    echo "<div class='supcase'>";
-    echo "<p class='case'>" . $convention->getMailUniversitaireEtu() . "</p>";
-    echo "</div>";
-    echo "</div>";
-    echo "</div>";
 
-echo "<h2> Informations Generale : </h2>";
+
+
+    echo "<h2> Informations Generale : </h2>";
     echo "<div class='detailLigne'>";
     echo "<div class='case'>";
     echo "<h3> Ville </h3>";
@@ -89,7 +102,7 @@ echo "<h2> Informations Generale : </h2>";
     echo "<p class='case'>" . $convention->getAnneeUniversitaire() . "</p>";
     echo "</div>";
     echo "</div>";
-echo "</div>";
+    echo "</div>";
 
     echo "<h2> Dates : </h2>";
     echo "<div class='detailLigne'>";

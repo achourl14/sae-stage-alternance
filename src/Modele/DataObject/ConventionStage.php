@@ -227,7 +227,7 @@ class ConventionStage extends AbstractDataObject
         ?string $dateModificationConvention,
         ?string $origineStage,
         ?string $nomEtablissement,
-        string $siret,
+        ?string $siret,
         ?string $adresseResidence,
         ?string $adresseVoie,
         ?string $adresseLibCedex,

@@ -38,56 +38,59 @@ class ControleurGenerique
             echo '<div class="msgConfirmation"><p>Veuillez rentrer le champ login</p></div>';
         }
 
-        if ($_POST['type_connexion'] == 'secretariat') {
-            $utilisateurAVerifier = (new SecretariatRepository())->recupererParClePrimaire($_POST['login']);
-            $cle = "secretariat";
-        } else if ($_POST['type_connexion'] == 'etudiant') {
+        $utilisateurAVerifier = (new SecretariatRepository())->recupererParClePrimaire($_POST['login']);
+        if ($utilisateurAVerifier == null) {
             $utilisateurAVerifier = (new EtudiantRepository())->recupererParClePrimaire($_POST['login']);
-            $cle = "etudiant";
-        } else if ($_POST['type_connexion'] == 'entreprise') {
-            $utilisateurAVerifier = (new EntrepriseRepository())->recupererParClePrimaire($_POST['login']);
-            $cle = "entreprise";
+            if ($utilisateurAVerifier == null) {
+                $utilisateurAVerifier = (new EntrepriseRepository())->recupererParClePrimaire($_POST['login']);
+                if ($utilisateurAVerifier == null) {
+                    echo '<div class="msgConfirmation"><p>Aucun compte de ce login existe</p></div>';
+                    self::afficherConnexion();
+                    die();
+                } else {
+                    $cle = "entreprise";
+                }
+            } else {
+                $cle = "etudiant";
+            }
         } else {
-            echo '<div class="msgConfirmation"><p>Erreur au niveau type de connexion</p></div>';
+            $cle = "secretariat";
         }
 
-        if ($utilisateurAVerifier == null) {
-            echo '<div class="msgConfirmation"><p>Aucun compte de ce login existe</p></div>';
-        } else {
-            if ($_POST['type_connexion'] == 'etudiant' || $_POST['type_connexion'] == 'secretariat') {
-                if ($utilisateurAVerifier->getPremiereConnexion() == 0) {
-                    echo '<div class="msgConfirmation"><p>Vous devez changer votre mot de passe</p></div>';
-                    if ($_POST['type_connexion'] == 'secretariat') {
-                        ConnexionUtilisateur::connecter($utilisateurAVerifier->getLogin());
-                        $session = Session::getInstance();
-                        $session->enregistrer($cle, 1);
-                        header("Location: controleurFrontal.php?controleur=personnel&action=afficherMAJPersonnel&login=" . ConnexionUtilisateur::getLoginUtilisateurConnecte());
-                        die();
-                    } else {
-                        ConnexionUtilisateur::connecter($utilisateurAVerifier->getLogin());
-                        $session = Session::getInstance();
-                        $session->enregistrer($cle, 1);
-                        header("Location: controleurFrontal.php?controleur=etudiant&action=afficherMAJEtudiant&login=" . ConnexionUtilisateur::getLoginUtilisateurConnecte());
-                        die();
-                    }
+//        if ($_POST['type_connexion'] == 'secretariat') {
+//            $utilisateurAVerifier = (new SecretariatRepository())->recupererParClePrimaire($_POST['login']);
+//            $cle = "secretariat";
+//        } else if ($_POST['type_connexion'] == 'etudiant') {
+//            $utilisateurAVerifier = (new EtudiantRepository())->recupererParClePrimaire($_POST['login']);
+//            $cle = "etudiant";
+//        } else if ($_POST['type_connexion'] == 'entreprise') {
+//            $utilisateurAVerifier = (new EntrepriseRepository())->recupererParClePrimaire($_POST['login']);
+//            $cle = "entreprise";
+//        } else {
+//            echo '<div class="msgConfirmation"><p>Erreur au niveau type de connexion</p></div>';
+//        }
+
+        if ($cle == 'etudiant' || $cle == 'secretariat') {
+            if ($utilisateurAVerifier->getPremiereConnexion() == 0) {
+                echo '<div class="msgConfirmation"><p>Vous devez changer votre mot de passe</p></div>';
+                if ($cle == 'secretariat') {
+                    ConnexionUtilisateur::connecter($utilisateurAVerifier->getLogin());
+                    $session = Session::getInstance();
+                    $session->enregistrer($cle, 1);
+                    header("Location: controleurFrontal.php?controleur=personnel&action=afficherMAJPersonnel&login=" . ConnexionUtilisateur::getLoginUtilisateurConnecte());
+                    die();
                 } else {
-                    $mdpCorrect = MotDePasse::verifier($_POST['mdp'], $utilisateurAVerifier->getMdp());
-                    if (!$mdpCorrect) {
-                        echo '<div class="msgConfirmation"><p>Mot de passe incorrect</p></div>';
-                        self::afficherConnexion();
-                    } else {
-                        ConnexionUtilisateur::connecter($utilisateurAVerifier->getLogin());
-                        $session = Session::getInstance();
-                        $session->enregistrer($cle, 1);
-                        self::afficherAccueil();
-                    }
+                    ConnexionUtilisateur::connecter($utilisateurAVerifier->getLogin());
+                    $session = Session::getInstance();
+                    $session->enregistrer($cle, 1);
+                    header("Location: controleurFrontal.php?controleur=etudiant&action=afficherMAJEtudiant&login=" . ConnexionUtilisateur::getLoginUtilisateurConnecte());
+                    die();
                 }
             } else {
                 $mdpCorrect = MotDePasse::verifier($_POST['mdp'], $utilisateurAVerifier->getMdp());
                 if (!$mdpCorrect) {
                     echo '<div class="msgConfirmation"><p>Mot de passe incorrect</p></div>';
                     self::afficherConnexion();
-                    die();
                 } else {
                     ConnexionUtilisateur::connecter($utilisateurAVerifier->getLogin());
                     $session = Session::getInstance();
@@ -95,7 +98,20 @@ class ControleurGenerique
                     self::afficherAccueil();
                 }
             }
+        } else {
+            $mdpCorrect = MotDePasse::verifier($_POST['mdp'], $utilisateurAVerifier->getMdp());
+            if (!$mdpCorrect) {
+                echo '<div class="msgConfirmation"><p>Mot de passe incorrect</p></div>';
+                self::afficherConnexion();
+                die();
+            } else {
+                ConnexionUtilisateur::connecter($utilisateurAVerifier->getLogin());
+                $session = Session::getInstance();
+                $session->enregistrer($cle, 1);
+                self::afficherAccueil();
+            }
         }
+
     }
 
     public static function afficherAccueil()
