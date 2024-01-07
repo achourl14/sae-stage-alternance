@@ -93,6 +93,7 @@ if (ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estSecretariat(
     echo '<a href="controleurFrontal.php?controleur=etudiant&action=afficherGestionEtudiant">Gestion Etudiant</a>';
     echo '<a href="controleurFrontal.php?controleur=convention&action=afficherGestionConvention">Gestion des brouillons des Conventions</a>';
     echo '<a href="controleurFrontal.php?controleur=convention&action=afficherGestionConventionFinale">Gestion des Conventions Finales</a>';
+    echo '<a href="controleurFrontal.php?controleur=convention&action=afficherGestionConventionAlternanceFinale">Gestion des Conventions Alternance Finales</a>';
 
     echo '</div>';
     echo '</div>';
