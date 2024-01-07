@@ -4,9 +4,11 @@ namespace App\Controleur;
 
 use App\Lib\ConnexionUtilisateur;
 use App\Lib\MotDePasse;
+use App\Modele\DataObject\ConventionAlternance;
 use App\Modele\DataObject\ConventionStage;
 use App\Modele\DataObject\Entreprise;
 use App\Modele\HTTP\Session;
+use App\Modele\Repository\ConventionAlternanceRepository;
 use App\Modele\Repository\ConventionStageFinaleRepository;
 use App\Modele\Repository\ConventionStageRepository;
 use App\Modele\Repository\EntrepriseRepository;
@@ -590,7 +592,276 @@ class ControleurConvention extends ControleurGenerique
                             fclose($file);
                             (new ConventionStageFinaleRepository())->sauvegarderC($convention);
                             unlink("../fichier_csv/$nomFichier");
+                            echo '<div class="msgErreur"><p>L\'importation a été un succès</p></div>';
                             self::afficherGestionConventionFinale();
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    //CONVENTION ALTERNANCE FINALE
+
+    public static function afficherGestionConventionAlternanceFinale()
+    {
+        if (ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estSecretariat()) {
+            if (!Session::getInstance()->contient("requeteFiltreConventionAlternanceFinale")) {
+                $conventions = (new ConventionAlternanceRepository())->recuperer();
+            } else {
+                $conventions = (new ConventionAlternanceRepository())->recupererAvecFiltre(Session::getInstance()->lire("requeteFiltreConventionAlternanceFinale"));
+            }
+            $tableauParPage = null;
+            if ($conventions == null) {
+                $nbrePages = 1;
+                $page = 1;
+            } else {
+
+                //Pagination
+                $nombresConventions = count($conventions);
+                $nbrePages = ceil($nombresConventions / 9);
+
+                $page = 1;
+                if (isset($_GET['page'])) {
+                    $page = $_GET['page'];
+                    if ($page > $nbrePages) {
+                        $page = $nbrePages;
+                    } else if ($page <= 1) {
+                        $page = 1;
+                    }
+                }
+                $y = $page * 9;
+                if ($page * 9 > $nombresConventions) {
+                    $y = $nombresConventions;
+                }
+
+                for ($i = ($page - 1) * 9; $i < $y; $i++) {
+                    $tableauParPage[] = $conventions[$i];
+                }
+
+            }
+            self::afficherVue("vueGenerale.php", ["contenu" => "ConventionFinale/vueGestionConventionAlternance.php", "conventions" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Conventions Alternance Finale"]);
+        } else {
+            self::afficherErreur("Vous n'avez pas les droits");
+        }
+    }
+
+//    public static function afficherDetailConventionAlternanceFinale()
+//    {
+//        if (!isset($_GET["id"])) {
+//            self::afficherErreur("L'id de la convention n'est pas renseigné");
+//        } else {
+//            $convention = (new ConventionAlternanceRepository())->recupererParClePrimaire($_GET["id"]);
+//            $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($convention->getSiret());
+//            $etudiant = (new EtudiantRepository())->recupererDepuisNumEtudiant($convention->getNumEtudiant());
+//            self::afficherVue("vueGenerale.php", ["title" => "Detail Convention ", "contenu" => "Convention/vueDetailConventionAlternance.php", "convention" => $convention, "entreprise" => $entreprise, "etudiant" => $etudiant]);
+//        }
+//    }
+
+    public static function rechercherConventionAlternanceFinale()
+    {
+        $values = null;
+        if (isset($_POST["id"]) && $_POST["id"] != "") {
+            $values['id'] = $_POST["id"];
+        }
+        if (isset($_POST["prenomAlternantEtu"]) && $_POST["prenomAlternantEtu"] != "") {
+            $values['prenomAlternantEtu'] = $_POST["prenomAlternantEtu"];
+        }
+        if (isset($_POST['nomAlternantEtu']) && $_POST["nomAlternantEtu"] != "") {
+            $values['nomAlternantEtu'] = $_POST['nomAlternantEtu'];
+        }
+        if (isset($_POST['siret']) && $_POST["siret"] != "") {
+            $values['siret'] = $_POST['siret'];
+        }
+
+        Session::getInstance()->enregistrer("requeteFiltreConventionAlternanceFinale", $values);
+        self::afficherGestionConvention();
+    }
+
+    public static function supprimerFiltreConventionAlternanceFinale()
+    {
+        Session::getInstance()->supprimer("requeteFiltreConventionAlternanceFinale");
+        self::afficherGestionConvention();
+    }
+
+    public static function afficherVueImportationConventionAlternanceFinale()
+    {
+        if (ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estSecretariat()) {
+            self::afficherVue("vueGenerale.php", ["contenu" => "ConventionFinale/vueImportationConventionAlternanceFinale.php", "title" => "Importation Convention Alternance Finale"]);
+        }
+    }
+
+    public static function importerConventionAlternance()
+    {
+        if (ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estSecretariat()) {
+            if ($_FILES["fileToUpload"]["name"]) {
+                $nomFichier = $_FILES["fileToUpload"]["name"];
+                $dossier = $_FILES["fileToUpload"]["tmp_name"];
+                move_uploaded_file("$dossier", "../fichier_csv/$nomFichier");
+                $file_parts = pathinfo("../fichier_csv/$nomFichier");
+                if ($file_parts['extension'] != "csv") {
+                    echo '<div class="msgErreur"><p>Le fichier n\'est pas un fichier CSV</p></div>';
+                    self::afficherGestionConvention();
+                } else {
+                    $file = fopen("../fichier_csv/$nomFichier", "r");
+                    fgetcsv($file);
+                    while (($data = fgetcsv($file, 1000, ",")) !== false) {
+
+                        if((new ConventionAlternanceRepository())->recupererParClePrimaire($data[3]) != null){
+                            echo '<div class="msgConfirmation"><p>La convention numéro : '.$data[3].' existe déjà</p></div>';
+                            self::afficherGestionConventionFinale();
+                        }else{
+                            $convention = new ConventionAlternance(
+                                $data[0],
+                                $data[1],
+                                $data[2],
+                                $data[3],
+                                $data[4],
+                                $data[5],
+                                $data[6],
+                                $data[7],
+                                $data[8],
+                                $data[9],
+                                $data[10],
+                                $data[11],
+                                $data[12],
+                                $data[13],
+                                $data[14],
+                                $data[15],
+                                $data[16],
+                                $data[17],
+                                $data[18],
+                                $data[19],
+                                $data[20],
+                                $data[21],
+                                $data[22],
+                                $data[23],
+                                $data[24],
+                                $data[25],
+                                $data[26],
+                                $data[27],
+                                $data[28],
+                                $data[29],
+                                $data[30],
+                                $data[31],
+                                $data[32],
+                                $data[33],
+                                $data[34],
+                                $data[35],
+                                $data[36],
+                                $data[37],
+                                $data[38],
+                                $data[39],
+                                $data[40],
+                                $data[41],
+                                $data[42],
+                                $data[43],
+                                $data[44],
+                                $data[45],
+                                $data[46],
+                                $data[47],
+                                $data[48],
+                                $data[49],
+                                $data[50],
+                                $data[51],
+                                $data[52],
+                                $data[53],
+                                $data[54],
+                                $data[55],
+                                $data[56],
+                                $data[57],
+                                $data[58],
+                                $data[59],
+                                $data[60],
+                                $data[61],
+                                $data[62],
+                                $data[63],
+                                $data[64],
+                                $data[65],
+                                $data[66],
+                                $data[67],
+                                $data[68],
+                                $data[69],
+                                $data[70],
+                                $data[71],
+                                $data[72],
+                                $data[73],
+                                $data[74],
+                                $data[75],
+                                $data[76],
+                                $data[77],
+                                $data[78],
+                                $data[79],
+                                $data[80],
+                                $data[81],
+                                $data[82],
+                                $data[83],
+                                $data[84],
+                                $data[85],
+                                $data[86],
+                                $data[87],
+                                $data[88],
+                                $data[89],
+                                $data[90],
+                                $data[91],
+                                $data[92],
+                                $data[93],
+                                $data[94],
+                                $data[95],
+                                $data[96],
+                                $data[97],
+                                $data[98],
+                                $data[99],
+                                $data[100],
+                                $data[101],
+                                $data[102],
+                                $data[103],
+                                $data[104],
+                                $data[105],
+                                $data[106],
+                                $data[107],
+                                $data[108],
+                                $data[109],
+                                $data[110],
+                                $data[111],
+                                $data[112],
+                                $data[113],
+                                $data[114],
+                                $data[115],
+                                $data[116],
+                                $data[117],
+                                $data[118],
+                                $data[119],
+                                $data[120],
+                                $data[121],
+                                $data[122],
+                                $data[123],
+                                $data[124],
+                                $data[125],
+                                $data[126],
+                                $data[127],
+                                $data[128],
+                                $data[129],
+                                $data[130],
+                                $data[131],
+                                $data[132],
+                                $data[133],
+                                $data[134],
+                                $data[135],
+                                $data[136],
+                                $data[137],
+                                $data[138],
+                                $data[139],
+                                $data[140],
+                                $data[141],
+                                $data[142]
+                            );
+                            fclose($file);
+                            (new ConventionAlternanceRepository())->sauvegarder($convention);
+                            unlink("../fichier_csv/$nomFichier");
+                            echo '<div class="msgErreur"><p>L\'importation a été un succès</p></div>';
+                            self::afficherGestionConventionAlternanceFinale();
                         }
                     }
                 }
