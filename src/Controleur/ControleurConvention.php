@@ -932,11 +932,25 @@ class ControleurConvention extends ControleurGenerique
 
     public static function MiseAJourConventionDetailStage(){
         $convention = (new ConventionStageRepository())->recupererParClePrimaire($_POST['numConvention']);
+        $dateDebutInterup = "0000-00-00";
+        $dateFinInterup = "0000-00-00";
+        if ($_POST['dateDebutInterruption'] != "") {
+            $dateDebutInterup = $_POST['dateDebutInterruption'];
+        }
+        if ($_POST['dateFinInterruption'] != "") {
+            $dateFinInterup = $_POST['dateFinInterruption'];
+        }
+
+//        $dateCreationConvention = date("Y-m-d", time());
+        $dateModificationConvention = date("Y-m-d", time());
+        if ($_POST['dateCreationConvention'] != "") {
+            $dateCreationConvention = $_POST['dateCreationConvention'];
+        }
         $convention->setDateDebut($_POST['dateDeDebut']);
         $convention->setDateFin($_POST['dateDeFin']);
         $convention->setInterruption($_POST['interruption']);
-        $convention->setDateDebutInterruption($_POST['dateDebutInterruption']);
-        $convention->setDateFinInterruption($_POST['dateFinInterruption']);
+        $convention->setDateDebutInterruption($dateDebutInterup);
+        $convention->setDateFinInterruption($dateFinInterup);
         $convention->setThematique($_POST['thematique']);
         $convention->setSujet($_POST['sujet']);
         $convention->setFonctionTache($_POST['fonctionTache']);
@@ -952,8 +966,8 @@ class ControleurConvention extends ControleurGenerique
         $convention->setCommentaireStage($_POST['commentaireStage']);
         $convention->setCommentaireDureeTravail($_POST['commentaireDureeTravail']);
         $convention->setAvantageNature($_POST['avantageNature']);
-        $convention->setDateCreationConvention($_POST['dateCreationConvention']);
-        $convention->setDateModificationConvention($_POST['teModificationConvention']);
+        $convention->setDateCreationConvention($dateCreationConvention);
+        $convention->setDateModificationConvention($dateModificationConvention);
         $convention->setOrigineStage($_POST['origineStage']);
 
         (new ConventionStageRepository())->mettreAJour($convention);
@@ -973,10 +987,8 @@ class ControleurConvention extends ControleurGenerique
         $convention->setFonctionSignataire($_POST['fonctionSignataire']);
         $convention->setCodeELP($_POST['codeELP']);
         $convention->setElementPedagogique($_POST['elementPedagogique']);
-
-
         (new ConventionStageRepository())->mettreAJour($convention);
-        self::afficherVue("vueGenerale.php", ["contenu" => "CreationConvention/vueConventionAutres.php", "title" => "Mise à jour Convention Entreprise", "convention" => $convention]);
+        self::afficherAccueil();
     }
 
 }

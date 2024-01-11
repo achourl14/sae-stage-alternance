@@ -17,6 +17,12 @@
                 <div class="user-details">
 
                     <div class="input-box">
+                        <span class="details">Numero Convention</span>
+                        <input type="text" name="numConvention" required readonly
+                               value=<?php echo $convention->getNumConvention() ?>>
+                    </div>
+
+                    <div class="input-box">
                         <span class="details">Nom de l'établissement</span>
                         <input type="text" placeholder="" name="nomEtablissement" maxlength="50"
                                value=<?php echo $convention->getNomEtablissement() ?>>

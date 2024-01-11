@@ -27,6 +27,12 @@ if($convention->getInterruption() == "non"){
 
                 <div class="user-details">
 
+                    <div class="input-box">
+                        <span class="details">Numero Convention</span>
+                        <input type="text" name="numConvention" required readonly
+                               value=<?php echo $convention->getNumConvention() ?>>
+                    </div>
+
 
                     <div class="input-box">
                         <span class="details">Date de début</span>

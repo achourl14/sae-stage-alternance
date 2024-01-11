@@ -13,7 +13,7 @@ if($convention->getAvenant() == "non"){
     <div class="container">
         <div class="content">
             <form method="post" class="formulaire"
-                  action="controleurFrontal.php?controleur=convention&action=MiseAjourConvention">
+                  action="controleurFrontal.php?controleur=convention&action=MiseAJourConventionAutres">
                 <div class="title">Convention</div>
 
                 <div class='page'>
@@ -23,6 +23,12 @@ if($convention->getAvenant() == "non"){
                     <div><p class="activeP">Autres</p></div>
                 </div>
                 <div class="user-details">
+
+                    <div class="input-box">
+                        <span class="details">Numero Convention</span>
+                        <input type="text" name="numConvention" required readonly
+                               value=<?php echo $convention->getNumConvention() ?>>
+                    </div>
 
 
                     <div class="input-box">
