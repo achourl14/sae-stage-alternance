@@ -256,7 +256,7 @@ class ControleurConvention extends ControleurGenerique
     {
         if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
             $convention = (new ConventionStageRepository())->recupererParClePrimaire($_GET['numConvention']);
-            self::afficherVue("vueGenerale.php", ["contenu" => "Convention/vueMiseAJourConvention.php", "title" => "Mise à jour Convention", "convention" => $convention]);
+            self::afficherVue("vueGenerale.php", ["contenu" => "CreationConvention/vueConventionEtudiant.php", "title" => "Mise à jour Convention", "convention" => $convention]);
         }
     }
 
@@ -268,7 +268,7 @@ class ControleurConvention extends ControleurGenerique
             if ($convention == null) {
                 self::afficherErreur("Vous n'avez pas de convention");
             } else {
-                self::afficherVue("vueGenerale.php", ["contenu" => "Convention/vueMiseAJourConvention.php", "title" => "Mise à jour Convention", "convention" => $convention]);
+                self::afficherVue("vueGenerale.php", ["contenu" => "CreationConvention/vueConventionEtudiant.php", "title" => "Mise à jour Convention", "convention" => $convention]);
             }
 
         }
@@ -868,6 +868,114 @@ class ControleurConvention extends ControleurGenerique
 
             }
         }
+    }
+
+    public static function MiseAJourConventionEtudiant(){
+        $convention = (new ConventionStageRepository())->recupererParClePrimaire($_POST['numConvention']);
+        $convention->setNumEtudiant($_POST['numEtudiant']);
+        $convention->setNomEtu($_POST['nomEtu']);
+        $convention->setPrenomEtu($_POST['prenomEtu']);
+        $convention->setNumTelPersoEtu($_POST['numTelPersoEtu']);
+        $convention->setNumTelEtu($_POST['numTelEtu']);
+        $convention->setMailPersoEtu($_POST['mailPersoEtu']);
+        $convention->setMailUniversitaireEtu($_POST['mailUniversitaireEtu']);
+        $convention->setMailPersoEtu($_POST['mailPersoEtu']);
+        $convention->setCodeSexeEtu($_POST['codeSexeEtu']);
+        $convention->setAdresseEtu($_POST['adresseEtu']);
+        $convention->setCodePostalEtu($_POST['codePostalEtu']);
+        $convention->setVilleEtu($_POST['villeEtu']);
+        $convention->setPaysEtu($_POST['paysEtu']);
+        $convention->setCodeUfr($_POST['codeUfr']);
+        $convention->setLibUfr($_POST['libUfr']);
+        $convention->setCodeDepartement($_POST['codeDepartement']);
+        $convention->setCodeEtape($_POST['codeEtape']);
+        $convention->setLibEtape($_POST['libEtape']);
+        (new ConventionStageRepository())->mettreAJour($convention);
+        self::afficherVue("vueGenerale.php", ["contenu" => "CreationConvention/vueConventionEntreprise.php", "title" => "Mise à jour Convention Entreprise", "convention" => $convention]);
+    }
+    public static function MiseAJourConventionEntreprise(){
+        $convention = (new ConventionStageRepository())->recupererParClePrimaire($_POST['numConvention']);
+        $convention->setNomEtablissement($_POST['nomEtablissement']);
+        $convention->setSiret($_POST['siret']);
+        $convention->setAdresseResidence($_POST['adresseResidence']);
+        $convention->setAdresseVoie($_POST['adresseVoie']);
+        $convention->setAdresseLibCedex($_POST['adresseLibCedex']);
+        $convention->setCodePostal($_POST['codePostal']);
+        $convention->setCommuneEtabAcceuil($_POST['communeEtabAcceuil']);
+        $convention->setPaysEtablissement($_POST['paysEtablissement']);
+        $convention->setStatutJuridique($_POST['statutJuridique']);
+        $convention->setTypeStructure($_POST['typeStructure']);
+        $convention->setEffectif($_POST['effectif']);
+        $convention->setCodeNAF($_POST['codeNAF']);
+        $convention->setTelEtablissement($_POST['telEtablissement']);
+        $convention->setFax($_POST['fax']);
+        $convention->setMailEtablissement($_POST['mailEtablissement']);
+        $convention->setSiteWeb($_POST['siteWeb']);
+        $convention->setNomServiceAcceuil($_POST['nomServiceAcceuil']);
+        $convention->setResidenceServiceAcceuil($_POST['residenceServiceAcceuil']);
+        $convention->setVoieServiceAcceuil($_POST['voieServiceAcceuil']);
+        $convention->setCedexServiceAcceuil($_POST['cedexServiceAcceuil']);
+        $convention->setCodePostalServiceAcceuil($_POST['codePostalServiceAcceuil']);
+        $convention->setCommuneServiceAcceuil($_POST['communeServiceAcceuil']);
+        $convention->setPaysServiceAcceuil($_POST['paysServiceAcceuil']);
+        $convention->setNomTuteurProfessionnel($_POST['nomTuteurProfessionnel']);
+        $convention->setPrenomTuteurProfessionnel($_POST['prenomTuteurProfessionnel']);
+        $convention->setMailTuteurProfessionnel($_POST['mailTuteurProfessionnel']);
+        $convention->setTelTuteurProfessionnel($_POST['telTuteurProfessionnel']);
+        $convention->setFonctionTuteurProfessionnel($_POST['fonctionTuteurProfessionnel']);
+
+
+        (new ConventionStageRepository())->mettreAJour($convention);
+        self::afficherVue("vueGenerale.php", ["contenu" => "CreationConvention/vueConventionDetailsStage.php", "title" => "Mise à jour Convention Entreprise", "convention" => $convention]);
+    }
+
+    public static function MiseAJourConventionDetailStage(){
+        $convention = (new ConventionStageRepository())->recupererParClePrimaire($_POST['numConvention']);
+        $convention->setDateDebut($_POST['dateDeDebut']);
+        $convention->setDateFin($_POST['dateDeFin']);
+        $convention->setInterruption($_POST['interruption']);
+        $convention->setDateDebutInterruption($_POST['dateDebutInterruption']);
+        $convention->setDateFinInterruption($_POST['dateFinInterruption']);
+        $convention->setThematique($_POST['thematique']);
+        $convention->setSujet($_POST['sujet']);
+        $convention->setFonctionTache($_POST['fonctionTache']);
+        $convention->setDetailProjet($_POST['detailProjet']);
+        $convention->setDuree($_POST['duree']);
+        $convention->setNbJourTravail($_POST['nbJourTravail']);
+        $convention->setNbHeureHebdomadairer($_POST['nbHeureHebdomadaire']);
+        $convention->setGratification($_POST['gratification']);
+        $convention->setUniteGratification($_POST['uniteGratification']);
+        $convention->setUniteDureGratification($_POST['uniteDureeGratification']);
+        $convention->setAnneeUniversitaire($_POST['anneeUniversitaire']);
+        $convention->setTypeDeConvention($_POST['typeDeConvention']);
+        $convention->setCommentaireStage($_POST['commentaireStage']);
+        $convention->setCommentaireDureeTravail($_POST['commentaireDureeTravail']);
+        $convention->setAvantageNature($_POST['avantageNature']);
+        $convention->setDateCreationConvention($_POST['dateCreationConvention']);
+        $convention->setDateModificationConvention($_POST['teModificationConvention']);
+        $convention->setOrigineStage($_POST['origineStage']);
+
+        (new ConventionStageRepository())->mettreAJour($convention);
+        self::afficherVue("vueGenerale.php", ["contenu" => "CreationConvention/vueConventionAutres.php", "title" => "Mise à jour Convention Entreprise", "convention" => $convention]);
+    }
+
+    public static function MiseAJourConventionAutres(){
+        $convention = (new ConventionStageRepository())->recupererParClePrimaire($_POST['numConvention']);
+        $convention->setAvenant($_POST['avenant']);
+        $convention->setDetailAvenant($_POST['detailAvenant']);
+        $convention->setNomEnseignantReferent($_POST['nomEnseignantReferent']);
+        $convention->setPrenomEnseignentReferent($_POST['prenomEnseignantReferent']);
+        $convention->setMailEnseignentReferent($_POST['mailEnseignantReferent']);
+        $convention->setNomSignataire($_POST['nomSignataire']);
+        $convention->setPrenomSignataire($_POST['prenomSignataire']);
+        $convention->setMailSignataire($_POST['mailSignataire']);
+        $convention->setFonctionSignataire($_POST['fonctionSignataire']);
+        $convention->setCodeELP($_POST['codeELP']);
+        $convention->setElementPedagogique($_POST['elementPedagogique']);
+
+
+        (new ConventionStageRepository())->mettreAJour($convention);
+        self::afficherVue("vueGenerale.php", ["contenu" => "CreationConvention/vueConventionAutres.php", "title" => "Mise à jour Convention Entreprise", "convention" => $convention]);
     }
 
 }

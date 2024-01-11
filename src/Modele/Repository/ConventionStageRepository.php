@@ -121,7 +121,7 @@ class ConventionStageRepository extends AbstractRepository
             "detailProjet",
             "duree",
             "nbJourTravail",
-            "nbHeureHebdomadairer",
+            "nbHeureHebdomadaire",
             "gratification",
             "uniteGratification",
             "uniteDureGratification",

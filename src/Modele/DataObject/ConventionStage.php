@@ -750,6 +750,418 @@ class ConventionStage extends AbstractDataObject
         return $this->fonctionTuteurProfessionnel;
     }
 
+    public function setNumConvention(?int $numConvention): void
+    {
+        $this->numConvention = $numConvention;
+    }
+
+    public function setNumEtudiant(?int $numEtudiant): void
+    {
+        $this->numEtudiant = $numEtudiant;
+    }
+
+    public function setNomEtu(?string $nomEtu): void
+    {
+        $this->nomEtu = $nomEtu;
+    }
+
+    public function setPrenomEtu(?string $prenomEtu): void
+    {
+        $this->prenomEtu = $prenomEtu;
+    }
+
+    public function setNumTelPersoEtu(?string $numTelPersoEtu): void
+    {
+        $this->numTelPersoEtu = $numTelPersoEtu;
+    }
+
+    public function setNumTelEtu(?string $numTelEtu): void
+    {
+        $this->numTelEtu = $numTelEtu;
+    }
+
+    public function setMailPersoEtu(?string $mailPersoEtu): void
+    {
+        $this->mailPersoEtu = $mailPersoEtu;
+    }
+
+    public function setMailUniversitaireEtu(?string $mailUniversitaireEtu): void
+    {
+        $this->mailUniversitaireEtu = $mailUniversitaireEtu;
+    }
+
+    public function setCodeUfr(?string $codeUfr): void
+    {
+        $this->codeUfr = $codeUfr;
+    }
+
+    public function setLibUfr(?string $libUfr): void
+    {
+        $this->libUfr = $libUfr;
+    }
+
+    public function setCodeDepartement(?string $codeDepartement): void
+    {
+        $this->codeDepartement = $codeDepartement;
+    }
+
+    public function setCodeEtape(?string $codeEtape): void
+    {
+        $this->codeEtape = $codeEtape;
+    }
+
+    public function setLibEtape(?string $libEtape): void
+    {
+        $this->libEtape = $libEtape;
+    }
+
+    public function setDateDebut(?string $dateDebut): void
+    {
+        $this->dateDebut = $dateDebut;
+    }
+
+    public function setDateFin(?string $dateFin): void
+    {
+        $this->dateFin = $dateFin;
+    }
+
+    public function setInterruption(?string $interruption): void
+    {
+        $this->interruption = $interruption;
+    }
+
+    public function setDateDebutInterruption(?string $dateDebutInterruption): void
+    {
+        $this->dateDebutInterruption = $dateDebutInterruption;
+    }
+
+    public function setDateFinInterruption(?string $dateFinInterruption): void
+    {
+        $this->dateFinInterruption = $dateFinInterruption;
+    }
+
+    public function setThematique(?string $thematique): void
+    {
+        $this->thematique = $thematique;
+    }
+
+    public function setSujet(?string $sujet): void
+    {
+        $this->sujet = $sujet;
+    }
+
+    public function setFonctionTache(?string $fonctionTache): void
+    {
+        $this->fonctionTache = $fonctionTache;
+    }
+
+    public function setDetailProjet(?string $detailProjet): void
+    {
+        $this->detailProjet = $detailProjet;
+    }
+
+    public function setDuree(?string $duree): void
+    {
+        $this->duree = $duree;
+    }
+
+    public function setNbJourTravail(?string $nbJourTravail): void
+    {
+        $this->nbJourTravail = $nbJourTravail;
+    }
+
+    public function setNbHeureHebdomadairer(?string $nbHeureHebdomadairer): void
+    {
+        $this->nbHeureHebdomadairer = $nbHeureHebdomadairer;
+    }
+
+    public function setGratification(?float $gratification): void
+    {
+        $this->gratification = $gratification;
+    }
+
+    public function setUniteGratification(?string $uniteGratification): void
+    {
+        $this->uniteGratification = $uniteGratification;
+    }
+
+    public function setUniteDureGratification(?string $uniteDureGratification): void
+    {
+        $this->uniteDureGratification = $uniteDureGratification;
+    }
+
+    public function setConventionValide(?string $conventionValide): void
+    {
+        $this->conventionValide = $conventionValide;
+    }
+
+    public function setNomEnseignantReferent(?string $nomEnseignantReferent): void
+    {
+        $this->nomEnseignantReferent = $nomEnseignantReferent;
+    }
+
+    public function setPrenomEnseignentReferent(?string $prenomEnseignentReferent): void
+    {
+        $this->prenomEnseignentReferent = $prenomEnseignentReferent;
+    }
+
+    public function setMailEnseignentReferent(?string $mailEnseignentReferent): void
+    {
+        $this->mailEnseignentReferent = $mailEnseignentReferent;
+    }
+
+    public function setNomSignataire(?string $nomSignataire): void
+    {
+        $this->nomSignataire = $nomSignataire;
+    }
+
+    public function setPrenomSignataire(?string $prenomSignataire): void
+    {
+        $this->prenomSignataire = $prenomSignataire;
+    }
+
+    public function setMailSignataire(?string $mailSignataire): void
+    {
+        $this->mailSignataire = $mailSignataire;
+    }
+
+    public function setFonctionSignataire(?string $fonctionSignataire): void
+    {
+        $this->fonctionSignataire = $fonctionSignataire;
+    }
+
+    public function setAnneeUniversitaire(?string $anneeUniversitaire): void
+    {
+        $this->anneeUniversitaire = $anneeUniversitaire;
+    }
+
+    public function setTypeDeConvention(?string $typeDeConvention): void
+    {
+        $this->typeDeConvention = $typeDeConvention;
+    }
+
+    public function setCommentaireStage(?string $commentaireStage): void
+    {
+        $this->commentaireStage = $commentaireStage;
+    }
+
+    public function setCommentaireDureeTravail(?string $commentaireDureeTravail): void
+    {
+        $this->commentaireDureeTravail = $commentaireDureeTravail;
+    }
+
+    public function setCodeELP(?string $codeELP): void
+    {
+        $this->codeELP = $codeELP;
+    }
+
+    public function setElementPedagogique(?string $elementPedagogique): void
+    {
+        $this->elementPedagogique = $elementPedagogique;
+    }
+
+    public function setCodeSexeEtu(?string $codeSexeEtu): void
+    {
+        $this->codeSexeEtu = $codeSexeEtu;
+    }
+
+    public function setAvantageNature(?string $avantageNature): void
+    {
+        $this->avantageNature = $avantageNature;
+    }
+
+    public function setAdresseEtu(?string $adresseEtu): void
+    {
+        $this->adresseEtu = $adresseEtu;
+    }
+
+    public function setCodePostalEtu(?string $codePostalEtu): void
+    {
+        $this->codePostalEtu = $codePostalEtu;
+    }
+
+    public function setPaysEtu(?string $paysEtu): void
+    {
+        $this->paysEtu = $paysEtu;
+    }
+
+    public function setVilleEtu(?string $villeEtu): void
+    {
+        $this->villeEtu = $villeEtu;
+    }
+
+    public function setConventionValidePedagogique(?string $conventionValidePedagogique): void
+    {
+        $this->conventionValidePedagogique = $conventionValidePedagogique;
+    }
+
+    public function setAvenant(?string $avenant): void
+    {
+        $this->avenant = $avenant;
+    }
+
+    public function setDetailAvenant(?string $detailAvenant): void
+    {
+        $this->detailAvenant = $detailAvenant;
+    }
+
+    public function setDateCreationConvention(?string $dateCreationConvention): void
+    {
+        $this->dateCreationConvention = $dateCreationConvention;
+    }
+
+    public function setDateModificationConvention(?string $dateModificationConvention): void
+    {
+        $this->dateModificationConvention = $dateModificationConvention;
+    }
+
+    public function setOrigineStage(?string $origineStage): void
+    {
+        $this->origineStage = $origineStage;
+    }
+
+    public function setNomEtablissement(?string $nomEtablissement): void
+    {
+        $this->nomEtablissement = $nomEtablissement;
+    }
+
+    public function setSiret(?string $siret): void
+    {
+        $this->siret = $siret;
+    }
+
+    public function setAdresseResidence(?string $adresseResidence): void
+    {
+        $this->adresseResidence = $adresseResidence;
+    }
+
+    public function setAdresseVoie(?string $adresseVoie): void
+    {
+        $this->adresseVoie = $adresseVoie;
+    }
+
+    public function setAdresseLibCedex(?string $adresseLibCedex): void
+    {
+        $this->adresseLibCedex = $adresseLibCedex;
+    }
+
+    public function setCodePostal(?string $codePostal): void
+    {
+        $this->codePostal = $codePostal;
+    }
+
+    public function setCommuneEtabAcceuil(?string $communeEtabAcceuil): void
+    {
+        $this->communeEtabAcceuil = $communeEtabAcceuil;
+    }
+
+    public function setPaysEtablissement(?string $paysEtablissement): void
+    {
+        $this->paysEtablissement = $paysEtablissement;
+    }
+
+    public function setStatutJuridique(?string $statutJuridique): void
+    {
+        $this->statutJuridique = $statutJuridique;
+    }
+
+    public function setTypeStructure(?string $typeStructure): void
+    {
+        $this->typeStructure = $typeStructure;
+    }
+
+    public function setEffectif(?string $effectif): void
+    {
+        $this->effectif = $effectif;
+    }
+
+    public function setCodeNAF(?string $codeNAF): void
+    {
+        $this->codeNAF = $codeNAF;
+    }
+
+    public function setTelEtablissement(?string $telEtablissement): void
+    {
+        $this->telEtablissement = $telEtablissement;
+    }
+
+    public function setFax(?string $fax): void
+    {
+        $this->fax = $fax;
+    }
+
+    public function setMailEtablissement(?string $mailEtablissement): void
+    {
+        $this->mailEtablissement = $mailEtablissement;
+    }
+
+    public function setSiteWeb(?string $siteWeb): void
+    {
+        $this->siteWeb = $siteWeb;
+    }
+
+    public function setNomServiceAcceuil(?string $nomServiceAcceuil): void
+    {
+        $this->nomServiceAcceuil = $nomServiceAcceuil;
+    }
+
+    public function setResidenceServiceAcceuil(?string $residenceServiceAcceuil): void
+    {
+        $this->residenceServiceAcceuil = $residenceServiceAcceuil;
+    }
+
+    public function setVoieServiceAcceuil(?string $voieServiceAcceuil): void
+    {
+        $this->voieServiceAcceuil = $voieServiceAcceuil;
+    }
+
+    public function setCedexServiceAcceuil(?string $cedexServiceAcceuil): void
+    {
+        $this->cedexServiceAcceuil = $cedexServiceAcceuil;
+    }
+
+    public function setCodePostalServiceAcceuil(?string $codePostalServiceAcceuil): void
+    {
+        $this->codePostalServiceAcceuil = $codePostalServiceAcceuil;
+    }
+
+    public function setCommuneServiceAcceuil(?string $communeServiceAcceuil): void
+    {
+        $this->communeServiceAcceuil = $communeServiceAcceuil;
+    }
+
+    public function setPaysServiceAcceuil(?string $paysServiceAcceuil): void
+    {
+        $this->paysServiceAcceuil = $paysServiceAcceuil;
+    }
+
+    public function setNomTuteurProfessionnel(?string $nomTuteurProfessionnel): void
+    {
+        $this->nomTuteurProfessionnel = $nomTuteurProfessionnel;
+    }
+
+    public function setPrenomTuteurProfessionnel(?string $prenomTuteurProfessionnel): void
+    {
+        $this->prenomTuteurProfessionnel = $prenomTuteurProfessionnel;
+    }
+
+    public function setMailTuteurProfessionnel(?string $mailTuteurProfessionnel): void
+    {
+        $this->mailTuteurProfessionnel = $mailTuteurProfessionnel;
+    }
+
+    public function setTelTuteurProfessionnel(?string $telTuteurProfessionnel): void
+    {
+        $this->telTuteurProfessionnel = $telTuteurProfessionnel;
+    }
+
+    public function setFonctionTuteurProfessionnel(?string $fonctionTuteurProfessionnel): void
+    {
+        $this->fonctionTuteurProfessionnel = $fonctionTuteurProfessionnel;
+    }
+
+
+
 
     public function formatTableau(): array
     {
@@ -778,7 +1190,7 @@ class ConventionStage extends AbstractDataObject
             "detailProjetTag" => $this->getDetailProjet(),
             "dureeTag" => $this->getDuree(),
             "nbJourTravailTag" => $this->getNbJourTravail(),
-            "nbHeureHebdomadairerTag" => $this->getNbHeureHebdomadairer(),
+            "nbHeureHebdomadaireTag" => $this->getNbHeureHebdomadairer(),
             "gratificationTag" => $this->getGratification(),
             "uniteGratificationTag" => $this->getUniteGratification(),
             "uniteDureGratificationTag" => $this->getUniteDureGratification(),

@@ -77,16 +77,20 @@ if ($pageActuelle != $nbrePages) {
 echo "<div> <a class='' href='controleurFrontal.php?controleur=entreprise&action=afficherGestionEntreprise&page=" . $pageActuelle + 1 . "'> page suivante </a> </div>";
 echo "</div>";
 echo '<div class = "groupCartes">';
-foreach ($entreprises as $entreprise) {
+if ($entreprises == null) {
+    echo '<div class="msgConfirmation"><p> Aucune entreprise trouvé </p></div>';
+} else {
+    foreach ($entreprises as $entreprise) {
 
-    echo "<a href='controleurFrontal.php?controleur=entreprise&action=afficherDetailEntreprise&numSiret=" . $entreprise->getNumSiret() . "'>";
-    echo '<div class ="carte">';
-    echo("<h1> Nom Entreprise: " . htmlspecialchars($entreprise->getNomEntreprise()) . "</h1>");
-    echo "<h2> Numéro Siret: " . htmlspecialchars($entreprise->getNumSiret()) . " </h2>";
-    echo("<p> Adresse mail : " . htmlspecialchars($entreprise->getMail()) . " </p>");
-    echo("<p> Telephone : " . htmlspecialchars($entreprise->getTelephone()) . " </p>");
-    echo "</div>";
-    echo "</a>";
+        echo "<a href='controleurFrontal.php?controleur=entreprise&action=afficherDetailEntreprise&numSiret=" . $entreprise->getNumSiret() . "'>";
+        echo '<div class ="carte">';
+        echo("<h1> Nom Entreprise: " . htmlspecialchars($entreprise->getNomEntreprise()) . "</h1>");
+        echo "<h2> Numéro Siret: " . htmlspecialchars($entreprise->getNumSiret()) . " </h2>";
+        echo("<p> Adresse mail : " . htmlspecialchars($entreprise->getMail()) . " </p>");
+        echo("<p> Telephone : " . htmlspecialchars($entreprise->getTelephone()) . " </p>");
+        echo "</div>";
+        echo "</a>";
+    }
 }
 echo '</div>';
 echo '</div>';
