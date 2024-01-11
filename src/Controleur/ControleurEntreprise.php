@@ -37,7 +37,7 @@ class ControleurEntreprise extends ControleurGenerique
 
         $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($_GET['numSiret']);
         echo '<div class="msgConfirmation"><p> L\'entreprise ' . $entreprise->getNomEntreprise().' a été supprimée ainsi que toutes les offres associées</p></div>';
-        self::afficherVue('vueGenerale.php', ["contenu" => "Generale/index.html","title"=>"Accueil"]);
+        self::afficherVue('vueGenerale.php', ["contenu" => "Generale/index.php","title"=>"Accueil"]);
         (new OffreRepository())->supprimer($_GET['idEntreprise']);
         (new EntrepriseRepository())->supprimer($_GET['numSiret']);
     }

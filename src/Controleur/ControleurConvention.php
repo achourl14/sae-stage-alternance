@@ -286,6 +286,7 @@ class ControleurConvention extends ControleurGenerique
         }
     }
 
+
     public static function MAJConvention()
     {
         $dateDebutInterup = "0000-00-00";
@@ -647,17 +648,17 @@ class ControleurConvention extends ControleurGenerique
         }
     }
 
-//    public static function afficherDetailConventionAlternanceFinale()
-//    {
-//        if (!isset($_GET["id"])) {
-//            self::afficherErreur("L'id de la convention n'est pas renseigné");
-//        } else {
-//            $convention = (new ConventionAlternanceRepository())->recupererParClePrimaire($_GET["id"]);
-//            $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($convention->getSiret());
-//            $etudiant = (new EtudiantRepository())->recupererDepuisNumEtudiant($convention->getNumEtudiant());
-//            self::afficherVue("vueGenerale.php", ["title" => "Detail Convention ", "contenu" => "Convention/vueDetailConventionAlternance.php", "convention" => $convention, "entreprise" => $entreprise, "etudiant" => $etudiant]);
-//        }
-//    }
+    public static function afficherDetailConventionAlternanceFinale()
+    {
+        if (!isset($_GET["id"])) {
+            self::afficherErreur("L'id de la convention n'est pas renseigné");
+        } else {
+           $convention = (new ConventionAlternanceRepository())->recupererParClePrimaire($_GET["id"]);
+           $entreprise = (new EntrepriseRepository())->recupererParClePrimaire($convention->getSiret());
+
+            self::afficherVue("vueGenerale.php", ["title" => "Detail Convention ", "contenu" => "Convention/vueDetailConventionAlternance.php", "convention" => $convention, "entreprise" => $entreprise]);
+        }
+    }
 
     public static function rechercherConventionAlternanceFinale()
     {

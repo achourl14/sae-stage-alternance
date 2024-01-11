@@ -116,7 +116,7 @@ class ControleurGenerique
 
     public static function afficherAccueil()
     {
-        self::afficherVue("vueGenerale.php", ["contenu" => "Generale/index.html", "title" => "Accueil"]);
+        self::afficherVue("vueGenerale.php", ["contenu" => "Generale/index.php", "title" => "Accueil"]);
     }
 
     public static function afficherInscription()

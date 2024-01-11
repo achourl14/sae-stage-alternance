@@ -2,6 +2,7 @@
 
 namespace App\Modele\Repository;
 
+use App\Modele\DataObject\AbstractDataObject;
 use App\Modele\DataObject\ConventionAlternance;
 
 class ConventionAlternanceRepository extends AbstractRepository
@@ -15,6 +16,28 @@ class ConventionAlternanceRepository extends AbstractRepository
         }
         return $tableau;
     }
+
+    public function recupererParClePrimaire(string $valeurClePrimaire): ?AbstractDataObject{
+        $sql = "SELECT * from ConventionAlternanceFinale c JOIN ConventionAlternanceFinal2 cc ON c.id = cc.id WHERE c.id = :valeurClePrimaireTag" ;
+        // Préparation de la requête
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+
+        $values = array(
+            "valeurClePrimaireTag" => $valeurClePrimaire
+        );
+        // On donne les valeurs et on exécute la requête
+        $pdoStatement->execute($values);
+
+        // On récupère les résultats comme précédemment
+        // Note: fetch() renvoie false si pas de objet correspondante
+        $objetFormatTableau = $pdoStatement->fetch();
+        if($objetFormatTableau == null){
+            return null;
+        }
+        return $this->construireDepuisTableau($objetFormatTableau);
+    }
+
+
 
     public function recupererAvecFiltre(array $parameters) : ?array {
         $colonesql = "";
