@@ -68,7 +68,7 @@ foreach ($resultats as $resultat) {
             //$mdp = MotDePasse::hacher($login);
             if((new SecretariatRepository())->recupererParClePrimaire($login) == null){
                 $personnel = new Secretariat($login, $nomprenom[0],$nomprenom[1],$mailEtudiant,null,null,null,null,0);
-                echo "<p>type= ".$type." login : ". $personnel->getLogin() ." nom : ".$personnel->getNomSecretariat()." prenom : ".$personnel->getPrenomSecretariat()." mail : ".$personnel->getMail()." mdpHaché : ".$personnel->getMdp()."</p>";
+                //echo "<p>type= ".$type." login : ". $personnel->getLogin() ." nom : ".$personnel->getNomSecretariat()." prenom : ".$personnel->getPrenomSecretariat()." mail : ".$personnel->getMail()." mdpHaché : ".$personnel->getMdp()."</p>";
                 SecretariatRepository::sauvegarder($personnel);
             }
 
@@ -76,21 +76,21 @@ foreach ($resultats as $resultat) {
             //$mdp = MotDePasse::hacher($login);
             if((new EtudiantRepository())->recupererParClePrimaire($login) == null) {
                 $etudiant = new Etudiant($login, null, $nomprenom[0], $nomprenom[1], $mailEtudiant, 1, null, null, null, null, null, null, null, 0);
-                echo "<p>type= " . $type . " login : " . $etudiant->getLogin() . " nom : " . $etudiant->getNom() . " prenom : " . $etudiant->getPrenom() . " mail : " . $etudiant->getEmail() . " promotion " . $etudiant->getPromotion() . " mdpHaché : " . $etudiant->getMdp() . "</p>";
+                //echo "<p>type= " . $type . " login : " . $etudiant->getLogin() . " nom : " . $etudiant->getNom() . " prenom : " . $etudiant->getPrenom() . " mail : " . $etudiant->getEmail() . " promotion " . $etudiant->getPromotion() . " mdpHaché : " . $etudiant->getMdp() . "</p>";
                 (new EtudiantRepository())->sauvegarder($etudiant);
             }
         } else if ($type == "Ann2") {
             //$mdp = MotDePasse::hacher($login);
             if((new EtudiantRepository())->recupererParClePrimaire($login) == null) {
                 $etudiant = new Etudiant($login, null, $nomprenom[0], $nomprenom[1], $mailEtudiant, 2, null, null, null, null, null, null, null, 0);
-                echo "<p>type= " . $type . " login : " . $etudiant->getLogin() . " nom : " . $etudiant->getNom() . " prenom : " . $etudiant->getPrenom() . " mail : " . $etudiant->getEmail() . " promotion " . $etudiant->getPromotion() . " mdpHaché : " . $etudiant->getMdp() . "</p>";
+                //echo "<p>type= " . $type . " login : " . $etudiant->getLogin() . " nom : " . $etudiant->getNom() . " prenom : " . $etudiant->getPrenom() . " mail : " . $etudiant->getEmail() . " promotion " . $etudiant->getPromotion() . " mdpHaché : " . $etudiant->getMdp() . "</p>";
                 (new EtudiantRepository())->sauvegarder($etudiant);
             }
         } else if ($type == "Ann3") {
             //$mdp = MotDePasse::hacher($login);
             if((new EtudiantRepository())->recupererParClePrimaire($login) == null) {
                 $etudiant = new Etudiant($login, null, $nomprenom[0], $nomprenom[1], $mailEtudiant, 3, null, null, null, null, null, null, null, 0);
-                echo "<p>type= " . $type . " login : " . $etudiant->getLogin() . " nom : " . $etudiant->getNom() . " prenom : " . $etudiant->getPrenom() . " mail : " . $etudiant->getEmail() . " promotion " . $etudiant->getPromotion() . " mdpHaché : " . $etudiant->getMdp() . "</p>";
+                //echo "<p>type= " . $type . " login : " . $etudiant->getLogin() . " nom : " . $etudiant->getNom() . " prenom : " . $etudiant->getPrenom() . " mail : " . $etudiant->getEmail() . " promotion " . $etudiant->getPromotion() . " mdpHaché : " . $etudiant->getMdp() . "</p>";
                 (new EtudiantRepository())->sauvegarder($etudiant);
             }
         }

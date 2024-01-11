@@ -4,33 +4,35 @@ use App\Modele\Repository\EtudiantRepository;
 
 echo "<div class='title'> Les candidatures pour votre offre </div>";
 
-if($postulers == null){
+if ($postulers == null) {
     echo '<div class="msgConfirmation"><p> Aucun étudiant a postuler pour cette offre </p></div>';
-}else{
+} else {
     echo "<div class='toutesCandidature'>";
     foreach ($postulers as $postuler) {
         echo "<div class='offre_candidature'>";
         echo "<div>";
         $etudiant = (new EtudiantRepository())->recupererParClePrimaire($postuler->getLoginEtu());
-        echo "<h1>".htmlspecialchars($etudiant->getPrenom())." ".htmlspecialchars($etudiant->getNom())."</h1>";
+        echo "<h1>" . htmlspecialchars($etudiant->getPrenom()) . " " . htmlspecialchars($etudiant->getNom()) . "</h1>";
         echo "<h2> Numéro INE : " . htmlspecialchars($etudiant->getLogin()) . "</h2>";
-        echo "<h2> Numéro Etudiant : ". htmlspecialchars($etudiant->getNumEtudiant()) ."</h2>";
+        echo "<h2> Numéro Etudiant : " . htmlspecialchars($etudiant->getNumEtudiant()) . "</h2>";
         echo '</div>';
 
         echo "<div class='etat'>";
-        if($postuler->getEtat() == 0){
+        if ($postuler->getEtat() == 0) {
             echo "<img class='icon_etat' src='../web/img/lhorloge.png'/>";
             echo "<p> en attente </p>";
-        }else if($postuler->getEtat() == 1){
+        } else if ($postuler->getEtat() == 1) {
             echo "<p> ✅ <p/>";
             echo "<p>,  Validé, L'étudiant a été retenu pour ce poste </p>";
-        }else{
+        } else {
             echo "<p> ❌ <p/>";
             echo "<p>, Refusé, L'étudiant n'a pas été retenu pour ce poste </p>";
         }
         echo "</div>";
-        echo "<a href='controleurFrontal.php?controleur=entreprise&action=accepterCandidature&idOffre=".$postuler->getIdOffre()."&login=".$postuler->getLoginEtu()."'> Accepter </a>";
-        echo "<a href='controleurFrontal.php?controleur=entreprise&action=refuserCandidature&idOffre=".$postuler->getIdOffre()."&login=".$postuler->getLoginEtu()."'> Refuser </a>";
+        if ($postuler->getEtat() == 0) {
+            echo "<a href='controleurFrontal.php?controleur=entreprise&action=accepterCandidature&idOffre=" . $postuler->getIdOffre() . "&login=" . $postuler->getLoginEtu() . "'> Accepter </a>";
+            echo "<a href='controleurFrontal.php?controleur=entreprise&action=refuserCandidature&idOffre=" . $postuler->getIdOffre() . "&login=" . $postuler->getLoginEtu() . "'> Refuser </a>";
+        }
         echo "</div>";
 
     }
