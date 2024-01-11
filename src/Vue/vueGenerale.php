@@ -40,7 +40,7 @@ $gestion = "";
 $formExterne = "";
 $compte = "";
 
-if ($contenu == "index.html") {
+if ($contenu == "index.php") {
     $accueil = "actuel";
 } else if ($contenu == "formulaireoffre.php") {
     $form = "actuel";
@@ -82,14 +82,14 @@ if (ConnexionUtilisateur::estEtudiant()) {
     }
 }
 
-if (ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estSecretariat()) {
-    echo '<div><a id=' . $gestion . '>Gestionnaire▾</a>';
+if (/*ConnexionUtilisateur::estMaitreSA() || */ConnexionUtilisateur::estSecretariat()) {
+    echo '<div><a id=' . $gestion . '>Gestionnaire ▾</a>';
     echo '<div class="submenu">';
-    if (ConnexionUtilisateur::estMaitreSA()) {
+    /*if (ConnexionUtilisateur::estMaitreSA()) {
         echo '<a href="controleurFrontal.php?controleur=offre&action=offres">Gestion offre</a>';
         echo '<a href="controleurFrontal.php?controleur=entreprise&action=afficherGestionEntreprise">Gestion Entreprise</a>';
         echo '<a href="controleurFrontal.php?controleur=personnel&action=afficherGestionPersonnel">Gestion du personnel de l\'IUT</a>';
-    }
+    }*/
     echo '<a href="controleurFrontal.php?controleur=etudiant&action=afficherGestionEtudiant">Gestion Etudiant</a>';
     echo '<a href="controleurFrontal.php?controleur=convention&action=afficherGestionConvention">Gestion des brouillons des Conventions</a>';
     echo '<a href="controleurFrontal.php?controleur=convention&action=afficherGestionConventionFinale">Gestion des Conventions Finales</a>';
@@ -98,6 +98,32 @@ if (ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estSecretariat(
     echo '</div>';
     echo '</div>';
 }
+
+if (ConnexionUtilisateur::estMaitreSA()){
+    echo '<div><a id=' . $gestion . '>Gestion des entreprises▾</a>';
+    echo '<div class="submenu">';
+    echo '<a href="controleurFrontal.php?controleur=offre&action=offres">Gestion offre</a>';
+    echo '<a href="controleurFrontal.php?controleur=entreprise&action=afficherGestionEntreprise">Gestion Entreprise</a>';
+    echo '</div>';
+    echo '</div>';
+
+    echo '<div><a id=' . $gestion . '>Gestion des conventions▾</a>';
+    echo '<div class="submenu">';
+    echo '<a href="controleurFrontal.php?controleur=convention&action=afficherGestionConvention">Gestion des brouillons des Conventions</a>';
+    echo '<a href="controleurFrontal.php?controleur=convention&action=afficherGestionConventionFinale">Gestion des Conventions Finales</a>';
+    echo '<a href="controleurFrontal.php?controleur=convention&action=afficherGestionConventionAlternanceFinale">Gestion des Conventions Alternance Finales</a>';
+    echo '</div>';
+    echo '</div>';
+
+    echo '<div><a id=' . $gestion . '>Gestion des personnes▾</a>';
+    echo '<div class="submenu">';
+    echo '<a href="controleurFrontal.php?controleur=personnel&action=afficherGestionPersonnel">Gestion du personnel de l\'IUT</a>';
+    echo '<a href="controleurFrontal.php?controleur=etudiant&action=afficherGestionEtudiant">Gestion Etudiant</a>';
+    echo '</div>';
+    echo '</div>';
+
+}
+
 if (ConnexionUtilisateur::estEtudiant()) {
     echo '<div><a href="controleurFrontal.php?controleur=offre&action=afficherFormulaireExterne" id=' . $formExterne . '>Formulaire Externe</a></div>';
 }

@@ -21,7 +21,7 @@ class ControleurEtudiant extends ControleurGenerique
 
         $etudiant = (new EtudiantRepository())->recupererParClePrimaire($_GET['login']);
         echo '<div class="msgConfirmation"><p> L\'étudiant ' . $etudiant->getNom() . ' a été supprimé</p></div>';
-        self::afficherVue('vueGenerale.php', ["contenu" => "Generale/index.html", "title" => "Accueil"]);
+        self::afficherVue('vueGenerale.php', ["contenu" => "Generale/index.php", "title" => "Accueil"]);
         (new EtudiantRepository())->supprimer($_GET['login']);
     }
 

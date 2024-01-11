@@ -93,7 +93,7 @@ if ($etudiant->getParcours() == "RACDV") {
                         } ?> >
                     </div>
                     <div class="input-box">
-                        <span class="details">mail Personnel</span>
+                        <span class="details">Mail Personnel</span>
                         <input type="tel" placeholder="" value=<?php echo $etudiant->getMailPerso() ?> ""
                                name="mailPerso" maxlength="100" required>
                     </div>

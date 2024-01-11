@@ -37,6 +37,14 @@
     </ul>
 </div>
 -->
+<?php
+
+
+use App\Modele\Repository\ConnexionBaseDeDonnee;
+
+$sql = "DELETE FROM Offre WHERE dateFin < CURDATE()";
+    ConnexionBaseDeDonnee::getPdo()->query($sql);
+?>
 
 <div class="acceuil">
     <div >
