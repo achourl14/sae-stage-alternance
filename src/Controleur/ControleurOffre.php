@@ -19,16 +19,16 @@ class ControleurOffre extends ControleurGenerique
         if(ConnexionUtilisateur::estConnecte()){
             if(ConnexionUtilisateur::estEntreprise()){
                 $values["idEntreprise"] = ConnexionUtilisateur::getLoginUtilisateurConnecte();
-                $offres = (new OffreRepository())->recupererAvecFiltre($values);
+                $offres = (new OffreRepository())->recupererAvecFiltre($values); // filtre obligatoire pour l'entreprise (seulement ses offres à elle)
             }else{
-                if (!Session::getInstance()->contient("requeteFiltreOffre")) {
+                if (!Session::getInstance()->contient("requeteFiltreOffre")) { // regarder si une recherche est effectué
                     if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
                         $offres = (new OffreRepository())->recuperer();
                     } else {
                         $offres = (new OffreRepository())->recupererOffreValide();
                     }
                 } else {
-                    $offres = (new OffreRepository())->recupererAvecFiltre(Session::getInstance()->lire("requeteFiltreOffre"));
+                    $offres = (new OffreRepository())->recupererAvecFiltre(Session::getInstance()->lire("requeteFiltreOffre")); // récupération de la requete filtre
                 }
             }
 
@@ -98,27 +98,34 @@ class ControleurOffre extends ControleurGenerique
 
     public static function creerOffre()
     {
-        if($_FILES["fileToUpload"]["name"]){
+        if($_FILES["fileToUpload"]["name"]){ //si fichier existant et si il a été renseigné dans le formulaire
+            //mise en place des variables
             $nomFichier = $_FILES["fileToUpload"]["name"];
             $dossier = $_FILES["fileToUpload"]["tmp_name"];
+            // Déplacement du fichier
             move_uploaded_file("$dossier", "../upload_offres/$nomFichier");
             $file_parts = pathinfo("../upload_offres/$nomFichier");
+
+            // vérification de l'extention du fichier (pour accepter que les types de fichier que nous voulons)
             if ($file_parts['extension'] != "pdf" && $file_parts['extension'] != "docx" && $file_parts['extension'] != "txt") {
                 unlink("../upload_offres/$nomFichier");
                 echo '<div class="msgConfirmation"><p> Impossible de créer l\'offre : Le fichier n\'est pas dans les extensions demandées (.pdf, .docx, .txt)</p></div>';
             }else{
                 $offre = null;
+                //enregistrement de l'offre
                 $offre = new Offre(-9, $_POST["idEntreprise"], $_POST["adresseDeOffre"],$_POST["ville"],$_POST["codePostal"],$_POST["nomOffre"],$_POST["mission"], -9, -9, $_POST["dateDebut"], $_POST["dateFin"], $_POST["remuneration"], $_POST["but_annee"], $_POST["parcours"], $_POST["type"], 0);
                 OffreRepository::sauvegarder($offre);
 
 
                 $offreCree = (new OffreRepository())->derniereOffre();
+                // mise en place du nom de fichier pour pouvoir l'identifier correctement
                 rename("../upload_offres/$nomFichier", "../upload_offres/offre_" . $offreCree->getIdOffre() . "." . $file_parts['extension']);
 
                 echo '<div class="msgConfirmation"><p> Vous avez bien créer votre offre : ' . $offre->getNomOffre() . '</p></div>';
             }
         }else{
             $offre = null;
+            //si pas de fichier alors enregistrement de l'offre seulement
             $offre = new Offre(-9, $_POST["idEntreprise"], $_POST["adresseDeOffre"],$_POST["ville"],$_POST["codePostal"], $_POST["nomOffre"], $_POST["mission"], -9, -9, $_POST["dateDebut"], $_POST["dateFin"], $_POST["remuneration"], $_POST["but_annee"], $_POST["parcours"], $_POST["type"], 0);
             OffreRepository::sauvegarder($offre);
             echo '<div class="msgConfirmation"><p> Vous avez bien créer votre offre : ' . $offre->getNomOffre() . '</p></div>';
@@ -130,9 +137,12 @@ class ControleurOffre extends ControleurGenerique
     {
         $type = null;
         $values = null;
+
+        //recherche spécifique aux offres avec les boutons cochable
         if(isset($_POST['Stage']) && isset($_POST['Alternance']) && isset($_POST["StageAlternance"]) || !isset($_POST['Stage']) && !isset($_POST['Alternance']) && !isset($_POST["StageAlternance"]) ){
             $type = null;
         }else{
+            // cas spécial dans notre fonction filtrer de l'abstract repository (le seul cas spécial)
             if (isset($_POST['Stage'])) {
                 $type[] = "S";
             }
@@ -162,9 +172,9 @@ class ControleurOffre extends ControleurGenerique
             $values["idEntreprise"] = ConnexionUtilisateur::getLoginUtilisateurConnecte();
         }
 
-
-        if (isset($_POST["idEntreprise"]) && $_POST["idEntreprise"] != "") {
-            $values['idEntreprise'] = $_POST["idEntreprise"];
+        // recherche classique
+        if (isset($_POST["idEntreprise"]) && $_POST["idEntreprise"] != "") { // vérification si les champs du formulaire sont rempli
+            $values['idEntreprise'] = $_POST["idEntreprise"]; // mise en place du tableau associatif avec sa cle (nom d'une colone) et de sa valeur
         }
         if (isset($_POST["nomOffre"]) && $_POST["nomOffre"] != "") {
             $values['nomOffre'] = $_POST["nomOffre"];
@@ -184,6 +194,7 @@ class ControleurOffre extends ControleurGenerique
         if (isset($_POST['codePostal']) && $_POST["codePostal"] != "") {
             $values['codePostal'] = $_POST['codePostal'];
         }
+        // j'enregistre dans la session le tableau pour pouvoir l'utiliser
         Session::getInstance()->enregistrer("requeteFiltreOffre", $values);
         ControleurOffre::offres();
     }

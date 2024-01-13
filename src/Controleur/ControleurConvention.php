@@ -481,19 +481,25 @@ class ControleurConvention extends ControleurGenerique
     public static function importerConvention()
     {
         if (ConnexionUtilisateur::estMaitreSA() || ConnexionUtilisateur::estSecretariat()) {
+            // on récupère le fichier si il existe de l'importation
             if ($_FILES["fileToUpload"]["name"]) {
                 $nomFichier = $_FILES["fileToUpload"]["name"];
                 $dossier = $_FILES["fileToUpload"]["tmp_name"];
+                // on bouge le fichier csv à son bon emplacement
                 move_uploaded_file("$dossier", "../fichier_csv/$nomFichier");
                 $file_parts = pathinfo("../fichier_csv/$nomFichier");
+                // on vérifie l'extention du fichier
                 if ($file_parts['extension'] != "csv") {
                     echo '<div class="msgErreur"><p>Le fichier n\'est pas un fichier CSV</p></div>';
                     self::afficherGestionConvention();
                 } else {
+                    // on l'ouvre
                     $file = fopen("../fichier_csv/$nomFichier", "r");
                     fgetcsv($file);
+                    // Dans cette partie tant qu'il ya de case dans le fichier csv on boucle
                     while (($data = fgetcsv($file, 1000, ",")) !== false) {
 
+                        // si on essaie d'importer une convention qui existe déjà une erreur apparé
                         if((new ConventionStageFinaleRepository())->recupererParClePrimaire($data[0]) != null){
                             echo '<div class="msgConfirmation"><p>La convention numéro : '.$data[0].' existe déjà</p></div>';
                             self::afficherGestionConventionFinale();
@@ -506,6 +512,8 @@ class ControleurConvention extends ControleurGenerique
 
                             $dateCreation = date("Y-m-d", strtotime($data[51]));
                             $dateModification = date("Y-m-d", strtotime($data[52]));
+
+                            // on crée un objet ConventionStage avec l'ensemble des informations de l'extraction
                             $convention = new ConventionStage(
                                 $data[0],
                                 $data[1],
@@ -590,8 +598,8 @@ class ControleurConvention extends ControleurGenerique
                                 $data[80],
                                 $data[81]
                             );
-                            fclose($file);
-                            (new ConventionStageFinaleRepository())->sauvegarderC($convention);
+                            fclose($file); // on ferme le fichier
+                            (new ConventionStageFinaleRepository())->sauvegarderC($convention); // on sauvegarde l'extention
                             unlink("../fichier_csv/$nomFichier");
                             echo '<div class="msgErreur"><p>L\'importation a été un succès</p></div>';
                             self::afficherGestionConventionFinale();

@@ -67,10 +67,10 @@ class ControleurPersonnel extends ControleurGenerique
     public static function afficherGestionPersonnel()
     {
         if (ConnexionUtilisateur::estMaitreSA()) {
-            if (!Session::getInstance()->contient("requeteFiltrePersonnel")) {
+            if (!Session::getInstance()->contient("requeteFiltrePersonnel")) { // on regarde si il y'a une recherche
                 $personnel = (new SecretariatRepository())->recuperer();
             } else {
-                $personnel = (new SecretariatRepository())->recupererAvecFiltre(Session::getInstance()->lire("requeteFiltrePersonnel"));
+                $personnel = (new SecretariatRepository())->recupererAvecFiltre(Session::getInstance()->lire("requeteFiltrePersonnel")); // recupération de la requete filtré
             }
             $tableauParPage = null;
             if ($personnel == null) {
@@ -184,8 +184,8 @@ class ControleurPersonnel extends ControleurGenerique
     public static function rechercherPersonnel()
     {
         $values = null;
-        if (isset($_POST["login"]) && $_POST["login"] != "") {
-            $values['login'] = $_POST["login"];
+        if (isset($_POST["login"]) && $_POST["login"] != "") { // on regarde si le champ de la recherche est rempli
+            $values['login'] = $_POST["login"]; // si oui mettre dans le tableau associatif, la cle qui est le nom de la colone dans la bdd et sa valeur
         }
         if (isset($_POST["nomSecretariat"]) && $_POST["nomSecretariat"] != "") {
             $values['nomSecretariat'] = $_POST["nomSecretariat"];
@@ -206,12 +206,13 @@ class ControleurPersonnel extends ControleurGenerique
             $values['role'] = $_POST['role'];
         }
 
-        Session::getInstance()->enregistrer("requeteFiltrePersonnel", $values);
+        Session::getInstance()->enregistrer("requeteFiltrePersonnel", $values); // enregistrement des différents filtres appliqué
         self::afficherGestionPersonnel();
     }
 
     public static function supprimerFiltrePersonnel()
     {
+        //supprimer la recherche
         Session::getInstance()->supprimer("requeteFiltrePersonnel");
         self::afficherGestionPersonnel();
     }

@@ -50,23 +50,24 @@ $resultats = ldap_get_entries($ldap_conn, $search);
 //}
 
 //MON CODE POUR ENREGISTRER LES COMPTES :
-foreach ($resultats as $resultat) {
+foreach ($resultats as $resultat) { // pour chaque résultat
     $mailEtudiant = null;
     $login = null;
     if(isset($resultat['dn'])){
         if(isset($resultat['displayname'])){
-            $nomprenom = explode(" ", $resultat['displayname'][0]);
+            $nomprenom = explode(" ", $resultat['displayname'][0]); // recupération des noms et prénom
         }
-        $type = explode("=", explode(",", $resultat['dn'])[1])[1];
-        $login = explode("=", explode(",", $resultat['dn'])[0])[1];
+        $type = explode("=", explode(",", $resultat['dn'])[1])[1]; // type (année 1, année 2, année 3 ou personnel
+        $login = explode("=", explode(",", $resultat['dn'])[0])[1]; // login
         if(isset($resultat['mail'][0])){
-            $mailEtudiant = $resultat['mail'][0];
+            $mailEtudiant = $resultat['mail'][0]; //mail
         }
     }
+    // En fonction du type du compte sur LDAP mise en place avec les modèles des objets et enregistrement dans la bonne table les informations des comptes
     if(isset($type)){
         if ($type == "Personnel") {
             //$mdp = MotDePasse::hacher($login);
-            if((new SecretariatRepository())->recupererParClePrimaire($login) == null){
+            if((new SecretariatRepository())->recupererParClePrimaire($login) == null){ // si ce compte existe déjà sur notre base on ne le remplace pas
                 $personnel = new Secretariat($login, $nomprenom[0],$nomprenom[1],$mailEtudiant,null,null,null,null,0);
                 //echo "<p>type= ".$type." login : ". $personnel->getLogin() ." nom : ".$personnel->getNomSecretariat()." prenom : ".$personnel->getPrenomSecretariat()." mail : ".$personnel->getMail()." mdpHaché : ".$personnel->getMdp()."</p>";
                 SecretariatRepository::sauvegarder($personnel);
@@ -74,21 +75,21 @@ foreach ($resultats as $resultat) {
 
         } else if ($type == "Ann1") {
             //$mdp = MotDePasse::hacher($login);
-            if((new EtudiantRepository())->recupererParClePrimaire($login) == null) {
+            if((new EtudiantRepository())->recupererParClePrimaire($login) == null) { // si ce compte existe déjà sur notre base on ne le remplace pas
                 $etudiant = new Etudiant($login, null, $nomprenom[0], $nomprenom[1], $mailEtudiant, 1, null, null, null, null, null, null, null, 0);
                 //echo "<p>type= " . $type . " login : " . $etudiant->getLogin() . " nom : " . $etudiant->getNom() . " prenom : " . $etudiant->getPrenom() . " mail : " . $etudiant->getEmail() . " promotion " . $etudiant->getPromotion() . " mdpHaché : " . $etudiant->getMdp() . "</p>";
                 (new EtudiantRepository())->sauvegarder($etudiant);
             }
         } else if ($type == "Ann2") {
             //$mdp = MotDePasse::hacher($login);
-            if((new EtudiantRepository())->recupererParClePrimaire($login) == null) {
+            if((new EtudiantRepository())->recupererParClePrimaire($login) == null) { // si ce compte existe déjà sur notre base on ne le remplace pas
                 $etudiant = new Etudiant($login, null, $nomprenom[0], $nomprenom[1], $mailEtudiant, 2, null, null, null, null, null, null, null, 0);
                 //echo "<p>type= " . $type . " login : " . $etudiant->getLogin() . " nom : " . $etudiant->getNom() . " prenom : " . $etudiant->getPrenom() . " mail : " . $etudiant->getEmail() . " promotion " . $etudiant->getPromotion() . " mdpHaché : " . $etudiant->getMdp() . "</p>";
                 (new EtudiantRepository())->sauvegarder($etudiant);
             }
         } else if ($type == "Ann3") {
             //$mdp = MotDePasse::hacher($login);
-            if((new EtudiantRepository())->recupererParClePrimaire($login) == null) {
+            if((new EtudiantRepository())->recupererParClePrimaire($login) == null) { // si ce compte existe déjà sur notre base on ne le remplace pas
                 $etudiant = new Etudiant($login, null, $nomprenom[0], $nomprenom[1], $mailEtudiant, 3, null, null, null, null, null, null, null, 0);
                 //echo "<p>type= " . $type . " login : " . $etudiant->getLogin() . " nom : " . $etudiant->getNom() . " prenom : " . $etudiant->getPrenom() . " mail : " . $etudiant->getEmail() . " promotion " . $etudiant->getPromotion() . " mdpHaché : " . $etudiant->getMdp() . "</p>";
                 (new EtudiantRepository())->sauvegarder($etudiant);

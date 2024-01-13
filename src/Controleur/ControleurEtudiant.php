@@ -74,10 +74,10 @@ class ControleurEtudiant extends ControleurGenerique
                 $personnel = (new SecretariatRepository())->recupererParClePrimaire(ConnexionUtilisateur::getLoginUtilisateurConnecte());
                 $etudiants = (new EtudiantRepository())->recupererParTuteur($personnel);
             }else {
-                if (!Session::getInstance()->contient("requeteFiltreEtudiant")) {
-                    $etudiants = (new EtudiantRepository())->recuperer();
+                if (!Session::getInstance()->contient("requeteFiltreEtudiant")) { // on regarde si il y'a une recherche de faites
+                    $etudiants = (new EtudiantRepository())->recuperer(); // recuperer classique
                 } else {
-                    $etudiants = (new EtudiantRepository())->recupererAvecFiltre(Session::getInstance()->lire("requeteFiltreEtudiant"));
+                    $etudiants = (new EtudiantRepository())->recupererAvecFiltre(Session::getInstance()->lire("requeteFiltreEtudiant")); // récupération de la recherche f
                 }
             }
             $tableauParPage = null;
@@ -88,12 +88,15 @@ class ControleurEtudiant extends ControleurGenerique
 
                 //Pagination
                 $nombresEtudiant = count($etudiants);
+                // nombres de page totale (9 cartes par page)
                 $nbrePages = ceil($nombresEtudiant / 9);
 
                 $page = 1;
                 if (isset($_GET['page'])) {
+                    // on regarde quel page est demandé
                     $page = $_GET['page'];
                     if ($page > $nbrePages) {
+                        // on ne peut pas aller à des pages inexistante
                         $page = $nbrePages;
                     } else if ($page <= 1) {
                         $page = 1;
@@ -104,6 +107,7 @@ class ControleurEtudiant extends ControleurGenerique
                     $y = $nombresEtudiant;
                 }
 
+                // on récupère seulement les étudiants associé à la page
                 for ($i = ($page - 1) * 9; $i < $y; $i++) {
                     $tableauParPage[] = $etudiants[$i];
                 }
@@ -188,8 +192,8 @@ class ControleurEtudiant extends ControleurGenerique
     public static function rechercherEtudiant()
     {
         $values = null;
-        if (isset($_POST["login"]) && $_POST["login"] != "") {
-            $values['login'] = $_POST["login"];
+        if (isset($_POST["login"]) && $_POST["login"] != "") { // vérification si le champ de la recherche est renseigné
+            $values['login'] = $_POST["login"]; // si oui mettre dans le tableau associatif, la cle qui est le nom de la colone dans la bdd et sa valeur
         }
         if (isset($_POST["num_etudiant"]) && $_POST["num_etudiant"] != "") {
             $values['codeEtudiant'] = $_POST["num_etudiant"];
@@ -216,12 +220,14 @@ class ControleurEtudiant extends ControleurGenerique
             $values['groupe'] = $_POST['groupe'];
         }
 
+        //enregistrement de la recherche dans la session
         Session::getInstance()->enregistrer("requeteFiltreEtudiant", $values);
         self::afficherGestionEtudiant();
     }
 
     public static function supprimerFiltreEtudiant()
     {
+        //supprimer la recherche enregistré
         Session::getInstance()->supprimer("requeteFiltreEtudiant");
         self::afficherGestionEtudiant();
     }
@@ -271,16 +277,21 @@ class ControleurEtudiant extends ControleurGenerique
     public static function postuler()
     {
         if (ConnexionUtilisateur::estEtudiant()) {
+            // mise en place des variables
             $nomFichier = $_FILES["cvEtu"]["name"];
             $dossier = $_FILES["cvEtu"]["tmp_name"];
+            //déplacement du fichier au bon emplacement
             move_uploaded_file("$dossier", "../upload_postuler/$nomFichier");
             $file_parts = pathinfo("../upload_postuler/$nomFichier");
+            //vérification des extensions pour accepter seulement les extensions voulues
             if ($file_parts['extension'] != "pdf" && $file_parts['extension'] != "docx" && $file_parts['extension'] != "txt") {
                 unlink("../upload_postuler/$nomFichier");
                 echo '<div class="msgConfirmation"><p> Impossible de postuler : Le fichier CV n\'est pas dans les extensions demandées (.pdf, .docx, .txt)</p></div>';
             } else {
+                // on renome le fichier pour pouvoir le retrouver et l'identifier
                 rename("../upload_postuler/$nomFichier", "../upload_postuler/cv_postuler_" . $_GET['idOffre'] . "_" . ConnexionUtilisateur::getLoginUtilisateurConnecte() . "." . $file_parts['extension']);
 
+                // si le fichier lettre de motivation a été renseigné car non obligatoire (ensuite même vérifications (extentions,renommage...)
                 if (file_exists($_FILES['lettreMotivation']['tmp_name']) && is_uploaded_file($_FILES['lettreMotivation']['tmp_name'])) {
                     $nomFichier = $_FILES["lettreMotivation"]["name"];
                     $dossier = $_FILES["lettreMotivation"]["tmp_name"];
@@ -308,6 +319,7 @@ class ControleurEtudiant extends ControleurGenerique
             $postuler = (new PostulerRepository())->recupererParClePrimaire(ConnexionUtilisateur::getLoginUtilisateurConnecte(),$_GET['idOffre']);
             if($postuler != null){
                 (new PostulerRepository())->supprimer(ConnexionUtilisateur::getLoginUtilisateurConnecte(),$postuler->getIdOffre());
+                //suppression des fichiers associé à la candidature à l'offre
                 $supprimeSuccess = unlink("../upload_postuler/cv_postuler_".$postuler->getIdOffre()."_".ConnexionUtilisateur::getLoginUtilisateurConnecte().".pdf");
                 $supprimeSuccess = unlink("../upload_postuler/cv_postuler_".$postuler->getIdOffre()."_".ConnexionUtilisateur::getLoginUtilisateurConnecte().".docx");
                 $supprimeSuccess = unlink("../upload_postuler/cv_postuler_".$postuler->getIdOffre()."_".ConnexionUtilisateur::getLoginUtilisateurConnecte().".txt");

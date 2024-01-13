@@ -71,12 +71,14 @@ abstract class AbstractRepository
         $i=0;
         $j=0;
         if($parameters != null){
+            // mise en place des $cle qui est le nom du champs dans la table et $valeur qui est sa valeur
             foreach($parameters as $clef => $valeur){
                 if($i != 0){
                     $colonesql .= " AND ";
                 }
                 $i = $i + 1;
-                // type spécial
+
+                // type spécial (c'est une exception qui n'arrive que pour une recherche dans nos recherche obligatoire de faire un if pour faire cette exception)
                 if($clef == "type"){
                     $colonesql .= $clef . " IN (";
                     $cpt = count($valeur);
@@ -93,6 +95,7 @@ abstract class AbstractRepository
 
 
                 }else{
+                    // mise en langage sql
                     $colonesql .= $clef . " = ";
                     $colonesql .= ":".$clef . "Tag";
 

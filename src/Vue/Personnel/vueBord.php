@@ -45,16 +45,21 @@ if(isset($rechercheConvention["validation"])){
         google.charts.load('current', {'packages': ['corechart']});
         google.charts.setOnLoadCallback(drawChart);
 
+        //Récupération des variables en php vers javascript qui lit la base de données avec des requetes =
         var nombreStageTrouve = <?php echo json_encode($nombreStageTrouve); ?>;
         var nombreAlternanceTrouve = <?php echo json_encode($nombreAlternanceTrouve); ?>;
         var nombreEnRecherche = <?php echo json_encode($nombreEnRecherche); ?>;
 
         var nbreConventionValidePedagogique = <?php echo json_encode($nbreConventionValidePedagogique); ?>;
         var nbreConventionNonValidePedagogique = <?php echo json_encode($nbreConventionNonValidePedagogique); ?>;
+
+        //Fonction appelé en javascript
         function drawChart() {
 
+            //API de google pour faire des graphiques
+            // nom de chaque partie du graphique ainsi que ses valeurs
             var data = google.visualization.arrayToDataTable([
-                ['Task', 'Hours per Day'],
+                ['types', 'nombres'],
                 ['En recherche', nombreEnRecherche],
                 ['Stage Trouvé', nombreStageTrouve],
                 ['Alternance Trouvé', nombreAlternanceTrouve]
@@ -69,7 +74,7 @@ if(isset($rechercheConvention["validation"])){
             chart.draw(data, options);
 
             var dataConvention = google.visualization.arrayToDataTable([
-                ['Task', 'Hours per Day'],
+                ['Conventions', 'nombres'],
                 ['Convention Validé', nbreConventionValidePedagogique],
                 ['Convention Non validé', nbreConventionNonValidePedagogique]
             ]);
