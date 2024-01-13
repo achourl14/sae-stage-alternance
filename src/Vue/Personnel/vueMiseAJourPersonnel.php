@@ -9,6 +9,7 @@
 </head>
 <body>
 <?php
+use App\Lib\ConnexionUtilisateur;
 $m ="";
 $s = "";
 $t = "";
@@ -50,30 +51,33 @@ if($personnel->getRole() == "M"){
                     <span class="details">Téléphone</span>
                     <input type="tel" value=<?php echo $personnel->getTelephone() ?> "" name="telephoneSecretariat" pattern="[0-9]{10}" maxlength="10" required>
                 </div>
-                <div class="input-box">
-                    <label class="details" for="roleCible"> Rôle </label>
-                    <select name="role" id="roleCible" required>
-                        <option value="T" <?php echo $t; ?>> Tuteur </option>
-                        <option value="S" <?php echo $s; ?>> Secretariat </option>
-                        <option value="M" <?php echo $m; ?>> Maitre Stage/Alternance (Admin) </option>
-                    </select>
-                </div>
                 <?php
-                if(!\App\Lib\ConnexionUtilisateur::estMaitreSA() && $personnel->getPremiereConnexion() != 0){
+                if(\App\Lib\ConnexionUtilisateur::estMaitreSA() && \App\Lib\ConnexionUtilisateur::getLoginUtilisateurConnecte() != $personnel->getLogin()){
                     echo '<div class="input-box">';
-                    echo '<span class="details">Entrez votre mot de passe</span>';
-                    echo '<input type="password" name="mdp" minlength="8" maxlength="50" required>';
+                    echo '<label class="details" for="roleCible"> Rôle </label>';
+                    echo '<select name="role" id="roleCible" required>';
+                    echo '<option value="T" ' . $t . ' > Tuteur </option>';
+                    echo '<option value="S" ' . $s . ' > Secretariat </option>';
+                    echo '<option value="M" ' . $m . ' > Maitre Stage/Alternance (Admin) </option>';
+                    echo '</select>';
                     echo '</div>';
                 }
-                if ($personnel->getPremiereConnexion() == 0) {
-                    echo '<div class="input-box">';
-                    echo '<span class="details">Mot de passe </span>';
-                    echo '<input type="password" placeholder="Entrez votre mot de passe" name="mdp" minlength="8" maxlength="50" required>';
-                    echo '</div>';
-                    echo '<div class="input-box">';
-                    echo '<span class="details">Confirmez mot de passe</span>';
-                    echo '<input type="password" placeholder="Confirmez votre mot de passe" name="mdp2" minlength="8" maxlength="50" required>';
-                    echo '</div>';
+                if(!ConnexionUtilisateur::estMaitreSA()) {
+                    if ($personnel->getPremiereConnexion() == 0) {
+                        echo '<div class="input-box">';
+                        echo '<span class="details">Mot de passe </span>';
+                        echo '<input type="password" placeholder="Entrez votre mot de passe" name="mdp" minlength="8" maxlength="50" required>';
+                        echo '</div>';
+                        echo '<div class="input-box">';
+                        echo '<span class="details">Confirmez mot de passe</span>';
+                        echo '<input type="password" placeholder="Confirmez votre mot de passe" name="mdp2" minlength="8" maxlength="50" required>';
+                        echo '</div>';
+                    } else {
+                        echo '<div class="input-box">';
+                        echo '<span class="details">Entrez votre mot de passe</span>';
+                        echo '<input type="password" name="mdp" minlength="8" maxlength="50" required>';
+                        echo '</div>';
+                    }
                 }
                 ?>
             </div>

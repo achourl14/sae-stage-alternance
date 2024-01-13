@@ -86,13 +86,19 @@ if ($pageActuelle != $nbrePages) {
 echo "<div> <a class='' href='controleurFrontal.php?controleur=etudiant&action=afficherGestionEtudiant&page=" . $pageActuelle + 1 . "'> page suivante </a> </div>";
 echo "</div>";
 
-echo '<div class="page">';
-echo "<div> <a href='controleurFrontal.php?controleur=etudiant&action=afficherEtudiant'> Ajouter un étudiant </a> </div>";
-echo '</div>';
+if(\App\Lib\ConnexionUtilisateur::estMaitreSA() || \App\Lib\ConnexionUtilisateur::estSecretariat()){
+    echo '<div class="page">';
+    echo "<div> <a href='controleurFrontal.php?controleur=etudiant&action=afficherEtudiant'> Ajouter un étudiant </a> </div>";
+    echo '</div>';
+}
 
 echo '<div class = "groupCartes">';
 if ($etudiants == null) {
-    echo '<div class="msgConfirmation"><p> Aucun Etudiants trouvé </p></div>';
+    if(\App\Lib\ConnexionUtilisateur::estTuteur()){
+        echo '<div class="msgConfirmation"><p> Vous n\'avez pas d\'étudiant où vous êtes tuteur </p></div>';
+    }else {
+        echo '<div class="msgConfirmation"><p> Aucun Etudiants trouvé </p></div>';
+    }
 } else {
     foreach ($etudiants as $etudiant) {
 

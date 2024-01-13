@@ -29,7 +29,7 @@
 <?php
 
 use App\Lib\ConnexionUtilisateur;
-use App\ClassTest;
+use App\Modele\ClassTest;
 
 // BOUTON DEBUG
 
@@ -80,6 +80,9 @@ if (ConnexionUtilisateur::estEtudiant()) {
             echo "<div><a href='controleurFrontal.php?controleur=convention&action=afficherMAJConventionDepuisEtudiant'>Convention</a></div>";
         }
     }
+}
+if(ConnexionUtilisateur::estTuteur()){
+    echo '<div><a href="controleurFrontal.php?controleur=etudiant&action=afficherGestionEtudiant">Suivi Etudiants</a></div>';
 }
 
 if (/*ConnexionUtilisateur::estMaitreSA() || */ConnexionUtilisateur::estSecretariat()) {

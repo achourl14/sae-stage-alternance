@@ -110,21 +110,22 @@ if ($etudiant->getParcours() == "RACDV") {
                                pattern="[0-9]{10}" maxlength="10" required>
                     </div>
                     <?php
-                    if (!ConnexionUtilisateur::estSecretariat() && !ConnexionUtilisateur::estMaitreSA() && $etudiant->getPremiereConnexion() != 0) {
-                        echo '<div class="input-box">';
-                        echo '<span class="details">Entrez votre mot de passe</span>';
-                        echo '<input type="password" name="mdp" minlength="8" maxlength="50" required>';
-                        echo '</div>';
-                    }
-                    if ($etudiant->getPremiereConnexion() == 0) {
-                        echo '<div class="input-box">';
-                        echo '<span class="details">Mot de passe </span>';
-                        echo '<input type="password" placeholder="Entrez votre mot de passe" name="mdp" minlength="8" maxlength="50" required>';
-                        echo '</div>';
-                        echo '<div class="input-box">';
-                        echo '<span class="details">Confirmez mot de passe</span>';
-                        echo '<input type="password" placeholder="Confirmez votre mot de passe" name="mdp2" minlength="8" maxlength="50" required>';
-                        echo '</div>';
+                    if(!ConnexionUtilisateur::estMaitreSA() && !ConnexionUtilisateur::estSecretariat()) {
+                        if ($etudiant->getPremiereConnexion() != 0) {
+                            echo '<div class="input-box">';
+                            echo '<span class="details">Entrez votre mot de passe</span>';
+                            echo '<input type="password" name="mdp" minlength="8" maxlength="50" required>';
+                            echo '</div>';
+                        }else{
+                            echo '<div class="input-box">';
+                            echo '<span class="details">Mot de passe </span>';
+                            echo '<input type="password" placeholder="Entrez votre mot de passe" name="mdp" minlength="8" maxlength="50" required>';
+                            echo '</div>';
+                            echo '<div class="input-box">';
+                            echo '<span class="details">Confirmez mot de passe</span>';
+                            echo '<input type="password" placeholder="Confirmez votre mot de passe" name="mdp2" minlength="8" maxlength="50" required>';
+                            echo '</div>';
+                        }
                     }
                     ?>
                 </div>

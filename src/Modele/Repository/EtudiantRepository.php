@@ -4,6 +4,7 @@ namespace App\Modele\Repository;
 
 use App\Modele\DataObject\AbstractDataObject;
 use App\Modele\DataObject\Etudiant;
+use App\Modele\DataObject\Secretariat;
 use DateTime;
 
 class EtudiantRepository extends AbstractRepository
@@ -51,6 +52,16 @@ class EtudiantRepository extends AbstractRepository
         } else {
             return null;
         }
+    }
+
+    public function recupererParTuteur(Secretariat $personnel)
+    {
+        $tableau = null;
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query("SELECT * FROM Etudiant e JOIN ConventionStageFinale c ON c.numEtudiant = e.codeEtudiant JOIN Secretariat s ON c.nomEnseignantReferent = s.nomSecretariat WHERE prenomEnseignentReferent = prenomSecretariat AND nomEnseignantReferent ='".$personnel->getNomSecretariat()."' AND prenomEnseignentReferent ='".$personnel->getPrenomSecretariat()."'");
+        foreach ($pdoStatement as $objetFormatTableau) {
+            $tableau[] = $this->construireDepuisTableau($objetFormatTableau);
+        }
+        return $tableau;
     }
 
     // Tu dois faire une fontion trouve stage en fontion d'une année de manière a ce que je puisse vérifier si l'etudiant possède un stage dans l'année en cours

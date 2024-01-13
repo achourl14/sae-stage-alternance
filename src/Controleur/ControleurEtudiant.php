@@ -11,6 +11,7 @@ use App\Modele\Repository\AlternanceRepository;
 use App\Modele\Repository\EntrepriseRepository;
 use App\Modele\Repository\EtudiantRepository;
 use App\Modele\Repository\PostulerRepository;
+use App\Modele\Repository\SecretariatRepository;
 use App\Modele\Repository\StageRepository;
 
 class ControleurEtudiant extends ControleurGenerique
@@ -68,11 +69,16 @@ class ControleurEtudiant extends ControleurGenerique
 
     public static function afficherGestionEtudiant()
     {
-        if (ConnexionUtilisateur::estSecretariat() || ConnexionUtilisateur::estMaitreSA()) {
-            if (!Session::getInstance()->contient("requeteFiltreEtudiant")) {
-                $etudiants = (new EtudiantRepository())->recuperer();
-            } else {
-                $etudiants = (new EtudiantRepository())->recupererAvecFiltre(Session::getInstance()->lire("requeteFiltreEtudiant"));
+        if (ConnexionUtilisateur::estPersonnel()) {
+            if(ConnexionUtilisateur::estTuteur()){
+                $personnel = (new SecretariatRepository())->recupererParClePrimaire(ConnexionUtilisateur::getLoginUtilisateurConnecte());
+                $etudiants = (new EtudiantRepository())->recupererParTuteur($personnel);
+            }else {
+                if (!Session::getInstance()->contient("requeteFiltreEtudiant")) {
+                    $etudiants = (new EtudiantRepository())->recuperer();
+                } else {
+                    $etudiants = (new EtudiantRepository())->recupererAvecFiltre(Session::getInstance()->lire("requeteFiltreEtudiant"));
+                }
             }
             $tableauParPage = null;
             if ($etudiants == null) {

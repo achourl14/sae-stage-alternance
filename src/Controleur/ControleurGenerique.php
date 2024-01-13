@@ -2,13 +2,12 @@
 
 namespace App\Controleur;
 
-use App\ClassTest;
 use App\Lib\ConnexionUtilisateur;
 use App\Lib\MotDePasse;
+use App\Modele\ClassTest;
 use App\Modele\HTTP\Session;
 use App\Modele\Repository\EntrepriseRepository;
 use App\Modele\Repository\EtudiantRepository;
-use App\Modele\Repository\OffreRepository;
 use App\Modele\Repository\SecretariatRepository;
 
 class ControleurGenerique

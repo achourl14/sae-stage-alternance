@@ -84,6 +84,19 @@ class ConnexionUtilisateur
         }
     }
 
+    public static function estTuteur() : bool{
+        if(Session::getInstance()->contient('secretariat')){
+            $personnel = (new SecretariatRepository())->recupererParClePrimaire(self::getLoginUtilisateurConnecte());
+            if($personnel->getRole() == "T"){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
     public static function estEtudiant() : bool{
         if(Session::getInstance()->contient('etudiant')){
             return true;

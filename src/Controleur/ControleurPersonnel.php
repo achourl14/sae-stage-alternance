@@ -2,12 +2,10 @@
 
 namespace App\Controleur;
 
-use App\ClassTest;
 use App\Lib\ConnexionUtilisateur;
 use App\Lib\MotDePasse;
 use App\Modele\DataObject\Secretariat;
 use App\Modele\HTTP\Session;
-use App\Modele\Repository\ConnexionBaseDeDonnee;
 use App\Modele\Repository\ConventionStageRepository;
 use App\Modele\Repository\EntrepriseRepository;
 use App\Modele\Repository\EtudiantRepository;
@@ -145,7 +143,12 @@ class ControleurPersonnel extends ControleurGenerique
                             self::afficherMAJPersonnel();
                         } else {
                             $mdpHache = MotDePasse::hacher($_POST['mdp']);
-                            $secretaire = new Secretariat($_POST["login"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"], $_POST["role"], $mdpHache, 1);
+                            if(!ConnexionUtilisateur::estMaitreSA()){
+                                $role = 'T';
+                            }else{
+                                $role = $_POST["role"];
+                            }
+                            $secretaire = new Secretariat($_POST["login"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"], $role, $mdpHache, 1);
                             (new SecretariatRepository())->mettreAJour($secretaire);
                             echo '<div class="msgConfirmation"><p> Votre compte a bien été mis à jour </p></div>';
                             self::afficherAccueil();
@@ -161,7 +164,7 @@ class ControleurPersonnel extends ControleurGenerique
                         if (!$mdpCorrect) {
                             self::afficherErreur("Mot de passe Incorrect");
                         } else {
-                            $secretaire = new Secretariat($_POST["login"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"], $_POST["role"], $secretaireAVerifier->getMdp(), 1);
+                            $secretaire = new Secretariat($_POST["login"], $_POST["nomSecretariat"], $_POST["prenomSecretariat"], $_POST["mailSecretariat"], $_POST["telephoneSecretariat"], $_POST["dateDeNaissanceSecretariat"], $secretaireAVerifier->getRole(), $secretaireAVerifier->getMdp(), 1);
                             (new SecretariatRepository())->mettreAJour($secretaire);
                             self::afficherErreur("Vos informations " . $secretaire->getLogin() . " ont bien été mis à jour");
                         }
