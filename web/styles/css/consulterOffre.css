@@ -165,6 +165,13 @@
     padding: 8px 15px;
 }
 
+.page h4{
+    border: solid #c7c4c3 2px;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 8px 15px;
+}
+
 
 .activeP{
     background-color: #F44336;

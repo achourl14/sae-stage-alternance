@@ -18,10 +18,10 @@ if($convention->getInterruption() == "non"){
                 <div class="title">Convention</div>
 
                 <div class='page'>
-                    <div><p>Etudiant</p></div>
-                    <div><p>Entreprise</p></div>
-                    <div><p class="activeP">Details du stage</p></div>
-                    <div><p>Autres</p></div>
+                    <div><h4>Etudiant</h4></div>
+                    <div><h4>Entreprise</h4></div>
+                    <div><h4 class="activeP">Details du stage</h4></div>
+                    <div><h4>Autres</h4></div>
                 </div>
 
 

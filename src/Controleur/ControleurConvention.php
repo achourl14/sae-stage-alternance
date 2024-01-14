@@ -157,7 +157,7 @@ class ControleurConvention extends ControleurGenerique
             $_POST['gratification'],
             $_POST['uniteGratification'],
             $_POST['uniteDureeGratification'],
-            $_POST['conventionValide'],
+            "",
             $_POST['nomEnseignantReferent'],
             $_POST['prenomEnseignantReferent'],
             $_POST['mailEnseignantReferent'],
@@ -177,7 +177,7 @@ class ControleurConvention extends ControleurGenerique
             $_POST['codePostalEtu'],
             $_POST['paysEtu'],
             $_POST['villeEtu'],
-            $_POST['conventionValidePedagogique'],
+            "",
             $_POST['avenant'],
             $_POST['detailAvenant'],
             $dateCreationConvention,
@@ -286,104 +286,6 @@ class ControleurConvention extends ControleurGenerique
         }
     }
 
-
-    public static function MAJConvention()
-    {
-        $dateDebutInterup = "0000-00-00";
-        $dateFinInterup = "0000-00-00";
-        if ($_POST['dateDebutInterruption'] != "") {
-            $dateDebutInterup = $_POST['dateDebutInterruption'];
-        }
-        if ($_POST['dateFinInterruption'] != "") {
-            $dateFinInterup = $_POST['dateFinInterruption'];
-        }
-        $convention = new ConventionStage(
-            $_POST['numConvention'],
-            $_POST['numEtudiant'],
-            $_POST['nomEtu'],
-            $_POST['prenomEtu'],
-            $_POST['numTelPersoEtu'],
-            $_POST['numTelEtu'],
-            $_POST['mailPersoEtu'],
-            $_POST['mailUniversitaireEtu'],
-            $_POST['codeUfr'],
-            $_POST['libUfr'],
-            $_POST['codeDepartement'],
-            $_POST['codeEtape'],
-            $_POST['libEtape'],
-            $_POST['dateDeDebut'],
-            $_POST['dateDeFin'],
-            $_POST['interruption'],
-            $dateDebutInterup,
-            $dateFinInterup,
-            $_POST['thematique'],
-            $_POST['sujet'],
-            $_POST['fonctionTache'],
-            $_POST['detailProjet'],
-            $_POST['duree'],
-            $_POST['nbJourTravail'],
-            $_POST['nbHeureHebdomadaire'],
-            $_POST['gratification'],
-            $_POST['uniteGratification'],
-            $_POST['uniteDureeGratification'],
-            $_POST['conventionValide'],
-            $_POST['nomEnseignantReferent'],
-            $_POST['prenomEnseignantReferent'],
-            $_POST['mailEnseignantReferent'],
-            $_POST['nomSignataire'],
-            $_POST['prenomSignataire'],
-            $_POST['mailSignataire'],
-            $_POST['fonctionSignataire'],
-            $_POST['anneeUniversitaire'],
-            $_POST['typeDeConvention'],
-            $_POST['commentaireStage'],
-            $_POST['commentaireDureeTravail'],
-            $_POST['codeELP'],
-            $_POST['elementPedagogique'],
-            $_POST['codeSexeEtu'],
-            $_POST['avantageNature'],
-            $_POST['adresseEtu'],
-            $_POST['codePostalEtu'],
-            $_POST['paysEtu'],
-            $_POST['villeEtu'],
-            $_POST['conventionValidePedagogique'],
-            $_POST['avenant'],
-            $_POST['detailAvenant'],
-            $_POST['dateCreationConvention'],
-            $_POST['dateModificationConvention'],
-            $_POST['origineStage'],
-            $_POST['nomEtablissement'],
-            $_POST['siret'],
-            $_POST['adresseResidence'],
-            $_POST['adresseVoie'],
-            $_POST['adresseLibCedex'],
-            $_POST['codePostal'],
-            $_POST['communeEtabAcceuil'],
-            $_POST['paysEtablissement'],
-            $_POST['statutJuridique'],
-            $_POST['typeStructure'],
-            $_POST['effectif'],
-            $_POST['codeNAF'],
-            $_POST['telEtablissement'],
-            $_POST['fax'],
-            $_POST['mailEtablissement'],
-            $_POST['siteWeb'],
-            $_POST['nomServiceAcceuil'],
-            $_POST['residenceServiceAcceuil'],
-            $_POST['voieServiceAcceuil'],
-            $_POST['cedexServiceAcceuil'],
-            $_POST['codePostalServiceAcceuil'],
-            $_POST['communeServiceAcceuil'],
-            $_POST['paysServiceAcceuil'],
-            $_POST['nomTuteurProfessionnel'],
-            $_POST['prenomTuteurProfessionnel'],
-            $_POST['mailTuteurProfessionnel'],
-            $_POST['telTuteurProfessionnel'],
-            $_POST['fonctionTuteurProfessionnel']);
-        (new ConventionStageRepository())->mettreAJour($convention);
-        self::afficherErreur("Les informations de votre entreprise " . $convention->getNumConvention() . " ont bien été mis à jour");
-
-    }
 
     //Convention Finale
 
@@ -996,6 +898,7 @@ class ControleurConvention extends ControleurGenerique
         $convention->setCodeELP($_POST['codeELP']);
         $convention->setElementPedagogique($_POST['elementPedagogique']);
         (new ConventionStageRepository())->mettreAJour($convention);
+        echo '<div class="msgErreur"><p>Vous avez rempli votre convention (vous pouvez y revenir à tout moment) </p></div>';
         self::afficherAccueil();
     }
 

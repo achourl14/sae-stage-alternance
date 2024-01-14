@@ -56,19 +56,6 @@ class ControleurGenerique
             $cle = "secretariat";
         }
 
-//        if ($_POST['type_connexion'] == 'secretariat') {
-//            $utilisateurAVerifier = (new SecretariatRepository())->recupererParClePrimaire($_POST['login']);
-//            $cle = "secretariat";
-//        } else if ($_POST['type_connexion'] == 'etudiant') {
-//            $utilisateurAVerifier = (new EtudiantRepository())->recupererParClePrimaire($_POST['login']);
-//            $cle = "etudiant";
-//        } else if ($_POST['type_connexion'] == 'entreprise') {
-//            $utilisateurAVerifier = (new EntrepriseRepository())->recupererParClePrimaire($_POST['login']);
-//            $cle = "entreprise";
-//        } else {
-//            echo '<div class="msgConfirmation"><p>Erreur au niveau type de connexion</p></div>';
-//        }
-
         if ($cle == 'etudiant' || $cle == 'secretariat') {
             if ($utilisateurAVerifier->getPremiereConnexion() == 0) {
                 echo '<div class="msgConfirmation"><p>Vous devez changer votre mot de passe</p></div>';
@@ -94,7 +81,11 @@ class ControleurGenerique
                     ConnexionUtilisateur::connecter($utilisateurAVerifier->getLogin());
                     $session = Session::getInstance();
                     $session->enregistrer($cle, 1);
-                    self::afficherAccueil();
+                    if(ConnexionUtilisateur::estMaitreSA()){
+                        self::afficherBord();
+                    }else {
+                        self::afficherAccueil();
+                    }
                 }
             }
         } else {
@@ -159,13 +150,21 @@ class ControleurGenerique
 
     public static function afficherLDAP()
     {
-        self::afficherVue("LDAP.php");
-        echo '<div class="msgConfirmation"><p>L\'annuaire LDAP a bien été mis à jour</p></div>';
-        ControleurEtudiant::afficherGestionEtudiant();
+        if(ConnexionUtilisateur::estMaitreSA()) {
+            self::afficherVue("LDAP.php");
+            echo '<div class="msgConfirmation"><p>L\'annuaire LDAP a bien été mis à jour</p></div>';
+            ControleurEtudiant::afficherGestionEtudiant();
+        }else{
+            self::afficherErreur("Vous n'avez pas les droits");
+        }
     }
 
     public static function afficherBord()
     {
-        self::afficherVue("vueGenerale.php", ["contenu" => "Personnel/vueBord.php", "title" => "TableauDeBord"]);
+        if(ConnexionUtilisateur::estMaitreSA()) {
+            self::afficherVue("vueGenerale.php", ["contenu" => "Personnel/vueBord.php", "title" => "TableauDeBord"]);
+        }else{
+            self::afficherErreur("Vous n'avez pas les droits");
+        }
     }
 }

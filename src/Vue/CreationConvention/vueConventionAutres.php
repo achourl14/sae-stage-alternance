@@ -17,10 +17,10 @@ if($convention->getAvenant() == "non"){
                 <div class="title">Convention</div>
 
                 <div class='page'>
-                    <div><p>Etudiant</p></div>
-                    <div><p>Entreprise</p></div>
-                    <div><p>Details du stage</p></div>
-                    <div><p class="activeP">Autres</p></div>
+                    <div><h4>Etudiant</h4></div>
+                    <div><h4>Entreprise</h4></div>
+                    <div><h4>Details du stage</h4></div>
+                    <div><h4 class="activeP">Autres</h4></div>
                 </div>
                 <div class="user-details">
 
