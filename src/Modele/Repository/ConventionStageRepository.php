@@ -265,6 +265,15 @@ class ConventionStageRepository extends AbstractRepository
         return $this->construireDepuisTableau($conventionFormatTableau);
     }
 
+    public function recupererDepuisValidation() : array
+    {
+        $sql = "SELECT * FROM ConventionStage WHERE conventionValidePedagogique = '' ";
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query($sql);
+        foreach ($pdoStatement as $objetFormatTableau) {
+            $tableau[] = $this->construireDepuisTableau($objetFormatTableau);
+        }
+        return $tableau;
+    }
 
     protected function getNomTable(): string
     {

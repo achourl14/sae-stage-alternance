@@ -7,9 +7,11 @@ if (isset($convention)) {
     echo '<a  class="boutonRetour" href="controleurFrontal.php"> < Retour à l\'Accueil </a>';
     echo '<div class="offre_detail">';
     echo "<h1> Convention de " . htmlspecialchars($convention->getPrenomEtu()) . " " . htmlspecialchars($convention->getNomEtu()) . "</h1>";
-    echo "<div class='boutonsGeneral'>
-            <div> <a href='controleurFrontal.php?controleur=convention&action=afficherMAJConvention&numConvention=".$convention->getNumConvention()."'> Modifier Convention </a> </div>
+    if(\App\Lib\ConnexionUtilisateur::estMaitreSA() || \App\Lib\ConnexionUtilisateur::estSecretariat()) {
+        echo "<div class='boutonsGeneral'>
+            <div> <a href='controleurFrontal.php?controleur=convention&action=afficherMAJConvention&numConvention=" . $convention->getNumConvention() . "'> Modifier Convention </a> </div>
            </div>";
+    }
     echo "<hr/>";
 
     echo "<h2> Informations Générale : </h2>";
