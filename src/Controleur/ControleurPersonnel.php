@@ -220,6 +220,13 @@ class ControleurPersonnel extends ControleurGenerique
     public static function afficherTableauDeBord()
     {
         if (ConnexionUtilisateur::estMaitreSA()) {
+            $cpt = 0;
+            $conventions = (new ConventionStageRepository())->recuperer();
+            foreach($conventions as $convention){
+                if($convention->getConventionValidePedagogique() == ""){
+                    $cpt++;
+                }
+            }
             if (Session::getInstance()->contient("requeteFiltreTB")) {
                 $nombreStageTrouve = (new EtudiantRepository())->nombreDePersonneTrouveStage(Session::getInstance()->lire("requeteFiltreTB"));
                 $nombreAlternanceTrouve = (new EtudiantRepository())->nombreDePersonneTrouveAlternance(Session::getInstance()->lire("requeteFiltreTB"));
@@ -242,7 +249,7 @@ class ControleurPersonnel extends ControleurGenerique
                 $nbreConventionValidePedagogique = (new ConventionStageRepository())->nbreConventionValidePedagogique();
                 $nbreConventionNonValidePedagogique = (new ConventionStageRepository())->nbreConventionNonValidePedagogique();
             }
-            self::afficherVue("vueGenerale.php", ["contenu" => "Personnel/vueBord.php", "title" => "Tableau De Bord", "nombreStageTrouve" => $nombreStageTrouve, "nombreAlternanceTrouve" => $nombreAlternanceTrouve, "nombreEnRecherche" => $nombreEnRecherche, "nbreConventionValidePedagogique" => $nbreConventionValidePedagogique, "nbreConventionNonValidePedagogique" => $nbreConventionNonValidePedagogique]);
+            self::afficherVue("vueGenerale.php", ["contenu" => "Personnel/vueBord.php", "title" => "Tableau De Bord", "nombreStageTrouve" => $nombreStageTrouve, "nombreAlternanceTrouve" => $nombreAlternanceTrouve, "nombreEnRecherche" => $nombreEnRecherche, "nbreConventionValidePedagogique" => $nbreConventionValidePedagogique, "nbreConventionNonValidePedagogique" => $nbreConventionNonValidePedagogique, "cpt" => $cpt]);
         } else {
             self::afficherErreur("Vous n'avez pas les droits");
         }
@@ -426,6 +433,48 @@ class ControleurPersonnel extends ControleurGenerique
                 }
             }
             self::afficherVue("vueGenerale.php", ["contenu" => "Entreprise/vueGestionEntreprise.php", "entreprises" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Liste des entreprises avec un élèves en alternance"]);
+        } else {
+            self::afficherErreur("Vous n'avez pas les droits");
+        }
+    }
+
+    public static function afficherConventionEnAttente(){
+        if (ConnexionUtilisateur::estMaitreSA()) {
+            $conventions = (new ConventionStageRepository())->recupererDepuisValidation();
+            if($conventions == null) {
+                self::afficherErreur("Il n'y a aucune convention en attente");
+            }else {
+                $tableauParPage = null;
+                if ($conventions == null) {
+                    $nbrePages = 1;
+                    $page = 1;
+                } else {
+
+                    //Pagination
+                    $nombresConventions = count($conventions);
+                    $nbrePages = ceil($nombresConventions / 9);
+
+                    $page = 1;
+                    if (isset($_GET['page'])) {
+                        $page = $_GET['page'];
+                        if ($page > $nbrePages) {
+                            $page = $nbrePages;
+                        } else if ($page <= 1) {
+                            $page = 1;
+                        }
+                    }
+                    $y = $page * 9;
+                    if ($page * 9 > $nombresConventions) {
+                        $y = $nombresConventions;
+                    }
+
+                    for ($i = ($page - 1) * 9; $i < $y; $i++) {
+                        $tableauParPage[] = $conventions[$i];
+                    }
+
+                }
+                self::afficherVue("vueGenerale.php", ["contenu" => "Convention/vueGestionConvention.php", "conventions" => $tableauParPage, "nbrePages" => $nbrePages, "pageActuelle" => $page, "title" => "Gestions des Conventions"]);
+            }
         } else {
             self::afficherErreur("Vous n'avez pas les droits");
         }

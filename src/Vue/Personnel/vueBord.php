@@ -26,7 +26,7 @@ $finale = "";
 if (Session::getInstance()->contient("requeteFiltreTBConvention")) {
     $rechercheConvention = Session::getInstance()->lire("requeteFiltreTBConvention");
 }
-if(isset($rechercheConvention["validation"])){
+if (isset($rechercheConvention["validation"])) {
     if ($rechercheConvention["validation"] == "pedagogique") {
         $pedag = "checked";
     } else {
@@ -34,7 +34,6 @@ if(isset($rechercheConvention["validation"])){
         $pedag = "";
     }
 }
-
 
 
 ?>
@@ -89,10 +88,21 @@ if(isset($rechercheConvention["validation"])){
         }
     </script>
 
-    <div class='title'> Tableau de bord </div>
+    <div class='title'> Tableau de bord</div>
+
+<?php
+echo '<div class="margeBord">';
+if ($cpt != 0) {
+    echo '<div class="page">';
+    echo '<a href="https://webinfo.iutmontp.univ-montp2.fr/~crepinh/SAE/web/controleurFrontal.php?controleur=personnel&action=afficherConventionEnAttente">  '.$cpt.' Convention(s) en attente de validation (que vous n\'avez pas consultée(s)) </a>';
+    echo '</div>';
+}
+echo '</div>';
+?>
     <div class="tableauDeBord">
         <div>
-            <form method="post" class="formulaire formTB" action="controleurFrontal.php?controleur=personnel&action=filtrerTB">
+            <form method="post" class="formulaire formTB"
+                  action="controleurFrontal.php?controleur=personnel&action=filtrerTB">
                 <div class="user-details">
                     <div class="input-box-TB">
                         <label class="details" for="annee"> Année de BUT </label>
@@ -110,47 +120,56 @@ if(isset($rechercheConvention["validation"])){
             <div id="piechart-SA" style="width: 800px; height: 400px;"></div>
         </div>
 
-    <div class="tableauDeBord">
-        <div>
-            <form method="post" class="formulaire formTB" action="controleurFrontal.php?controleur=personnel&action=filtrerTB">
-                <div class="user-details">
-                    <div class="input-box-TB">
-                        <label class="details" for="annee"> Validation </label>
-                        <div class="radio">
-                            <input type="radio" id="pedagogique" name="validation" value="pedagogique" <?php echo $pedag ?>>
-                            <label for="pedagogique">Pédagogique</label>
-                        </div>
-                        <div class="radio">
-                            <input type="radio" id="finale" name="validation" value="finale" <?php echo $finale ?>>
-                            <label for="finale">Finale</label>
+        <div class="tableauDeBord">
+            <div>
+                <form method="post" class="formulaire formTB"
+                      action="controleurFrontal.php?controleur=personnel&action=filtrerTB">
+                    <div class="user-details">
+                        <div class="input-box-TB">
+                            <label class="details" for="annee"> Validation </label>
+                            <div class="radio">
+                                <input type="radio" id="pedagogique" name="validation"
+                                       value="pedagogique" <?php echo $pedag ?>>
+                                <label for="pedagogique">Pédagogique</label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" id="finale" name="validation" value="finale" <?php echo $finale ?>>
+                                <label for="finale">Finale</label>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="button">
-                    <input type="submit" value="Rechercher">
-                </div>
-            </form>
-            <div id="piechartConvention" style="width: 800px; height: 400px;"> </div>
+                    <div class="button">
+                        <input type="submit" value="Rechercher">
+                    </div>
+                </form>
+                <div id="piechartConvention" style="width: 800px; height: 400px;"></div>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="bord">
+    <div class="bord">
 
-    <div class="bordListeBouton">
-        <div>
-            <a class="boutonBord" href="controleurFrontal.php?controleur=Personnel&action=afficherEtudiantStage" >Liste des étudiants en stage</a>
-        </div>
-        <div>
-            <a class="boutonBord" href="controleurFrontal.php?controleur=Personnel&action=afficherEtudiantAlternance" >Liste des étudiants en Alternance</a>
-        </div>
-        <div>
-            <a class="boutonBord" href="controleurFrontal.php?controleur=Personnel&action=afficherListeEntrepriseStage" >Liste des entreprise avec un stagiaire</a>
-        </div>
-        <div>
-            <a class="boutonBord" href="controleurFrontal.php?controleur=Personnel&action=afficherListeEntrepriseAlternance" >Liste des entreprise avec un Alternant</a>
+        <div class="bordListeBouton">
+            <div>
+                <a class="boutonBord" href="controleurFrontal.php?controleur=Personnel&action=afficherEtudiantStage">Liste
+                    des étudiants en stage</a>
+            </div>
+            <div>
+                <a class="boutonBord"
+                   href="controleurFrontal.php?controleur=Personnel&action=afficherEtudiantAlternance">Liste des
+                    étudiants en Alternance</a>
+            </div>
+            <div>
+                <a class="boutonBord"
+                   href="controleurFrontal.php?controleur=Personnel&action=afficherListeEntrepriseStage">Liste des
+                    entreprise avec un stagiaire</a>
+            </div>
+            <div>
+                <a class="boutonBord"
+                   href="controleurFrontal.php?controleur=Personnel&action=afficherListeEntrepriseAlternance">Liste des
+                    entreprise avec un Alternant</a>
+            </div>
         </div>
     </div>
-</div>
 <?php
 

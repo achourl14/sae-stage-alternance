@@ -82,7 +82,7 @@ class ControleurGenerique
                     $session = Session::getInstance();
                     $session->enregistrer($cle, 1);
                     if(ConnexionUtilisateur::estMaitreSA()){
-                        self::afficherBord();
+                        ControleurPersonnel::afficherTableauDeBord();
                     }else {
                         self::afficherAccueil();
                     }
@@ -154,15 +154,6 @@ class ControleurGenerique
             self::afficherVue("LDAP.php");
             echo '<div class="msgConfirmation"><p>L\'annuaire LDAP a bien été mis à jour</p></div>';
             ControleurEtudiant::afficherGestionEtudiant();
-        }else{
-            self::afficherErreur("Vous n'avez pas les droits");
-        }
-    }
-
-    public static function afficherBord()
-    {
-        if(ConnexionUtilisateur::estMaitreSA()) {
-            self::afficherVue("vueGenerale.php", ["contenu" => "Personnel/vueBord.php", "title" => "TableauDeBord"]);
         }else{
             self::afficherErreur("Vous n'avez pas les droits");
         }

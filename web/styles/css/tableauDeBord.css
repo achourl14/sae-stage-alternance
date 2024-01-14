@@ -36,6 +36,11 @@
     border-color: #50ad22;
 }
 
+.margeBord{
+    margin-left: 70px;
+    margin-bottom: 30px;
+}
+
 .bord{
     display: inline-flex;
     flex-direction: row;
