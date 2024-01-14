@@ -11,13 +11,13 @@ $loader->register();
 $loader->addNamespace('App', __DIR__ . '/../src');
 
 // On recupère l'action passée dans l'URL
-if(isset($_GET['Controleur']))
-if(isset($_GET['action'])){
-    $action = $_GET['action'];
-    Controleur::$action();
-}else{
-    \App\Controleur\ControleurGenerique::afficherAccueil();
-}
+//if(isset($_GET['Controleur']))
+//if(isset($_GET['action'])){
+//    $action = $_GET['action'];
+//    Controleur::$action();
+//}else{
+//    \App\Controleur\ControleurGenerique::afficherAccueil();
+//}
 $nomDeClasseControleur = "App\Controleur\Controleur";
 if(isset($_GET['controleur'])) {
     $controleur = $_GET['controleur'];

@@ -62,6 +62,7 @@ echo '<h1> Stage / Alternance </h1>';
 echo '</div>';
 
 echo '<div id="navButton">';
+echo '<div class="MenuBouton">';
 echo '<div><a href="controleurFrontal.php" id=' . $accueil . '>Accueil</a></div>';
 if (ConnexionUtilisateur::estMaitreSA()) {
     echo '<div><a href="controleurFrontal.php?controleur=personnel&action=afficherTableauDeBord">Tableau De Bord</a></div>';
@@ -138,7 +139,8 @@ if (!ConnexionUtilisateur::estConnecte()) {
     echo '<a class="connexion"  href="controleurFrontal.php?controleur=generique&action=afficherConnexion">Connexion</a>';
     echo '</div>';
 } else {
-    echo '<div>';
+    echo '</div>';
+    echo '<div class="MenuCompte">';
     echo '<a id="buttonCompte">';
     echo '<div id="monCompte">';
     echo '<img src="img/compte.png"/>';
@@ -153,7 +155,7 @@ if (!ConnexionUtilisateur::estConnecte()) {
     }
     echo '</div>';
     echo '</a>';
-    echo '<div class="submenu submenuCompte">';
+    echo '<div class="submenuCompte">';
     if (ConnexionUtilisateur::estPersonnel()) {
         echo '<a href="controleurFrontal.php?controleur=personnel&action=afficherMAJPersonnel&login=' . ConnexionUtilisateur::getLoginUtilisateurConnecte() . '">Configuration</a>';
     }
@@ -169,9 +171,7 @@ if (!ConnexionUtilisateur::estConnecte()) {
     echo '<a href="controleurFrontal.php?controleur=generique&action=seDeconnecter">Se déconnecter</a>';
     echo '</div>';
     echo '</div>';
-    echo '</div>';
 }
-
 echo '</nav>';
 ?>
 

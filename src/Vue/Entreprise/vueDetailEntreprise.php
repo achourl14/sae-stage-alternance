@@ -24,7 +24,7 @@ if(isset($_GET['numSiret'])){
 
     echo '<hr/>';
 
-    echo "<h3> Informations Générale sur l\'entreprise </h3>";
+    echo "<h3> Informations Générale sur l'entreprise </h3>";
     echo "<div class='detailLigne'>";
     echo "<div class='case'>";
     echo "<h3> Adresse de l'entreprise : </h3>";
